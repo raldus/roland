@@ -1,0 +1,12 @@
+### Build ###
+bin/*
+build/*
+
+### Backup ###
+*~
+*.bak
+
+### KDE ###
+.directory
+.kateproject
+.swp
