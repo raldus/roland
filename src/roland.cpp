@@ -19,9 +19,9 @@
  ***************************************************************************/
 
 
-#ifdef HAVE_CONFIG_H
+//#ifdef HAVE_CONFIG_H
 	#include <config.h>
-#endif
+//#endif
 
 #ifdef USE_MMX
 	#include "mmx_memcpy.h"
@@ -123,13 +123,13 @@ void init()
 	if (screen->format->BitsPerPixel == 32) cpc.vdu().setBpp(Vdu::Bpp32);
 
 	cpc.colours().setDepth(screen->format->BitsPerPixel);
-	
+
 	cpc.vdu().setScrBase(calcScreenStart());
 	cpc.vdu().setScrEnd(calcScreenEnd());
-	
+
 	cerr << "[CORE] ScrBase: " << screen->pixels << "\n";
 	cerr << "[CORE] ScrEnd:  " << (uint*) screen->pixels+((screen->pitch/4) * height) << "\n";
-	
+
 	cpc.vdu().setScrLineOffset(screen->pitch/2);
 
 	SDL_UnlockSurface(screen);
@@ -147,7 +147,7 @@ inline uint* calcScreenStart()
 {
 	uint vp = (height - (CPC_VISIBLE_SCR_HEIGHT * 2)) / 2;
 	uint hp = (width  - (CPC_VISIBLE_SCR_WIDTH  * 2)) / 2;
-	
+
 	if (screen->format->BitsPerPixel == 16)
 	{
 		unsigned short int* pix = (unsigned short int*) screen->pixels+((screen->pitch / 2)*vp)+hp;
@@ -161,7 +161,7 @@ inline uint* calcScreenStart()
 }
 
 inline uint* calcScreenEnd()
-{	
+{
 	if (screen->format->BitsPerPixel == 16)
 	{
 		return (uint*) (unsigned short int*) screen->pixels+((screen->pitch/2) * height);
@@ -333,7 +333,7 @@ void mainloop()
 
 
 		/*
-				while (mainClock.elapsed() < frametime+ticksadjust) 
+				while (mainClock.elapsed() < frametime+ticksadjust)
 				{
 					SDL_Delay(1);
 				}
@@ -372,7 +372,7 @@ void mainloop()
 			//if (frameskip) {frameskip=false;mainClock.init();}
 			//else {display();framecount++;}
 
-			
+
 			display();
 			framecount++;
 
@@ -405,9 +405,9 @@ inline void display()
 {
 	Font fnt;
 
-	
-	
-	if (cpc.fdc().led()) 
+
+
+	if (cpc.fdc().led())
 	{
 		SDL_Rect rect;
 		rect.w=20;
@@ -415,7 +415,7 @@ inline void display()
 		rect.x=screen->w-(rect.w+3);
 		rect.y=screen->h-(rect.h+3);
 		SDL_FillRect(screen, &rect, SDL_MapRGB(screen->format, 96, 96, 96));
-		
+
 		rect.w=18;
 		rect.h=10;
 		rect.x=screen->w-(rect.w+4);
@@ -583,7 +583,7 @@ int main(int argc, char *argv[])
 		SDL_Quit();
 	}
 
-	
+
 
 #ifdef USE_MMX
 	cout << "[CORE] MMX enabled" << "\n";
@@ -598,7 +598,7 @@ int main(int argc, char *argv[])
 		cerr << "[SDL_VIDEO] Couldn't set " << width << "x" << height << "-" << screen->format->BitsPerPixel << " video mode: " << SDL_GetError() << endl;
 		SDL_Quit();
 	}
-	
+
 	char buf[16];
 	memset(buf, 0, 16);
 	SDL_VideoDriverName(buf, 15);
@@ -612,7 +612,7 @@ int main(int argc, char *argv[])
 	//SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
 	SDL_EnableKeyRepeat(0, 0);
 
-	
+
 
 
 	initSound();

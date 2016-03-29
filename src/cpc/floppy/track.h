@@ -24,16 +24,16 @@
 #include "sector.h"
 #include "fdcconst.h"
 
-#include <memory>
+#include <cstring>
 
 /** @author Fred Klaus */
 class Track
 {
 public:
-	Track() {memset(this, 0, sizeof(*this));}
+	Track() {std::memset(this, 0, sizeof(*this));}
 	~Track() {}
 
-	UBYTE* data()            {return mData;}
+	UBYTE* data()    {return mData;}
 	uint sectors()   {return mSectors;}
 	uint size()      {return mSize;}
 	Sector & sector(int num) {return mSector[num];}

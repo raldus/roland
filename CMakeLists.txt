@@ -6,7 +6,7 @@ set(CMAKE_BINARY_DIR "${CMAKE_SOURCE_DIR}/bin")
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-
+# C++ version
 include(CheckCXXCompilerFlag)
 CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
 CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
@@ -18,17 +18,28 @@ else()
         message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler.")
 endif()
 
-
-
-find_package(SDL REQUIRED)
-include_directories(${SDL_INCLUDE_DIR})
-
-
+# C++ flags
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
-include_directories("${PROJECT_SOURCE_DIR}/src")
+# SDL
+find_package(SDL REQUIRED)
+include_directories(${SDL_INCLUDE_DIR})
 
-add_executable(roland ${PROJECT_SOURCE_DIR}/src/roland.cpp)
+# roland
+set(PACKAGE_STRING 1 FORCE)
+set(PACKAGE_NAME 1 FORCE)
+set(DEBUG 1 FORCE)
+configure_file(${PROJECT_SOURCE_DIR}/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h)
 
-TARGET_LINK_LIBRARIES(roland ${SDL_LIBRARIES})
+include_directories(${PROJECT_SOURCE_DIR}/src)
+include_directories(${PROJECT_SOURCE_DIR}/src/common)
+include_directories(${PROJECT_SOURCE_DIR}/src/common/filesys)
+include_directories(${PROJECT_SOURCE_DIR}/src/cpc)
+include_directories(${PROJECT_SOURCE_DIR}/src/cpc/z80)
+include_directories(${PROJECT_SOURCE_DIR}/src/cpc/floppy)
+include_directories(${PROJECT_SOURCE_DIR}/src/sdl)
+include_directories(${PROJECT_SOURCE_DIR}/src/sdl/gui)
+include_directories(${PROJECT_SOURCE_DIR}/src/sdl/gui/font)
+
+add_subdirectory(src)

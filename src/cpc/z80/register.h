@@ -22,7 +22,7 @@
 
 #include "types.h"
 
-#include <memory>
+#include <cstring>
 
 
 #define _A        z80.AF.b.h
@@ -74,7 +74,7 @@ public:
 	Register() {init();}
 	~Register(){}
 
-	void init() {memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
+	void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
 
 private:
 	REGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;

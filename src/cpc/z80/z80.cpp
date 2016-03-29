@@ -889,7 +889,7 @@ int Z80::execute(int cc)
 			return iCycleCountSum;   // exit emulation loop
 		}
 		else if (iCycleCountSum >= iCycleCountInit) return iCycleCountSum;
-		
+
 
 
 		/*

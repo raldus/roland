@@ -1,6 +1,7 @@
 ### Build ###
 bin/*
 build/*
+src/config.h
 
 ### Backup ###
 *~
