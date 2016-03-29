@@ -1,0 +1,336 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type"
+content="text/html; charset=iso-8859-1">
+<title>RAZE Z80 emulator</title>
+</head>
+
+<body bgcolor="#FFFFFF" text="#000000" link="#0000FF"
+vlink="#800000">
+<hr color="#0000FF">
+<h1 align="center">R. A. Z. E.</h1>
+<p align="center">v1.06<br>
+  Copyright (c) 1999 <a href="#contact">Richard Mitton</a></p>
+<hr color="#0000FF">
+<h2>Introduction</h2>
+<p>What is RAZE? It's a Zilog Z80 emulator for Intel x86 systems.<br>
+  If you use RAZE in a project, I'd love to hear about it.<br>
+  If RAZE doesn't work for you, I'd also like to hear about that.<br>
+  IF anyone needs any features adding, just ask. </p>
+<p>Features include: </p>
+<ul>
+  <li>Written in 100% 32-bit assembly language.</li>
+  <li>Standard C interface supplied.</li>
+  <li>Support for <strong>all</strong> opcodes, both documented and undocumented.</li>
+  <li>Calculates 99.9% of flags correctly, even undocumented ones.</li>
+  <li>Built-in support for bankswitching and mirrored memory.</li>
+  <li>Extensively tested against a real Z80.</li>
+  <li>Complete IRQ line support.</li>
+  <li>Correct R-register emulation.</li>
+  <li>Correct T-state cycle counting (probably).</li>
+  <li>Wait states.</li>
+  <li>Spectrum emulator example program. </li>
+</ul>
+<p>Lacking features:</p>
+<ul>
+  <li>IM 0 can only be used with a RST opcode.</li>
+  <li>The 'patch' feature (it's not actually a proper Z80 opcode).</li>
+  <li>1 or 2 undocumented flags.</li>
+  <li>No M1 cycle emulation (i.e. no difference between opcodes/operands).</li>
+  <li>Could be faster (at the expense of features though). </li>
+</ul>
+<h2>Installation</h2>
+<h3>DJGPP/GCC:</h3>
+<p>Un-zip to a directory, and just run <kbd>MAKE</kbd>.</p>
+<p><tt>NASM</tt> is required to assemble it. It currently uses <tt>NASM</tt>, 
+  but you can edit the makefile if you need a different command. <i>Allegro</i> 
+  is required if you want to run the example program. </p>
+<h3>Other:</h3>
+<p>Not tested, but you should be able to use it, as long as your compiler sticks 
+  to the <em>GCC/MSVC</em> calling convention.</p>
+<p>If the makefile doesn't work, then use <tt>NASM</tt> directly:</p>
+<blockquote> 
+  <p><kbd>nasm -e raze.asm -o raze2.asm<br>
+    </kbd><em>then<br>
+    </em><kbd>nasm -f coff raze2.asm -o raze.o -praze.reg</kbd></p>
+</blockquote>
+<p>Substitute <tt>COFF</tt> for whatever object format you need.<br>
+  You might need to use <tt>NASMW</tt> instead.<br>
+  If anyone can't get this working on non-DOS platforms, let me know! </p>
+<p>Include &quot;raze.h&quot; in your program, and link with raze.o </p>
+<hr>
+<p align="center"><strong>For extra speed, you can edit RAZE.ASM and comment-out 
+  some of the %define's.</strong></p>
+<hr>
+<h2><a name="#contact"></a>Contact information</h2>
+<p>RAZE was written by <a
+href="mailto:richard.mitton@bigfoot.com">Richard Mitton</a>.<br>
+  e-mail: <a href="mailto:richard.mitton@bigfoot.com">richard.mitton@bigfoot.com</a><br>
+  www: <a href="http://etc.home.dhs.org/">http://etc.home.dhs.org/ </a></p>
+<h2>License &amp; legal stuff</h2>
+<p>You may use RAZE in any program you wish, however you are not allowed to sell 
+  the programs without written permisson from Richard Mitton. </p>
+<p>You may freely copy the source code to RAZE, as long as this archive stays 
+  intact. </p>
+<p>This program comes with absolutely <strong>NO WARRANTY</strong>. Richard Mitton 
+  will not be held responsible for any problems due to RAZE. While all effort 
+  has been made to ensure correct operation, use of RAZE is entirely at the user's 
+  discretion. However, I will still try and help with problems whenever possible.</p>
+<p><strong><u>Programs using RAZE must mention it in the documentation</u></strong>, 
+  along with the text &quot;RAZE Z80 core, by Richard Mitton (richard.mitton@bigfoot.com)&quot;.</p>
+<h2>What's new</h2>
+<table border="0" align="center">
+  <tr> 
+    <td valign="top" width="8%"><u>v1.06:</u></td>
+    <td valign="top" width="82%">Um. This time I hope save states are <b>really</b> 
+      fixed...</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="8%"><u>v1.05:</u></td>
+    <td valign="top" width="82%">Hopefully fixed a bug with save states...? (feedback 
+      appreciated)</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="8%"><u>v1.04:</u></td>
+    <td valign="top" width="82%">Fixed MSVC support (thanks to <em>YANO Hirokuni</em>!),<br>
+      BIT instr now passes all ZEX tests,<br>
+      fixed support for Quazatron (thanks to <em>Charles Gallagher</em>!).</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="8%"><u>v1.03:</u></td>
+    <td valign="top" width="82%">Improved cycle timing slightly, added R-register 
+      emulation,<br>
+      added an opcode-fetch callback option, added wait-states,<br>
+      also improved the example program a bit.</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="8%"><u>v1.02:</u></td>
+    <td valign="top" width="82%">Added post-EI interrupt behaviour</td>
+  </tr>
+  <tr> 
+    <td valign="top" width="8%"><u>v1.01:</u></td>
+    <td valign="top" width="82%">Fixed to work with NASM v0.98,<br>
+      fixed reset code (thx to <em>Neil Bradley</em> ;)</td>
+  </tr>
+  <tr> 
+    <td width="8%"><u>v1.00:</u></td>
+    <td valign="top" width="82%">First release.</td>
+  </tr>
+</table>
+<hr>
+<h2>How to use it</h2>
+<p>First, set up the memory-map, for example: </p>
+<blockquote>
+  <p><code>z80_init_memmap();<br>
+    z80_map_fetch(0x0000, 0x7fff, &amp;rom[0]);<br>
+    z80_map_fetch(0x8000, 0x9fff, &amp;banked_rom[0]);<br>
+    z80_map_fetch(0xa000, 0xdfff, &amp;ram[0]); </code></p>
+  <p><code>z80_add_read(0x0000, 0x7fff, Z80_MAP_DIRECT, &amp;rom[0]);<br>
+    z80_map_read(0x8000, 0x9fff, &amp;banked_rom[0]);<br>
+    z80_add_read(0xa000, 0xdfff, Z80_MAP_DIRECT, &amp;ram[0]);<br>
+    z80_add_read(0xe000, 0xe001, Z80_MAP_HANDLED, &amp;Read_SoundChip); </code></p>
+  <p><code>z80_add_write(0x0000, 0x7fff, Z80_MAP_DIRECT, &amp;rom[0]);<br>
+    z80_map_write(0x8000, 0x9fff, &amp;banked_rom[0]);<br>
+    z80_add_write(0xa000, 0xdfff, Z80_MAP_DIRECT, &amp;ram[0]);<br>
+    z80_add_write(0xe000, 0xe001, Z80_MAP_HANDLED, &amp;Write_SoundChip);<br>
+    z80_add_write(0xf000, 0xf001, Z80_MAP_HANDLED, &amp;Write_Bankswitch);<br>
+    z80_end_memmap(); </code></p>
+</blockquote>
+<p>This defines the memory-map for a Z80. '<strong>fetch</strong>' is used for 
+  instruction fetching, '<strong>read</strong>' is for reading memory, '<strong>write</strong>' 
+  is for writing memory. </p>
+<p>You can either specify an area as <var>Z80_MAP_DIRECT</var>, in which case 
+  RAZE will directly read/write to it itself, or <var>Z80_MAP_HANDLED</var>, which 
+  causes RAZE to call the given function instead. </p>
+<ul>
+  <li>Note that <strong>NONE</strong> of the address should overlap at all.</li>
+  <li> Also note that for the <code>z80_map_?????</code> functions, the addresses 
+    <strong>MUST</strong> be 256-byte aligned: e.g. it must start on <tt>0x8000</tt>, 
+    and end on <tt>0x80ff</tt>. So the start address must be <tt>0xXX00</tt>, 
+    end address must be <tt>0xYYff</tt>. </li>
+</ul>
+<table width="100%" align="center" bgcolor="#CCCCFF">
+  <tr> 
+    <td> 
+      <p>Once the memory-map has been defined, it can't be changed. So, in order 
+        to accommodate bank-switching etc, you can use the 'map' functions: </p>
+      <blockquote> 
+        <pre><code>void Write_Bankswitch(UWORD addr, UBYTE value)
+{
+   /* map in a new bit of memory into the bank */
+   z80_map_fetch(0x8000, 0x9fff, &amp;banked_rom[value * 0x2000]);
+   z80_map_read(0x8000, 0x9fff, &amp;banked_rom[value * 0x2000]);
+   z80_map_write(0x8000, 0x9fff, &amp;banked_rom[value * 0x2000]);
+}</code></pre>
+      </blockquote>
+      <p>But! You can only map an area if it was set up using z80_map_????? to 
+        start with! i.e. the ones set using z80_add_????? are fixed!</p>
+      </td>
+  </tr>
+</table>
+<p>If you haven't defined a bit of memory, the following will happen:<br>
+  <em>fetch</em>: it might crash, so don't do it.<br>
+  <em>read</em>: it will return 0xff as the value read.<br>
+  <em>write</em>: nothing. </p>
+<p>This may all seem a bit complicated, but it is worth making use of it in order 
+  to get the best performance. </p>
+<hr>
+<h2>I/O Ports &amp; RetI</h2>
+<p>If you want to use the I/O ports, do this:</p>
+<blockquote>
+  <p><code>z80_set_in(&amp;ReadInputPort);<br>
+    z80_set_out(&amp;WriteOutputPort);</code></p>
+</blockquote>
+<p>RAZE will call the given function, for all ports.</p>
+<ul>
+  <li>
+    <p><strong>NOTE:</strong> the port addresses are always 16-bit. If you need 
+      8-bit ports, <u>you must AND the port address with 0xff first!</u> (just 
+      like a real Z80 would, basically...)</p>
+  </li>
+</ul>
+<p>If you want to trap the RETI opcode, do this:</p>
+<blockquote>
+  <p><code>z80_set_reti(&amp;YourCustom_RETI_Handler); </code></p>
+</blockquote>
+<hr>
+<h2>Main Loop &amp; Interrupts</h2>
+<p>Once that's all been done, you'll need to reset the Z80 before use:</p>
+<blockquote>
+  <p><code>z80_reset(); </code></p>
+</blockquote>
+<p>Right, now you can run it! </p>
+<p>Example: </p>
+<blockquote>
+  <pre><code>while(running)
+{
+   z80_emulate(4000000/60);
+   z80_raise_IRQ(0xff);
+   z80_lower_IRQ();
+} </code></pre>
+</blockquote>
+<p><code>z80_emulate</code> will actually run the Z80. The parameter is the number 
+  of cycles to run for. It will always execute <em>at least </em>that many cycles, 
+  unless you deliberately cut it short during the run (see later). It will return 
+  the number of cycles actually executed. </p>
+<p><code>z80_raise_IRQ</code> will raise the IRQ line. This is the only way to 
+  cause an interrupt in RAZE. The parameter is the value to pass on the bus. If 
+  you're not sure, <tt>0xff</tt> is usually best. When in IM 2, you'd need to 
+  actually provide an interrupt vector here.</p>
+<ul>
+  <li>In IM 0, you pass the opcode to execute. Only RST opcodes are supported 
+    currently.<br>
+    NOTE!: For IM 0, you would pass the opcode, not the address!<br>
+    (e.g. <tt>0xff</tt> instead of <tt>0x38</tt>, etc). </li>
+</ul>
+<p><b>You need to lower the IRQ line again!</b> Otherwise it will keep trying 
+  to send the interrupt! This can either be done straight away, or you can execute 
+  some cycles and then do it later. </p>
+<hr>
+<h2>Other functions</h2>
+<p><code><strong>void z80_cause_NMI(void);</strong></code><br>
+  Causes an NMI immediately. Because the Z80 NMI line is edge-triggered, there 
+  is no function to lower the line (it doesn't matter to the Z80 when it is lowered, 
+  you see). </p>
+<p><code><strong>void z80_set_fetch_callback(void (*handler)(UWORD pc));<br>
+  </strong></code>This sets an opcode-fetch callback function. Every time a byte 
+  is fetched from the instruction stream, your function will be called.</p>
+<p><strong>NOTE!:</strong> For this to work, you have to edit RAZE.ASM and uncomment 
+  this line:</p>
+<blockquote>
+  <p><code>%define USE_FETCH_CALLBACK</code></p>
+</blockquote>
+<p>Your handler should be like this - (example) </p>
+<blockquote>
+  <pre><code>void debug(UWORD pc)
+{
+   if (pc == 0x1234) printf(&quot;Breakpoint hit!\n&quot;);
+} </code></pre>
+  <pre><code>z80_set_fetch_callback(&amp;debug); </code></pre>
+</blockquote>
+<p><code><strong>int z80_get_cycles_elapsed(void);<br>
+  </strong></code>Returns the number of cycles elapsed since <code>z80_emulate</code> 
+  was last called. </p>
+<p><code><strong>void z80_stop_emulating(void);<br>
+  </strong></code>This can only be called from a read/write handler. It will stop 
+  the Z80 emulating after the current instruction has completed. The cycle-count 
+  returned from <code>z80_emulate()</code> will be less than normal, to reflect 
+  the fact it was stopped early. </p>
+<p><code><strong>void z80_skip_idle(void);<br>
+  </strong></code>This can only be called from a read/write handler. It will stop 
+  the Z80 emulating after the current instruction has completed. The cycle-count 
+  returned from <code>z80_emulate()</code> will be as though the Z80 had not been 
+  stopped, i.e. it will be the same as normal. </p>
+<p><code><strong>void z80_do_wait_states(int n);<br>
+  </strong></code>Temporarily halt the CPU, by stopping for 'n' T-states. This 
+  can be called from a memory-handler, or the opcode-callback function, to reproduce 
+  effects such as the ZX Spectrum's ULA delays, etc. </p>
+<p><code><strong>UWORD z80_get_reg(z80_register reg);<br>
+  </strong></code>Returns the given internal register from the Z80. If this is 
+  called from inside a read/write handler, then only <var>Z80_REG_PC</var> can 
+  be used. See RAZE.H for possible values. </p>
+<p><code><strong>void z80_set_reg(z80_register reg, UWORD value);<br>
+  </strong></code>Sets the given internal register in the Z80 to a new value. 
+  This cannot be called from inside a read/write handler. See RAZE.H for possible 
+  values. </p>
+<p><code><strong>int z80_get_context_size(void);<br>
+  </strong></code>Returns the size of a RAZE context. If you need multiple Z80 
+  emulation, you need to allocate that much memory for each context. </p>
+<p><code><strong>void z80_get_context(void *context);<br>
+  </strong></code>Will copy the internal state of the current Z80 into the given 
+  context. </p>
+<p><code><strong>void z80_set_context(void *context);<br>
+  </strong></code>Will copy the given context into the internal state of the current 
+  Z80. </p>
+<h2>Misc notes:</h2>
+<ul>
+  <li>Memory-map areas defined with <code>z80_map_fetch, z80_map_read, and z80_map_write</code>, 
+    must start and finish aligned to a 256-byte boundary.</li>
+  <li>Memory-map areas must not overlap!</li>
+  <li>Port addresses are always 16-bit. You might have to AND them with 255.</li>
+  <li>The only functions callable from inside a read/write handler, are:<br>
+    <code>z80_map_?????, z80_raise_IRQ, z80_lower_IRQ, z80_cause_NMI,<br>
+    z80_get_reg(Z80_REG_PC), z80_get_cycles_elapsed, z80_stop_emulating,<br>
+    z80_skip_idle, z80_get_context_size.</code></li>
+  <li>In order to <code>z80_map_?????</code> a bit of memory, it <strong>must</strong> 
+    be declared as in the<br>
+    memory map with the <code>z80_map_?????</code> functions first! (<em>not</em> 
+    <code>z80_add_?????</code>)!<br>
+    Got that? Good.</li>
+  <li>You can speed it up a bit. Edit RAZE.ASM, remove %define's and re-compile. 
+  </li>
+</ul>
+<h2>Thanks </h2>
+<ul>
+  <li><em><strong>Ishmair</strong></em>, for MAZE, a great Z80 emulator.</li>
+  <li><em><strong>Charles MacDonald</strong></em><em> (cgfm2)</em>, for testing 
+    this thing out a lot! (<a
+        href="http://www.emuviews.com/cgfm2/">http://www.emuviews.com/cgfm2/</a>)</li>
+  <li><em><strong>Sean Young</strong></em>, for his brilliant Z80 docs (<a href="http://www.msxnet.org/">http://www.msxnet.org/</a>)</li>
+  <li><em><strong>Frank D. Cringle</strong></em>, for ZEX. 'nuff said.</li>
+  <li><em><strong>Allard van der Bas</strong></em>, for the Spectrum emulator 
+    in MAZE (<a
+        href="mailto:avdbas@wi.leidenuniv.nl">avdbas@wi.leidenuniv.nl</a>)</li>
+  <li><em><strong>Neil Bradley</strong></em>, with a good alternative to RAZE 
+    (MZ80) (<a
+        href="ftp://ftp.synthcom.com/pub/emulators/cpu/makez80.zip">ftp://ftp.synthcom.com/pub/emulators/cpu/makez80.zip</a>) 
+  </li>
+</ul>
+<p>I hope you can find this program useful.<br>
+  All comments, and bug reports are especially appreciated.</p>
+<hr>
+<div align="right">
+  <table bgcolor="#CCFFFF" cellpadding="10">
+    <tr>
+      <td> 
+        <div align="right"><em><strong>Richard Mitton</strong></em><br>
+          <a href="mailto:richard.mitton@bigfoot.com">richard.mitton@bigfoot.com</a></div>
+      </td>
+    </tr>
+  </table>
+  
+</div>
+<hr>
+</body>
+</html>
