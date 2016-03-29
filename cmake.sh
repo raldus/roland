@@ -2,8 +2,9 @@
 
 mkdir -p bin
 mkdir -p build
-rm -R build/*
+
 rm -R bin/*
+rm -R build/*
 
 cmake -H. -Bbuild -G"Kate - Unix Makefiles"
 

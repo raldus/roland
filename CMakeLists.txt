@@ -19,9 +19,9 @@ else()
 endif()
 
 
-set(CURSES_NEED_NCURSES TRUE)
-find_package(Curses REQUIRED)
-include_directories(${CURSES_INCLUDE_DIR})
+
+find_package(SDL REQUIRED)
+include_directories(${SDL_INCLUDE_DIR})
 
 
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
@@ -29,6 +29,6 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
 
-add_executable(ncgit ${PROJECT_SOURCE_DIR}/src/ncgit.cpp)
+add_executable(roland ${PROJECT_SOURCE_DIR}/src/roland.cpp)
 
-TARGET_LINK_LIBRARIES(ncgit ${CURSES_LIBRARIES})
+TARGET_LINK_LIBRARIES(roland ${SDL_LIBRARIES})
