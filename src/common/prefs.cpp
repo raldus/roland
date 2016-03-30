@@ -31,6 +31,8 @@
 
 #ifdef _WIN32
 	#include <io.h>
+#else
+    #include <unistd.h>
 #endif
 
 #ifndef NAME_MAX
@@ -92,7 +94,7 @@ Prefs::Prefs(bool autowrite, bool writealways)
 	#endif
 
 	mNothing="";
-	
+
 	read();
 }
 
@@ -104,7 +106,7 @@ Prefs::~Prefs()
 bool Prefs::read()
 {
 	DOUT("\nReading Preferences...\n");
-	
+
 	ifstream in(mFilename.c_str());
 	if (!in) return false;
 
@@ -124,20 +126,20 @@ bool Prefs::read()
 		}
 	}
 	in.close();
-	
-	for(int i=0; i<PREFCOUNT; i++) 
+
+	for(int i=0; i<PREFCOUNT; i++)
 	{
 		if (mStr[i].empty()) mStr[i]=text[i][paDefault];
 		DOUT(text[i][paKey] << ": " << mStr[i] << "\n");
 	}
-	
+
 	return true;
 }
 
 bool Prefs::write()
 {
 	DOUT("\nWriting Preferences...\n");
-	
+
 	ofstream out(mFilename.c_str());
 	if (!out) return false;
 	for(int i=0; i<PREFCOUNT; i++)
@@ -247,7 +249,7 @@ bool Prefs::getBool(const string & key) const
 			if (mStr[i].empty()) return false;
 			if ( (mStr[i] == "yes")
 				|| (mStr[i] == "true")
-				|| (mStr[i] == "on") 
+				|| (mStr[i] == "on")
 				|| (mStr[i] == "1")) return true;
 			else return false;
 		}

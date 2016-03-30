@@ -45,7 +45,7 @@ int MemMan::init(Z80* z80, GateArray* gatearray)
 {
 	mGateArray=gatearray;
 	mZ80=z80;
-	init();
+    return init();
 }
 
 int MemMan::init(int ramsize, const string & cpcrom, const string & amsdos)

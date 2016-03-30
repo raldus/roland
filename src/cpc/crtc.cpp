@@ -20,13 +20,13 @@
 #include "crtc.h"
 
 
-#include <memory>
+#include <cstring>
 
 
 void Crtc::init(Vdu* vdu, Ppi* ppi)
-{	
-	memset(this, 0, sizeof(*this));
-	
+{
+	std::memset(this, 0, sizeof(*this));
+
 	if (vdu) mVdu=vdu;
 	if (ppi) mPpi=ppi;
 	if (!mPpi || !mVdu) return;

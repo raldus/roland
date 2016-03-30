@@ -19,9 +19,9 @@
  ***************************************************************************/
 
 
-//#ifdef HAVE_CONFIG_H
+#ifdef HAVE_CONFIG_H
 	#include <config.h>
-//#endif
+#endif
 
 #ifdef USE_MMX
 	#include "mmx_memcpy.h"
@@ -181,7 +181,7 @@ void mainloop()
 	static uint frametime = (int)((double) 20.0 / (double)((cpc.speed() * 25) / 100.0));
 	static uint cyclesElapsed = 0;
 	static int  ticksadjust   = 0;
-	bool frameskip=false;
+	//bool frameskip=false;
 
 	// audioResume();
 

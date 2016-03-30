@@ -20,7 +20,7 @@
 #ifndef CPCMU_TYPES_H
 #define CPCMU_TYPES_H
 
-#include <stdint.h>
+#include <cstdint>
 //enum Bits {Bit0=1, Bit1=2, Bit2=4, Bit3=8, Bit4=16, Bit5=32, Bit6=64, Bit7=128};
 
 
@@ -122,7 +122,7 @@
 
 
 //@todo Should this be here ??
-static UBYTE bit_values[8] =
+static const UBYTE bit_values[8] =
 {
 	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
 };

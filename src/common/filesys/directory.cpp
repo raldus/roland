@@ -21,6 +21,7 @@
 
 #include <sys/types.h>
 #include <dirent.h>
+#include <cstddef>
 
 #include <algorithm>
 #include <iostream>

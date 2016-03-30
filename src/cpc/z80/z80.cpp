@@ -613,7 +613,7 @@ int Z80::execute(int cc)
 		 case adc_byte:    ADC(read_mem(_PC++)); break;
 		 case adc_c:       ADC(_C); break;
 		 case adc_d:       ADC(_D); break;
-		 case adc_e:       ADC(_E); break;
+		 case adc_e:       ADC(z80.DE.b.l); break;
 		 case adc_h:       ADC(_H); break;
 		 case adc_l:       ADC(_L); break;
 		 case adc_mhl:     ADC(read_mem(_HL)); break;
@@ -622,7 +622,7 @@ int Z80::execute(int cc)
 		 case add_byte:    ADD(read_mem(_PC++)); break;
 		 case add_c:       ADD(_C); break;
 		 case add_d:       ADD(_D); break;
-		 case add_e:       ADD(_E); break;
+		 case add_e:       ADD(z80.DE.b.l); break;
 		 case add_h:       ADD(_H); break;
 		 case add_hl_bc:   ADD16(HL, BC); break;
 		 case add_hl_de:   ADD16(HL, DE); break;
@@ -635,7 +635,7 @@ int Z80::execute(int cc)
 		 case and_byte:    AND(read_mem(_PC++)); break;
 		 case and_c:       AND(_C); break;
 		 case and_d:       AND(_D); break;
-		 case and_e:       AND(_E); break;
+		 case and_e:       AND(z80.DE.b.l); break;
 		 case and_h:       AND(_H); break;
 		 case and_l:       AND(_L); break;
 		 case and_mhl:     AND(read_mem(_HL)); break;
@@ -655,7 +655,7 @@ int Z80::execute(int cc)
 		 case cp_byte:     CP(read_mem(_PC++)); break;
 		 case cp_c:        CP(_C); break;
 		 case cp_d:        CP(_D); break;
-		 case cp_e:        CP(_E); break;
+		 case cp_e:        CP(z80.DE.b.l); break;
 		 case cp_h:        CP(_H); break;
 		 case cp_l:        CP(_L); break;
 		 case cp_mhl:      CP(read_mem(_HL)); break;
@@ -666,7 +666,7 @@ int Z80::execute(int cc)
 		 case dec_c:       DEC(_C); break;
 		 case dec_d:       DEC(_D); break;
 		 case dec_de:      _DE--; iWSAdjust++; break;
-		 case dec_e:       DEC(_E); break;
+		 case dec_e:       DEC(z80.DE.b.l); break;
 		 case dec_h:       DEC(_H); break;
 		 case dec_hl:      _HL--; iWSAdjust++; break;
 		 case dec_l:       DEC(_L); break;
@@ -687,7 +687,7 @@ int Z80::execute(int cc)
 		 case inc_c:       INC(_C); break;
 		 case inc_d:       INC(_D); break;
 		 case inc_de:      _DE++; iWSAdjust++; break;
-		 case inc_e:       INC(_E); break;
+		 case inc_e:       INC(z80.DE.b.l); break;
 		 case inc_h:       INC(_H); break;
 		 case inc_hl:      _HL++; iWSAdjust++; break;
 		 case inc_l:       INC(_L); break;
@@ -712,7 +712,7 @@ int Z80::execute(int cc)
 		 case ld_a_byte:   _A = read_mem(_PC++); break;
 		 case ld_a_c:      _A = _C; break;
 		 case ld_a_d:      _A = _D; break;
-		 case ld_a_e:      _A = _E; break;
+		 case ld_a_e:      _A = z80.DE.b.l; break;
 		 case ld_a_h:      _A = _H; break;
 		 case ld_a_l:      _A = _L; break;
 		 case ld_a_mbc:    _A = read_mem(_BC); break;
@@ -725,7 +725,7 @@ int Z80::execute(int cc)
 		 case ld_b_byte:   _B = read_mem(_PC++); break;
 		 case ld_b_c:      _B = _C; break;
 		 case ld_b_d:      _B = _D; break;
-		 case ld_b_e:      _B = _E; break;
+		 case ld_b_e:      _B = z80.DE.b.l; break;
 		 case ld_b_h:      _B = _H; break;
 		 case ld_b_l:      _B = _L; break;
 		 case ld_b_mhl:    _B = read_mem(_HL); break;
@@ -734,7 +734,7 @@ int Z80::execute(int cc)
 		 case ld_c_byte:   _C = read_mem(_PC++); break;
 		 case ld_c_c:      break;
 		 case ld_c_d:      _C = _D; break;
-		 case ld_c_e:      _C = _E; break;
+		 case ld_c_e:      _C = z80.DE.b.l; break;
 		 case ld_c_h:      _C = _H; break;
 		 case ld_c_l:      _C = _L; break;
 		 case ld_c_mhl:    _C = read_mem(_HL); break;
@@ -744,19 +744,19 @@ int Z80::execute(int cc)
 		 case ld_d_byte:   _D = read_mem(_PC++); break;
 		 case ld_d_c:      _D = _C; break;
 		 case ld_d_d:      break;
-		 case ld_d_e:      _D = _E; break;
+		 case ld_d_e:      _D = z80.DE.b.l; break;
 		 case ld_d_h:      _D = _H; break;
 		 case ld_d_l:      _D = _L; break;
 		 case ld_d_mhl:    _D = read_mem(_HL); break;
-		 case ld_e_a:      _E = _A; break;
-		 case ld_e_b:      _E = _B; break;
-		 case ld_e_byte:   _E = read_mem(_PC++); break;
-		 case ld_e_c:      _E = _C; break;
-		 case ld_e_d:      _E = _D; break;
+		 case ld_e_a:      z80.DE.b.l = _A; break;
+		 case ld_e_b:      z80.DE.b.l = _B; break;
+		 case ld_e_byte:   z80.DE.b.l = read_mem(_PC++); break;
+		 case ld_e_c:      z80.DE.b.l = _C; break;
+		 case ld_e_d:      z80.DE.b.l = _D; break;
 		 case ld_e_e:      break;
-		 case ld_e_h:      _E = _H; break;
-		 case ld_e_l:      _E = _L; break;
-		 case ld_e_mhl:    _E = read_mem(_HL); break;
+		 case ld_e_h:      z80.DE.b.l = _H; break;
+		 case ld_e_l:      z80.DE.b.l = _L; break;
+		 case ld_e_mhl:    z80.DE.b.l = read_mem(_HL); break;
 		 case ld_hl_mword: LD16_MEM(HL); break;
 		 case ld_hl_word:  z80.HL.b.l = read_mem(_PC++); z80.HL.b.h = read_mem(_PC++); break;
 		 case ld_h_a:      _H = _A; break;
@@ -764,7 +764,7 @@ int Z80::execute(int cc)
 		 case ld_h_byte:   _H = read_mem(_PC++); break;
 		 case ld_h_c:      _H = _C; break;
 		 case ld_h_d:      _H = _D; break;
-		 case ld_h_e:      _H = _E; break;
+		 case ld_h_e:      _H = z80.DE.b.l; break;
 		 case ld_h_h:      break;
 		 case ld_h_l:      _H = _L; break;
 		 case ld_h_mhl:    _H = read_mem(_HL); break;
@@ -773,7 +773,7 @@ int Z80::execute(int cc)
 		 case ld_l_byte:   _L = read_mem(_PC++); break;
 		 case ld_l_c:      _L = _C; break;
 		 case ld_l_d:      _L = _D; break;
-		 case ld_l_e:      _L = _E; break;
+		 case ld_l_e:      _L = z80.DE.b.l; break;
 		 case ld_l_h:      _L = _H; break;
 		 case ld_l_l:      break;
 		 case ld_l_mhl:    _L = read_mem(_HL); break;
@@ -784,7 +784,7 @@ int Z80::execute(int cc)
 		 case ld_mhl_byte: { UBYTE b = read_mem(_PC++); write_mem(_HL, b); } break;
 		 case ld_mhl_c:    write_mem(_HL, _C); break;
 		 case ld_mhl_d:    write_mem(_HL, _D); break;
-		 case ld_mhl_e:    write_mem(_HL, _E); break;
+		 case ld_mhl_e:    write_mem(_HL, z80.DE.b.l); break;
 		 case ld_mhl_h:    write_mem(_HL, _H); break;
 		 case ld_mhl_l:    write_mem(_HL, _L); break;
 		 case ld_mword_a:  { REGPAIR addr; addr.b.l = read_mem(_PC++); addr.b.h = read_mem(_PC++); write_mem(addr.w.l, _A); } break;
@@ -798,7 +798,7 @@ int Z80::execute(int cc)
 		 case or_byte:     OR(read_mem(_PC++)); break;
 		 case or_c:        OR(_C); break;
 		 case or_d:        OR(_D); break;
-		 case or_e:        OR(_E); break;
+		 case or_e:        OR(z80.DE.b.l); break;
 		 case or_h:        OR(_H); break;
 		 case or_l:        OR(_L); break;
 		 case or_mhl:      OR(read_mem(_HL)); break;
@@ -841,7 +841,7 @@ int Z80::execute(int cc)
 		 case sbc_byte:    SBC(read_mem(_PC++)); break;
 		 case sbc_c:       SBC(_C); break;
 		 case sbc_d:       SBC(_D); break;
-		 case sbc_e:       SBC(_E); break;
+		 case sbc_e:       SBC(z80.DE.b.l); break;
 		 case sbc_h:       SBC(_H); break;
 		 case sbc_l:       SBC(_L); break;
 		 case sbc_mhl:     SBC(read_mem(_HL)); break;
@@ -851,7 +851,7 @@ int Z80::execute(int cc)
 		 case sub_byte:    SUB(read_mem(_PC++)); break;
 		 case sub_c:       SUB(_C); break;
 		 case sub_d:       SUB(_D); break;
-		 case sub_e:       SUB(_E); break;
+		 case sub_e:       SUB(z80.DE.b.l); break;
 		 case sub_h:       SUB(_H); break;
 		 case sub_l:       SUB(_L); break;
 		 case sub_mhl:     SUB(read_mem(_HL)); break;
@@ -860,7 +860,7 @@ int Z80::execute(int cc)
 		 case xor_byte:    XOR(read_mem(_PC++)); break;
 		 case xor_c:       XOR(_C); break;
 		 case xor_d:       XOR(_D); break;
-		 case xor_e:       XOR(_E); break;
+		 case xor_e:       XOR(z80.DE.b.l); break;
 		 case xor_h:       XOR(_H); break;
 		 case xor_l:       XOR(_L); break;
 		 case xor_mhl:     XOR(read_mem(_HL)); break;
@@ -926,7 +926,7 @@ void Z80::z80_pfx_cb()
 	  case bit0_b:      BIT(0, _B); break;
 	  case bit0_c:      BIT(0, _C); break;
 	  case bit0_d:      BIT(0, _D); break;
-	  case bit0_e:      BIT(0, _E); break;
+	  case bit0_e:      BIT(0, z80.DE.b.l); break;
 	  case bit0_h:      BIT(0, _H); break;
 	  case bit0_l:      BIT(0, _L); break;
 	  case bit0_mhl:    BIT(0, read_mem(_HL)); break;
@@ -934,7 +934,7 @@ void Z80::z80_pfx_cb()
 	  case bit1_b:      BIT(1, _B); break;
 	  case bit1_c:      BIT(1, _C); break;
 	  case bit1_d:      BIT(1, _D); break;
-	  case bit1_e:      BIT(1, _E); break;
+	  case bit1_e:      BIT(1, z80.DE.b.l); break;
 	  case bit1_h:      BIT(1, _H); break;
 	  case bit1_l:      BIT(1, _L); break;
 	  case bit1_mhl:    BIT(1, read_mem(_HL)); break;
@@ -942,7 +942,7 @@ void Z80::z80_pfx_cb()
 	  case bit2_b:      BIT(2, _B); break;
 	  case bit2_c:      BIT(2, _C); break;
 	  case bit2_d:      BIT(2, _D); break;
-	  case bit2_e:      BIT(2, _E); break;
+	  case bit2_e:      BIT(2, z80.DE.b.l); break;
 	  case bit2_h:      BIT(2, _H); break;
 	  case bit2_l:      BIT(2, _L); break;
 	  case bit2_mhl:    BIT(2, read_mem(_HL)); break;
@@ -950,7 +950,7 @@ void Z80::z80_pfx_cb()
 	  case bit3_b:      BIT(3, _B); break;
 	  case bit3_c:      BIT(3, _C); break;
 	  case bit3_d:      BIT(3, _D); break;
-	  case bit3_e:      BIT(3, _E); break;
+	  case bit3_e:      BIT(3, z80.DE.b.l); break;
 	  case bit3_h:      BIT(3, _H); break;
 	  case bit3_l:      BIT(3, _L); break;
 	  case bit3_mhl:    BIT(3, read_mem(_HL)); break;
@@ -958,7 +958,7 @@ void Z80::z80_pfx_cb()
 	  case bit4_b:      BIT(4, _B); break;
 	  case bit4_c:      BIT(4, _C); break;
 	  case bit4_d:      BIT(4, _D); break;
-	  case bit4_e:      BIT(4, _E); break;
+	  case bit4_e:      BIT(4, z80.DE.b.l); break;
 	  case bit4_h:      BIT(4, _H); break;
 	  case bit4_l:      BIT(4, _L); break;
 	  case bit4_mhl:    BIT(4, read_mem(_HL)); break;
@@ -966,7 +966,7 @@ void Z80::z80_pfx_cb()
 	  case bit5_b:      BIT(5, _B); break;
 	  case bit5_c:      BIT(5, _C); break;
 	  case bit5_d:      BIT(5, _D); break;
-	  case bit5_e:      BIT(5, _E); break;
+	  case bit5_e:      BIT(5, z80.DE.b.l); break;
 	  case bit5_h:      BIT(5, _H); break;
 	  case bit5_l:      BIT(5, _L); break;
 	  case bit5_mhl:    BIT(5, read_mem(_HL)); break;
@@ -974,7 +974,7 @@ void Z80::z80_pfx_cb()
 	  case bit6_b:      BIT(6, _B); break;
 	  case bit6_c:      BIT(6, _C); break;
 	  case bit6_d:      BIT(6, _D); break;
-	  case bit6_e:      BIT(6, _E); break;
+	  case bit6_e:      BIT(6, z80.DE.b.l); break;
 	  case bit6_h:      BIT(6, _H); break;
 	  case bit6_l:      BIT(6, _L); break;
 	  case bit6_mhl:    BIT(6, read_mem(_HL)); break;
@@ -982,7 +982,7 @@ void Z80::z80_pfx_cb()
 	  case bit7_b:      BIT(7, _B); break;
 	  case bit7_c:      BIT(7, _C); break;
 	  case bit7_d:      BIT(7, _D); break;
-	  case bit7_e:      BIT(7, _E); break;
+	  case bit7_e:      BIT(7, z80.DE.b.l); break;
 	  case bit7_h:      BIT(7, _H); break;
 	  case bit7_l:      BIT(7, _L); break;
 	  case bit7_mhl:    BIT(7, read_mem(_HL)); break;
@@ -990,7 +990,7 @@ void Z80::z80_pfx_cb()
 	  case res0_b:      _B = RES(0, _B); break;
 	  case res0_c:      _C = RES(0, _C); break;
 	  case res0_d:      _D = RES(0, _D); break;
-	  case res0_e:      _E = RES(0, _E); break;
+	  case res0_e:      z80.DE.b.l = RES(0, z80.DE.b.l); break;
 	  case res0_h:      _H = RES(0, _H); break;
 	  case res0_l:      _L = RES(0, _L); break;
 	  case res0_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(0, b)); } break;
@@ -998,7 +998,7 @@ void Z80::z80_pfx_cb()
 	  case res1_b:      _B = RES(1, _B); break;
 	  case res1_c:      _C = RES(1, _C); break;
 	  case res1_d:      _D = RES(1, _D); break;
-	  case res1_e:      _E = RES(1, _E); break;
+	  case res1_e:      z80.DE.b.l = RES(1, z80.DE.b.l); break;
 	  case res1_h:      _H = RES(1, _H); break;
 	  case res1_l:      _L = RES(1, _L); break;
 	  case res1_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(1, b)); } break;
@@ -1006,7 +1006,7 @@ void Z80::z80_pfx_cb()
 	  case res2_b:      _B = RES(2, _B); break;
 	  case res2_c:      _C = RES(2, _C); break;
 	  case res2_d:      _D = RES(2, _D); break;
-	  case res2_e:      _E = RES(2, _E); break;
+	  case res2_e:      z80.DE.b.l = RES(2, z80.DE.b.l); break;
 	  case res2_h:      _H = RES(2, _H); break;
 	  case res2_l:      _L = RES(2, _L); break;
 	  case res2_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(2, b)); } break;
@@ -1014,7 +1014,7 @@ void Z80::z80_pfx_cb()
 	  case res3_b:      _B = RES(3, _B); break;
 	  case res3_c:      _C = RES(3, _C); break;
 	  case res3_d:      _D = RES(3, _D); break;
-	  case res3_e:      _E = RES(3, _E); break;
+	  case res3_e:      z80.DE.b.l = RES(3, z80.DE.b.l); break;
 	  case res3_h:      _H = RES(3, _H); break;
 	  case res3_l:      _L = RES(3, _L); break;
 	  case res3_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(3, b)); } break;
@@ -1022,7 +1022,7 @@ void Z80::z80_pfx_cb()
 	  case res4_b:      _B = RES(4, _B); break;
 	  case res4_c:      _C = RES(4, _C); break;
 	  case res4_d:      _D = RES(4, _D); break;
-	  case res4_e:      _E = RES(4, _E); break;
+	  case res4_e:      z80.DE.b.l = RES(4, z80.DE.b.l); break;
 	  case res4_h:      _H = RES(4, _H); break;
 	  case res4_l:      _L = RES(4, _L); break;
 	  case res4_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(4, b)); } break;
@@ -1030,7 +1030,7 @@ void Z80::z80_pfx_cb()
 	  case res5_b:      _B = RES(5, _B); break;
 	  case res5_c:      _C = RES(5, _C); break;
 	  case res5_d:      _D = RES(5, _D); break;
-	  case res5_e:      _E = RES(5, _E); break;
+	  case res5_e:      z80.DE.b.l = RES(5, z80.DE.b.l); break;
 	  case res5_h:      _H = RES(5, _H); break;
 	  case res5_l:      _L = RES(5, _L); break;
 	  case res5_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(5, b)); } break;
@@ -1038,7 +1038,7 @@ void Z80::z80_pfx_cb()
 	  case res6_b:      _B = RES(6, _B); break;
 	  case res6_c:      _C = RES(6, _C); break;
 	  case res6_d:      _D = RES(6, _D); break;
-	  case res6_e:      _E = RES(6, _E); break;
+	  case res6_e:      z80.DE.b.l = RES(6, z80.DE.b.l); break;
 	  case res6_h:      _H = RES(6, _H); break;
 	  case res6_l:      _L = RES(6, _L); break;
 	  case res6_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(6, b)); } break;
@@ -1046,7 +1046,7 @@ void Z80::z80_pfx_cb()
 	  case res7_b:      _B = RES(7, _B); break;
 	  case res7_c:      _C = RES(7, _C); break;
 	  case res7_d:      _D = RES(7, _D); break;
-	  case res7_e:      _E = RES(7, _E); break;
+	  case res7_e:      z80.DE.b.l = RES(7, z80.DE.b.l); break;
 	  case res7_h:      _H = RES(7, _H); break;
 	  case res7_l:      _L = RES(7, _L); break;
 	  case res7_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, RES(7, b)); } break;
@@ -1054,7 +1054,7 @@ void Z80::z80_pfx_cb()
 	  case rlc_b:       _B = RLC(_B); break;
 	  case rlc_c:       _C = RLC(_C); break;
 	  case rlc_d:       _D = RLC(_D); break;
-	  case rlc_e:       _E = RLC(_E); break;
+	  case rlc_e:       z80.DE.b.l = RLC(z80.DE.b.l); break;
 	  case rlc_h:       _H = RLC(_H); break;
 	  case rlc_l:       _L = RLC(_L); break;
 	  case rlc_mhl:     { UBYTE b = read_mem(_HL); write_mem(_HL, RLC(b)); } break;
@@ -1062,7 +1062,7 @@ void Z80::z80_pfx_cb()
 	  case rl_b:        _B = RL(_B); break;
 	  case rl_c:        _C = RL(_C); break;
 	  case rl_d:        _D = RL(_D); break;
-	  case rl_e:        _E = RL(_E); break;
+	  case rl_e:        z80.DE.b.l = RL(z80.DE.b.l); break;
 	  case rl_h:        _H = RL(_H); break;
 	  case rl_l:        _L = RL(_L); break;
 	  case rl_mhl:      { UBYTE b = read_mem(_HL); write_mem(_HL, RL(b)); } break;
@@ -1070,7 +1070,7 @@ void Z80::z80_pfx_cb()
 	  case rrc_b:       _B = RRC(_B); break;
 	  case rrc_c:       _C = RRC(_C); break;
 	  case rrc_d:       _D = RRC(_D); break;
-	  case rrc_e:       _E = RRC(_E); break;
+	  case rrc_e:       z80.DE.b.l = RRC(z80.DE.b.l); break;
 	  case rrc_h:       _H = RRC(_H); break;
 	  case rrc_l:       _L = RRC(_L); break;
 	  case rrc_mhl:     { UBYTE b = read_mem(_HL); write_mem(_HL, RRC(b)); } break;
@@ -1078,7 +1078,7 @@ void Z80::z80_pfx_cb()
 	  case rr_b:        _B = RR(_B); break;
 	  case rr_c:        _C = RR(_C); break;
 	  case rr_d:        _D = RR(_D); break;
-	  case rr_e:        _E = RR(_E); break;
+	  case rr_e:        z80.DE.b.l = RR(z80.DE.b.l); break;
 	  case rr_h:        _H = RR(_H); break;
 	  case rr_l:        _L = RR(_L); break;
 	  case rr_mhl:      { UBYTE b = read_mem(_HL); write_mem(_HL, RR(b)); } break;
@@ -1086,7 +1086,7 @@ void Z80::z80_pfx_cb()
 	  case set0_b:      _B = SET(0, _B); break;
 	  case set0_c:      _C = SET(0, _C); break;
 	  case set0_d:      _D = SET(0, _D); break;
-	  case set0_e:      _E = SET(0, _E); break;
+	  case set0_e:      z80.DE.b.l = SET(0, z80.DE.b.l); break;
 	  case set0_h:      _H = SET(0, _H); break;
 	  case set0_l:      _L = SET(0, _L); break;
 	  case set0_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(0, b)); } break;
@@ -1094,7 +1094,7 @@ void Z80::z80_pfx_cb()
 	  case set1_b:      _B = SET(1, _B); break;
 	  case set1_c:      _C = SET(1, _C); break;
 	  case set1_d:      _D = SET(1, _D); break;
-	  case set1_e:      _E = SET(1, _E); break;
+	  case set1_e:      z80.DE.b.l = SET(1, z80.DE.b.l); break;
 	  case set1_h:      _H = SET(1, _H); break;
 	  case set1_l:      _L = SET(1, _L); break;
 	  case set1_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(1, b)); } break;
@@ -1102,7 +1102,7 @@ void Z80::z80_pfx_cb()
 	  case set2_b:      _B = SET(2, _B); break;
 	  case set2_c:      _C = SET(2, _C); break;
 	  case set2_d:      _D = SET(2, _D); break;
-	  case set2_e:      _E = SET(2, _E); break;
+	  case set2_e:      z80.DE.b.l = SET(2, z80.DE.b.l); break;
 	  case set2_h:      _H = SET(2, _H); break;
 	  case set2_l:      _L = SET(2, _L); break;
 	  case set2_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(2, b)); } break;
@@ -1110,7 +1110,7 @@ void Z80::z80_pfx_cb()
 	  case set3_b:      _B = SET(3, _B); break;
 	  case set3_c:      _C = SET(3, _C); break;
 	  case set3_d:      _D = SET(3, _D); break;
-	  case set3_e:      _E = SET(3, _E); break;
+	  case set3_e:      z80.DE.b.l = SET(3, z80.DE.b.l); break;
 	  case set3_h:      _H = SET(3, _H); break;
 	  case set3_l:      _L = SET(3, _L); break;
 	  case set3_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(3, b)); } break;
@@ -1118,7 +1118,7 @@ void Z80::z80_pfx_cb()
 	  case set4_b:      _B = SET(4, _B); break;
 	  case set4_c:      _C = SET(4, _C); break;
 	  case set4_d:      _D = SET(4, _D); break;
-	  case set4_e:      _E = SET(4, _E); break;
+	  case set4_e:      z80.DE.b.l = SET(4, z80.DE.b.l); break;
 	  case set4_h:      _H = SET(4, _H); break;
 	  case set4_l:      _L = SET(4, _L); break;
 	  case set4_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(4, b)); } break;
@@ -1126,7 +1126,7 @@ void Z80::z80_pfx_cb()
 	  case set5_b:      _B = SET(5, _B); break;
 	  case set5_c:      _C = SET(5, _C); break;
 	  case set5_d:      _D = SET(5, _D); break;
-	  case set5_e:      _E = SET(5, _E); break;
+	  case set5_e:      z80.DE.b.l = SET(5, z80.DE.b.l); break;
 	  case set5_h:      _H = SET(5, _H); break;
 	  case set5_l:      _L = SET(5, _L); break;
 	  case set5_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(5, b)); } break;
@@ -1134,7 +1134,7 @@ void Z80::z80_pfx_cb()
 	  case set6_b:      _B = SET(6, _B); break;
 	  case set6_c:      _C = SET(6, _C); break;
 	  case set6_d:      _D = SET(6, _D); break;
-	  case set6_e:      _E = SET(6, _E); break;
+	  case set6_e:      z80.DE.b.l = SET(6, z80.DE.b.l); break;
 	  case set6_h:      _H = SET(6, _H); break;
 	  case set6_l:      _L = SET(6, _L); break;
 	  case set6_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(6, b)); } break;
@@ -1142,7 +1142,7 @@ void Z80::z80_pfx_cb()
 	  case set7_b:      _B = SET(7, _B); break;
 	  case set7_c:      _C = SET(7, _C); break;
 	  case set7_d:      _D = SET(7, _D); break;
-	  case set7_e:      _E = SET(7, _E); break;
+	  case set7_e:      z80.DE.b.l = SET(7, z80.DE.b.l); break;
 	  case set7_h:      _H = SET(7, _H); break;
 	  case set7_l:      _L = SET(7, _L); break;
 	  case set7_mhl:    { UBYTE b = read_mem(_HL); write_mem(_HL, SET(7, b)); } break;
@@ -1150,7 +1150,7 @@ void Z80::z80_pfx_cb()
 	  case sla_b:       _B = SLA(_B); break;
 	  case sla_c:       _C = SLA(_C); break;
 	  case sla_d:       _D = SLA(_D); break;
-	  case sla_e:       _E = SLA(_E); break;
+	  case sla_e:       z80.DE.b.l = SLA(z80.DE.b.l); break;
 	  case sla_h:       _H = SLA(_H); break;
 	  case sla_l:       _L = SLA(_L); break;
 	  case sla_mhl:     { UBYTE b = read_mem(_HL); write_mem(_HL, SLA(b)); } break;
@@ -1158,7 +1158,7 @@ void Z80::z80_pfx_cb()
 	  case sll_b:       _B = SLL(_B); break;
 	  case sll_c:       _C = SLL(_C); break;
 	  case sll_d:       _D = SLL(_D); break;
-	  case sll_e:       _E = SLL(_E); break;
+	  case sll_e:       z80.DE.b.l = SLL(z80.DE.b.l); break;
 	  case sll_h:       _H = SLL(_H); break;
 	  case sll_l:       _L = SLL(_L); break;
 	  case sll_mhl:     { UBYTE b = read_mem(_HL); write_mem(_HL, SLL(b)); } break;
@@ -1166,7 +1166,7 @@ void Z80::z80_pfx_cb()
 	  case sra_b:       _B = SRA(_B); break;
 	  case sra_c:       _C = SRA(_C); break;
 	  case sra_d:       _D = SRA(_D); break;
-	  case sra_e:       _E = SRA(_E); break;
+	  case sra_e:       z80.DE.b.l = SRA(z80.DE.b.l); break;
 	  case sra_h:       _H = SRA(_H); break;
 	  case sra_l:       _L = SRA(_L); break;
 	  case sra_mhl:     { UBYTE b = read_mem(_HL); write_mem(_HL, SRA(b)); } break;
@@ -1174,7 +1174,7 @@ void Z80::z80_pfx_cb()
 	  case srl_b:       _B = SRL(_B); break;
 	  case srl_c:       _C = SRL(_C); break;
 	  case srl_d:       _D = SRL(_D); break;
-	  case srl_e:       _E = SRL(_E); break;
+	  case srl_e:       z80.DE.b.l = SRL(z80.DE.b.l); break;
 	  case srl_h:       _H = SRL(_H); break;
 	  case srl_l:       _L = SRL(_L); break;
 	  case srl_mhl:     { UBYTE b = read_mem(_HL); write_mem(_HL, SRL(b)); } break;
@@ -1197,7 +1197,7 @@ void Z80::z80_pfx_dd()
 	  case adc_byte:    ADC(read_mem(_PC++)); break;
 	  case adc_c:       ADC(_C); break;
 	  case adc_d:       ADC(_D); break;
-	  case adc_e:       ADC(_E); break;
+	  case adc_e:       ADC(z80.DE.b.l); break;
 	  case adc_h:       ADC(_IXh); break;
 	  case adc_l:       ADC(_IXl); break;
 	  case adc_mhl:     { signed char o = read_mem(_PC++); ADC(read_mem(_IX+o)); } break;
@@ -1206,7 +1206,7 @@ void Z80::z80_pfx_dd()
 	  case add_byte:    ADD(read_mem(_PC++)); break;
 	  case add_c:       ADD(_C); break;
 	  case add_d:       ADD(_D); break;
-	  case add_e:       ADD(_E); break;
+	  case add_e:       ADD(z80.DE.b.l); break;
 	  case add_h:       ADD(_IXh); break;
 	  case add_hl_bc:   ADD16(IX, BC); break;
 	  case add_hl_de:   ADD16(IX, DE); break;
@@ -1219,7 +1219,7 @@ void Z80::z80_pfx_dd()
 	  case and_byte:    AND(read_mem(_PC++)); break;
 	  case and_c:       AND(_C); break;
 	  case and_d:       AND(_D); break;
-	  case and_e:       AND(_E); break;
+	  case and_e:       AND(z80.DE.b.l); break;
 	  case and_h:       AND(_IXh); break;
 	  case and_l:       AND(_IXl); break;
 	  case and_mhl:     { signed char o = read_mem(_PC++); AND(read_mem(_IX+o)); } break;
@@ -1239,7 +1239,7 @@ void Z80::z80_pfx_dd()
 	  case cp_byte:     CP(read_mem(_PC++)); break;
 	  case cp_c:        CP(_C); break;
 	  case cp_d:        CP(_D); break;
-	  case cp_e:        CP(_E); break;
+	  case cp_e:        CP(z80.DE.b.l); break;
 	  case cp_h:        CP(_IXh); break;
 	  case cp_l:        CP(_IXl); break;
 	  case cp_mhl:      { signed char o = read_mem(_PC++); CP(read_mem(_IX+o)); } break;
@@ -1250,7 +1250,7 @@ void Z80::z80_pfx_dd()
 	  case dec_c:       DEC(_C); break;
 	  case dec_d:       DEC(_D); break;
 	  case dec_de:      _DE--; iWSAdjust++; break;
-	  case dec_e:       DEC(_E); break;
+	  case dec_e:       DEC(z80.DE.b.l); break;
 	  case dec_h:       DEC(_IXh); break;
 	  case dec_hl:      _IX--; iWSAdjust++; break;
 	  case dec_l:       DEC(_IXl); break;
@@ -1271,7 +1271,7 @@ void Z80::z80_pfx_dd()
 	  case inc_c:       INC(_C); break;
 	  case inc_d:       INC(_D); break;
 	  case inc_de:      _DE++; iWSAdjust++; break;
-	  case inc_e:       INC(_E); break;
+	  case inc_e:       INC(z80.DE.b.l); break;
 	  case inc_h:       INC(_IXh); break;
 	  case inc_hl:      _IX++; iWSAdjust++; break;
 	  case inc_l:       INC(_IXl); break;
@@ -1296,7 +1296,7 @@ void Z80::z80_pfx_dd()
 	  case ld_a_byte:   _A = read_mem(_PC++); break;
 	  case ld_a_c:      _A = _C; break;
 	  case ld_a_d:      _A = _D; break;
-	  case ld_a_e:      _A = _E; break;
+	  case ld_a_e:      _A = z80.DE.b.l; break;
 	  case ld_a_h:      _A = _IXh; break;
 	  case ld_a_l:      _A = _IXl; break;
 	  case ld_a_mbc:    _A = read_mem(_BC); break;
@@ -1309,7 +1309,7 @@ void Z80::z80_pfx_dd()
 	  case ld_b_byte:   _B = read_mem(_PC++); break;
 	  case ld_b_c:      _B = _C; break;
 	  case ld_b_d:      _B = _D; break;
-	  case ld_b_e:      _B = _E; break;
+	  case ld_b_e:      _B = z80.DE.b.l; break;
 	  case ld_b_h:      _B = _IXh; break;
 	  case ld_b_l:      _B = _IXl; break;
 	  case ld_b_mhl:    { signed char o = read_mem(_PC++); _B = read_mem(_IX+o); } break;
@@ -1318,7 +1318,7 @@ void Z80::z80_pfx_dd()
 	  case ld_c_byte:   _C = read_mem(_PC++); break;
 	  case ld_c_c:      break;
 	  case ld_c_d:      _C = _D; break;
-	  case ld_c_e:      _C = _E; break;
+	  case ld_c_e:      _C = z80.DE.b.l; break;
 	  case ld_c_h:      _C = _IXh; break;
 	  case ld_c_l:      _C = _IXl; break;
 	  case ld_c_mhl:    { signed char o = read_mem(_PC++); _C = read_mem(_IX+o); } break;
@@ -1328,19 +1328,19 @@ void Z80::z80_pfx_dd()
 	  case ld_d_byte:   _D = read_mem(_PC++); break;
 	  case ld_d_c:      _D = _C; break;
 	  case ld_d_d:      break;
-	  case ld_d_e:      _D = _E; break;
+	  case ld_d_e:      _D = z80.DE.b.l; break;
 	  case ld_d_h:      _D = _IXh; break;
 	  case ld_d_l:      _D = _IXl; break;
 	  case ld_d_mhl:    { signed char o = read_mem(_PC++); _D = read_mem(_IX+o); } break;
-	  case ld_e_a:      _E = _A; break;
-	  case ld_e_b:      _E = _B; break;
-	  case ld_e_byte:   _E = read_mem(_PC++); break;
-	  case ld_e_c:      _E = _C; break;
-	  case ld_e_d:      _E = _D; break;
+	  case ld_e_a:      z80.DE.b.l = _A; break;
+	  case ld_e_b:      z80.DE.b.l = _B; break;
+	  case ld_e_byte:   z80.DE.b.l = read_mem(_PC++); break;
+	  case ld_e_c:      z80.DE.b.l = _C; break;
+	  case ld_e_d:      z80.DE.b.l = _D; break;
 	  case ld_e_e:      break;
-	  case ld_e_h:      _E = _IXh; break;
-	  case ld_e_l:      _E = _IXl; break;
-	  case ld_e_mhl:    { signed char o = read_mem(_PC++); _E = read_mem(_IX+o); } break;
+	  case ld_e_h:      z80.DE.b.l = _IXh; break;
+	  case ld_e_l:      z80.DE.b.l = _IXl; break;
+	  case ld_e_mhl:    { signed char o = read_mem(_PC++); z80.DE.b.l = read_mem(_IX+o); } break;
 	  case ld_hl_mword: LD16_MEM(IX); break;
 	  case ld_hl_word:  z80.IX.b.l = read_mem(_PC++); z80.IX.b.h = read_mem(_PC++); break;
 	  case ld_h_a:      _IXh = _A; break;
@@ -1348,7 +1348,7 @@ void Z80::z80_pfx_dd()
 	  case ld_h_byte:   _IXh = read_mem(_PC++); break;
 	  case ld_h_c:      _IXh = _C; break;
 	  case ld_h_d:      _IXh = _D; break;
-	  case ld_h_e:      _IXh = _E; break;
+	  case ld_h_e:      _IXh = z80.DE.b.l; break;
 	  case ld_h_h:      break;
 	  case ld_h_l:      _IXh = _IXl; break;
 	  case ld_h_mhl:    { signed char o = read_mem(_PC++); _H = read_mem(_IX+o); } break;
@@ -1357,7 +1357,7 @@ void Z80::z80_pfx_dd()
 	  case ld_l_byte:   _IXl = read_mem(_PC++); break;
 	  case ld_l_c:      _IXl = _C; break;
 	  case ld_l_d:      _IXl = _D; break;
-	  case ld_l_e:      _IXl = _E; break;
+	  case ld_l_e:      _IXl = z80.DE.b.l; break;
 	  case ld_l_h:      _IXl = _IXh; break;
 	  case ld_l_l:      break;
 	  case ld_l_mhl:    { signed char o = read_mem(_PC++); _L = read_mem(_IX+o); } break;
@@ -1368,7 +1368,7 @@ void Z80::z80_pfx_dd()
 	  case ld_mhl_byte: { signed char o = read_mem(_PC++); UBYTE b = read_mem(_PC++); write_mem(_IX+o, b); } break;
 	  case ld_mhl_c:    { signed char o = read_mem(_PC++); write_mem(_IX+o, _C); } break;
 	  case ld_mhl_d:    { signed char o = read_mem(_PC++); write_mem(_IX+o, _D); } break;
-	  case ld_mhl_e:    { signed char o = read_mem(_PC++); write_mem(_IX+o, _E); } break;
+	  case ld_mhl_e:    { signed char o = read_mem(_PC++); write_mem(_IX+o, z80.DE.b.l); } break;
 	  case ld_mhl_h:    { signed char o = read_mem(_PC++); write_mem(_IX+o, _H); } break;
 	  case ld_mhl_l:    { signed char o = read_mem(_PC++); write_mem(_IX+o, _L); } break;
 	  case ld_mword_a:  { REGPAIR addr; addr.b.l = read_mem(_PC++); addr.b.h = read_mem(_PC++); write_mem(addr.w.l, _A); } break;
@@ -1382,7 +1382,7 @@ void Z80::z80_pfx_dd()
 	  case or_byte:     OR(read_mem(_PC++)); break;
 	  case or_c:        OR(_C); break;
 	  case or_d:        OR(_D); break;
-	  case or_e:        OR(_E); break;
+	  case or_e:        OR(z80.DE.b.l); break;
 	  case or_h:        OR(_IXh); break;
 	  case or_l:        OR(_IXl); break;
 	  case or_mhl:      { signed char o = read_mem(_PC++); OR(read_mem(_IX+o)); } break;
@@ -1425,7 +1425,7 @@ void Z80::z80_pfx_dd()
 	  case sbc_byte:    SBC(read_mem(_PC++)); break;
 	  case sbc_c:       SBC(_C); break;
 	  case sbc_d:       SBC(_D); break;
-	  case sbc_e:       SBC(_E); break;
+	  case sbc_e:       SBC(z80.DE.b.l); break;
 	  case sbc_h:       SBC(_IXh); break;
 	  case sbc_l:       SBC(_IXl); break;
 	  case sbc_mhl:     { signed char o = read_mem(_PC++); SBC(read_mem(_IX+o)); } break;
@@ -1435,7 +1435,7 @@ void Z80::z80_pfx_dd()
 	  case sub_byte:    SUB(read_mem(_PC++)); break;
 	  case sub_c:       SUB(_C); break;
 	  case sub_d:       SUB(_D); break;
-	  case sub_e:       SUB(_E); break;
+	  case sub_e:       SUB(z80.DE.b.l); break;
 	  case sub_h:       SUB(_IXh); break;
 	  case sub_l:       SUB(_IXl); break;
 	  case sub_mhl:     { signed char o = read_mem(_PC++); SUB(read_mem(_IX+o)); } break;
@@ -1444,7 +1444,7 @@ void Z80::z80_pfx_dd()
 	  case xor_byte:    XOR(read_mem(_PC++)); break;
 	  case xor_c:       XOR(_C); break;
 	  case xor_d:       XOR(_D); break;
-	  case xor_e:       XOR(_E); break;
+	  case xor_e:       XOR(z80.DE.b.l); break;
 	  case xor_h:       XOR(_IXh); break;
 	  case xor_l:       XOR(_IXl); break;
 	  case xor_mhl:     { signed char o = read_mem(_PC++); XOR(read_mem(_IX+o)); } break;
@@ -1529,7 +1529,7 @@ void Z80::z80_pfx_ddcb()
 	  case res0_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(0, _B)); break;
 	  case res0_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(0, _C)); break;
 	  case res0_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(0, _D)); break;
-	  case res0_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(0, _E)); break;
+	  case res0_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(0, z80.DE.b.l)); break;
 	  case res0_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(0, _H)); break;
 	  case res0_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(0, _L)); break;
 	  case res0_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(0, b)); } break;
@@ -1537,7 +1537,7 @@ void Z80::z80_pfx_ddcb()
 	  case res1_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(1, _B)); break;
 	  case res1_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(1, _C)); break;
 	  case res1_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(1, _D)); break;
-	  case res1_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(1, _E)); break;
+	  case res1_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(1, z80.DE.b.l)); break;
 	  case res1_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(1, _H)); break;
 	  case res1_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(1, _L)); break;
 	  case res1_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(1, b)); } break;
@@ -1545,7 +1545,7 @@ void Z80::z80_pfx_ddcb()
 	  case res2_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(2, _B)); break;
 	  case res2_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(2, _C)); break;
 	  case res2_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(2, _D)); break;
-	  case res2_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(2, _E)); break;
+	  case res2_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(2, z80.DE.b.l)); break;
 	  case res2_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(2, _H)); break;
 	  case res2_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(2, _L)); break;
 	  case res2_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(2, b)); } break;
@@ -1553,7 +1553,7 @@ void Z80::z80_pfx_ddcb()
 	  case res3_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(3, _B)); break;
 	  case res3_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(3, _C)); break;
 	  case res3_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(3, _D)); break;
-	  case res3_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(3, _E)); break;
+	  case res3_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(3, z80.DE.b.l)); break;
 	  case res3_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(3, _H)); break;
 	  case res3_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(3, _L)); break;
 	  case res3_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(3, b)); } break;
@@ -1561,7 +1561,7 @@ void Z80::z80_pfx_ddcb()
 	  case res4_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(4, _B)); break;
 	  case res4_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(4, _C)); break;
 	  case res4_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(4, _D)); break;
-	  case res4_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(4, _E)); break;
+	  case res4_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(4, z80.DE.b.l)); break;
 	  case res4_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(4, _H)); break;
 	  case res4_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(4, _L)); break;
 	  case res4_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(4, b)); } break;
@@ -1569,7 +1569,7 @@ void Z80::z80_pfx_ddcb()
 	  case res5_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(5, _B)); break;
 	  case res5_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(5, _C)); break;
 	  case res5_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(5, _D)); break;
-	  case res5_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(5, _E)); break;
+	  case res5_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(5, z80.DE.b.l)); break;
 	  case res5_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(5, _H)); break;
 	  case res5_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(5, _L)); break;
 	  case res5_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(5, b)); } break;
@@ -1577,7 +1577,7 @@ void Z80::z80_pfx_ddcb()
 	  case res6_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(6, _B)); break;
 	  case res6_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(6, _C)); break;
 	  case res6_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(6, _D)); break;
-	  case res6_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(6, _E)); break;
+	  case res6_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(6, z80.DE.b.l)); break;
 	  case res6_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(6, _H)); break;
 	  case res6_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(6, _L)); break;
 	  case res6_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(6, b)); } break;
@@ -1585,7 +1585,7 @@ void Z80::z80_pfx_ddcb()
 	  case res7_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = RES(7, _B)); break;
 	  case res7_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = RES(7, _C)); break;
 	  case res7_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = RES(7, _D)); break;
-	  case res7_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = RES(7, _E)); break;
+	  case res7_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = RES(7, z80.DE.b.l)); break;
 	  case res7_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = RES(7, _H)); break;
 	  case res7_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = RES(7, _L)); break;
 	  case res7_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RES(7, b)); } break;
@@ -1593,7 +1593,7 @@ void Z80::z80_pfx_ddcb()
 	  case rlc_b:       _B = read_mem(_IX+o); _B = RLC(_B); write_mem(_IX+o, _B); break;
 	  case rlc_c:       _C = read_mem(_IX+o); _C = RLC(_C); write_mem(_IX+o, _C); break;
 	  case rlc_d:       _D = read_mem(_IX+o); _D = RLC(_D); write_mem(_IX+o, _D); break;
-	  case rlc_e:       _E = read_mem(_IX+o); _E = RLC(_E); write_mem(_IX+o, _E); break;
+	  case rlc_e:       z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = RLC(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case rlc_h:       _H = read_mem(_IX+o); _H = RLC(_H); write_mem(_IX+o, _H); break;
 	  case rlc_l:       _L = read_mem(_IX+o); _L = RLC(_L); write_mem(_IX+o, _L); break;
 	  case rlc_mhl:     { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RLC(b)); } break;
@@ -1601,7 +1601,7 @@ void Z80::z80_pfx_ddcb()
 	  case rl_b:        _B = read_mem(_IX+o); _B = RL(_B); write_mem(_IX+o, _B); break;
 	  case rl_c:        _C = read_mem(_IX+o); _C = RL(_C); write_mem(_IX+o, _C); break;
 	  case rl_d:        _D = read_mem(_IX+o); _D = RL(_D); write_mem(_IX+o, _D); break;
-	  case rl_e:        _E = read_mem(_IX+o); _E = RL(_E); write_mem(_IX+o, _E); break;
+	  case rl_e:        z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = RL(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case rl_h:        _H = read_mem(_IX+o); _H = RL(_H); write_mem(_IX+o, _H); break;
 	  case rl_l:        _L = read_mem(_IX+o); _L = RL(_L); write_mem(_IX+o, _L); break;
 	  case rl_mhl:      { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RL(b)); } break;
@@ -1609,7 +1609,7 @@ void Z80::z80_pfx_ddcb()
 	  case rrc_b:       _B = read_mem(_IX+o); _B = RRC(_B); write_mem(_IX+o, _B); break;
 	  case rrc_c:       _C = read_mem(_IX+o); _C = RRC(_C); write_mem(_IX+o, _C); break;
 	  case rrc_d:       _D = read_mem(_IX+o); _D = RRC(_D); write_mem(_IX+o, _D); break;
-	  case rrc_e:       _E = read_mem(_IX+o); _E = RRC(_E); write_mem(_IX+o, _E); break;
+	  case rrc_e:       z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = RRC(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case rrc_h:       _H = read_mem(_IX+o); _H = RRC(_H); write_mem(_IX+o, _H); break;
 	  case rrc_l:       _L = read_mem(_IX+o); _L = RRC(_L); write_mem(_IX+o, _L); break;
 	  case rrc_mhl:     { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RRC(b)); } break;
@@ -1617,7 +1617,7 @@ void Z80::z80_pfx_ddcb()
 	  case rr_b:        _B = read_mem(_IX+o); _B = RR(_B); write_mem(_IX+o, _B); break;
 	  case rr_c:        _C = read_mem(_IX+o); _C = RR(_C); write_mem(_IX+o, _C); break;
 	  case rr_d:        _D = read_mem(_IX+o); _D = RR(_D); write_mem(_IX+o, _D); break;
-	  case rr_e:        _E = read_mem(_IX+o); _E = RR(_E); write_mem(_IX+o, _E); break;
+	  case rr_e:        z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = RR(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case rr_h:        _H = read_mem(_IX+o); _H = RR(_H); write_mem(_IX+o, _H); break;
 	  case rr_l:        _L = read_mem(_IX+o); _L = RR(_L); write_mem(_IX+o, _L); break;
 	  case rr_mhl:      { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, RR(b)); } break;
@@ -1625,7 +1625,7 @@ void Z80::z80_pfx_ddcb()
 	  case set0_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(0, _B)); break;
 	  case set0_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(0, _C)); break;
 	  case set0_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(0, _D)); break;
-	  case set0_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(0, _E)); break;
+	  case set0_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(0, z80.DE.b.l)); break;
 	  case set0_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(0, _H)); break;
 	  case set0_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(0, _L)); break;
 	  case set0_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(0, b)); } break;
@@ -1633,7 +1633,7 @@ void Z80::z80_pfx_ddcb()
 	  case set1_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(1, _B)); break;
 	  case set1_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(1, _C)); break;
 	  case set1_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(1, _D)); break;
-	  case set1_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(1, _E)); break;
+	  case set1_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(1, z80.DE.b.l)); break;
 	  case set1_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(1, _H)); break;
 	  case set1_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(1, _L)); break;
 	  case set1_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(1, b)); } break;
@@ -1641,7 +1641,7 @@ void Z80::z80_pfx_ddcb()
 	  case set2_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(2, _B)); break;
 	  case set2_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(2, _C)); break;
 	  case set2_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(2, _D)); break;
-	  case set2_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(2, _E)); break;
+	  case set2_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(2, z80.DE.b.l)); break;
 	  case set2_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(2, _H)); break;
 	  case set2_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(2, _L)); break;
 	  case set2_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(2, b)); } break;
@@ -1649,7 +1649,7 @@ void Z80::z80_pfx_ddcb()
 	  case set3_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(3, _B)); break;
 	  case set3_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(3, _C)); break;
 	  case set3_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(3, _D)); break;
-	  case set3_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(3, _E)); break;
+	  case set3_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(3, z80.DE.b.l)); break;
 	  case set3_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(3, _H)); break;
 	  case set3_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(3, _L)); break;
 	  case set3_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(3, b)); } break;
@@ -1657,7 +1657,7 @@ void Z80::z80_pfx_ddcb()
 	  case set4_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(4, _B)); break;
 	  case set4_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(4, _C)); break;
 	  case set4_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(4, _D)); break;
-	  case set4_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(4, _E)); break;
+	  case set4_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(4, z80.DE.b.l)); break;
 	  case set4_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(4, _H)); break;
 	  case set4_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(4, _L)); break;
 	  case set4_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(4, b)); } break;
@@ -1665,7 +1665,7 @@ void Z80::z80_pfx_ddcb()
 	  case set5_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(5, _B)); break;
 	  case set5_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(5, _C)); break;
 	  case set5_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(5, _D)); break;
-	  case set5_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(5, _E)); break;
+	  case set5_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(5, z80.DE.b.l)); break;
 	  case set5_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(5, _H)); break;
 	  case set5_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(5, _L)); break;
 	  case set5_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(5, b)); } break;
@@ -1673,7 +1673,7 @@ void Z80::z80_pfx_ddcb()
 	  case set6_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(6, _B)); break;
 	  case set6_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(6, _C)); break;
 	  case set6_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(6, _D)); break;
-	  case set6_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(6, _E)); break;
+	  case set6_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(6, z80.DE.b.l)); break;
 	  case set6_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(6, _H)); break;
 	  case set6_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(6, _L)); break;
 	  case set6_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(6, b)); } break;
@@ -1681,7 +1681,7 @@ void Z80::z80_pfx_ddcb()
 	  case set7_b:      _B = read_mem(_IX+o); write_mem(_IX+o, _B = SET(7, _B)); break;
 	  case set7_c:      _C = read_mem(_IX+o); write_mem(_IX+o, _C = SET(7, _C)); break;
 	  case set7_d:      _D = read_mem(_IX+o); write_mem(_IX+o, _D = SET(7, _D)); break;
-	  case set7_e:      _E = read_mem(_IX+o); write_mem(_IX+o, _E = SET(7, _E)); break;
+	  case set7_e:      z80.DE.b.l = read_mem(_IX+o); write_mem(_IX+o, z80.DE.b.l = SET(7, z80.DE.b.l)); break;
 	  case set7_h:      _H = read_mem(_IX+o); write_mem(_IX+o, _H = SET(7, _H)); break;
 	  case set7_l:      _L = read_mem(_IX+o); write_mem(_IX+o, _L = SET(7, _L)); break;
 	  case set7_mhl:    { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SET(7, b)); } break;
@@ -1689,7 +1689,7 @@ void Z80::z80_pfx_ddcb()
 	  case sla_b:       _B = read_mem(_IX+o); _B = SLA(_B); write_mem(_IX+o, _B); break;
 	  case sla_c:       _C = read_mem(_IX+o); _C = SLA(_C); write_mem(_IX+o, _C); break;
 	  case sla_d:       _D = read_mem(_IX+o); _D = SLA(_D); write_mem(_IX+o, _D); break;
-	  case sla_e:       _E = read_mem(_IX+o); _E = SLA(_E); write_mem(_IX+o, _E); break;
+	  case sla_e:       z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = SLA(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case sla_h:       _H = read_mem(_IX+o); _H = SLA(_H); write_mem(_IX+o, _H); break;
 	  case sla_l:       _L = read_mem(_IX+o); _L = SLA(_L); write_mem(_IX+o, _L); break;
 	  case sla_mhl:     { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SLA(b)); } break;
@@ -1697,7 +1697,7 @@ void Z80::z80_pfx_ddcb()
 	  case sll_b:       _B = read_mem(_IX+o); _B = SLL(_B); write_mem(_IX+o, _B); break;
 	  case sll_c:       _C = read_mem(_IX+o); _C = SLL(_C); write_mem(_IX+o, _C); break;
 	  case sll_d:       _D = read_mem(_IX+o); _D = SLL(_D); write_mem(_IX+o, _D); break;
-	  case sll_e:       _E = read_mem(_IX+o); _E = SLL(_E); write_mem(_IX+o, _E); break;
+	  case sll_e:       z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = SLL(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case sll_h:       _H = read_mem(_IX+o); _H = SLL(_H); write_mem(_IX+o, _H); break;
 	  case sll_l:       _L = read_mem(_IX+o); _L = SLL(_L); write_mem(_IX+o, _L); break;
 	  case sll_mhl:     { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SLL(b)); } break;
@@ -1705,7 +1705,7 @@ void Z80::z80_pfx_ddcb()
 	  case sra_b:       _B = read_mem(_IX+o); _B = SRA(_B); write_mem(_IX+o, _B); break;
 	  case sra_c:       _C = read_mem(_IX+o); _C = SRA(_C); write_mem(_IX+o, _C); break;
 	  case sra_d:       _D = read_mem(_IX+o); _D = SRA(_D); write_mem(_IX+o, _D); break;
-	  case sra_e:       _E = read_mem(_IX+o); _E = SRA(_E); write_mem(_IX+o, _E); break;
+	  case sra_e:       z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = SRA(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case sra_h:       _H = read_mem(_IX+o); _H = SRA(_H); write_mem(_IX+o, _H); break;
 	  case sra_l:       _L = read_mem(_IX+o); _L = SRA(_L); write_mem(_IX+o, _L); break;
 	  case sra_mhl:     { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SRA(b)); } break;
@@ -1713,7 +1713,7 @@ void Z80::z80_pfx_ddcb()
 	  case srl_b:       _B = read_mem(_IX+o); _B = SRL(_B); write_mem(_IX+o, _B); break;
 	  case srl_c:       _C = read_mem(_IX+o); _C = SRL(_C); write_mem(_IX+o, _C); break;
 	  case srl_d:       _D = read_mem(_IX+o); _D = SRL(_D); write_mem(_IX+o, _D); break;
-	  case srl_e:       _E = read_mem(_IX+o); _E = SRL(_E); write_mem(_IX+o, _E); break;
+	  case srl_e:       z80.DE.b.l = read_mem(_IX+o); z80.DE.b.l = SRL(z80.DE.b.l); write_mem(_IX+o, z80.DE.b.l); break;
 	  case srl_h:       _H = read_mem(_IX+o); _H = SRL(_H); write_mem(_IX+o, _H); break;
 	  case srl_l:       _L = read_mem(_IX+o); _L = SRL(_L); write_mem(_IX+o, _L); break;
 	  case srl_mhl:     { UBYTE b = read_mem(_IX+o); write_mem(_IX+o, SRL(b)); } break;
@@ -1932,7 +1932,7 @@ void Z80::z80_pfx_ed()
 	  case in_b_c:      _B = z80_IN_handler(z80.BC); _F = (_F & Cflag) | SZP[_B]; break;
 	  case in_c_c:      _C = z80_IN_handler(z80.BC); _F = (_F & Cflag) | SZP[_C]; break;
 	  case in_d_c:      _D = z80_IN_handler(z80.BC); _F = (_F & Cflag) | SZP[_D]; break;
-	  case in_e_c:      _E = z80_IN_handler(z80.BC); _F = (_F & Cflag) | SZP[_E]; break;
+	  case in_e_c:      z80.DE.b.l = z80_IN_handler(z80.BC); _F = (_F & Cflag) | SZP[z80.DE.b.l]; break;
 	  case in_h_c:      _H = z80_IN_handler(z80.BC); _F = (_F & Cflag) | SZP[_H]; break;
 	  case in_l_c:      _L = z80_IN_handler(z80.BC); _F = (_F & Cflag) | SZP[_L]; break;
 	  case ldd:         LDD; iWSAdjust++; break;
@@ -1968,7 +1968,7 @@ void Z80::z80_pfx_ed()
 	  case out_c_b:     z80_OUT_handler(z80.BC, _B); break;
 	  case out_c_c:     z80_OUT_handler(z80.BC, _C); break;
 	  case out_c_d:     z80_OUT_handler(z80.BC, _D); break;
-	  case out_c_e:     z80_OUT_handler(z80.BC, _E); break;
+	  case out_c_e:     z80_OUT_handler(z80.BC, z80.DE.b.l); break;
 	  case out_c_h:     z80_OUT_handler(z80.BC, _H); break;
 	  case out_c_l:     z80_OUT_handler(z80.BC, _L); break;
 	  case reti:        _IFF1 = _IFF2; RET; break;
@@ -2002,7 +2002,7 @@ void Z80::z80_pfx_fd()
 	  case adc_byte:    ADC(read_mem(_PC++)); break;
 	  case adc_c:       ADC(_C); break;
 	  case adc_d:       ADC(_D); break;
-	  case adc_e:       ADC(_E); break;
+	  case adc_e:       ADC(z80.DE.b.l); break;
 	  case adc_h:       ADC(_IYh); break;
 	  case adc_l:       ADC(_IYl); break;
 	  case adc_mhl:     { signed char o = read_mem(_PC++); ADC(read_mem(_IY+o)); } break;
@@ -2011,7 +2011,7 @@ void Z80::z80_pfx_fd()
 	  case add_byte:    ADD(read_mem(_PC++)); break;
 	  case add_c:       ADD(_C); break;
 	  case add_d:       ADD(_D); break;
-	  case add_e:       ADD(_E); break;
+	  case add_e:       ADD(z80.DE.b.l); break;
 	  case add_h:       ADD(_IYh); break;
 	  case add_hl_bc:   ADD16(IY, BC); break;
 	  case add_hl_de:   ADD16(IY, DE); break;
@@ -2024,7 +2024,7 @@ void Z80::z80_pfx_fd()
 	  case and_byte:    AND(read_mem(_PC++)); break;
 	  case and_c:       AND(_C); break;
 	  case and_d:       AND(_D); break;
-	  case and_e:       AND(_E); break;
+	  case and_e:       AND(z80.DE.b.l); break;
 	  case and_h:       AND(_IYh); break;
 	  case and_l:       AND(_IYl); break;
 	  case and_mhl:     { signed char o = read_mem(_PC++); AND(read_mem(_IY+o)); } break;
@@ -2044,7 +2044,7 @@ void Z80::z80_pfx_fd()
 	  case cp_byte:     CP(read_mem(_PC++)); break;
 	  case cp_c:        CP(_C); break;
 	  case cp_d:        CP(_D); break;
-	  case cp_e:        CP(_E); break;
+	  case cp_e:        CP(z80.DE.b.l); break;
 	  case cp_h:        CP(_IYh); break;
 	  case cp_l:        CP(_IYl); break;
 	  case cp_mhl:      { signed char o = read_mem(_PC++); CP(read_mem(_IY+o)); } break;
@@ -2055,7 +2055,7 @@ void Z80::z80_pfx_fd()
 	  case dec_c:       DEC(_C); break;
 	  case dec_d:       DEC(_D); break;
 	  case dec_de:      _DE--; iWSAdjust++; break;
-	  case dec_e:       DEC(_E); break;
+	  case dec_e:       DEC(z80.DE.b.l); break;
 	  case dec_h:       DEC(_IYh); break;
 	  case dec_hl:      _IY--; iWSAdjust++; break;
 	  case dec_l:       DEC(_IYl); break;
@@ -2076,7 +2076,7 @@ void Z80::z80_pfx_fd()
 	  case inc_c:       INC(_C); break;
 	  case inc_d:       INC(_D); break;
 	  case inc_de:      _DE++; iWSAdjust++; break;
-	  case inc_e:       INC(_E); break;
+	  case inc_e:       INC(z80.DE.b.l); break;
 	  case inc_h:       INC(_IYh); break;
 	  case inc_hl:      _IY++; iWSAdjust++; break;
 	  case inc_l:       INC(_IYl); break;
@@ -2101,7 +2101,7 @@ void Z80::z80_pfx_fd()
 	  case ld_a_byte:   _A = read_mem(_PC++); break;
 	  case ld_a_c:      _A = _C; break;
 	  case ld_a_d:      _A = _D; break;
-	  case ld_a_e:      _A = _E; break;
+	  case ld_a_e:      _A = z80.DE.b.l; break;
 	  case ld_a_h:      _A = _IYh; break;
 	  case ld_a_l:      _A = _IYl; break;
 	  case ld_a_mbc:    _A = read_mem(_BC); break;
@@ -2114,7 +2114,7 @@ void Z80::z80_pfx_fd()
 	  case ld_b_byte:   _B = read_mem(_PC++); break;
 	  case ld_b_c:      _B = _C; break;
 	  case ld_b_d:      _B = _D; break;
-	  case ld_b_e:      _B = _E; break;
+	  case ld_b_e:      _B = z80.DE.b.l; break;
 	  case ld_b_h:      _B = _IYh; break;
 	  case ld_b_l:      _B = _IYl; break;
 	  case ld_b_mhl:    { signed char o = read_mem(_PC++); _B = read_mem(_IY+o); } break;
@@ -2123,7 +2123,7 @@ void Z80::z80_pfx_fd()
 	  case ld_c_byte:   _C = read_mem(_PC++); break;
 	  case ld_c_c:      break;
 	  case ld_c_d:      _C = _D; break;
-	  case ld_c_e:      _C = _E; break;
+	  case ld_c_e:      _C = z80.DE.b.l; break;
 	  case ld_c_h:      _C = _IYh; break;
 	  case ld_c_l:      _C = _IYl; break;
 	  case ld_c_mhl:    { signed char o = read_mem(_PC++); _C = read_mem(_IY+o); } break;
@@ -2133,19 +2133,19 @@ void Z80::z80_pfx_fd()
 	  case ld_d_byte:   _D = read_mem(_PC++); break;
 	  case ld_d_c:      _D = _C; break;
 	  case ld_d_d:      break;
-	  case ld_d_e:      _D = _E; break;
+	  case ld_d_e:      _D = z80.DE.b.l; break;
 	  case ld_d_h:      _D = _IYh; break;
 	  case ld_d_l:      _D = _IYl; break;
 	  case ld_d_mhl:    { signed char o = read_mem(_PC++); _D = read_mem(_IY+o); } break;
-	  case ld_e_a:      _E = _A; break;
-	  case ld_e_b:      _E = _B; break;
-	  case ld_e_byte:   _E = read_mem(_PC++); break;
-	  case ld_e_c:      _E = _C; break;
-	  case ld_e_d:      _E = _D; break;
+	  case ld_e_a:      z80.DE.b.l = _A; break;
+	  case ld_e_b:      z80.DE.b.l = _B; break;
+	  case ld_e_byte:   z80.DE.b.l = read_mem(_PC++); break;
+	  case ld_e_c:      z80.DE.b.l = _C; break;
+	  case ld_e_d:      z80.DE.b.l = _D; break;
 	  case ld_e_e:      break;
-	  case ld_e_h:      _E = _IYh; break;
-	  case ld_e_l:      _E = _IYl; break;
-	  case ld_e_mhl:    { signed char o = read_mem(_PC++); _E = read_mem(_IY+o); } break;
+	  case ld_e_h:      z80.DE.b.l = _IYh; break;
+	  case ld_e_l:      z80.DE.b.l = _IYl; break;
+	  case ld_e_mhl:    { signed char o = read_mem(_PC++); z80.DE.b.l = read_mem(_IY+o); } break;
 	  case ld_hl_mword: LD16_MEM(IY); break;
 	  case ld_hl_word:  z80.IY.b.l = read_mem(_PC++); z80.IY.b.h = read_mem(_PC++); break;
 	  case ld_h_a:      _IYh = _A; break;
@@ -2153,7 +2153,7 @@ void Z80::z80_pfx_fd()
 	  case ld_h_byte:   _IYh = read_mem(_PC++); break;
 	  case ld_h_c:      _IYh = _C; break;
 	  case ld_h_d:      _IYh = _D; break;
-	  case ld_h_e:      _IYh = _E; break;
+	  case ld_h_e:      _IYh = z80.DE.b.l; break;
 	  case ld_h_h:      break;
 	  case ld_h_l:      _IYh = _IYl; break;
 	  case ld_h_mhl:    { signed char o = read_mem(_PC++); _H = read_mem(_IY+o); } break;
@@ -2162,7 +2162,7 @@ void Z80::z80_pfx_fd()
 	  case ld_l_byte:   _IYl = read_mem(_PC++); break;
 	  case ld_l_c:      _IYl = _C; break;
 	  case ld_l_d:      _IYl = _D; break;
-	  case ld_l_e:      _IYl = _E; break;
+	  case ld_l_e:      _IYl = z80.DE.b.l; break;
 	  case ld_l_h:      _IYl = _IYh; break;
 	  case ld_l_l:      break;
 	  case ld_l_mhl:    { signed char o = read_mem(_PC++); _L = read_mem(_IY+o); } break;
@@ -2173,7 +2173,7 @@ void Z80::z80_pfx_fd()
 	  case ld_mhl_byte: { signed char o = read_mem(_PC++); UBYTE b = read_mem(_PC++); write_mem(_IY+o, b); } break;
 	  case ld_mhl_c:    { signed char o = read_mem(_PC++); write_mem(_IY+o, _C); } break;
 	  case ld_mhl_d:    { signed char o = read_mem(_PC++); write_mem(_IY+o, _D); } break;
-	  case ld_mhl_e:    { signed char o = read_mem(_PC++); write_mem(_IY+o, _E); } break;
+	  case ld_mhl_e:    { signed char o = read_mem(_PC++); write_mem(_IY+o, z80.DE.b.l); } break;
 	  case ld_mhl_h:    { signed char o = read_mem(_PC++); write_mem(_IY+o, _H); } break;
 	  case ld_mhl_l:    { signed char o = read_mem(_PC++); write_mem(_IY+o, _L); } break;
 	  case ld_mword_a:  { REGPAIR addr; addr.b.l = read_mem(_PC++); addr.b.h = read_mem(_PC++); write_mem(addr.w.l, _A); } break;
@@ -2187,7 +2187,7 @@ void Z80::z80_pfx_fd()
 	  case or_byte:     OR(read_mem(_PC++)); break;
 	  case or_c:        OR(_C); break;
 	  case or_d:        OR(_D); break;
-	  case or_e:        OR(_E); break;
+	  case or_e:        OR(z80.DE.b.l); break;
 	  case or_h:        OR(_IYh); break;
 	  case or_l:        OR(_IYl); break;
 	  case or_mhl:      { signed char o = read_mem(_PC++); OR(read_mem(_IY+o)); } break;
@@ -2230,7 +2230,7 @@ void Z80::z80_pfx_fd()
 	  case sbc_byte:    SBC(read_mem(_PC++)); break;
 	  case sbc_c:       SBC(_C); break;
 	  case sbc_d:       SBC(_D); break;
-	  case sbc_e:       SBC(_E); break;
+	  case sbc_e:       SBC(z80.DE.b.l); break;
 	  case sbc_h:       SBC(_IYh); break;
 	  case sbc_l:       SBC(_IYl); break;
 	  case sbc_mhl:     { signed char o = read_mem(_PC++); SBC(read_mem(_IY+o)); } break;
@@ -2240,7 +2240,7 @@ void Z80::z80_pfx_fd()
 	  case sub_byte:    SUB(read_mem(_PC++)); break;
 	  case sub_c:       SUB(_C); break;
 	  case sub_d:       SUB(_D); break;
-	  case sub_e:       SUB(_E); break;
+	  case sub_e:       SUB(z80.DE.b.l); break;
 	  case sub_h:       SUB(_IYh); break;
 	  case sub_l:       SUB(_IYl); break;
 	  case sub_mhl:     { signed char o = read_mem(_PC++); SUB(read_mem(_IY+o)); } break;
@@ -2249,7 +2249,7 @@ void Z80::z80_pfx_fd()
 	  case xor_byte:    XOR(read_mem(_PC++)); break;
 	  case xor_c:       XOR(_C); break;
 	  case xor_d:       XOR(_D); break;
-	  case xor_e:       XOR(_E); break;
+	  case xor_e:       XOR(z80.DE.b.l); break;
 	  case xor_h:       XOR(_IYh); break;
 	  case xor_l:       XOR(_IYl); break;
 	  case xor_mhl:     { signed char o = read_mem(_PC++); XOR(read_mem(_IY+o)); } break;
@@ -2334,7 +2334,7 @@ void Z80::z80_pfx_fdcb()
 	  case res0_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(0, _B)); break;
 	  case res0_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(0, _C)); break;
 	  case res0_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(0, _D)); break;
-	  case res0_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(0, _E)); break;
+	  case res0_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(0, z80.DE.b.l)); break;
 	  case res0_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(0, _H)); break;
 	  case res0_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(0, _L)); break;
 	  case res0_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(0, b)); } break;
@@ -2342,7 +2342,7 @@ void Z80::z80_pfx_fdcb()
 	  case res1_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(1, _B)); break;
 	  case res1_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(1, _C)); break;
 	  case res1_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(1, _D)); break;
-	  case res1_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(1, _E)); break;
+	  case res1_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(1, z80.DE.b.l)); break;
 	  case res1_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(1, _H)); break;
 	  case res1_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(1, _L)); break;
 	  case res1_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(1, b)); } break;
@@ -2350,7 +2350,7 @@ void Z80::z80_pfx_fdcb()
 	  case res2_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(2, _B)); break;
 	  case res2_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(2, _C)); break;
 	  case res2_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(2, _D)); break;
-	  case res2_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(2, _E)); break;
+	  case res2_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(2, z80.DE.b.l)); break;
 	  case res2_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(2, _H)); break;
 	  case res2_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(2, _L)); break;
 	  case res2_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(2, b)); } break;
@@ -2358,7 +2358,7 @@ void Z80::z80_pfx_fdcb()
 	  case res3_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(3, _B)); break;
 	  case res3_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(3, _C)); break;
 	  case res3_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(3, _D)); break;
-	  case res3_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(3, _E)); break;
+	  case res3_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(3, z80.DE.b.l)); break;
 	  case res3_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(3, _H)); break;
 	  case res3_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(3, _L)); break;
 	  case res3_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(3, b)); } break;
@@ -2366,7 +2366,7 @@ void Z80::z80_pfx_fdcb()
 	  case res4_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(4, _B)); break;
 	  case res4_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(4, _C)); break;
 	  case res4_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(4, _D)); break;
-	  case res4_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(4, _E)); break;
+	  case res4_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(4, z80.DE.b.l)); break;
 	  case res4_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(4, _H)); break;
 	  case res4_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(4, _L)); break;
 	  case res4_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(4, b)); } break;
@@ -2374,7 +2374,7 @@ void Z80::z80_pfx_fdcb()
 	  case res5_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(5, _B)); break;
 	  case res5_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(5, _C)); break;
 	  case res5_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(5, _D)); break;
-	  case res5_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(5, _E)); break;
+	  case res5_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(5, z80.DE.b.l)); break;
 	  case res5_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(5, _H)); break;
 	  case res5_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(5, _L)); break;
 	  case res5_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(5, b)); } break;
@@ -2382,7 +2382,7 @@ void Z80::z80_pfx_fdcb()
 	  case res6_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(6, _B)); break;
 	  case res6_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(6, _C)); break;
 	  case res6_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(6, _D)); break;
-	  case res6_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(6, _E)); break;
+	  case res6_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(6, z80.DE.b.l)); break;
 	  case res6_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(6, _H)); break;
 	  case res6_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(6, _L)); break;
 	  case res6_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(6, b)); } break;
@@ -2390,7 +2390,7 @@ void Z80::z80_pfx_fdcb()
 	  case res7_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = RES(7, _B)); break;
 	  case res7_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = RES(7, _C)); break;
 	  case res7_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = RES(7, _D)); break;
-	  case res7_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = RES(7, _E)); break;
+	  case res7_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = RES(7, z80.DE.b.l)); break;
 	  case res7_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = RES(7, _H)); break;
 	  case res7_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = RES(7, _L)); break;
 	  case res7_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RES(7, b)); } break;
@@ -2398,7 +2398,7 @@ void Z80::z80_pfx_fdcb()
 	  case rlc_b:       _B = read_mem(_IY+o); _B = RLC(_B); write_mem(_IY+o, _B); break;
 	  case rlc_c:       _C = read_mem(_IY+o); _C = RLC(_C); write_mem(_IY+o, _C); break;
 	  case rlc_d:       _D = read_mem(_IY+o); _D = RLC(_D); write_mem(_IY+o, _D); break;
-	  case rlc_e:       _E = read_mem(_IY+o); _E = RLC(_E); write_mem(_IY+o, _E); break;
+	  case rlc_e:       z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = RLC(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case rlc_h:       _H = read_mem(_IY+o); _H = RLC(_H); write_mem(_IY+o, _H); break;
 	  case rlc_l:       _L = read_mem(_IY+o); _L = RLC(_L); write_mem(_IY+o, _L); break;
 	  case rlc_mhl:     { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RLC(b)); } break;
@@ -2406,7 +2406,7 @@ void Z80::z80_pfx_fdcb()
 	  case rl_b:        _B = read_mem(_IY+o); _B = RL(_B); write_mem(_IY+o, _B); break;
 	  case rl_c:        _C = read_mem(_IY+o); _C = RL(_C); write_mem(_IY+o, _C); break;
 	  case rl_d:        _D = read_mem(_IY+o); _D = RL(_D); write_mem(_IY+o, _D); break;
-	  case rl_e:        _E = read_mem(_IY+o); _E = RL(_E); write_mem(_IY+o, _E); break;
+	  case rl_e:        z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = RL(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case rl_h:        _H = read_mem(_IY+o); _H = RL(_H); write_mem(_IY+o, _H); break;
 	  case rl_l:        _L = read_mem(_IY+o); _L = RL(_L); write_mem(_IY+o, _L); break;
 	  case rl_mhl:      { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RL(b)); } break;
@@ -2414,7 +2414,7 @@ void Z80::z80_pfx_fdcb()
 	  case rrc_b:       _B = read_mem(_IY+o); _B = RRC(_B); write_mem(_IY+o, _B); break;
 	  case rrc_c:       _C = read_mem(_IY+o); _C = RRC(_C); write_mem(_IY+o, _C); break;
 	  case rrc_d:       _D = read_mem(_IY+o); _D = RRC(_D); write_mem(_IY+o, _D); break;
-	  case rrc_e:       _E = read_mem(_IY+o); _E = RRC(_E); write_mem(_IY+o, _E); break;
+	  case rrc_e:       z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = RRC(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case rrc_h:       _H = read_mem(_IY+o); _H = RRC(_H); write_mem(_IY+o, _H); break;
 	  case rrc_l:       _L = read_mem(_IY+o); _L = RRC(_L); write_mem(_IY+o, _L); break;
 	  case rrc_mhl:     { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RRC(b)); } break;
@@ -2422,7 +2422,7 @@ void Z80::z80_pfx_fdcb()
 	  case rr_b:        _B = read_mem(_IY+o); _B = RR(_B); write_mem(_IY+o, _B); break;
 	  case rr_c:        _C = read_mem(_IY+o); _C = RR(_C); write_mem(_IY+o, _C); break;
 	  case rr_d:        _D = read_mem(_IY+o); _D = RR(_D); write_mem(_IY+o, _D); break;
-	  case rr_e:        _E = read_mem(_IY+o); _E = RR(_E); write_mem(_IY+o, _E); break;
+	  case rr_e:        z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = RR(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case rr_h:        _H = read_mem(_IY+o); _H = RR(_H); write_mem(_IY+o, _H); break;
 	  case rr_l:        _L = read_mem(_IY+o); _L = RR(_L); write_mem(_IY+o, _L); break;
 	  case rr_mhl:      { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, RR(b)); } break;
@@ -2430,7 +2430,7 @@ void Z80::z80_pfx_fdcb()
 	  case set0_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(0, _B)); break;
 	  case set0_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(0, _C)); break;
 	  case set0_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(0, _D)); break;
-	  case set0_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(0, _E)); break;
+	  case set0_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(0, z80.DE.b.l)); break;
 	  case set0_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(0, _H)); break;
 	  case set0_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(0, _L)); break;
 	  case set0_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(0, b)); } break;
@@ -2438,7 +2438,7 @@ void Z80::z80_pfx_fdcb()
 	  case set1_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(1, _B)); break;
 	  case set1_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(1, _C)); break;
 	  case set1_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(1, _D)); break;
-	  case set1_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(1, _E)); break;
+	  case set1_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(1, z80.DE.b.l)); break;
 	  case set1_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(1, _H)); break;
 	  case set1_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(1, _L)); break;
 	  case set1_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(1, b)); } break;
@@ -2446,7 +2446,7 @@ void Z80::z80_pfx_fdcb()
 	  case set2_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(2, _B)); break;
 	  case set2_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(2, _C)); break;
 	  case set2_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(2, _D)); break;
-	  case set2_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(2, _E)); break;
+	  case set2_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(2, z80.DE.b.l)); break;
 	  case set2_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(2, _H)); break;
 	  case set2_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(2, _L)); break;
 	  case set2_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(2, b)); } break;
@@ -2454,7 +2454,7 @@ void Z80::z80_pfx_fdcb()
 	  case set3_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(3, _B)); break;
 	  case set3_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(3, _C)); break;
 	  case set3_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(3, _D)); break;
-	  case set3_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(3, _E)); break;
+	  case set3_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(3, z80.DE.b.l)); break;
 	  case set3_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(3, _H)); break;
 	  case set3_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(3, _L)); break;
 	  case set3_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(3, b)); } break;
@@ -2462,7 +2462,7 @@ void Z80::z80_pfx_fdcb()
 	  case set4_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(4, _B)); break;
 	  case set4_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(4, _C)); break;
 	  case set4_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(4, _D)); break;
-	  case set4_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(4, _E)); break;
+	  case set4_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(4, z80.DE.b.l)); break;
 	  case set4_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(4, _H)); break;
 	  case set4_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(4, _L)); break;
 	  case set4_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(4, b)); } break;
@@ -2470,7 +2470,7 @@ void Z80::z80_pfx_fdcb()
 	  case set5_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(5, _B)); break;
 	  case set5_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(5, _C)); break;
 	  case set5_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(5, _D)); break;
-	  case set5_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(5, _E)); break;
+	  case set5_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(5, z80.DE.b.l)); break;
 	  case set5_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(5, _H)); break;
 	  case set5_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(5, _L)); break;
 	  case set5_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(5, b)); } break;
@@ -2478,7 +2478,7 @@ void Z80::z80_pfx_fdcb()
 	  case set6_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(6, _B)); break;
 	  case set6_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(6, _C)); break;
 	  case set6_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(6, _D)); break;
-	  case set6_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(6, _E)); break;
+	  case set6_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(6, z80.DE.b.l)); break;
 	  case set6_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(6, _H)); break;
 	  case set6_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(6, _L)); break;
 	  case set6_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(6, b)); } break;
@@ -2486,7 +2486,7 @@ void Z80::z80_pfx_fdcb()
 	  case set7_b:      _B = read_mem(_IY+o); write_mem(_IY+o, _B = SET(7, _B)); break;
 	  case set7_c:      _C = read_mem(_IY+o); write_mem(_IY+o, _C = SET(7, _C)); break;
 	  case set7_d:      _D = read_mem(_IY+o); write_mem(_IY+o, _D = SET(7, _D)); break;
-	  case set7_e:      _E = read_mem(_IY+o); write_mem(_IY+o, _E = SET(7, _E)); break;
+	  case set7_e:      z80.DE.b.l = read_mem(_IY+o); write_mem(_IY+o, z80.DE.b.l = SET(7, z80.DE.b.l)); break;
 	  case set7_h:      _H = read_mem(_IY+o); write_mem(_IY+o, _H = SET(7, _H)); break;
 	  case set7_l:      _L = read_mem(_IY+o); write_mem(_IY+o, _L = SET(7, _L)); break;
 	  case set7_mhl:    { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SET(7, b)); } break;
@@ -2494,7 +2494,7 @@ void Z80::z80_pfx_fdcb()
 	  case sla_b:       _B = read_mem(_IY+o); _B = SLA(_B); write_mem(_IY+o, _B); break;
 	  case sla_c:       _C = read_mem(_IY+o); _C = SLA(_C); write_mem(_IY+o, _C); break;
 	  case sla_d:       _D = read_mem(_IY+o); _D = SLA(_D); write_mem(_IY+o, _D); break;
-	  case sla_e:       _E = read_mem(_IY+o); _E = SLA(_E); write_mem(_IY+o, _E); break;
+	  case sla_e:       z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = SLA(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case sla_h:       _H = read_mem(_IY+o); _H = SLA(_H); write_mem(_IY+o, _H); break;
 	  case sla_l:       _L = read_mem(_IY+o); _L = SLA(_L); write_mem(_IY+o, _L); break;
 	  case sla_mhl:     { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SLA(b)); } break;
@@ -2502,7 +2502,7 @@ void Z80::z80_pfx_fdcb()
 	  case sll_b:       _B = read_mem(_IY+o); _B = SLL(_B); write_mem(_IY+o, _B); break;
 	  case sll_c:       _C = read_mem(_IY+o); _C = SLL(_C); write_mem(_IY+o, _C); break;
 	  case sll_d:       _D = read_mem(_IY+o); _D = SLL(_D); write_mem(_IY+o, _D); break;
-	  case sll_e:       _E = read_mem(_IY+o); _E = SLL(_E); write_mem(_IY+o, _E); break;
+	  case sll_e:       z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = SLL(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case sll_h:       _H = read_mem(_IY+o); _H = SLL(_H); write_mem(_IY+o, _H); break;
 	  case sll_l:       _L = read_mem(_IY+o); _L = SLL(_L); write_mem(_IY+o, _L); break;
 	  case sll_mhl:     { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SLL(b)); } break;
@@ -2510,7 +2510,7 @@ void Z80::z80_pfx_fdcb()
 	  case sra_b:       _B = read_mem(_IY+o); _B = SRA(_B); write_mem(_IY+o, _B); break;
 	  case sra_c:       _C = read_mem(_IY+o); _C = SRA(_C); write_mem(_IY+o, _C); break;
 	  case sra_d:       _D = read_mem(_IY+o); _D = SRA(_D); write_mem(_IY+o, _D); break;
-	  case sra_e:       _E = read_mem(_IY+o); _E = SRA(_E); write_mem(_IY+o, _E); break;
+	  case sra_e:       z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = SRA(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case sra_h:       _H = read_mem(_IY+o); _H = SRA(_H); write_mem(_IY+o, _H); break;
 	  case sra_l:       _L = read_mem(_IY+o); _L = SRA(_L); write_mem(_IY+o, _L); break;
 	  case sra_mhl:     { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SRA(b)); } break;
@@ -2518,7 +2518,7 @@ void Z80::z80_pfx_fdcb()
 	  case srl_b:       _B = read_mem(_IY+o); _B = SRL(_B); write_mem(_IY+o, _B); break;
 	  case srl_c:       _C = read_mem(_IY+o); _C = SRL(_C); write_mem(_IY+o, _C); break;
 	  case srl_d:       _D = read_mem(_IY+o); _D = SRL(_D); write_mem(_IY+o, _D); break;
-	  case srl_e:       _E = read_mem(_IY+o); _E = SRL(_E); write_mem(_IY+o, _E); break;
+	  case srl_e:       z80.DE.b.l = read_mem(_IY+o); z80.DE.b.l = SRL(z80.DE.b.l); write_mem(_IY+o, z80.DE.b.l); break;
 	  case srl_h:       _H = read_mem(_IY+o); _H = SRL(_H); write_mem(_IY+o, _H); break;
 	  case srl_l:       _L = read_mem(_IY+o); _L = SRL(_L); write_mem(_IY+o, _L); break;
 	  case srl_mhl:     { UBYTE b = read_mem(_IY+o); write_mem(_IY+o, SRL(b)); } break;

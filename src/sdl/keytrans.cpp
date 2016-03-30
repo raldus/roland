@@ -301,6 +301,7 @@ UBYTE KeyTrans::get(SDL_Event & event)
 		}
 		else return mTable[event.key.keysym.sym];
 	}
+	return 0; // TODO: Here was no return. Check this
 }
 
 bool KeyTrans::hasSequence()

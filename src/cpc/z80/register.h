@@ -34,7 +34,7 @@
 #define _BC       z80.BC.w.l
 #define _BCdword  z80.BC.d
 #define _D        z80.DE.b.h
-#define _E        z80.DE.b.l
+// #define _E        z80.DE.b.l
 #define _DE       z80.DE.w.l
 #define _DEdword  z80.DE.d
 #define _H        z80.HL.b.h

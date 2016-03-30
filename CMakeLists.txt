@@ -27,10 +27,11 @@ find_package(SDL REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
 # roland
-set(PACKAGE_STRING 1 FORCE)
-set(PACKAGE_NAME 1 FORCE)
-set(DEBUG 1 FORCE)
+set(PACKAGE_STRING 1)
+set(PACKAGE_NAME 1)
+set(DEBUG 1)
 configure_file(${PROJECT_SOURCE_DIR}/config.h.in ${PROJECT_SOURCE_DIR}/src/config.h)
+add_definitions("-DHAVE_CONFIG_H")
 
 include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/src/common)

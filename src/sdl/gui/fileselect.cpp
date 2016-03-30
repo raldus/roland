@@ -151,13 +151,13 @@ void FileSelect::events()
 {
 	SDL_Event event;
 	long ksym;
-	SDLMod mod;
+	//SDLMod mod;
 
 	// Check key events
 	while(SDL_PollEvent(&event))
 	{
 		ksym = event.key.keysym.sym;
-		mod  = event.key.keysym.mod;
+		//mod  = event.key.keysym.mod;
 
 		switch(event.type)
 		{

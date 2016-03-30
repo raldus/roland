@@ -24,7 +24,7 @@
 #include "types.h"
 
 
-static UBYTE cpckey[256][4] =
+static const UBYTE cpckey[256][4] =
 {
 	{ 0x00, 0x00, 0x00, 0x00 }, //   ? - Row - Key - ?
 	{ 0x00, 0x00, 0x00, 0x00 },
