@@ -21,20 +21,20 @@
 
 Drive::Drive()
 {
-	init();
+    init();
 }
 
 void Drive::init()
 {
-	mTracks         =0;
-	mCurrentTrack   =0;
-	mSides          =0;
-	mCurrentSide    =0;
-	mCurrentSector  =0;
-	mAltered        =0;
-	mWriteProtected =0;
-	mRandomDEs      =0;
-	mFlipped        =0;
+    mTracks         =0;
+    mCurrentTrack   =0;
+    mSides          =0;
+    mCurrentSide    =0;
+    mCurrentSector  =0;
+    mAltered        =0;
+    mWriteProtected =0;
+    mRandomDEs      =0;
+    mFlipped        =0;
 }
 
 

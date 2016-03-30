@@ -27,22 +27,22 @@
 class Keyboard
 {
 public:
-	Keyboard();
-	~Keyboard();
+    Keyboard();
+    ~Keyboard();
 
-	void init();
+    void init();
 
-	UBYTE value() {return mLine[mRow];}
-	UBYTE value(UBYTE row) {return mLine[row];}
-	UBYTE row() {return mRow;}
+    UBYTE value() {return mLine[mRow];}
+    UBYTE value(UBYTE row) {return mLine[row];}
+    UBYTE row() {return mRow;}
 
-	void setRow(UBYTE row) {mRow=row;}
-	void setValue(UBYTE val) {mLine[mRow]=val;}
-	void setValue(UBYTE row, UBYTE val) {mLine[row]=val;}
+    void setRow(UBYTE row) {mRow=row;}
+    void setValue(UBYTE val) {mLine[mRow]=val;}
+    void setValue(UBYTE row, UBYTE val) {mLine[row]=val;}
 
 private:
-	UBYTE mRow;
-	UBYTE mLine[16];
+    UBYTE mRow;
+    UBYTE mLine[16];
 };
 
 #endif

@@ -28,33 +28,33 @@ using std::vector;
 
 /// [std::vector] for directory entrys
 /** This is a vector to retrieve, store and sort FileName types.
-	No slicing can occure by passing pointers of Directorys, because no additional
-	variables are added at all.
-	@todo excludeflag for hidden files !!
-	@todo maybe use a set rather than a vector, to sort entries
-		this is needed in FileName :
-		bool operator<(const ... & right) const {return mTestOffset > right.mTestOffset;}
-	\n\n<B>Example:</B>\n @include "directory.cpp"
-	@author Fred Klaus */
+    No slicing can occure by passing pointers of Directorys, because no additional
+    variables are added at all.
+    @todo excludeflag for hidden files !!
+    @todo maybe use a set rather than a vector, to sort entries
+        this is needed in FileName :
+        bool operator<(const ... & right) const {return mTestOffset > right.mTestOffset;}
+    \n\n<B>Example:</B>\n @include "directory.cpp"
+    @author Fred Klaus */
 class Directory : public vector<FileName>
 {
 
 public:
-	Directory() : vector<FileName>() {}
-	Directory(const string & path, bool subdir=false, bool owndir=false);
-	~Directory() {}
+    Directory() : vector<FileName>() {}
+    Directory(const string & path, bool subdir=false, bool owndir=false);
+    ~Directory() {}
 
-	void scan(const string & path, bool subdir=false, bool owndir=false);
+    void scan(const string & path, bool subdir=false, bool owndir=false);
 
-	/** Sorts this vector by filename.
-		If you dont need to change the default behaviour (case insensitive), use this.
-		@todo implement dirsfirst flag */
-	void sort();
-	/** @overload
-		Is NOT REALLY THREADSAFE because of using a static function in FileName.
-		@param casesensitive = Sets whether sorting is case sensitive or not.
-		@see <B>static</B> stk::FileName::setCaseSensitiveCompare */
-	void sort(bool casesensitive);
+    /** Sorts this vector by filename.
+        If you dont need to change the default behaviour (case insensitive), use this.
+        @todo implement dirsfirst flag */
+    void sort();
+    /** @overload
+        Is NOT REALLY THREADSAFE because of using a static function in FileName.
+        @param casesensitive = Sets whether sorting is case sensitive or not.
+        @see <B>static</B> stk::FileName::setCaseSensitiveCompare */
+    void sort(bool casesensitive);
 };
 
 #endif

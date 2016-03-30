@@ -27,13 +27,13 @@
 class CmdTable
 {
 public:
-	CmdTable() {}
-	~CmdTable() {}
+    CmdTable() {}
+    ~CmdTable() {}
 
-	CmdTableDef & get(int num) {return entry[num];}
+    CmdTableDef & get(int num) {return entry[num];}
 
 private:
-	CmdTableDef entry[MAX_CMD_COUNT];
+    CmdTableDef entry[MAX_CMD_COUNT];
 
 };
 

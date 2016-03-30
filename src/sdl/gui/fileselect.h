@@ -30,36 +30,36 @@
 class FileSelect
 {
 public:
-	FileSelect(SDL_Surface* scrn, const string & dir, const string & last, const string & prefix="File: ");
-	~FileSelect();
+    FileSelect(SDL_Surface* scrn, const string & dir, const string & last, const string & prefix="File: ");
+    ~FileSelect();
 
-	void openDir(const string &  dir);
-	void closeDir();
+    void openDir(const string &  dir);
+    void closeDir();
 
-	const string & filename();
+    const string & filename();
 
-	bool loop();
+    bool loop();
 
 private:
-	Directory*   mDir;
-	Directory::iterator mDirIt;
-	SDL_Surface* mScrn;
+    Directory*   mDir;
+    Directory::iterator mDirIt;
+    SDL_Surface* mScrn;
 
-	SDL_Rect rect;
+    SDL_Rect rect;
 
-	Font mFont;
+    Font mFont;
 
-	string mDirname;
-	string mPrefix;
-	FileName mFilename;
-	FileName mLast;
+    string mDirname;
+    string mPrefix;
+    FileName mFilename;
+    FileName mLast;
 
-	bool running;
-	bool abort;
+    bool running;
+    bool abort;
 
-	void clear();
-	void display();
-	void events();
+    void clear();
+    void display();
+    void events();
 
 };
 

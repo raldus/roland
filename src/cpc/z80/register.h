@@ -68,18 +68,18 @@ class Z80;
 /** @author Fred Klaus */
 class Register
 {
-	friend class Z80;
+    friend class Z80;
 
 public:
-	Register() {init();}
-	~Register(){}
+    Register() {init();}
+    ~Register(){}
 
-	void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
+    void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
 
 private:
-	REGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;
-	UBYTE   I, R, Rb7, IFF1, IFF2, IM, HALT, EI_issued, int_pending;
-	DWORD   break_point, trace;
+    REGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;
+    UBYTE   I, R, Rb7, IFF1, IFF2, IM, HALT, EI_issued, int_pending;
+    DWORD   break_point, trace;
 
 };
 

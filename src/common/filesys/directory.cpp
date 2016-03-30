@@ -31,57 +31,57 @@ using std::vector;
 
 Directory::Directory(const string & path, bool subdir, bool owndir) : vector<FileName>()
 {
-	scan(path, subdir, owndir);
+    scan(path, subdir, owndir);
 }
 
 void Directory::scan(const string & path, bool subdir, bool owndir)
 {
-	clear();
+    clear();
 
-	DIR *dir;
-	dir=opendir(path.c_str());
-	if (dir == 0) return; /** @todo errorhandling !! */
+    DIR *dir;
+    dir=opendir(path.c_str());
+    if (dir == 0) return; /** @todo errorhandling !! */
 
-	struct dirent *entry;
+    struct dirent *entry;
 #ifdef _WIN32
-	while((entry=readdir(dir))) /**  @todo not threadsafe but readdir_r not in MinGW !! */
-	{
-		FileName fi(entry->d_name);
-		if ((!subdir) && (fi == "..")) continue;
-		if ((!owndir) && (fi == "." )) continue;
-		push_back(fi);
-	}
-	free(entry); /** @todo this is a static portion of memory, need change ?? */
+    while((entry=readdir(dir))) /**  @todo not threadsafe but readdir_r not in MinGW !! */
+    {
+        FileName fi(entry->d_name);
+        if ((!subdir) && (fi == "..")) continue;
+        if ((!owndir) && (fi == "." )) continue;
+        push_back(fi);
+    }
+    free(entry); /** @todo this is a static portion of memory, need change ?? */
 #else
-	/** @todo cleanup */
-	// following code is to ensure d_name is large enough.
-	union
-	{
-		struct dirent d;
-		char b[offsetof (struct dirent, d_name) + NAME_MAX + 1];
-	} u;
+    /** @todo cleanup */
+    // following code is to ensure d_name is large enough.
+    union
+    {
+        struct dirent d;
+        char b[offsetof (struct dirent, d_name) + NAME_MAX + 1];
+    } u;
 
-	while(!readdir_r(dir, &u.d, &entry))
-	{
-		if (!entry) break;
-		FileName fi(u.d.d_name);
-		if ((!subdir) && (fi == "..")) continue;
-		if ((!owndir) && (fi == "." )) continue;
-		push_back(fi);
-	}
+    while(!readdir_r(dir, &u.d, &entry))
+    {
+        if (!entry) break;
+        FileName fi(u.d.d_name);
+        if ((!subdir) && (fi == "..")) continue;
+        if ((!owndir) && (fi == "." )) continue;
+        push_back(fi);
+    }
 #endif
 
-	closedir(dir);
+    closedir(dir);
 }
 
 void Directory::sort()
 {
-	std::sort(begin(), end());
+    std::sort(begin(), end());
 }
 
 void Directory::sort(bool casesensitive)
 {
-	FileName::setCaseSensitiveCompare(casesensitive);
-	std::sort(begin(), end());
+    FileName::setCaseSensitiveCompare(casesensitive);
+    std::sort(begin(), end());
 }
 

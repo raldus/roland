@@ -25,54 +25,54 @@
 
 /// The 8255
 /** Parallel Peripheral Interface\n\n @htmlinclude  8255.html
-	@author Fred Klaus */
+    @author Fred Klaus */
 class Ppi
 {
 
 public:
-	enum FlagB
-	{
-		Triumph        = 2,      ///< Manufacturer Triumph   (DIP-switch, do not combine with other Man.)
-		Saisho         = 4 ,     ///< Manufacturer Saisho    (DIP-switch, do not combine with other Man.)
-		Solavox        = 6 ,     ///< Manufacturer Solavox   (DIP-switch, do not combine with other Man.)
-		Awa            = 8 ,     ///< Manufacturer Awa       (DIP-switch, do not combine with other Man.)
-		Schneider      = 10 ,    ///< Manufacturer Schneider (DIP-switch, do not combine with other Man.)
-		Orion          = 12 ,    ///< Manufacturer Orion     (DIP-switch, do not combine with other Man.)
-		Amstrad        = 14,     ///< Manufacturer Amstrad   (DIP-switch, do not combine with other Man.)
-		VSyncOccured   = 1,      ///< VSync (internal)
-		Refresh50Hz    = 16,     ///< 50Hz instead of 60Hz refresh rate (DIP-switch)
-		Expansion      = 32,     ///< No expansion Peripherals available (internal)
-		PrnterNotReady = 64,     ///< Printer is not ready (internal)
-		TapeRead       = 128     ///< Tape will be read (internal)
-	};
+    enum FlagB
+    {
+        Triumph        = 2,      ///< Manufacturer Triumph   (DIP-switch, do not combine with other Man.)
+        Saisho         = 4 ,     ///< Manufacturer Saisho    (DIP-switch, do not combine with other Man.)
+        Solavox        = 6 ,     ///< Manufacturer Solavox   (DIP-switch, do not combine with other Man.)
+        Awa            = 8 ,     ///< Manufacturer Awa       (DIP-switch, do not combine with other Man.)
+        Schneider      = 10 ,    ///< Manufacturer Schneider (DIP-switch, do not combine with other Man.)
+        Orion          = 12 ,    ///< Manufacturer Orion     (DIP-switch, do not combine with other Man.)
+        Amstrad        = 14,     ///< Manufacturer Amstrad   (DIP-switch, do not combine with other Man.)
+        VSyncOccured   = 1,      ///< VSync (internal)
+        Refresh50Hz    = 16,     ///< 50Hz instead of 60Hz refresh rate (DIP-switch)
+        Expansion      = 32,     ///< No expansion Peripherals available (internal)
+        PrnterNotReady = 64,     ///< Printer is not ready (internal)
+        TapeRead       = 128     ///< Tape will be read (internal)
+    };
 
-	Ppi();     ///< does nothing
-	~Ppi() {}  ///< does nothing
+    Ppi();     ///< does nothing
+    ~Ppi() {}  ///< does nothing
 
-	void init();                                   ///< set initial values
+    void init();                                   ///< set initial values
 
-	UBYTE portA()   {return mPortA;}               ///< get Port A
-	UBYTE portB()   {return mPortB;}               ///< get Port B
-	UBYTE portC()   {return mPortC;}               ///< get Port C
-	UBYTE control() {return mControl;}             ///< get control bits
-	UBYTE jumpers() {return mJumpers;}             ///< get jumpers
+    UBYTE portA()   {return mPortA;}               ///< get Port A
+    UBYTE portB()   {return mPortB;}               ///< get Port B
+    UBYTE portC()   {return mPortC;}               ///< get Port C
+    UBYTE control() {return mControl;}             ///< get control bits
+    UBYTE jumpers() {return mJumpers;}             ///< get jumpers
 
-	void setA(UBYTE val)       {mPortA=val;}       ///< set Port A
-	void setB(UBYTE val)       {mPortB=val;}       ///< set Port B
-	void setC(UBYTE val)       {mPortC=val;}       ///< set Port C
-	void setControl(UBYTE val) {mControl=val;}     ///< set control bits
-	void setJumpers(UBYTE val) {mJumpers=val;}     ///< set jumpers
+    void setA(UBYTE val)       {mPortA=val;}       ///< set Port A
+    void setB(UBYTE val)       {mPortB=val;}       ///< set Port B
+    void setC(UBYTE val)       {mPortC=val;}       ///< set Port C
+    void setControl(UBYTE val) {mControl=val;}     ///< set control bits
+    void setJumpers(UBYTE val) {mJumpers=val;}     ///< set jumpers
 
-	void addB(UBYTE flags)     {mPortB |= flags;}  ///< add a flag to Port B
-	void removeB(UBYTE flags)  {mPortB &= ~flags;} ///< remove a flag from Port B
+    void addB(UBYTE flags)     {mPortB |= flags;}  ///< add a flag to Port B
+    void removeB(UBYTE flags)  {mPortB &= ~flags;} ///< remove a flag from Port B
 
 private:
-	UBYTE mPortA;
-	UBYTE mPortB;
-	UBYTE mPortC;
-	UBYTE mControl;
+    UBYTE mPortA;
+    UBYTE mPortB;
+    UBYTE mPortC;
+    UBYTE mControl;
 
-	UBYTE mJumpers;
+    UBYTE mJumpers;
 };
 
 #endif //PPI_H

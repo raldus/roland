@@ -97,44 +97,44 @@
 
 #define z80_int_handler \
 { \
-	if (_IFF1) \
-	{  \
-		_R++; \
-		_IFF1 = _IFF2 = 0;  \
-		z80.int_pending = 0; \
-		cpc.gatearray().setSlCount(cpc.gatearray().slCount() & 0xdf);   \
-		if (_HALT) \
-		{   \
-			_HALT = 0;   \
-			_PC++;   \
-		} \
-		if (_IM < 2)   \
-		{   \
-			iCycleCount = 20; \
-			if (iWSAdjust)  \
-			{ \
-      			iCycleCount -= 4; \
-			} \
-			RST(0x0038); \
-			z80_wait_states \
-		} \
-		else    \
-		{   \
-			REGPAIR addr; \
-			iCycleCount = 28;  \
-			if (iWSAdjust)    \
-			{ \
-				iCycleCount -= 4; \
-			} \
-			write_mem(--_SP, z80.PC.b.h);   \
-			write_mem(--_SP, z80.PC.b.l);   \
-			addr.b.l = 0xff;   \
-			addr.b.h = _I; \
-			z80.PC.b.l = read_mem(addr.w.l);   \
-			z80.PC.b.h = read_mem(addr.w.l+1);   \
-			z80_wait_states \
-		} \
-	} \
+    if (_IFF1) \
+    {  \
+        _R++; \
+        _IFF1 = _IFF2 = 0;  \
+        z80.int_pending = 0; \
+        cpc.gatearray().setSlCount(cpc.gatearray().slCount() & 0xdf);   \
+        if (_HALT) \
+        {   \
+            _HALT = 0;   \
+            _PC++;   \
+        } \
+        if (_IM < 2)   \
+        {   \
+            iCycleCount = 20; \
+            if (iWSAdjust)  \
+            { \
+                iCycleCount -= 4; \
+            } \
+            RST(0x0038); \
+            z80_wait_states \
+        } \
+        else    \
+        {   \
+            REGPAIR addr; \
+            iCycleCount = 28;  \
+            if (iWSAdjust)    \
+            { \
+                iCycleCount -= 4; \
+            } \
+            write_mem(--_SP, z80.PC.b.h);   \
+            write_mem(--_SP, z80.PC.b.l);   \
+            addr.b.l = 0xff;   \
+            addr.b.h = _I; \
+            z80.PC.b.l = read_mem(addr.w.l);   \
+            z80.PC.b.h = read_mem(addr.w.l+1);   \
+            z80_wait_states \
+        } \
+    } \
 }
 
 

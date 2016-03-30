@@ -28,43 +28,43 @@ class KeyTrans
 {
 
 public:
-	KeyTrans();
-	~KeyTrans() {}
+    KeyTrans();
+    ~KeyTrans() {}
 
-	struct JoyAlloc
-	{
-		UBYTE joy;
-		UBYTE orig;
-		UWORD key;
-	};
-	struct SeqPair
-	{
-		UBYTE keyval;
-		bool  down;
-	};
+    struct JoyAlloc
+    {
+        UBYTE joy;
+        UBYTE orig;
+        UWORD key;
+    };
+    struct SeqPair
+    {
+        UBYTE keyval;
+        bool  down;
+    };
 
-	enum Language {German, English};
+    enum Language {German, English};
 
-	void init(Language lang=German);
+    void init(Language lang=German);
 
-	UBYTE get(SDL_Event & event);
+    UBYTE get(SDL_Event & event);
 
-	bool toggleJoystick();
-	bool joystickEnabled() {return mJoyEnabled;}
+    bool toggleJoystick();
+    bool joystickEnabled() {return mJoyEnabled;}
 
-	const SeqPair & sequenceVal();
-	bool hasSequence();
+    const SeqPair & sequenceVal();
+    bool hasSequence();
 
-	void sequenceCatRun();
+    void sequenceCatRun();
 
 private:
-	SeqPair mSequence[64];
-	uint mSeqIndex;
+    SeqPair mSequence[64];
+    uint mSeqIndex;
 
-	static UBYTE mTable[320];
+    static UBYTE mTable[320];
 
-	JoyAlloc mJoyAlloc[6];
-	bool     mJoyEnabled;
+    JoyAlloc mJoyAlloc[6];
+    bool     mJoyEnabled;
 };
 
 #endif

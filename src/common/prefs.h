@@ -21,7 +21,7 @@
 #define PREFS_H
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+    #include <config.h>
 #endif
 
 #include <string>
@@ -35,39 +35,39 @@ class Prefs
 {
 
 public:
-	
-	enum PrefsArray {paKey=0, paDefault=1};
-	
-	Prefs(bool autowrite=true, bool writealways=true);
-	~Prefs();
+    
+    enum PrefsArray {paKey=0, paDefault=1};
+    
+    Prefs(bool autowrite=true, bool writealways=true);
+    ~Prefs();
 
-	bool read ();
-	bool write();
+    bool read ();
+    bool write();
 
-	bool set(const string & key, const string & value);
-	bool set(const string & key, int value);
-	bool set(const string & key, bool value);
+    bool set(const string & key, const string & value);
+    bool set(const string & key, int value);
+    bool set(const string & key, bool value);
 
-	const string & getStr (const string & key) const;
-	string         getPath(const string & key) const;
-	int            getNum (const string & key) const;
-	bool           getBool(const string & key) const;
+    const string & getStr (const string & key) const;
+    string         getPath(const string & key) const;
+    int            getNum (const string & key) const;
+    bool           getBool(const string & key) const;
 
 private:
-	#ifdef _WIN32
-		static const char delim() {return '\\';}
-	#else
-		static const char delim() {return '/';}
-	#endif
+    #ifdef _WIN32
+        static const char delim() {return '\\';}
+    #else
+        static const char delim() {return '/';}
+    #endif
 
-	string mFilename;
-	string mNothing;
-	string mStr[PREFCOUNT];
-	static string text[PREFCOUNT][2];
+    string mFilename;
+    string mNothing;
+    string mStr[PREFCOUNT];
+    static string text[PREFCOUNT][2];
 
-	bool mAutoWrite;
-	bool mWriteAlways;
-	bool mRead;
+    bool mAutoWrite;
+    bool mWriteAlways;
+    bool mRead;
 };
 
 #endif //PREFS_H

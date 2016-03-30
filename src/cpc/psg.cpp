@@ -23,22 +23,22 @@
 
 Psg::Psg()
 {
-	init();
+    init();
 }
 
 
 void Psg::init()
 {
-	mControl=0;
-	mSelected=0;
+    mControl=0;
+    mSelected=0;
 
-	for (int n=0; n<16; n++)
-	{
-		mRegisterAY[n]=0;
-	}
+    for (int n=0; n<16; n++)
+    {
+        mRegisterAY[n]=0;
+    }
 
-	mAmplitudeEnv=0;
-	mFirstPeriod=false;
+    mAmplitudeEnv=0;
+    mFirstPeriod=false;
 }
 
 

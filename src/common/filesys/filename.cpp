@@ -28,82 +28,82 @@ bool FileName::mCaseSensitive = false;
 
 bool FileName::operator<(const FileName & fn)
 {
-	if (mCaseSensitive) return (this->compare(fn) < 0);
-	else return (strcasecmp(this->c_str(), fn.c_str()) < 0);
+    if (mCaseSensitive) return (this->compare(fn) < 0);
+    else return (strcasecmp(this->c_str(), fn.c_str()) < 0);
 }
 
 bool FileName::operator==(const FileName & fn)
 {
-	if (mCaseSensitive) return (this->compare(fn) == 0);
-	else return (strcasecmp(this->c_str(), fn.c_str()) == 0);
+    if (mCaseSensitive) return (this->compare(fn) == 0);
+    else return (strcasecmp(this->c_str(), fn.c_str()) == 0);
 }
 
 string FileName::qualified() const
 {
-	if (at(0) != delim()) return string("file:")+delim()+delim()+*this;
-	else return string("file:")+delim()+*this;
+    if (at(0) != delim()) return string("file:")+delim()+delim()+*this;
+    else return string("file:")+delim()+*this;
 }
 
 string FileName::base(bool ext) const
 {
-	if (ext) return substr(rfind(delim())+1);
-	else return substr(rfind(delim())+1, find('.')-(rfind(delim())+1));
+    if (ext) return substr(rfind(delim())+1);
+    else return substr(rfind(delim())+1, find('.')-(rfind(delim())+1));
 }
 
 string FileName::path() const
 {
-	return substr(0, rfind(delim())+1);
+    return substr(0, rfind(delim())+1);
 }
 
 string FileName::relpath() const
 {
-	if (at(0) == delim()) return substr(1, rfind(delim()));
-	else return substr(0, rfind(delim())+1);
+    if (at(0) == delim()) return substr(1, rfind(delim()));
+    else return substr(0, rfind(delim())+1);
 }
 
 string FileName::ext(bool dot) const
 {
-	string::size_type st = find('.');
-	if (st == string::npos) return string(0);
-	if (dot) return substr(st, size()-st);
-	else return substr(st+1, size()-st);
+    string::size_type st = find('.');
+    if (st == string::npos) return string(0);
+    if (dot) return substr(st, size()-st);
+    else return substr(st+1, size()-st);
 }
 
 void FileName::setBase(const string & basename, bool ext)
 {
-	string::size_type st = rfind(delim())+1;
-	if (st == string::npos && ext)
-	{
-		append(basename);
-		return;
-	}
-	replace(st, size()-st, basename);
+    string::size_type st = rfind(delim())+1;
+    if (st == string::npos && ext)
+    {
+        append(basename);
+        return;
+    }
+    replace(st, size()-st, basename);
 }
 
 void FileName::setExt(const string & extension)
 {
-	string::size_type st = find('.');
-	if (st == string::npos)
-	{
-		append("."+extension);
-		return;
-	}
-	if (extension.at(0) != '.') st++;
-	replace(st, size()-st, extension);
+    string::size_type st = find('.');
+    if (st == string::npos)
+    {
+        append("."+extension);
+        return;
+    }
+    if (extension.at(0) != '.') st++;
+    replace(st, size()-st, extension);
 }
 
 void FileName::setPath(const string & path)
 {
-	if (find(delim()) == string::npos) // no delimiter found means no path.
-	{
-		if (path.at(path.size()-1) != delim()) insert(0, 1, delim());
-		insert(0, path);
-	}
-	else
-	{
-		string::size_type s=1;
-		if (path.at(path.size()-1) != delim()) s=0;
-		replace(0, rfind(delim())+s, path);
-	}
+    if (find(delim()) == string::npos) // no delimiter found means no path.
+    {
+        if (path.at(path.size()-1) != delim()) insert(0, 1, delim());
+        insert(0, path);
+    }
+    else
+    {
+        string::size_type s=1;
+        if (path.at(path.size()-1) != delim()) s=0;
+        replace(0, rfind(delim())+s, path);
+    }
 }
 

@@ -86,55 +86,55 @@ class Raze
 {
 
 public:
-	Raze()  {mIntPending=0;}
-	~Raze() {}
+    Raze()  {mIntPending=0;}
+    ~Raze() {}
 
-	typedef UBYTE (*Z80_IN_Handler) (REGPAIR port);
-	typedef void  (*Z80_OUT_Handler)(REGPAIR port, UBYTE value);
+    typedef UBYTE (*Z80_IN_Handler) (REGPAIR port);
+    typedef void  (*Z80_OUT_Handler)(REGPAIR port, UBYTE value);
 
-	void setInHandler (Z80_IN_Handler handler)  {}
-	void setOutHandler(Z80_OUT_Handler handler) {}
+    void setInHandler (Z80_IN_Handler handler)  {}
+    void setOutHandler(Z80_OUT_Handler handler) {}
 
-	void init() {mLastCyclecount=0; mCycleCountInit=0;}
+    void init() {mLastCyclecount=0; mCycleCountInit=0;}
 
-	void initMemMap() {z80_init_memmap();}
-	void endMemMap()  {z80_end_memmap(); z80_reset();}
+    void initMemMap() {z80_init_memmap();}
+    void endMemMap()  {z80_end_memmap(); z80_reset();}
 
-	void setMembank_read (UBYTE bank, UBYTE* ptr)
-	{
-		if (bank==0) {z80_map_read(0x0000, 0x3fff, ptr); z80_map_fetch(0x0000, 0x3fff, ptr); return;}
-		if (bank==1) {z80_map_read(0x4000, 0x7fff, ptr); z80_map_fetch(0x4000, 0x7fff, ptr); return;}
-		if (bank==2) {z80_map_read(0x8000, 0xbfff, ptr); z80_map_fetch(0x8000, 0xbfff, ptr); return;}
-		if (bank==3) {z80_map_read(0xc000, 0xffff, ptr); z80_map_fetch(0xc000, 0xffff, ptr); return;}
-	}
-	void setMembank_write(UBYTE bank, UBYTE* ptr)
-	{
-		if (bank==0) {z80_map_write(0x0000, 0x3fff, ptr); return;}
-		if (bank==1) {z80_map_write(0x4000, 0x7fff, ptr); return;}
-		if (bank==2) {z80_map_write(0x8000, 0xbfff, ptr); return;}
-		if (bank==3) {z80_map_write(0xc000, 0xffff, ptr); return;}
-	}
+    void setMembank_read (UBYTE bank, UBYTE* ptr)
+    {
+        if (bank==0) {z80_map_read(0x0000, 0x3fff, ptr); z80_map_fetch(0x0000, 0x3fff, ptr); return;}
+        if (bank==1) {z80_map_read(0x4000, 0x7fff, ptr); z80_map_fetch(0x4000, 0x7fff, ptr); return;}
+        if (bank==2) {z80_map_read(0x8000, 0xbfff, ptr); z80_map_fetch(0x8000, 0xbfff, ptr); return;}
+        if (bank==3) {z80_map_read(0xc000, 0xffff, ptr); z80_map_fetch(0xc000, 0xffff, ptr); return;}
+    }
+    void setMembank_write(UBYTE bank, UBYTE* ptr)
+    {
+        if (bank==0) {z80_map_write(0x0000, 0x3fff, ptr); return;}
+        if (bank==1) {z80_map_write(0x4000, 0x7fff, ptr); return;}
+        if (bank==2) {z80_map_write(0x8000, 0xbfff, ptr); return;}
+        if (bank==3) {z80_map_write(0xc000, 0xffff, ptr); return;}
+    }
 
-	int  cyclecount() {int i=mLastCyclecount; mLastCyclecount=z80_get_cycles_elapsed(); return mLastCyclecount-i;}
-	void setIntPending(UBYTE ip) {/*mIntPending=ip;*/if (ip) {z80_raise_IRQ(0xff); z80_lower_IRQ();}}
-	UBYTE intPending() {return mIntPending;}
+    int  cyclecount() {int i=mLastCyclecount; mLastCyclecount=z80_get_cycles_elapsed(); return mLastCyclecount-i;}
+    void setIntPending(UBYTE ip) {/*mIntPending=ip;*/if (ip) {z80_raise_IRQ(0xff); z80_lower_IRQ();}}
+    UBYTE intPending() {return mIntPending;}
 
-	void setInHandler (UBYTE (*handler)(UWORD port))  {z80_set_in(handler);}
-	void setOutHandler(void (*handler)(UWORD port, UBYTE value)) {z80_set_out(handler);}
-	void setWsHandler (void (*handler)(void))  {z80_set_av(handler);}
+    void setInHandler (UBYTE (*handler)(UWORD port))  {z80_set_in(handler);}
+    void setOutHandler(void (*handler)(UWORD port, UBYTE value)) {z80_set_out(handler);}
+    void setWsHandler (void (*handler)(void))  {z80_set_av(handler);}
 
-	int  execute(int i) {mLastCyclecount=0; mCycleCountInit=i; return z80_emulate(i);}
-	void stop()         {z80_stop_emulating();}
+    int  execute(int i) {mLastCyclecount=0; mCycleCountInit=i; return z80_emulate(i);}
+    void stop()         {z80_stop_emulating();}
 
 private:
-	//Z80_IN_Handler  IN_handler;
-	//Z80_OUT_Handler OUT_handler;
+    //Z80_IN_Handler  IN_handler;
+    //Z80_OUT_Handler OUT_handler;
 
-	//UBYTE z80_in_handler(REGPAIR port)
-	//void z80_out_handler(REGPAIR port, UBYTE value)
-	int mLastCyclecount;
-	int mCycleCountInit;
-	UBYTE mIntPending;
+    //UBYTE z80_in_handler(REGPAIR port)
+    //void z80_out_handler(REGPAIR port, UBYTE value)
+    int mLastCyclecount;
+    int mCycleCountInit;
+    UBYTE mIntPending;
 
 };
 

@@ -33,71 +33,71 @@ class MemMan
 {
 
 public:
-	MemMan(Z80* z80=0, GateArray* gatearray=0, const string & cpcrom="", const string & amsdos="");
-	~MemMan() {}
+    MemMan(Z80* z80=0, GateArray* gatearray=0, const string & cpcrom="", const string & amsdos="");
+    ~MemMan() {}
 
-	enum RamSize {ram64=64, ram128=128, ram256=256, ram512=512};
+    enum RamSize {ram64=64, ram128=128, ram256=256, ram512=512};
 
-	enum Error {ErrRamSize=1, ErrMemory=2, ErrCpcRom=4, ErrAmsdos=8};
+    enum Error {ErrRamSize=1, ErrMemory=2, ErrCpcRom=4, ErrAmsdos=8};
 
-	int init(int ramsize=128, const string & cpcrom="", const string & amsdos="");
-	int init(Z80* z80, GateArray* gatearray);
-	
-	inline void initBanking();
-	void memoryManager();
+    int init(int ramsize=128, const string & cpcrom="", const string & amsdos="");
+    int init(Z80* z80, GateArray* gatearray);
+    
+    inline void initBanking();
+    void memoryManager();
 
-	inline void toggleLowerRom();
-	inline void toggleUpperRom();
+    inline void toggleLowerRom();
+    inline void toggleUpperRom();
 
-	UBYTE* memBankConfig(UBYTE bank, UBYTE seg) {return mMemBankConfig[bank][seg];}
-	UBYTE* rom(int bank) {return mRom[bank];}
+    UBYTE* memBankConfig(UBYTE bank, UBYTE seg) {return mMemBankConfig[bank][seg];}
+    UBYTE* rom(int bank) {return mRom[bank];}
 
-	UBYTE* upperRom() {return mUpperRom;}
-	UBYTE* lowerRom() {return mLowerRom;}
+    UBYTE* upperRom() {return mUpperRom;}
+    UBYTE* lowerRom() {return mLowerRom;}
 
-	UBYTE* base() {return mMemBankConfig[0][0];}
+    UBYTE* base() {return mMemBankConfig[0][0];}
 
-	bool openRom(int idx, const string & filename);
-	bool openCpcRom(const string & filename);
+    bool openRom(int idx, const string & filename);
+    bool openCpcRom(const string & filename);
 
 private:
-	GateArray* mGateArray;
-	Z80* mZ80;
+    GateArray* mGateArray;
+    Z80* mZ80;
 
-	UBYTE* mRam;
-	UBYTE* mRom[256];
-	UBYTE  mCpcRom[2*16384];
-	UBYTE* mMemBankConfig[8][4];
+    UBYTE* mRam;
+    UBYTE* mRom[256];
+    UBYTE  mCpcRom[2*16384];
+    UBYTE* mMemBankConfig[8][4];
 
-	UBYTE* mUpperRom;
-	UBYTE* mLowerRom;
+    UBYTE* mUpperRom;
+    UBYTE* mLowerRom;
 
-	int mRamSize;
+    int mRamSize;
 
 };
 
 inline void MemMan::toggleUpperRom()
 {
 
-	if (!(mGateArray->romConfig() & 0x08))
-	{
-		if ((mGateArray->upperRom() == 0) || (mRom[mGateArray->upperRom()] == 0))
-		{
-			mZ80->setMembank_read(3, mUpperRom);
-		}
-		else
-		{
-			mZ80->setMembank_read(3, mRom[mGateArray->upperRom()]);
-		}
-	}
+    if (!(mGateArray->romConfig() & 0x08))
+    {
+        if ((mGateArray->upperRom() == 0) || (mRom[mGateArray->upperRom()] == 0))
+        {
+            mZ80->setMembank_read(3, mUpperRom);
+        }
+        else
+        {
+            mZ80->setMembank_read(3, mRom[mGateArray->upperRom()]);
+        }
+    }
 }
 
 inline void MemMan::toggleLowerRom()
 {
-	if (!(mGateArray->romConfig() & 0x04))
-	{
-		mZ80->setMembank_read(0, mLowerRom);
-	}
+    if (!(mGateArray->romConfig() & 0x04))
+    {
+        mZ80->setMembank_read(0, mLowerRom);
+    }
 }
 
 #endif

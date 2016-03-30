@@ -7,14 +7,14 @@ class Font
 {
 
 public:
-	Font() {}
-	~Font() {}
+    Font() {}
+    ~Font() {}
 
-	void write(SDL_Surface *surf, int x, int y, const char *message, int len=0);
-	void write(SDL_Surface *surf, int x, int y, int num);
+    void write(SDL_Surface *surf, int x, int y, const char *message, int len=0);
+    void write(SDL_Surface *surf, int x, int y, int num);
 
 private:
-	inline void putglyph(char *p, int Bpp, int pitch, int which);
+    inline void putglyph(char *p, int Bpp, int pitch, int which);
 
 };
 

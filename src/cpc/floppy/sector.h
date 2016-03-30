@@ -26,25 +26,25 @@
 class Sector
 {
 public:
-	Sector();
-	~Sector() {}
+    Sector();
+    ~Sector() {}
 
-	UBYTE* CHRN()       {return mCHRN;}
-	UBYTE CHRN(int num) {return mCHRN[num];}
-	UBYTE* flags()      {return mFlags;}
-	UBYTE flag(int num) {return mFlags[num];}
-	uint size() {return mSize;}
-	UBYTE* data()       {return mData;}
+    UBYTE* CHRN()       {return mCHRN;}
+    UBYTE CHRN(int num) {return mCHRN[num];}
+    UBYTE* flags()      {return mFlags;}
+    UBYTE flag(int num) {return mFlags[num];}
+    uint size() {return mSize;}
+    UBYTE* data()       {return mData;}
 
-	void setData(UBYTE* data)      {mData=data;}
-	void setFlag(int idx, int val) {mFlags[idx]=val;}
-	void setSize(uint num) {mSize=num;}
+    void setData(UBYTE* data)      {mData=data;}
+    void setFlag(int idx, int val) {mFlags[idx]=val;}
+    void setSize(uint num) {mSize=num;}
 
 private:
-	UBYTE mCHRN[4];     // the CHRN for this sector
-	UBYTE mFlags[4];    // ST1 and ST2 - reflects any possible error conditions
-	uint mSize; // sector size in bytes
-	UBYTE* mData;       // pointer to sector data
+    UBYTE mCHRN[4];     // the CHRN for this sector
+    UBYTE mFlags[4];    // ST1 and ST2 - reflects any possible error conditions
+    uint mSize; // sector size in bytes
+    UBYTE* mData;       // pointer to sector data
 
 };
 

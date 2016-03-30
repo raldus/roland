@@ -33,84 +33,84 @@ class Fdc
 {
 
 public:
-	Fdc();
-	~Fdc() {}
+    Fdc();
+    ~Fdc() {}
 
-	typedef void (Fdc::*CmdHandler)(void);
+    typedef void (Fdc::*CmdHandler)(void);
 
-	void  write_data(UBYTE val);
-	UBYTE read_status();
-	UBYTE read_data();
-	void  specify();
-	void  drvstat();
-	void  recalib();
-	void  intstat();
-	void  seek();
-	void  readtrk();
-	void  write();
-	void  read();
-	void  readID();
-	void  writeID();
-	void  scan();
+    void  write_data(UBYTE val);
+    UBYTE read_status();
+    UBYTE read_data();
+    void  specify();
+    void  drvstat();
+    void  recalib();
+    void  intstat();
+    void  seek();
+    void  readtrk();
+    void  write();
+    void  read();
+    void  readID();
+    void  writeID();
+    void  scan();
 
-	void check_unit();
-	int  init_status_regs();
-	Sector* find_sector(UBYTE *requested_CHRN);
-	inline void cmd_write();
-	inline void cmd_read();
-	inline void cmd_readtrk();
-	inline void cmd_scan();
+    void check_unit();
+    int  init_status_regs();
+    Sector* find_sector(UBYTE *requested_CHRN);
+    inline void cmd_write();
+    inline void cmd_read();
+    inline void cmd_readtrk();
+    inline void cmd_scan();
 
-	int  dsk_load(const char *pchFileName, int drv, char chID='A');
-	void dsk_eject(int drv);
+    int  dsk_load(const char *pchFileName, int drv, char chID='A');
+    void dsk_eject(int drv);
 
-	//void scanlo();
-	//void scanhi();
+    //void scanlo();
+    //void scanhi();
 
-	int motor()              {return mMotor;}
-	void setMotor(int s)     {mMotor=s;}
-	int flags()              {return mFlags;}
-	void addFlags(int flags) {mFlags |= flags;}
-	int phase()              {return mPhase;}
-	int  timeout()           {return mTimeout;}
-	void setTimeout(int val) {mTimeout=val;}
+    int motor()              {return mMotor;}
+    void setMotor(int s)     {mMotor=s;}
+    int flags()              {return mFlags;}
+    void addFlags(int flags) {mFlags |= flags;}
+    int phase()              {return mPhase;}
+    int  timeout()           {return mTimeout;}
+    void setTimeout(int val) {mTimeout=val;}
 
-	int cmdDirection() {return mCmdDirection;}
+    int cmdDirection() {return mCmdDirection;}
 
-	bool led()               {return mLed;}
+    bool led()               {return mLed;}
 
 private:
-	int  mTimeout;
-	int  mMotor;
-	bool mLed;
-	int  mFlags;
-	int  mPhase;
-	int  mByteCount;
-	int  mBufferCount;
-	int  mCmdLength;
-	int  mResLength;
-	int  mCmdDirection;
-	CmdHandler mCmdHandler;
-	//void (Fdc::*mCmdHandler)(void);
+    int  mTimeout;
+    int  mMotor;
+    bool mLed;
+    int  mFlags;
+    int  mPhase;
+    int  mByteCount;
+    int  mBufferCount;
+    int  mCmdLength;
+    int  mResLength;
+    int  mCmdDirection;
+    CmdHandler mCmdHandler;
+    //void (Fdc::*mCmdHandler)(void);
 
-	UBYTE* pbGPBuffer;
+    UBYTE* pbGPBuffer;
 
-	UBYTE* mBufferPtr;
-	UBYTE* mBufferEndPtr;
-	UBYTE  mCommand[12];
-	UBYTE  mResult[8];
+    UBYTE* mBufferPtr;
+    UBYTE* mBufferEndPtr;
+    UBYTE  mCommand[12];
+    UBYTE  mResult[8];
 
-	Drive mDriveA;
-	Drive mDriveB;
+    Drive mDriveA;
+    Drive mDriveB;
 
-	Drive *mActiveDrive; // reference to the currently selected drive
-	Track *mActiveTrack; // reference to the currently selected track, of the active_drive
-	UWORD mReadStatusDelay;
-	UWORD mBytesTransferred;
+    Drive *mActiveDrive; // reference to the currently selected drive
+    Track *mActiveTrack; // reference to the currently selected track, of the active_drive
+    UWORD mReadStatusDelay;
+    UWORD mBytesTransferred;
 
-	CmdTable mCmdTable;
+    CmdTable mCmdTable;
 
-	FILE *pfileObject;
+    FILE *pfileObject;
 
 };
 

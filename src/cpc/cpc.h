@@ -21,16 +21,16 @@
 #define CPC_H
 
 #ifdef HAVE_CONFIG_H
-	#include <config.h>
+    #include <config.h>
 #endif
 
 #include "types.h"
 #include "prefs.h"
 
 #ifdef ENABLE_RAZE
-	#include "raze.h"
+    #include "raze.h"
 #endif
-	
+    
 #include "z80.h"
 #include "crtc.h"
 #include "ppi.h"
@@ -70,58 +70,58 @@ class Cpc
 {
 
 public:
-	enum CpcType {cpc464=0, cpc664=1, cpc6128=2};
-	enum RamSize {ram64=64, ram128=128, ram256=256, ram512=512};
-	//enum Monitor {colour=0, green=1, grey=2};
+    enum CpcType {cpc464=0, cpc664=1, cpc6128=2};
+    enum RamSize {ram64=64, ram128=128, ram256=256, ram512=512};
+    //enum Monitor {colour=0, green=1, grey=2};
 
 
-	Cpc(Prefs* prefs);
-	~Cpc() {}
+    Cpc(Prefs* prefs);
+    ~Cpc() {}
 
-	int init(Prefs* prefs=0);
+    int init(Prefs* prefs=0);
 
-	void setSpeed(uint value) {mSpeed=value;}
+    void setSpeed(uint value) {mSpeed=value;}
 
-	uint    speed()   {return mSpeed;}
-	//Monitor monitor() {return mMonitor;}
+    uint    speed()   {return mSpeed;}
+    //Monitor monitor() {return mMonitor;}
 
-	UBYTE z80_in_handler (REGPAIR port); //@todo change This !!
-	void  z80_out_handler(REGPAIR port, UBYTE value);
-	void waitstates();
+    UBYTE z80_in_handler (REGPAIR port); //@todo change This !!
+    void  z80_out_handler(REGPAIR port, UBYTE value);
+    void waitstates();
 
 
-	Z80       & z80()       {return mZ80;}
-	Ppi       & ppi()       {return mPpi;}
-	Fdc       & fdc()       {return mFdc;}
-	Psg       & psg()       {return mPsg;}
-	Vdu       & vdu()       {return mVdu;}
-	Crtc      & crtc()      {return mCrtc;}
-	Sound     & sound()     {return mSound;}
-	MemMan    & memman()    {return mMemman;}
-	Colours   & colours()   {return mColours;}
-	Keyboard  & keyboard()  {return mKeyboard;}
-	GateArray & gatearray() {return mGatearray;}
+    Z80       & z80()       {return mZ80;}
+    Ppi       & ppi()       {return mPpi;}
+    Fdc       & fdc()       {return mFdc;}
+    Psg       & psg()       {return mPsg;}
+    Vdu       & vdu()       {return mVdu;}
+    Crtc      & crtc()      {return mCrtc;}
+    Sound     & sound()     {return mSound;}
+    MemMan    & memman()    {return mMemman;}
+    Colours   & colours()   {return mColours;}
+    Keyboard  & keyboard()  {return mKeyboard;}
+    GateArray & gatearray() {return mGatearray;}
 
 private:
-	CpcType   mCpcType;
-	//Monitor  mMonitor;
+    CpcType   mCpcType;
+    //Monitor  mMonitor;
 
-	uint      mSpeed;
-	uint      mBpp;
+    uint      mSpeed;
+    uint      mBpp;
 
-	Prefs*    mPrefs;
+    Prefs*    mPrefs;
 
-	Z80       mZ80; //@todo change this !!!!!!!!!!!!!
-	Crtc      mCrtc;
-	Ppi       mPpi;
-	Fdc       mFdc;
-	Psg       mPsg;
-	GateArray mGatearray;
-	Keyboard  mKeyboard;
-	Colours   mColours;
-	MemMan    mMemman;
-	Sound     mSound;
-	Vdu       mVdu;
+    Z80       mZ80; //@todo change this !!!!!!!!!!!!!
+    Crtc      mCrtc;
+    Ppi       mPpi;
+    Fdc       mFdc;
+    Psg       mPsg;
+    GateArray mGatearray;
+    Keyboard  mKeyboard;
+    Colours   mColours;
+    MemMan    mMemman;
+    Sound     mSound;
+    Vdu       mVdu;
 
 };
 

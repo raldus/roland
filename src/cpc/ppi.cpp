@@ -21,17 +21,17 @@
 
 Ppi::Ppi()
 {
-	init();
+    init();
 }
 
 void Ppi::init()
 {
-	mPortA   = 0;
-	mPortB   = 0;
-	mPortC   = 0;
-	mControl = 0;
+    mPortA   = 0;
+    mPortB   = 0;
+    mPortC   = 0;
+    mControl = 0;
 
-	mJumpers = 0;
+    mJumpers = 0;
 }
 
 

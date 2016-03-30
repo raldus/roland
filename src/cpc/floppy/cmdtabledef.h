@@ -26,26 +26,26 @@ class Fdc;
 class CmdTableDef
 {
 public:
-	CmdTableDef()  {}
-	~CmdTableDef() {}
+    CmdTableDef()  {}
+    ~CmdTableDef() {}
 
-	typedef void (Fdc::*CmdHandler)(void);
+    typedef void (Fdc::*CmdHandler)(void);
 
-	void set(int cmd, int cmdlen, int reslen, int cmddir, CmdHandler cmdhandler)
-		{mCmd=cmd; mCmdLength=cmdlen; mResLength=reslen; mCmdDirection=cmddir; mCmdHandler=cmdhandler;}
+    void set(int cmd, int cmdlen, int reslen, int cmddir, CmdHandler cmdhandler)
+        {mCmd=cmd; mCmdLength=cmdlen; mResLength=reslen; mCmdDirection=cmddir; mCmdHandler=cmdhandler;}
 
-	int cmd()          {return mCmd;}
-	int cmdLength()    {return mCmdLength;}
-	int resLength()    {return mResLength;}
-	int cmdDirection() {return mCmdDirection;}
-	CmdHandler cmdHandler() {return mCmdHandler;}
+    int cmd()          {return mCmd;}
+    int cmdLength()    {return mCmdLength;}
+    int resLength()    {return mResLength;}
+    int cmdDirection() {return mCmdDirection;}
+    CmdHandler cmdHandler() {return mCmdHandler;}
 
 private:
-	int mCmd;
-	int mCmdLength;
-	int mResLength;
-	int mCmdDirection;
-	CmdHandler mCmdHandler;
+    int mCmd;
+    int mCmdLength;
+    int mResLength;
+    int mCmdDirection;
+    CmdHandler mCmdHandler;
 
 };
 

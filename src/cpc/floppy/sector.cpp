@@ -21,13 +21,13 @@
 
 Sector::Sector()
 {
-	for(int i=0; i<4; i++)
-	{
-		mCHRN[i]=0;
-		mFlags[i]=0;
-	}
-	mSize=0; // sector size in bytes
-	mData=0;       // pointer to sector data
+    for(int i=0; i<4; i++)
+    {
+        mCHRN[i]=0;
+        mFlags[i]=0;
+    }
+    mSize=0; // sector size in bytes
+    mData=0;       // pointer to sector data
 }
 
 

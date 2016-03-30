@@ -27,14 +27,14 @@ class Clock
 {
 
 public:
-	Clock() {mLast=SDL_GetTicks();}
-	~Clock() {}
+    Clock() {mLast=SDL_GetTicks();}
+    ~Clock() {}
 
-	uint elapsed() {return SDL_GetTicks()-mLast;}
-	void init()            {mLast=SDL_GetTicks();}
+    uint elapsed() {return SDL_GetTicks()-mLast;}
+    void init()            {mLast=SDL_GetTicks();}
 
 private:
-	uint mLast;
+    uint mLast;
 
 };
 

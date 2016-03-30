@@ -21,16 +21,16 @@
 
 Keyboard::Keyboard()
 {
-	init();
+    init();
 }
 
 void Keyboard::init()
 {
-	mRow=0x00;
-	for(int i=0; i<16; i++)
-	{
-		mLine[i] = 0xFF;
-	}
+    mRow=0x00;
+    for(int i=0; i<16; i++)
+    {
+        mLine[i] = 0xFF;
+    }
 }
 
 

@@ -27,25 +27,25 @@ class Colours
 {
 
 public:
-	Colours();
-	~Colours() {}
+    Colours();
+    ~Colours() {}
 
-	void init();
-	
-	void setIntensity(uint intensity) {mIntensity = intensity; init();}
-	void setDepth    (uint depth)     {mDepth     = depth;     init();}
-	void setMonitor  (uint monitor)   {mMonitor   = monitor;   init();}
+    void init();
+    
+    void setIntensity(uint intensity) {mIntensity = intensity; init();}
+    void setDepth    (uint depth)     {mDepth     = depth;     init();}
+    void setMonitor  (uint monitor)   {mMonitor   = monitor;   init();}
 
-	UDWORD get(int num) {return mTable[num];}
+    UDWORD get(int num) {return mTable[num];}
 
 private:
-	static double mColour[32][3];
-	static double mGreen [32];
-	UDWORD        mTable [32];
-	
-	uint mDepth;
-	uint mIntensity;
-	uint mMonitor;
+    static double mColour[32][3];
+    static double mGreen [32];
+    UDWORD        mTable [32];
+    
+    uint mDepth;
+    uint mIntensity;
+    uint mMonitor;
 };
 
 #endif
