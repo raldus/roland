@@ -1,13 +1,14 @@
 # Roland Emulator
 Roland is an emulator of the Amstrad/Schneider CPC 464/664/6128 Homecomputer.
+Homepage: https://www.rolendemu.de
 
 # Linux
 Um die Linuxversion zu starten, ist es notwendig in der Datei "roland-linux.cfg" die folgenden
 Pfade anzupassen:
 
-cpcrom=/mnt/shared/emu/cpc/roms/cpc6128.rom -> /../dieserOrdner/roms/cpc6128.rom
-amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
-diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
+* cpcrom=/mnt/shared/emu/cpc/roms/cpc6128.rom -> /../dieserOrdner/roms/cpc6128.rom
+* amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
+* diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
 
 Dann die "roland-linux.cfg" als ".roland" ins Homeverzeichnis kopieren und roland starten.
 Es wird die SDL-Bibliothek > 1.2 benötigt.
