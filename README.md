@@ -1,27 +1,27 @@
-# roland
+# Roland Emulator
 Roland is an emulator of the Amstrad/Schneider CPC 464/664/6128 Homecomputer.
 
 # Linux
 Um die Linuxversion zu starten, ist es notwendig in der Datei "roland-linux.cfg" die folgenden
 Pfade anzupassen:
--------------------------------------------------------------------------------------
-  cpcrom=/mnt/shared/emu/cpc/roms/cpc6128.rom -> /../dieserOrdner/roms/cpc6128.rom
-  amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
 
-  diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
--------------------------------------------------------------------------------------
+cpcrom=/mnt/shared/emu/cpc/roms/cpc6128.rom -> /../dieserOrdner/roms/cpc6128.rom
+amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
+diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
+
 Dann die "roland-linux.cfg" als ".roland" ins Homeverzeichnis kopieren und roland starten.
 Es wird die SDL-Bibliothek > 1.2 benötigt.
 
 # Usage
-F2  - Diskette in Laufwerk A: einlegen
-F3  - Diskette in Laufwerk B: einlegen
-
-F4  - cat/run Anweisungen ausführen (buggy)
-F5  - Joystickemulation ein-/aus-schalten (Cursortasten + Alt)
-F9  - Reset
-F10 - Exit
-F12 - umschalten auf Vollbild
+Taste|Funktion
+-----|--------
+F2|Diskette in Laufwerk A: einlegen
+F3|Diskette in Laufwerk B: einlegen
+F4|cat/run Anweisungen ausführen (buggy)
+F5|Joystickemulation ein-/aus-schalten (Cursortasten + Alt)
+F9|Reset
+F10|Exit
+F12|umschalten auf Vollbild
       (funktioniert unter Windows nicht, stattdessen fullscreen=1 in der roland.cfg)
 
 
@@ -62,17 +62,4 @@ ToDo:
 - vieles mehr...
 
 
-
-Fragen an alle Tester:
-1. stottert der Sound (aussetzer)?
-2. ruckelt das Bild?
-3. gibt es Darstellungsfehler?
-4. Wie hoch ist die CPU-Last (auf welcher CPU)?
-5. Abstürze?
-... jeder Kommentar erwünscht.
-
-bitte an <mail@fkweb.de>
-
-
-Danke!!!
 
