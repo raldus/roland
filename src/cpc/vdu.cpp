@@ -25,103 +25,107 @@
 
 #include <iostream>
 
-
-Vdu::Vdu(Crtc* crtc, GateArray* gatearray, Z80* z80)
+Vdu::Vdu(Crtc *crtc, GateArray *gatearray, Z80 *z80)
 {
-    mBpp       = Bpp32;
-    mBorder    = true;
-    mDoublescan= true;
+    mBpp = Bpp32;
+    mBorder = true;
+    mDoublescan = true;
     init(true, crtc, gatearray, z80);
 }
 
-void Vdu::init(bool full, Crtc* crtc, GateArray* gatearray, Z80* z80)
+void Vdu::init(bool full, Crtc *crtc, GateArray *gatearray, Z80 *z80)
 {
-    if (crtc)      mCrtc      = crtc;
-    if (gatearray) mGateArray = gatearray;
-    if (z80)       mZ80       = z80;
+    if (crtc)
+        mCrtc = crtc;
+    if (gatearray)
+        mGateArray = gatearray;
+    if (z80)
+        mZ80 = z80;
 
-
-    mHsw=mHswActive = 4;
-    mHswActive      = 0;
-    mHswCount       = 0;
-    mVswCount       = 0;
-    mHDelay         = 0;
-    mVDelay         = 0;
-    mScanline       = 0;
-    mScanlineMin    = 272; // @todo 240 ???
+    mHsw = mHswActive = 4;
+    mHswActive = 0;
+    mHswCount = 0;
+    mVswCount = 0;
+    mHDelay = 0;
+    mVDelay = 0;
+    mScanline = 0;
+    mScanlineMin = 272; // @todo 240 ???
     mFrameCompleted = false;
-    mCharCount      = 0;
-    mHCount         = 0;
-    mHStart         = 0;
-    mHWidth         = 0;
-    mVCount         = 0;
-    mVStart         = 0;
-    mVHeight        = 0;
+    mCharCount = 0;
+    mHCount = 0;
+    mHStart = 0;
+    mHWidth = 0;
+    mVCount = 0;
+    mVStart = 0;
+    mVHeight = 0;
 
-    //mScrWidth       = 800;
-    //mScrHeight      = 600;
-    //mScrBpp         = 16;
+    // mScrWidth       = 800;
+    // mScrHeight      = 600;
+    // mScrBpp         = 16;
 
-    mModeHandler[0][0]=&Vdu::draw16bpp_mode0;
-    mModeHandler[0][1]=&Vdu::draw16bpp_mode1;
-    mModeHandler[0][2]=&Vdu::draw16bpp_mode2;
-    mModeHandler[0][3]=&Vdu::draw16bpp_mode0;
+    mModeHandler[0][0] = &Vdu::draw16bpp_mode0;
+    mModeHandler[0][1] = &Vdu::draw16bpp_mode1;
+    mModeHandler[0][2] = &Vdu::draw16bpp_mode2;
+    mModeHandler[0][3] = &Vdu::draw16bpp_mode0;
 
-    mModeHandler[1][0]=&Vdu::draw24bpp_mode0;
-    mModeHandler[1][1]=&Vdu::draw24bpp_mode1;
-    mModeHandler[1][2]=&Vdu::draw24bpp_mode2;
-    mModeHandler[1][3]=&Vdu::draw24bpp_mode0;
+    mModeHandler[1][0] = &Vdu::draw24bpp_mode0;
+    mModeHandler[1][1] = &Vdu::draw24bpp_mode1;
+    mModeHandler[1][2] = &Vdu::draw24bpp_mode2;
+    mModeHandler[1][3] = &Vdu::draw24bpp_mode0;
 
-    mModeHandler[2][0]=&Vdu::draw32bpp_mode0;
-    mModeHandler[2][1]=&Vdu::draw32bpp_mode1;
-    mModeHandler[2][2]=&Vdu::draw32bpp_mode2;
-    mModeHandler[2][3]=&Vdu::draw32bpp_mode0;
+    mModeHandler[2][0] = &Vdu::draw32bpp_mode0;
+    mModeHandler[2][1] = &Vdu::draw32bpp_mode1;
+    mModeHandler[2][2] = &Vdu::draw32bpp_mode2;
+    mModeHandler[2][3] = &Vdu::draw32bpp_mode0;
 
     if (mBorder)
     {
-        mBorderHandler[0]=&Vdu::draw16bpp_border;
-        mBorderHandler[1]=&Vdu::draw24bpp_border;
-        mBorderHandler[2]=&Vdu::draw32bpp_border;
+        mBorderHandler[0] = &Vdu::draw16bpp_border;
+        mBorderHandler[1] = &Vdu::draw24bpp_border;
+        mBorderHandler[2] = &Vdu::draw32bpp_border;
     }
     else
     {
-        mBorderHandler[0]=&Vdu::draw16bpp_nullborder;
-        mBorderHandler[1]=&Vdu::draw24bpp_nullborder;
-        mBorderHandler[2]=&Vdu::draw32bpp_nullborder;
+        mBorderHandler[0] = &Vdu::draw16bpp_nullborder;
+        mBorderHandler[1] = &Vdu::draw24bpp_nullborder;
+        mBorderHandler[2] = &Vdu::draw32bpp_nullborder;
     }
 
-    mCurModeHandler  = mModeHandler  [mBpp][1];
-    mCurBorderHandler= mBorderHandler[mBpp];
+    mCurModeHandler = mModeHandler[mBpp][1];
+    mCurBorderHandler = mBorderHandler[mBpp];
 
     if (full)
     {
-        mHStart  = 7;
-        mHWidth  = CPC_VISIBLE_SCR_WIDTH / 8;
-        mVStart  = 27;
+        mHStart = 7;
+        mHWidth = CPC_VISIBLE_SCR_WIDTH / 8;
+        mVStart = 27;
         mVHeight = CPC_VISIBLE_SCR_HEIGHT;
 
-        mHswActive   = 4;
-        mScanlineMin = 272; //240;// @todo 272 ???
+        mHswActive = 4;
+        mScanlineMin = 272; // 240;// @todo 272 ???
     }
-
 
     UDWORD idx, n, p1, p2, p3, p4;
 
     idx = 0;
-    for (n = 0; n < 256; n++) // calculate mode0 UBYTE-to-pixel translation table
+    for (n = 0; n < 256;
+         n++) // calculate mode0 UBYTE-to-pixel translation table
     {
-        p1 = ((n & 0x80) >> 7) + ((n & 0x08) >> 2) + ((n & 0x20) >> 3) + ((n & 0x02) << 2);
-        p2 = ((n & 0x40) >> 6) + ((n & 0x04) >> 1) + ((n & 0x10) >> 2) + ((n & 0x01) << 3);
+        p1 = ((n & 0x80) >> 7) + ((n & 0x08) >> 2) + ((n & 0x20) >> 3) +
+             ((n & 0x02) << 2);
+        p2 = ((n & 0x40) >> 6) + ((n & 0x04) >> 1) + ((n & 0x10) >> 2) +
+             ((n & 0x01) << 3);
         mode0_table[idx++] = p1;
         mode0_table[idx++] = p2;
     }
 
     idx = 0;
-    for (n = 0; n < 256; n++) // calculate mode1 UBYTE-to-pixel translation table
+    for (n = 0; n < 256;
+         n++) // calculate mode1 UBYTE-to-pixel translation table
     {
         p1 = ((n & 0x80) >> 7) + ((n & 0x08) >> 2);
         p2 = ((n & 0x40) >> 6) + ((n & 0x04) >> 1);
-        p3 = ((n & 0x20) >> 5) +  (n & 0x02);
+        p3 = ((n & 0x20) >> 5) + (n & 0x02);
         p4 = ((n & 0x10) >> 4) + ((n & 0x01) << 1);
         mode1_table[idx++] = p1;
         mode1_table[idx++] = p2;
@@ -136,26 +140,23 @@ void Vdu::setBpp(Bpp bpp)
     init(true);
 }
 
-void Vdu::setDoublescan(bool doublescan)
-{
-    mDoublescan = doublescan;
-}
+void Vdu::setDoublescan(bool doublescan) { mDoublescan = doublescan; }
 
 void Vdu::setBorder(bool border)
 {
-    mBorder=border;
+    mBorder = border;
 
     if (mBorder)
     {
-        mBorderHandler[0]=&Vdu::draw16bpp_border;
-        mBorderHandler[1]=&Vdu::draw24bpp_border;
-        mBorderHandler[2]=&Vdu::draw32bpp_border;
+        mBorderHandler[0] = &Vdu::draw16bpp_border;
+        mBorderHandler[1] = &Vdu::draw24bpp_border;
+        mBorderHandler[2] = &Vdu::draw32bpp_border;
     }
     else
     {
-        mBorderHandler[0]=&Vdu::draw16bpp_nullborder;
-        mBorderHandler[1]=&Vdu::draw24bpp_nullborder;
-        mBorderHandler[2]=&Vdu::draw32bpp_nullborder;
+        mBorderHandler[0] = &Vdu::draw16bpp_nullborder;
+        mBorderHandler[1] = &Vdu::draw24bpp_nullborder;
+        mBorderHandler[2] = &Vdu::draw32bpp_nullborder;
     }
 }
 
@@ -165,8 +166,8 @@ void Vdu::access_video_memory(int repeat_count)
 
     do
     {
-        char_count   = mCrtc->charCount();
-        line_count   = mCrtc->lineCount();
+        char_count = mCrtc->charCount();
+        line_count = mCrtc->lineCount();
         raster_count = mCrtc->rasterCount();
 
         char_count++; // update character count (cc)
@@ -177,101 +178,129 @@ void Vdu::access_video_memory(int repeat_count)
             mCrtc->removeFlags(Crtc::HT);
             mCrtc->setHswActive(mCrtc->hsw());
             mHswActive = mHsw;
-            char_count = 0;            // reset cc
-            // next raster ----------------------------------------------------------------
-            raster_count += 8;         // advance rc by one
-            if (mCrtc->flags() & Crtc::VS)   // in VSYNC?
+            char_count = 0; // reset cc
+            // next raster
+            // ----------------------------------------------------------------
+            raster_count += 8;             // advance rc by one
+            if (mCrtc->flags() & Crtc::VS) // in VSYNC?
             {
-                mCrtc->incVswCount();  // update width counter
+                mCrtc->incVswCount();                  // update width counter
                 if (mCrtc->vswCount() >= mCrtc->vsw()) // reached end of VSYNC?
                 {
-                    //mCrtc->flags() = (mCrtc->flags() & ~VS_flag) | VSf_flag; // reset VSYNC, set 'just finished'
+                    // mCrtc->flags() = (mCrtc->flags() & ~VS_flag) | VSf_flag;
+                    // // reset VSYNC, set 'just finished'
                     mCrtc->removeFlags(Crtc::VS);
                     mCrtc->addFlags(Crtc::VSf);
                 }
             }
-            if (mCrtc->flags() & Crtc::MR)    // reached maximum raster address on last rc?
+            if (mCrtc->flags() &
+                Crtc::MR) // reached maximum raster address on last rc?
             {
                 mCrtc->removeFlags(Crtc::MR);
-                raster_count = 0;             // reset rc
-                if (!(mCrtc->flags() & Crtc::HDT))         // HDISPTMG still on (i.e. R01 > R00)?
+                raster_count = 0; // reset rc
+                if (!(mCrtc->flags() &
+                      Crtc::HDT)) // HDISPTMG still on (i.e. R01 > R00)?
                 {
-                    mCrtc->setAddr(mCrtc->addr() + mCrtc->lastHDisp() * 2); // advance CPC screen address to next line
+                    mCrtc->setAddr(
+                        mCrtc->addr() +
+                        mCrtc->lastHDisp() *
+                            2); // advance CPC screen address to next line
                 }
-                line_count++;           // update line count
-                line_count &= 127;      // limit to 7 bits
+                line_count++;      // update line count
+                line_count &= 127; // limit to 7 bits
             }
             if (mCrtc->vtAdjustCount()) // vertical total adjust active?
             {
-                mCrtc->setVtAdjustCount(mCrtc->vtAdjustCount()-1);
+                mCrtc->setVtAdjustCount(mCrtc->vtAdjustCount() - 1);
                 if (mCrtc->vtAdjustCount() == 0) // done with vta?
                 {
-                    //mCrtc->flags() = (mCrtc->flags() & ~VSf_flag) | VDT_flag; // enable VDISPTMG
+                    // mCrtc->flags() = (mCrtc->flags() & ~VSf_flag) | VDT_flag;
+                    // // enable VDISPTMG
                     mCrtc->removeFlags(Crtc::VSf); // enable VDISPTMG
                     mCrtc->addFlags(Crtc::VDT);
-                    raster_count = 0;   // reset rc
-                    line_count   = 0;   // reset lc
-                    mCrtc->setAddr(mCrtc->requestedAddr()); // update start of CPC screen address
+                    raster_count = 0;                       // reset rc
+                    line_count = 0;                         // reset lc
+                    mCrtc->setAddr(mCrtc->requestedAddr()); // update start of
+                                                            // CPC screen
+                                                            // address
                 }
             }
-            if (mCrtc->flags() & Crtc::VT)    // reached vertical total on last lc?
+            if (mCrtc->flags() & Crtc::VT) // reached vertical total on last lc?
             {
                 mCrtc->removeFlags(Crtc::VT);
-                if (mCrtc->vtAdjust())  // do a vertical total adjust?
+                if (mCrtc->vtAdjust()) // do a vertical total adjust?
                 {
-                    mCrtc->setVtAdjustCount(mCrtc->vtAdjust()); // init vta counter
+                    mCrtc->setVtAdjustCount(
+                        mCrtc->vtAdjust()); // init vta counter
                 }
                 else
                 {
-                    //mCrtc->flags() = (mCrtc->flags() & ~VSf_flag) | VDT_flag; // enable VDISPTMG
+                    // mCrtc->flags() = (mCrtc->flags() & ~VSf_flag) | VDT_flag;
+                    // // enable VDISPTMG
                     mCrtc->removeFlags(Crtc::VSf); // enable VDISPTMG
                     mCrtc->addFlags(Crtc::VDT);
-                    raster_count = 0;        // reset rc
-                    line_count   = 0;        // reset lc
-                    mCrtc->setAddr(mCrtc->requestedAddr()); // update start of CPC screen address
+                    raster_count = 0;                       // reset rc
+                    line_count = 0;                         // reset lc
+                    mCrtc->setAddr(mCrtc->requestedAddr()); // update start of
+                                                            // CPC screen
+                                                            // address
                 }
             }
-            if (raster_count == mCrtc->maxRaster()) // rc = maximum raster address?
+            if (raster_count ==
+                mCrtc->maxRaster()) // rc = maximum raster address?
             {
-                mCrtc->addFlags(Crtc::MR);          // process max raster address on next rc
-                if (!mCrtc->vtAdjustCount())        // no vertical total adjust?
+                mCrtc->addFlags(
+                    Crtc::MR); // process max raster address on next rc
+                if (!mCrtc->vtAdjustCount()) // no vertical total adjust?
                 {
-                    if (line_count == mCrtc->read(Crtc::VerticalTotal)) // lc = vertical total?
+                    if (line_count ==
+                        mCrtc->read(
+                            Crtc::VerticalTotal)) // lc = vertical total?
                     {
-                        mCrtc->addFlags(Crtc::VT);  // takes effect on next lc
+                        mCrtc->addFlags(Crtc::VT); // takes effect on next lc
                     }
                 }
             }
-            if (line_count == mCrtc->read(Crtc::VerticalDisplayed))   // lc = vertical displayed?
+            if (line_count ==
+                mCrtc->read(
+                    Crtc::VerticalDisplayed)) // lc = vertical displayed?
             {
-                mCrtc->removeFlags(Crtc::VDT);      // disable VDISPTMG
+                mCrtc->removeFlags(Crtc::VDT); // disable VDISPTMG
             }
-            if (line_count == mCrtc->read(Crtc::VerticalSyncPosition)) // lc = vertical sync position?
+            if (line_count ==
+                mCrtc->read(
+                    Crtc::VerticalSyncPosition)) // lc = vertical sync position?
             {
                 if (!(mCrtc->flags() & (Crtc::VSf | Crtc::VS))) // not in VSYNC?
                 {
                     mCrtc->addFlags(Crtc::VS);
-                    mCrtc->setVswCount(0);      // clear vsw counter
-                    mVDelay   = 2;              // GA delays vsync by 2 scanlines
-                    mVswCount = 4;              // GA vsync is always 4 scanlines long
-                    mGateArray->setIntDelay(2); // arm GA two scanlines interrupt delay
+                    mCrtc->setVswCount(0); // clear vsw counter
+                    mVDelay = 2;           // GA delays vsync by 2 scanlines
+                    mVswCount = 4; // GA vsync is always 4 scanlines long
+                    mGateArray->setIntDelay(
+                        2); // arm GA two scanlines interrupt delay
                 }
             }
             // ----------------------------------------------------------------------------
-            mCrtc->addFlags(Crtc::HDT);    // enable horizontal display
+            mCrtc->addFlags(Crtc::HDT); // enable horizontal display
         }
-        if (char_count == mCrtc->read(Crtc::HorizontalTotal))     // cc = horizontal total?
+        if (char_count ==
+            mCrtc->read(Crtc::HorizontalTotal)) // cc = horizontal total?
         {
-            mCrtc->addFlags(Crtc::HT);     // takes effect on next cc
+            mCrtc->addFlags(Crtc::HT); // takes effect on next cc
         }
-        if (char_count == mCrtc->read(Crtc::HorizontalDisplayed)) // cc = horizontal displayed?
+        if (char_count ==
+            mCrtc->read(
+                Crtc::HorizontalDisplayed)) // cc = horizontal displayed?
         {
             mCrtc->removeFlags(Crtc::HDT); // disable horizontal display
-            mCrtc->setLastHDisp(mCrtc->read(Crtc::HorizontalDisplayed)); // save width for line advancement
+            mCrtc->setLastHDisp(mCrtc->read(
+                Crtc::HorizontalDisplayed)); // save width for line advancement
         }
-        if (mCrtc->flags() & Crtc::HS)     // in horizontal sync?
+        if (mCrtc->flags() & Crtc::HS) // in horizontal sync?
         {
-            // check hsw ------------------------------------------------------------------
+            // check hsw
+            // ------------------------------------------------------------------
             if (mHDelay == 2) // ready to trigger VDU HSYNC?
             {
                 if (--mHswCount == 0)
@@ -279,7 +308,8 @@ void Vdu::access_video_memory(int repeat_count)
                     if (mScrLine < CPC_SCR_HEIGHT)
                     {
                         mScrLine++;
-                        if (mVCount != 0) // (!= 0) in the visible portion of the screen?
+                        if (mVCount !=
+                            0) // (!= 0) in the visible portion of the screen?
                         {
                             doublescan();
                             mScrBase += mScrLineOffset; // advance to next line
@@ -298,10 +328,13 @@ void Vdu::access_video_memory(int repeat_count)
             mCrtc->setHswCount(mCrtc->hswCount() - 1);
             if (mCrtc->hswCount() == 0) // end of HSYNC?
             {
-                // hsw end --------------------------------------------------------------------
+                // hsw end
+                // --------------------------------------------------------------------
                 mCrtc->removeFlags(Crtc::HS); // reset HSYNC
-                mGateArray->setMode(mGateArray->requestedMode()); // execute mode change
-                mCurModeHandler=mModeHandler[mBpp][mGateArray->requestedMode()];
+                mGateArray->setMode(
+                    mGateArray->requestedMode()); // execute mode change
+                mCurModeHandler =
+                    mModeHandler[mBpp][mGateArray->requestedMode()];
                 mScanline++;
                 if (mVDelay) // monitor delaying VSYNC?
                 {
@@ -313,33 +346,39 @@ void Vdu::access_video_memory(int repeat_count)
                     {
                         if (--mVswCount == 0) // done with monitor VSYNC?
                         {
-                            if (mScanline > mScanlineMin) // above minimum scanline count?
+                            if (mScanline >
+                                mScanlineMin) // above minimum scanline count?
                             {
                                 mScrOffset = 0;
                                 mScrLine = 0;
-                                mFrameCompleted = true;      // force exit of emulation loop
+                                mFrameCompleted =
+                                    true; // force exit of emulation loop
                                 mZ80->stop();
                             }
                         }
                     }
                 }
-                // GA interrupt trigger -------------------------------------------------------
-                mGateArray->setSlCount(mGateArray->slCount() + 1); // update GA scanline counter
+                // GA interrupt trigger
+                // -------------------------------------------------------
+                mGateArray->setSlCount(mGateArray->slCount() +
+                                       1);  // update GA scanline counter
                 if (mGateArray->intDelay()) // delay on VSYNC?
                 {
                     mGateArray->setIntDelay(mGateArray->intDelay() - 1);
-                    if (mGateArray->intDelay() == 0)     // delay expired?
+                    if (mGateArray->intDelay() == 0) // delay expired?
                     {
-                        if (mGateArray->slCount() >= 32) // counter above save margin?
+                        if (mGateArray->slCount() >=
+                            32) // counter above save margin?
                         {
-                            /** @todo mZ80->int_pending = 1;// queue interrupt */
+                            /** @todo mZ80->int_pending = 1;// queue interrupt
+                             */
                             mZ80->setIntPending(1);
                             // mGateArray->setInterrupt(false);
-                            mGateArray->setSlCount(0);   // clear counter
+                            mGateArray->setSlCount(0); // clear counter
                         }
                         else
                         {
-                            mGateArray->setSlCount(0);   // clear counter
+                            mGateArray->setSlCount(0); // clear counter
                         }
                     }
                 }
@@ -348,19 +387,21 @@ void Vdu::access_video_memory(int repeat_count)
                     /** @todo mZ80->int_pending = 1; // queue interrupt */
                     mZ80->setIntPending(1);
                     // mGateArray->setInterrupt(false);
-                    mGateArray->setSlCount(0);   // clear counter
+                    mGateArray->setSlCount(0); // clear counter
                 }
             }
         }
         // ----------------------------------------------------------------------------
-        if (char_count == mCrtc->read(Crtc::HorizontalSyncPosition)) // cc = horizontal sync position?
+        if (char_count ==
+            mCrtc->read(
+                Crtc::HorizontalSyncPosition)) // cc = horizontal sync position?
         {
-            if (mCrtc->hswActive())          // allow HSYNCs?
+            if (mCrtc->hswActive()) // allow HSYNCs?
             {
-                mCrtc->addFlags(Crtc::HS);   // set HSYNC
+                mCrtc->addFlags(Crtc::HS);              // set HSYNC
                 mCrtc->setHswCount(mCrtc->hswActive()); // load hsw counter
-                mHDelay = 0;                 // clear VDU 2 chars HSYNC delay
-                mHswCount = mHswActive;      // load VDU hsw counter
+                mHDelay = 0;            // clear VDU 2 chars HSYNC delay
+                mHswCount = mHswActive; // load VDU hsw counter
             }
         }
         mCrtc->setCharCount(char_count);     // store cc
@@ -369,31 +410,43 @@ void Vdu::access_video_memory(int repeat_count)
 
         {
             addr.d = char_count;
-            addr.d = (addr.d * 2) + mCrtc->addr(); // cc x2 + CPC screen memory address
-            if (addr.b.h & 0x20)  // 32K screen?
+            addr.d = (addr.d * 2) +
+                     mCrtc->addr(); // cc x2 + CPC screen memory address
+            if (addr.b.h & 0x20)    // 32K screen?
             {
                 addr.b.h += 0x40; // advance to next 16K segment
             }
-            addr.b.h &= 0xc7;     // apply 11000111 mask
-            addr.b.h |= (raster_count & 0x38); // insert rc, masked with 00111000
+            addr.b.h &= 0xc7; // apply 11000111 mask
+            addr.b.h |=
+                (raster_count & 0x38); // insert rc, masked with 00111000
 
             if (mHCount != 0)
             {
-                if ((mCrtc->flags() & (Crtc::HDT | Crtc::VDT)) == (Crtc::HDT | Crtc::VDT)) // DISPTMG enabled?
+                if ((mCrtc->flags() & (Crtc::HDT | Crtc::VDT)) ==
+                    (Crtc::HDT | Crtc::VDT)) // DISPTMG enabled?
                 {
                     if (mCrtc->skew() != 0)
                     {
                         mCrtc->setSkew(mCrtc->skew() - 1);
-                        if (mScrBase < mScrEnd) (this->*(mCurBorderHandler))(); // @bug should not happen, but does. Only in 32 Bpp
+                        if (mScrBase < mScrEnd)
+                            (this->*(mCurBorderHandler))(); // @bug should not
+                                                            // happen, but does.
+                                                            // Only in 32 Bpp
                     }
                     else
                     {
-                        if (mScrBase < mScrEnd) (this->*(mCurModeHandler))(); // @bug should not happen, but does. Only in 32 Bpp
+                        if (mScrBase < mScrEnd)
+                            (this->*(mCurModeHandler))(); // @bug should not
+                                                          // happen, but does.
+                                                          // Only in 32 Bpp
                     }
                 }
                 else
                 {
-                    if (mScrBase < mScrEnd) (this->*(mCurBorderHandler))(); // @bug should not happen, but does. Only in 32 Bpp
+                    if (mScrBase < mScrEnd)
+                        (this->*(mCurBorderHandler))(); // @bug should not
+                                                        // happen, but does.
+                                                        // Only in 32 Bpp
                 }
                 mHCount--;
             }
@@ -416,20 +469,20 @@ void Vdu::access_video_memory(int repeat_count)
                 }
             }
         }
-    }
-    while (--repeat_count);
+    } while (--repeat_count);
 }
 
 inline void Vdu::doublescan()
 {
-    if (mDoublescan && (mScrBase < mScrEnd)) // @todo Last line draws outside the screenmem
+    if (mDoublescan &&
+        (mScrBase < mScrEnd)) // @todo Last line draws outside the screenmem
     {
-        char *mem_ptr2 = (char*) mScrBase + (mScrLineOffset*2);
-        #ifdef USE_MMX
-            mmx_memcpy((char*)mem_ptr2, (char*)mScrBase, mScrLineOffset*2);
-        #else
-            memcpy((char*)mem_ptr2, (char*)mScrBase, mScrLineOffset*2);
-        #endif
+        char *mem_ptr2 = (char *)mScrBase + (mScrLineOffset * 2);
+#ifdef USE_MMX
+        mmx_memcpy((char *)mem_ptr2, (char *)mScrBase, mScrLineOffset * 2);
+#else
+        memcpy((char *)mem_ptr2, (char *)mScrBase, mScrLineOffset * 2);
+#endif
     }
 }
 
@@ -439,26 +492,26 @@ inline void Vdu::doublescan()
 void Vdu::draw16bpp_border()
 {
     UDWORD colour;
-    register UDWORD* mem_ptr;
+    register UDWORD *mem_ptr;
 
-    colour   = mGateArray->palette(16);
+    colour = mGateArray->palette(16);
     colour |= (colour << 16);
-    mem_ptr  = (UDWORD*) mScrBase + mScrOffset; // PC screen buffer address
+    mem_ptr = (UDWORD *)mScrBase + mScrOffset; // PC screen buffer address
     *mem_ptr = colour; // write one pixel of border colour
-    *(mem_ptr+1) = colour;
-    *(mem_ptr+2) = colour;
-    *(mem_ptr+3) = colour;
-    *(mem_ptr+4) = colour;
-    *(mem_ptr+5) = colour;
-    *(mem_ptr+6) = colour;
-    *(mem_ptr+7) = colour;
-    
-    mScrOffset+=8; // update PC screen buffer address
+    *(mem_ptr + 1) = colour;
+    *(mem_ptr + 2) = colour;
+    *(mem_ptr + 3) = colour;
+    *(mem_ptr + 4) = colour;
+    *(mem_ptr + 5) = colour;
+    *(mem_ptr + 6) = colour;
+    *(mem_ptr + 7) = colour;
+
+    mScrOffset += 8; // update PC screen buffer address
 }
 
 void Vdu::draw16bpp_nullborder()
 {
-    mScrOffset+=8; // update PC screen buffer address
+    mScrOffset += 8; // update PC screen buffer address
 }
 
 void Vdu::draw16bpp_mode0()
@@ -467,25 +520,26 @@ void Vdu::draw16bpp_mode0()
     register UDWORD *mem_ptr;
     UDWORD val;
 
-    mem_ptr = (UDWORD*) mScrBase + mScrOffset; // PC screen buffer address
+    mem_ptr = (UDWORD *)mScrBase + mScrOffset; // PC screen buffer address
 
     idx = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
-    val = mGateArray->palette(mode0_table[(idx*2)]);
-    *mem_ptr     = val;        // write one pixels
-    *(mem_ptr+1) = val;
-    val = mGateArray->palette(mode0_table[(idx*2)+1]);
-    *(mem_ptr+2) = val;
-    *(mem_ptr+3) = val;
+    val = mGateArray->palette(mode0_table[(idx * 2)]);
+    *mem_ptr = val; // write one pixels
+    *(mem_ptr + 1) = val;
+    val = mGateArray->palette(mode0_table[(idx * 2) + 1]);
+    *(mem_ptr + 2) = val;
+    *(mem_ptr + 3) = val;
 
-    idx = *(mCpcRamBase + ((addr.w.l+1) & 0xffff)); // grab second CPC screen memory UBYTE
-    val = mGateArray->palette(mode0_table[(idx*2)]);
-    *(mem_ptr+4) = val;
-    *(mem_ptr+5) = val;
-    val = mGateArray->palette(mode0_table[(idx*2)+1]);
-    *(mem_ptr+6) = val;
-    *(mem_ptr+7) = val;
+    idx = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    val = mGateArray->palette(mode0_table[(idx * 2)]);
+    *(mem_ptr + 4) = val;
+    *(mem_ptr + 5) = val;
+    val = mGateArray->palette(mode0_table[(idx * 2) + 1]);
+    *(mem_ptr + 6) = val;
+    *(mem_ptr + 7) = val;
 
-    mScrOffset+=8; // update PC screen buffer addr.w.less
+    mScrOffset += 8; // update PC screen buffer addr.w.less
 }
 
 void Vdu::draw16bpp_mode1()
@@ -494,31 +548,32 @@ void Vdu::draw16bpp_mode1()
     register UDWORD *mem_ptr;
     UDWORD val;
 
-    //std::cout << "CPC-addr.w.l: " << std::hex << (int) addr.w.l << "\n";
+    // std::cout << "CPC-addr.w.l: " << std::hex << (int) addr.w.l << "\n";
 
-    mem_ptr = (UDWORD*) mScrBase + mScrOffset; // PC screen buffer addr.w.less
+    mem_ptr = (UDWORD *)mScrBase + mScrOffset; // PC screen buffer addr.w.less
 
     idx = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
-    val = mGateArray->palette(mode1_table[(idx*4)]);
-    *mem_ptr     = val;        // write one pixels
-    val = mGateArray->palette(mode1_table[(idx*4)+1]);
-    *(mem_ptr+1) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+2]);
-    *(mem_ptr+2) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+3]);
-    *(mem_ptr+3) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4)]);
+    *mem_ptr = val; // write one pixels
+    val = mGateArray->palette(mode1_table[(idx * 4) + 1]);
+    *(mem_ptr + 1) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 2]);
+    *(mem_ptr + 2) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 3]);
+    *(mem_ptr + 3) = val;
 
-    idx = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
-    val = mGateArray->palette(mode1_table[(idx*4)]);
-    *(mem_ptr+4) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+1]);
-    *(mem_ptr+5) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+2]);
-    *(mem_ptr+6) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+3]);
-    *(mem_ptr+7) = val;
+    idx = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    val = mGateArray->palette(mode1_table[(idx * 4)]);
+    *(mem_ptr + 4) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 1]);
+    *(mem_ptr + 5) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 2]);
+    *(mem_ptr + 6) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 3]);
+    *(mem_ptr + 7) = val;
 
-    mScrOffset+=8; // update PC screen buffer addr.w.less
+    mScrOffset += 8; // update PC screen buffer addr.w.less
 }
 
 void Vdu::draw16bpp_mode2()
@@ -528,42 +583,41 @@ void Vdu::draw16bpp_mode2()
     UDWORD pen_on, pen_off;
     REGPAIR val;
 
-    mem_ptr = (UDWORD*) mScrBase + mScrOffset; // PC screen buffer addr.w.less
-    pen_on  = mGateArray->palette(1);
+    mem_ptr = (UDWORD *)mScrBase + mScrOffset; // PC screen buffer addr.w.less
+    pen_on = mGateArray->palette(1);
     pen_off = mGateArray->palette(0);
 
     pat = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
     val.w.l = (pat & 0x80) ? pen_on : pen_off;
     val.w.h = (pat & 0x40) ? pen_on : pen_off;
-    *mem_ptr = val.d;      // write four pixels
+    *mem_ptr = val.d; // write four pixels
     val.w.l = (pat & 0x20) ? pen_on : pen_off;
     val.w.h = (pat & 0x10) ? pen_on : pen_off;
-    *(mem_ptr+1) = val.d;
+    *(mem_ptr + 1) = val.d;
     val.w.l = (pat & 0x08) ? pen_on : pen_off;
     val.w.h = (pat & 0x04) ? pen_on : pen_off;
-    *(mem_ptr+2) = val.d;
+    *(mem_ptr + 2) = val.d;
     val.w.l = (pat & 0x02) ? pen_on : pen_off;
     val.w.h = (pat & 0x01) ? pen_on : pen_off;
-    *(mem_ptr+3) = val.d;
+    *(mem_ptr + 3) = val.d;
 
-    pat = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
+    pat = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
     val.w.l = (pat & 0x80) ? pen_on : pen_off;
     val.w.h = (pat & 0x40) ? pen_on : pen_off;
-    *(mem_ptr+4) = val.d;
+    *(mem_ptr + 4) = val.d;
     val.w.l = (pat & 0x20) ? pen_on : pen_off;
     val.w.h = (pat & 0x10) ? pen_on : pen_off;
-    *(mem_ptr+5) = val.d;
+    *(mem_ptr + 5) = val.d;
     val.w.l = (pat & 0x08) ? pen_on : pen_off;
     val.w.h = (pat & 0x04) ? pen_on : pen_off;
-    *(mem_ptr+6) = val.d;
+    *(mem_ptr + 6) = val.d;
     val.w.l = (pat & 0x02) ? pen_on : pen_off;
     val.w.h = (pat & 0x01) ? pen_on : pen_off;
-    *(mem_ptr+7) = val.d;
+    *(mem_ptr + 7) = val.d;
 
-    mScrOffset+=8; // update PC screen buffer addr.w.less
+    mScrOffset += 8; // update PC screen buffer addr.w.less
 }
-
-
 
 //******************************************
 //*** 24 bpp *******************************
@@ -576,28 +630,28 @@ void Vdu::draw24bpp_border()
     colour = mGateArray->palette(16);
     mem_ptr = (UBYTE *)(mScrBase + mScrOffset); // PC screen buffer address
     *(UDWORD *)mem_ptr = colour; // write one pixel of border colour
-    *(UDWORD *)(mem_ptr+3)  = colour;
-    *(UDWORD *)(mem_ptr+6)  = colour;
-    *(UDWORD *)(mem_ptr+9)  = colour;
-    *(UDWORD *)(mem_ptr+12) = colour;
-    *(UDWORD *)(mem_ptr+15) = colour;
-    *(UDWORD *)(mem_ptr+18) = colour;
-    *(UDWORD *)(mem_ptr+21) = colour;
-    *(UDWORD *)(mem_ptr+24) = colour;
-    *(UDWORD *)(mem_ptr+27) = colour;
-    *(UDWORD *)(mem_ptr+30) = colour;
-    *(UDWORD *)(mem_ptr+33) = colour;
-    *(UDWORD *)(mem_ptr+36) = colour;
-    *(UDWORD *)(mem_ptr+39) = colour;
-    *(UDWORD *)(mem_ptr+42) = colour;
-    *(UDWORD *)(mem_ptr+45) = colour;
+    *(UDWORD *)(mem_ptr + 3) = colour;
+    *(UDWORD *)(mem_ptr + 6) = colour;
+    *(UDWORD *)(mem_ptr + 9) = colour;
+    *(UDWORD *)(mem_ptr + 12) = colour;
+    *(UDWORD *)(mem_ptr + 15) = colour;
+    *(UDWORD *)(mem_ptr + 18) = colour;
+    *(UDWORD *)(mem_ptr + 21) = colour;
+    *(UDWORD *)(mem_ptr + 24) = colour;
+    *(UDWORD *)(mem_ptr + 27) = colour;
+    *(UDWORD *)(mem_ptr + 30) = colour;
+    *(UDWORD *)(mem_ptr + 33) = colour;
+    *(UDWORD *)(mem_ptr + 36) = colour;
+    *(UDWORD *)(mem_ptr + 39) = colour;
+    *(UDWORD *)(mem_ptr + 42) = colour;
+    *(UDWORD *)(mem_ptr + 45) = colour;
 
-    mScrOffset+=12; // update PC screen buffer address
+    mScrOffset += 12; // update PC screen buffer address
 }
 
 void Vdu::draw24bpp_nullborder()
 {
-    mScrOffset+=12; // update PC screen buffer address
+    mScrOffset += 12; // update PC screen buffer address
 }
 
 void Vdu::draw24bpp_mode0()
@@ -608,30 +662,31 @@ void Vdu::draw24bpp_mode0()
 
     mem_ptr = (UBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
     idx = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
-    val = mGateArray->palette(mode0_table[(idx*2)]);
+    val = mGateArray->palette(mode0_table[(idx * 2)]);
     *(UDWORD *)mem_ptr = val; // write one pixels
-    *(UDWORD *)(mem_ptr+3)  = val;
-    *(UDWORD *)(mem_ptr+6)  = val;
-    *(UDWORD *)(mem_ptr+9)  = val;
-    val = mGateArray->palette(mode0_table[(idx*2)+1]);
-    *(UDWORD *)(mem_ptr+12) = val;
-    *(UDWORD *)(mem_ptr+15) = val;
-    *(UDWORD *)(mem_ptr+18) = val;
-    *(UDWORD *)(mem_ptr+21) = val;
+    *(UDWORD *)(mem_ptr + 3) = val;
+    *(UDWORD *)(mem_ptr + 6) = val;
+    *(UDWORD *)(mem_ptr + 9) = val;
+    val = mGateArray->palette(mode0_table[(idx * 2) + 1]);
+    *(UDWORD *)(mem_ptr + 12) = val;
+    *(UDWORD *)(mem_ptr + 15) = val;
+    *(UDWORD *)(mem_ptr + 18) = val;
+    *(UDWORD *)(mem_ptr + 21) = val;
 
-    idx = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
-    val = mGateArray->palette(mode0_table[(idx*2)]);
-    *(UDWORD *)(mem_ptr+24) = val;
-    *(UDWORD *)(mem_ptr+27) = val;
-    *(UDWORD *)(mem_ptr+30) = val;
-    *(UDWORD *)(mem_ptr+33) = val;
-    val = mGateArray->palette(mode0_table[(idx*2)+1]);
-    *(UDWORD *)(mem_ptr+36) = val;
-    *(UDWORD *)(mem_ptr+39) = val;
-    *(UDWORD *)(mem_ptr+42) = val;
-    *(UDWORD *)(mem_ptr+45) = val;
+    idx = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    val = mGateArray->palette(mode0_table[(idx * 2)]);
+    *(UDWORD *)(mem_ptr + 24) = val;
+    *(UDWORD *)(mem_ptr + 27) = val;
+    *(UDWORD *)(mem_ptr + 30) = val;
+    *(UDWORD *)(mem_ptr + 33) = val;
+    val = mGateArray->palette(mode0_table[(idx * 2) + 1]);
+    *(UDWORD *)(mem_ptr + 36) = val;
+    *(UDWORD *)(mem_ptr + 39) = val;
+    *(UDWORD *)(mem_ptr + 42) = val;
+    *(UDWORD *)(mem_ptr + 45) = val;
 
-    mScrOffset+=12; // update PC screen buffer address
+    mScrOffset += 12; // update PC screen buffer address
 }
 
 void Vdu::draw24bpp_mode1()
@@ -642,34 +697,35 @@ void Vdu::draw24bpp_mode1()
 
     mem_ptr = (UBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
     idx = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
-    val = mGateArray->palette(mode1_table[(idx*4)]);
+    val = mGateArray->palette(mode1_table[(idx * 4)]);
     *(UDWORD *)mem_ptr = val; // write one pixels
-    *(UDWORD *)(mem_ptr+3)  = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+1]);
-    *(UDWORD *)(mem_ptr+6)  = val;
-    *(UDWORD *)(mem_ptr+9)  = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+2]);
-    *(UDWORD *)(mem_ptr+12) = val;
-    *(UDWORD *)(mem_ptr+15) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+3]);
-    *(UDWORD *)(mem_ptr+18) = val;
-    *(UDWORD *)(mem_ptr+21) = val;
+    *(UDWORD *)(mem_ptr + 3) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 1]);
+    *(UDWORD *)(mem_ptr + 6) = val;
+    *(UDWORD *)(mem_ptr + 9) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 2]);
+    *(UDWORD *)(mem_ptr + 12) = val;
+    *(UDWORD *)(mem_ptr + 15) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 3]);
+    *(UDWORD *)(mem_ptr + 18) = val;
+    *(UDWORD *)(mem_ptr + 21) = val;
 
-    idx = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
-    val = mGateArray->palette(mode1_table[(idx*4)]);
-    *(UDWORD *)(mem_ptr+24) = val;
-    *(UDWORD *)(mem_ptr+27) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+1]);
-    *(UDWORD *)(mem_ptr+30) = val;
-    *(UDWORD *)(mem_ptr+33) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+2]);
-    *(UDWORD *)(mem_ptr+36) = val;
-    *(UDWORD *)(mem_ptr+39) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+3]);
-    *(UDWORD *)(mem_ptr+42) = val;
-    *(UDWORD *)(mem_ptr+45) = val;
+    idx = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    val = mGateArray->palette(mode1_table[(idx * 4)]);
+    *(UDWORD *)(mem_ptr + 24) = val;
+    *(UDWORD *)(mem_ptr + 27) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 1]);
+    *(UDWORD *)(mem_ptr + 30) = val;
+    *(UDWORD *)(mem_ptr + 33) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 2]);
+    *(UDWORD *)(mem_ptr + 36) = val;
+    *(UDWORD *)(mem_ptr + 39) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 3]);
+    *(UDWORD *)(mem_ptr + 42) = val;
+    *(UDWORD *)(mem_ptr + 45) = val;
 
-    mScrOffset+=12; // update PC screen buffer address
+    mScrOffset += 12; // update PC screen buffer address
 }
 
 void Vdu::draw24bpp_mode2()
@@ -679,34 +735,32 @@ void Vdu::draw24bpp_mode2()
     UDWORD pen_on, pen_off;
 
     mem_ptr = (UBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
-    pen_on  = mGateArray->palette(1);
+    pen_on = mGateArray->palette(1);
     pen_off = mGateArray->palette(0);
 
     pat = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
-    *(UDWORD *) mem_ptr     = (pat & 0x80) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+3)  = (pat & 0x40) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+6)  = (pat & 0x20) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+9)  = (pat & 0x10) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+12) = (pat & 0x08) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+15) = (pat & 0x04) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+18) = (pat & 0x02) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+21) = (pat & 0x01) ? pen_on : pen_off;
+    *(UDWORD *)mem_ptr = (pat & 0x80) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 3) = (pat & 0x40) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 6) = (pat & 0x20) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 9) = (pat & 0x10) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 12) = (pat & 0x08) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 15) = (pat & 0x04) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 18) = (pat & 0x02) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 21) = (pat & 0x01) ? pen_on : pen_off;
 
-    pat = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
-    *(UDWORD *)(mem_ptr+24) = (pat & 0x80) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+27) = (pat & 0x40) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+30) = (pat & 0x20) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+33) = (pat & 0x10) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+36) = (pat & 0x08) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+39) = (pat & 0x04) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+42) = (pat & 0x02) ? pen_on : pen_off;
-    *(UDWORD *)(mem_ptr+45) = (pat & 0x01) ? pen_on : pen_off;
+    pat = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    *(UDWORD *)(mem_ptr + 24) = (pat & 0x80) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 27) = (pat & 0x40) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 30) = (pat & 0x20) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 33) = (pat & 0x10) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 36) = (pat & 0x08) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 39) = (pat & 0x04) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 42) = (pat & 0x02) ? pen_on : pen_off;
+    *(UDWORD *)(mem_ptr + 45) = (pat & 0x01) ? pen_on : pen_off;
 
-    mScrOffset+=12; // update PC screen buffer address
+    mScrOffset += 12; // update PC screen buffer address
 }
-
-
-
 
 //******************************************
 //*** 32 bpp *******************************
@@ -718,29 +772,29 @@ void Vdu::draw32bpp_border()
 
     colour = mGateArray->palette(16);
     mem_ptr = (mScrBase + mScrOffset); // PC screen buffer addr.w.less
-    *mem_ptr = colour; // write one pixel of border colour
-    *(mem_ptr+1)  = colour;
-    *(mem_ptr+2)  = colour;
-    *(mem_ptr+3)  = colour;
-    *(mem_ptr+4)  = colour;
-    *(mem_ptr+5)  = colour;
-    *(mem_ptr+6)  = colour;
-    *(mem_ptr+7)  = colour;
-    *(mem_ptr+8)  = colour;
-    *(mem_ptr+9)  = colour;
-    *(mem_ptr+10) = colour;
-    *(mem_ptr+11) = colour;
-    *(mem_ptr+12) = colour;
-    *(mem_ptr+13) = colour;
-    *(mem_ptr+14) = colour;
-    *(mem_ptr+15) = colour;
+    *mem_ptr = colour;                 // write one pixel of border colour
+    *(mem_ptr + 1) = colour;
+    *(mem_ptr + 2) = colour;
+    *(mem_ptr + 3) = colour;
+    *(mem_ptr + 4) = colour;
+    *(mem_ptr + 5) = colour;
+    *(mem_ptr + 6) = colour;
+    *(mem_ptr + 7) = colour;
+    *(mem_ptr + 8) = colour;
+    *(mem_ptr + 9) = colour;
+    *(mem_ptr + 10) = colour;
+    *(mem_ptr + 11) = colour;
+    *(mem_ptr + 12) = colour;
+    *(mem_ptr + 13) = colour;
+    *(mem_ptr + 14) = colour;
+    *(mem_ptr + 15) = colour;
 
-    mScrOffset+=16; // update PC screen buffer address
+    mScrOffset += 16; // update PC screen buffer address
 }
 
 void Vdu::draw32bpp_nullborder()
 {
-    mScrOffset+=16; // update PC screen buffer address
+    mScrOffset += 16; // update PC screen buffer address
 }
 
 void Vdu::draw32bpp_mode0()
@@ -751,30 +805,31 @@ void Vdu::draw32bpp_mode0()
 
     mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
     idx = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
-    val = mGateArray->palette(mode0_table[(idx*2)]);
+    val = mGateArray->palette(mode0_table[(idx * 2)]);
     *mem_ptr = val; // write one pixels
-    *(mem_ptr+1) = val;
-    *(mem_ptr+2) = val;
-    *(mem_ptr+3) = val;
-    val = mGateArray->palette(mode0_table[(idx*2)+1]);
-    *(mem_ptr+4) = val;
-    *(mem_ptr+5) = val;
-    *(mem_ptr+6) = val;
-    *(mem_ptr+7) = val;
+    *(mem_ptr + 1) = val;
+    *(mem_ptr + 2) = val;
+    *(mem_ptr + 3) = val;
+    val = mGateArray->palette(mode0_table[(idx * 2) + 1]);
+    *(mem_ptr + 4) = val;
+    *(mem_ptr + 5) = val;
+    *(mem_ptr + 6) = val;
+    *(mem_ptr + 7) = val;
 
-    idx = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
-    val = mGateArray->palette(mode0_table[(idx*2)]);
-    *(mem_ptr+8)  = val;
-    *(mem_ptr+9)  = val;
-    *(mem_ptr+10) = val;
-    *(mem_ptr+11) = val;
-    val = mGateArray->palette(mode0_table[(idx*2)+1]);
-    *(mem_ptr+12) = val;
-    *(mem_ptr+13) = val;
-    *(mem_ptr+14) = val;
-    *(mem_ptr+15) = val;
+    idx = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    val = mGateArray->palette(mode0_table[(idx * 2)]);
+    *(mem_ptr + 8) = val;
+    *(mem_ptr + 9) = val;
+    *(mem_ptr + 10) = val;
+    *(mem_ptr + 11) = val;
+    val = mGateArray->palette(mode0_table[(idx * 2) + 1]);
+    *(mem_ptr + 12) = val;
+    *(mem_ptr + 13) = val;
+    *(mem_ptr + 14) = val;
+    *(mem_ptr + 15) = val;
 
-    mScrOffset+=16; // update PC screen buffer address
+    mScrOffset += 16; // update PC screen buffer address
 }
 
 void Vdu::draw32bpp_mode1()
@@ -785,34 +840,35 @@ void Vdu::draw32bpp_mode1()
 
     mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
     idx = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
-    val = mGateArray->palette(mode1_table[(idx*4)]);
+    val = mGateArray->palette(mode1_table[(idx * 4)]);
     *mem_ptr = val; // write one pixels
-    *(mem_ptr+1) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+1]);
-    *(mem_ptr+2) = val;
-    *(mem_ptr+3) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+2]);
-    *(mem_ptr+4) = val;
-    *(mem_ptr+5) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+3]);
-    *(mem_ptr+6) = val;
-    *(mem_ptr+7) = val;
+    *(mem_ptr + 1) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 1]);
+    *(mem_ptr + 2) = val;
+    *(mem_ptr + 3) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 2]);
+    *(mem_ptr + 4) = val;
+    *(mem_ptr + 5) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 3]);
+    *(mem_ptr + 6) = val;
+    *(mem_ptr + 7) = val;
 
-    idx = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
-    val = mGateArray->palette(mode1_table[(idx*4)]);
-    *(mem_ptr+8) = val;
-    *(mem_ptr+9) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+1]);
-    *(mem_ptr+10) = val;
-    *(mem_ptr+11) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+2]);
-    *(mem_ptr+12) = val;
-    *(mem_ptr+13) = val;
-    val = mGateArray->palette(mode1_table[(idx*4)+3]);
-    *(mem_ptr+14) = val;
-    *(mem_ptr+15) = val;
+    idx = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    val = mGateArray->palette(mode1_table[(idx * 4)]);
+    *(mem_ptr + 8) = val;
+    *(mem_ptr + 9) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 1]);
+    *(mem_ptr + 10) = val;
+    *(mem_ptr + 11) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 2]);
+    *(mem_ptr + 12) = val;
+    *(mem_ptr + 13) = val;
+    val = mGateArray->palette(mode1_table[(idx * 4) + 3]);
+    *(mem_ptr + 14) = val;
+    *(mem_ptr + 15) = val;
 
-    mScrOffset+=16; // update PC screen buffer address
+    mScrOffset += 16; // update PC screen buffer address
 }
 
 void Vdu::draw32bpp_mode2()
@@ -822,29 +878,29 @@ void Vdu::draw32bpp_mode2()
     UDWORD pen_on, pen_off;
 
     mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
-    pen_on  = mGateArray->palette(1);
+    pen_on = mGateArray->palette(1);
     pen_off = mGateArray->palette(0);
 
     pat = *(mCpcRamBase + addr.w.l); // grab first CPC screen memory UBYTE
     *mem_ptr = (pat & 0x80) ? pen_on : pen_off;
-    *(mem_ptr+1) = (pat & 0x40) ? pen_on : pen_off;
-    *(mem_ptr+2) = (pat & 0x20) ? pen_on : pen_off;
-    *(mem_ptr+3) = (pat & 0x10) ? pen_on : pen_off;
-    *(mem_ptr+4) = (pat & 0x08) ? pen_on : pen_off;
-    *(mem_ptr+5) = (pat & 0x04) ? pen_on : pen_off;
-    *(mem_ptr+6) = (pat & 0x02) ? pen_on : pen_off;
-    *(mem_ptr+7) = (pat & 0x01) ? pen_on : pen_off;
+    *(mem_ptr + 1) = (pat & 0x40) ? pen_on : pen_off;
+    *(mem_ptr + 2) = (pat & 0x20) ? pen_on : pen_off;
+    *(mem_ptr + 3) = (pat & 0x10) ? pen_on : pen_off;
+    *(mem_ptr + 4) = (pat & 0x08) ? pen_on : pen_off;
+    *(mem_ptr + 5) = (pat & 0x04) ? pen_on : pen_off;
+    *(mem_ptr + 6) = (pat & 0x02) ? pen_on : pen_off;
+    *(mem_ptr + 7) = (pat & 0x01) ? pen_on : pen_off;
 
-    pat = *(mCpcRamBase + ((addr.w.l+1)&0xffff)); // grab second CPC screen memory UBYTE
-    *(mem_ptr+8)  = (pat & 0x80) ? pen_on : pen_off;
-    *(mem_ptr+9)  = (pat & 0x40) ? pen_on : pen_off;
-    *(mem_ptr+10) = (pat & 0x20) ? pen_on : pen_off;
-    *(mem_ptr+11) = (pat & 0x10) ? pen_on : pen_off;
-    *(mem_ptr+12) = (pat & 0x08) ? pen_on : pen_off;
-    *(mem_ptr+13) = (pat & 0x04) ? pen_on : pen_off;
-    *(mem_ptr+14) = (pat & 0x02) ? pen_on : pen_off;
-    *(mem_ptr+15) = (pat & 0x01) ? pen_on : pen_off;
+    pat = *(mCpcRamBase +
+            ((addr.w.l + 1) & 0xffff)); // grab second CPC screen memory UBYTE
+    *(mem_ptr + 8) = (pat & 0x80) ? pen_on : pen_off;
+    *(mem_ptr + 9) = (pat & 0x40) ? pen_on : pen_off;
+    *(mem_ptr + 10) = (pat & 0x20) ? pen_on : pen_off;
+    *(mem_ptr + 11) = (pat & 0x10) ? pen_on : pen_off;
+    *(mem_ptr + 12) = (pat & 0x08) ? pen_on : pen_off;
+    *(mem_ptr + 13) = (pat & 0x04) ? pen_on : pen_off;
+    *(mem_ptr + 14) = (pat & 0x02) ? pen_on : pen_off;
+    *(mem_ptr + 15) = (pat & 0x01) ? pen_on : pen_off;
 
-    mScrOffset+=16; // update PC screen buffer address
+    mScrOffset += 16; // update PC screen buffer address
 }
-

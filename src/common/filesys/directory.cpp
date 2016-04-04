@@ -26,29 +26,34 @@
 #include <algorithm>
 #include <iostream>
 
-
 using std::vector;
 
-Directory::Directory(const string & path, bool subdir, bool owndir) : vector<FileName>()
+Directory::Directory(const string &path, bool subdir, bool owndir)
+    : vector<FileName>()
 {
     scan(path, subdir, owndir);
 }
 
-void Directory::scan(const string & path, bool subdir, bool owndir)
+void Directory::scan(const string &path, bool subdir, bool owndir)
 {
     clear();
 
     DIR *dir;
-    dir=opendir(path.c_str());
-    if (dir == 0) return; /** @todo errorhandling !! */
+    dir = opendir(path.c_str());
+    if (dir == 0)
+        return; /** @todo errorhandling !! */
 
     struct dirent *entry;
 #ifdef _WIN32
-    while((entry=readdir(dir))) /**  @todo not threadsafe but readdir_r not in MinGW !! */
+    while (
+        (entry = readdir(
+             dir))) /**  @todo not threadsafe but readdir_r not in MinGW !! */
     {
         FileName fi(entry->d_name);
-        if ((!subdir) && (fi == "..")) continue;
-        if ((!owndir) && (fi == "." )) continue;
+        if ((!subdir) && (fi == ".."))
+            continue;
+        if ((!owndir) && (fi == "."))
+            continue;
         push_back(fi);
     }
     free(entry); /** @todo this is a static portion of memory, need change ?? */
@@ -58,15 +63,18 @@ void Directory::scan(const string & path, bool subdir, bool owndir)
     union
     {
         struct dirent d;
-        char b[offsetof (struct dirent, d_name) + NAME_MAX + 1];
+        char b[offsetof(struct dirent, d_name) + NAME_MAX + 1];
     } u;
 
-    while(!readdir_r(dir, &u.d, &entry))
+    while (!readdir_r(dir, &u.d, &entry))
     {
-        if (!entry) break;
+        if (!entry)
+            break;
         FileName fi(u.d.d_name);
-        if ((!subdir) && (fi == "..")) continue;
-        if ((!owndir) && (fi == "." )) continue;
+        if ((!subdir) && (fi == ".."))
+            continue;
+        if ((!owndir) && (fi == "."))
+            continue;
         push_back(fi);
     }
 #endif
@@ -74,14 +82,10 @@ void Directory::scan(const string & path, bool subdir, bool owndir)
     closedir(dir);
 }
 
-void Directory::sort()
-{
-    std::sort(begin(), end());
-}
+void Directory::sort() { std::sort(begin(), end()); }
 
 void Directory::sort(bool casesensitive)
 {
     FileName::setCaseSensitiveCompare(casesensitive);
     std::sort(begin(), end());
 }
-

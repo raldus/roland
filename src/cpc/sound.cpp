@@ -26,51 +26,45 @@
 
 extern Cpc cpc;
 
-UWORD Sound::mAmplitudesAY[16] =
-{
-   0, 836, 1212, 1773, 2619, 3875, 5397, 8823,
-   10392, 16706, 23339, 29292, 36969, 46421, 55195, 65535
-};
+UWORD Sound::mAmplitudesAY[16] = {0,     836,   1212,  1773,  2619,  3875,
+                                  5397,  8823,  10392, 16706, 23339, 29292,
+                                  36969, 46421, 55195, 65535};
 
 #define MAX_FREQ_ENTRIES 5
-DWORD Sound::mFreqTable[MAX_FREQ_ENTRIES] =
-{
-   11025,
-   22050,
-   44100,
-   48000,
-   96000
-};
+DWORD Sound::mFreqTable[MAX_FREQ_ENTRIES] = {11025, 22050, 44100, 48000, 96000};
 
-Sound::Sound(Psg* psg)
+Sound::Sound(Psg *psg)
 {
     mPsg = psg;
     init(psg);
 }
 
-void Sound::init(Psg* psg)
+void Sound::init(Psg *psg)
 {
-    mSndEnabled      = true;
+    mSndEnabled = true;
     mSndPlaybackRate = 1;
-    mSndBits         = 1;
-    mSndStereo       = 1;
-    mSndVolume       = 90;
-    mSndDevice       = 0;
-    mSndBufferSize   = 0;
-    mSndBufferPtr    = 0;
+    mSndBits = 1;
+    mSndStereo = 1;
+    mSndVolume = 90;
+    mSndDevice = 0;
+    mSndBufferSize = 0;
+    mSndBufferPtr = 0;
     mCycleCountInit.both = CYCLE_COUNT_INIT;
-    
-    
-    mBufferFull=false;
-    
-    if (psg) mPsg = psg;
-    if (mPsg) mPsg->init(); else return;
 
-    for (int n=0; n<16; n++)
+    mBufferFull = false;
+
+    if (psg)
+        mPsg = psg;
+    if (mPsg)
+        mPsg->init();
+    else
+        return;
+
+    for (int n = 0; n < 16; n++)
     {
-        setAYRegister(n, mPsg->registerAY(n)); // init sound emulation with valid values
+        setAYRegister(
+            n, mPsg->registerAY(n)); // init sound emulation with valid values
     }
-    
 }
 
 /*
@@ -110,13 +104,11 @@ inline void Sound::setAmplC(UBYTE value)
 }
 */
 
-
-
 void Sound::caseEnvType0_3__9()
 {
     if (mPsg->firstPeriod())
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()-1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() - 1);
         if (!mPsg->amplitudeEnv())
         {
             mPsg->setFirstPeriod(false);
@@ -128,7 +120,7 @@ void Sound::caseEnvType4_7__15()
 {
     if (mPsg->firstPeriod())
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()+1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() + 1);
         if (mPsg->amplitudeEnv() == 32)
         {
             mPsg->setFirstPeriod(false);
@@ -146,7 +138,7 @@ void Sound::caseEnvType10()
 {
     if (mPsg->firstPeriod())
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()-1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() - 1);
         if (mPsg->amplitudeEnv() == -1)
         {
             mPsg->setFirstPeriod(false);
@@ -155,7 +147,7 @@ void Sound::caseEnvType10()
     }
     else
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()+1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() + 1);
         if (mPsg->amplitudeEnv() == 32)
         {
             mPsg->setFirstPeriod(true);
@@ -168,7 +160,7 @@ void Sound::caseEnvType11()
 {
     if (mPsg->firstPeriod())
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()-1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() - 1);
         if (mPsg->amplitudeEnv() == -1)
         {
             mPsg->setFirstPeriod(false);
@@ -179,14 +171,14 @@ void Sound::caseEnvType11()
 
 void Sound::caseEnvType12()
 {
-    mPsg->setAmplitudeEnv((mPsg->amplitudeEnv()+1) & 31);
+    mPsg->setAmplitudeEnv((mPsg->amplitudeEnv() + 1) & 31);
 }
 
 void Sound::caseEnvType13()
 {
     if (mPsg->firstPeriod())
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()+1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() + 1);
         if (mPsg->amplitudeEnv() == 32)
         {
             mPsg->setFirstPeriod(false);
@@ -199,7 +191,7 @@ void Sound::caseEnvType14()
 {
     if (!mPsg->firstPeriod())
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()-1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() - 1);
         if (mPsg->amplitudeEnv() == -1)
         {
             mPsg->setFirstPeriod(true);
@@ -208,7 +200,7 @@ void Sound::caseEnvType14()
     }
     else
     {
-        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv()+1);
+        mPsg->setAmplitudeEnv(mPsg->amplitudeEnv() + 1);
         if (mPsg->amplitudeEnv() == 32)
         {
             mPsg->setFirstPeriod(false);
@@ -328,10 +320,13 @@ inline void Sound::synthesizerLogicQ()
         mTonC ^= 1;
     }
     mNoiseCounter.high++;
-    if ((!(mNoiseCounter.high & 1)) && (mNoiseCounter.high >= (mPsg->noise() << 1)))
+    if ((!(mNoiseCounter.high & 1)) &&
+        (mNoiseCounter.high >= (mPsg->noise() << 1)))
     {
         mNoiseCounter.high = 0;
-        mNoise.seed = (((((mNoise.seed >> 13) ^ (mNoise.seed >> 16)) & 1) ^ 1) | mNoise.seed << 1) & 0x1ffff;
+        mNoise.seed = (((((mNoise.seed >> 13) ^ (mNoise.seed >> 16)) & 1) ^ 1) |
+                       mNoise.seed << 1) &
+                      0x1ffff;
     }
     if (!mEnvelopeCounter.high)
     {
@@ -340,7 +335,7 @@ inline void Sound::synthesizerLogicQ()
     mEnvelopeCounter.high++;
     if (mEnvelopeCounter.high >= mPsg->envelopeLoW()) ///< @todo check this !!!
     {
-        mEnvelopeCounter.high=0;
+        mEnvelopeCounter.high = 0;
     }
 }
 
@@ -474,14 +469,15 @@ void Sound::synthesizerStereo16()
     REGPAIR val;
     val.w.l = mLeftChan / tickcounter;
     val.w.h = mRightChan / tickcounter;
-    *(DWORD*)mSndBufferPtr=val.d; // @todo check this,write to mixing buffer ########################
-    mSndBufferPtr+=4;
+    *(DWORD *)mSndBufferPtr = val.d; // @todo check this,write to mixing buffer
+                                     // ########################
+    mSndBufferPtr += 4;
     mLeftChan = 0;
     mRightChan = mLeftChan;
     if (mSndBufferPtr >= mSndBufferEnd)
     {
         mSndBufferPtr = mSndBuffer;
-        mBufferFull=true;
+        mBufferFull = true;
     }
 }
 
@@ -500,13 +496,13 @@ void Sound::synthesizerStereo8()
     val.b.l = 128 + mLeftChan / tickcounter;
     val.b.h = 128 + mRightChan / tickcounter;
     setBufferPtrW(val.w.l); // @todo check this,write to mixing buffer
-    mSndBufferPtr+=2;
+    mSndBufferPtr += 2;
     mLeftChan = 0;
     mRightChan = mLeftChan;
     if (mSndBufferPtr >= mSndBufferEnd)
     {
         mSndBufferPtr = mSndBuffer;
-        mBufferFull=true;
+        mBufferFull = true;
     }
 }
 
@@ -627,13 +623,14 @@ void Sound::synthesizerMono16()
         mLoopCount.high--;
     }
     mLoopCount.both += mLoopCountInit;
-    setBufferPtrW(mLeftChan / tickcounter); // @todo check this,write to mixing buffer
-    mSndBufferPtr +=2;
+    setBufferPtrW(mLeftChan /
+                  tickcounter); // @todo check this,write to mixing buffer
+    mSndBufferPtr += 2;
     mLeftChan = 0;
     if (mSndBufferPtr >= mSndBufferEnd)
     {
         mSndBufferPtr = mSndBuffer;
-        mBufferFull=true;
+        mBufferFull = true;
     }
 }
 
@@ -648,13 +645,15 @@ void Sound::synthesizerMono8()
         mLoopCount.high--;
     }
     mLoopCount.both += mLoopCountInit;
-    setBufferPtrU(128 + mLeftChan / tickcounter); // @todo check this,write to mixing buffer
+    setBufferPtrU(128 +
+                  mLeftChan /
+                      tickcounter); // @todo check this,write to mixing buffer
     mSndBufferPtr++;
     mLeftChan = 0;
     if (mSndBufferPtr >= mSndBufferEnd)
     {
         mSndBufferPtr = mSndBuffer;
-        mBufferFull=true;
+        mBufferFull = true;
     }
 }
 
@@ -750,37 +749,39 @@ void Sound::calculateLevelTables()
 
 void Sound::resetAYChipEmulation()
 {
-    mTonCounterA.both     = 0;
-    mTonCounterB.both     = 0;
-    mTonCounterC.both     = 0;
-    mNoiseCounter.both    = 0;
+    mTonCounterA.both = 0;
+    mTonCounterB.both = 0;
+    mTonCounterC.both = 0;
+    mNoiseCounter.both = 0;
     mEnvelopeCounter.both = 0;
-    mTonA       = 0;
-    mTonB       = 0;
-    mTonC       = 0;
-    mLeftChan   = 0;
-    mRightChan  = 0;
+    mTonA = 0;
+    mTonB = 0;
+    mTonC = 0;
+    mLeftChan = 0;
+    mRightChan = 0;
     mNoise.seed = 0xffff;
 }
 
 void Sound::initAYCounterVars()
 {
-    mCycleCountInit.both = (INT64) rint((4000000 * ((cpc.speed() * 25) / 100.0)) /
-            mFreqTable[playbackRate()] * 4294967296.0); // number of Z80 cycles per sample
+    mCycleCountInit.both = (INT64)rint(
+        (4000000 * ((cpc.speed() * 25) / 100.0)) / mFreqTable[playbackRate()] *
+        4294967296.0); // number of Z80 cycles per sample
 
-    mLoopCountInit = (INT64) rint(1000000.0 / (4000000.0 * ((cpc.speed() * 25) / 100.0)) / 8.0 *
-                                  mCycleCountInit.both); // number of AY counter increments per sample
+    mLoopCountInit = (INT64)rint(
+        1000000.0 / (4000000.0 * ((cpc.speed() * 25) / 100.0)) / 8.0 *
+        mCycleCountInit.both); // number of AY counter increments per sample
     mLoopCount.both = mLoopCountInit;
 }
 
 void Sound::initAY()
 {
-    mIndexAL   = 255;
-    mIndexAR   = 13;
-    mIndexBL   = 170;
-    mIndexBR   = 170;
-    mIndexCL   = 13;
-    mIndexCR   = 255;
+    mIndexAL = 255;
+    mIndexAR = 13;
+    mIndexBL = 170;
+    mIndexBR = 170;
+    mIndexCL = 13;
+    mIndexCR = 255;
     mPreAmpMax = 100;
 
     calculateLevelTables();
@@ -789,13 +790,16 @@ void Sound::initAY()
 
     if (stereo()) // stereo mode?
     {
-        if (bits()) setSynthesizer(&Sound::synthesizerStereo16); // 16 bits per sample?
-        else setSynthesizer(&Sound::synthesizerStereo8); // 8 bits
+        if (bits())
+            setSynthesizer(&Sound::synthesizerStereo16); // 16 bits per sample?
+        else
+            setSynthesizer(&Sound::synthesizerStereo8); // 8 bits
     }
     else // mono
     {
-        if (bits()) setSynthesizer(&Sound::synthesizerMono16); // 16 bits per sample?
-        else setSynthesizer(&Sound::synthesizerMono8); // 8 bits
+        if (bits())
+            setSynthesizer(&Sound::synthesizerMono16); // 16 bits per sample?
+        else
+            setSynthesizer(&Sound::synthesizerMono8); // 8 bits
     }
 }
-

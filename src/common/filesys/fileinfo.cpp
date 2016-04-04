@@ -19,20 +19,16 @@
  ***************************************************************************/
 #include "fileinfo.h"
 
+FileInfo::FileInfo(const string &filename) { mValid = read(filename, false); }
 
-FileInfo::FileInfo(const string & filename)
+bool FileInfo::read(const string &fname, bool followlink)
 {
-    mValid=read(filename, false);
-}
-
-bool FileInfo::read(const string & fname, bool followlink)
-{
-    #ifdef _WIN32
+#ifdef _WIN32
+    return mValid = stat(fname.c_str(), &mStat) ? false : true;
+#else
+    if (followlink)
         return mValid = stat(fname.c_str(), &mStat) ? false : true;
-    #else
-        if (followlink) return mValid=stat(fname.c_str(), &mStat) ? false : true;
-        else return mValid = lstat(fname.c_str(), &mStat) ? false : true;
-    #endif
-
+    else
+        return mValid = lstat(fname.c_str(), &mStat) ? false : true;
+#endif
 }
-

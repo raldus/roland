@@ -19,19 +19,14 @@
  ***************************************************************************/
 #include "ppi.h"
 
-Ppi::Ppi()
-{
-    init();
-}
+Ppi::Ppi() { init(); }
 
 void Ppi::init()
 {
-    mPortA   = 0;
-    mPortB   = 0;
-    mPortC   = 0;
+    mPortA = 0;
+    mPortB = 0;
+    mPortC = 0;
     mControl = 0;
 
     mJumpers = 0;
 }
-
-

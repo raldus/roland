@@ -26,64 +26,75 @@
 using std::ifstream;
 using std::string;
 
-MemMan::MemMan(Z80* z80, GateArray* gatearray, const string & cpcrom, const string & amsdos)
+MemMan::MemMan(Z80 *z80, GateArray *gatearray, const string &cpcrom,
+               const string &amsdos)
 {
-    mGateArray=gatearray;
-    mZ80=z80;
+    mGateArray = gatearray;
+    mZ80 = z80;
 
-    mRam      = 0;
-    mRamSize  = 0;
+    mRam = 0;
+    mRamSize = 0;
     mLowerRom = mCpcRom;
-    mUpperRom = mCpcRom+0x4000;
+    mUpperRom = mCpcRom + 0x4000;
 
-    for(int i=0; i<256; i++) mRom[i]=0;
+    for (int i = 0; i < 256; i++)
+        mRom[i] = 0;
 
     init();
 }
 
-int MemMan::init(Z80* z80, GateArray* gatearray)
+int MemMan::init(Z80 *z80, GateArray *gatearray)
 {
-    mGateArray=gatearray;
-    mZ80=z80;
+    mGateArray = gatearray;
+    mZ80 = z80;
     return init();
 }
 
-int MemMan::init(int ramsize, const string & cpcrom, const string & amsdos)
+int MemMan::init(int ramsize, const string &cpcrom, const string &amsdos)
 {
-    int ret=0;
-    mRamSize=ramsize;
-    if ((ramsize < 64) && (ramsize > 572)) return ErrRamSize; // @todo (type6128 < 128kb) ram error.
-    if (ramsize % 64) return ErrRamSize;
+    int ret = 0;
+    mRamSize = ramsize;
+    if ((ramsize < 64) && (ramsize > 572))
+        return ErrRamSize; // @todo (type6128 < 128kb) ram error.
+    if (ramsize % 64)
+        return ErrRamSize;
 
-    if (mRam) delete [] mRam;
-    mRam = new UBYTE[mRamSize*1024];
-    if (!mRam) return ErrMemory;
-    memset (mRam, 0, mRamSize*1024);
+    if (mRam)
+        delete[] mRam;
+    mRam = new UBYTE[mRamSize * 1024];
+    if (!mRam)
+        return ErrMemory;
+    memset(mRam, 0, mRamSize * 1024);
 
-    for(int i=0; i<256; i++)
+    for (int i = 0; i < 256; i++)
     {
-        if (mRom[i]) delete [] mRom[i];
-        mRom[i]=0;
+        if (mRom[i])
+            delete[] mRom[i];
+        mRom[i] = 0;
     }
 
-    if (!openCpcRom(cpcrom)) ret |= ErrCpcRom;
-    if (!openRom(7, amsdos)) ret |= ErrAmsdos;
-    if (ret) return ret;
+    if (!openCpcRom(cpcrom))
+        ret |= ErrCpcRom;
+    if (!openRom(7, amsdos))
+        ret |= ErrAmsdos;
+    if (ret)
+        return ret;
 
     initBanking();
 
-    //toggleRam();
+    // toggleRam();
     return ret;
 }
 
-bool MemMan::openRom(int idx, const string & filename)
+bool MemMan::openRom(int idx, const string &filename)
 {
-    if (filename.empty()) return false;
-    #ifdef _WIN32
-        ifstream in(filename.c_str(), std::ios::binary); // @todo size checking !
-    #else
-        ifstream in(filename.c_str());
-    #endif
+    if (filename.empty())
+        return false;
+#ifdef _WIN32
+    ifstream in(filename.c_str(), std::ios::binary); // @todo size checking !
+#else
+    ifstream in(filename.c_str());
+#endif
     if (!in)
     {
         std::cout << "*** Rom not found ***\n";
@@ -91,30 +102,32 @@ bool MemMan::openRom(int idx, const string & filename)
     }
     if (mRom[idx])
     {
-        delete [] mRom[idx];
-        mRom[idx]=0;
+        delete[] mRom[idx];
+        mRom[idx] = 0;
     }
-    mRom[idx]=new UBYTE[16384]; // @todo all new statements should be checked for enough mem!!
-    in.read((char*) mRom[idx], 16384);
+    mRom[idx] = new UBYTE[16384]; // @todo all new statements should be checked
+                                  // for enough mem!!
+    in.read((char *)mRom[idx], 16384);
     in.close();
     return true;
 }
 
-bool MemMan::openCpcRom(const string & filename)
+bool MemMan::openCpcRom(const string &filename)
 {
-    if (filename.empty()) return false;
-    #ifdef _WIN32
-        ifstream in(filename.c_str(), std::ios::binary); // @todo size checking !
-    #else
-        ifstream in(filename.c_str());
-    #endif
+    if (filename.empty())
+        return false;
+#ifdef _WIN32
+    ifstream in(filename.c_str(), std::ios::binary); // @todo size checking !
+#else
+    ifstream in(filename.c_str());
+#endif
     if (!in)
     {
         std::cout << "*** CPC-Rom not found ***\n";
         return false;
     }
-    memset(mCpcRom, 0, 2*16384);
-    in.read((char*) mCpcRom, 2*16384);
+    memset(mCpcRom, 0, 2 * 16384);
+    in.read((char *)mCpcRom, 2 * 16384);
     in.close();
     return true;
 }
@@ -125,17 +138,17 @@ inline void MemMan::initBanking()
     UBYTE *rambank;
 
     rom0 = mRam;
-    rom1 = mRam + 1*16384;
-    rom2 = mRam + 2*16384;
-    rom3 = mRam + 3*16384;
+    rom1 = mRam + 1 * 16384;
+    rom2 = mRam + 2 * 16384;
+    rom3 = mRam + 3 * 16384;
 
-    std::cout << "initBanking-ramBank: " << (int) mGateArray->ramBank() << "\n";
+    std::cout << "initBanking-ramBank: " << (int)mGateArray->ramBank() << "\n";
 
-    rambank = mRam + ((mGateArray->ramBank() + 1) * (4*16384)); // 64 KB
+    rambank = mRam + ((mGateArray->ramBank() + 1) * (4 * 16384)); // 64 KB
     rom4 = rambank;
-    rom5 = rambank + 1*16384;
-    rom6 = rambank + 2*16384;
-    rom7 = rambank + 3*16384;
+    rom5 = rambank + 1 * 16384;
+    rom6 = rambank + 2 * 16384;
+    rom7 = rambank + 3 * 16384;
 
     mMemBankConfig[0][0] = rom0;
     mMemBankConfig[0][1] = rom1;
@@ -181,20 +194,24 @@ inline void MemMan::initBanking()
 void MemMan::memoryManager()
 {
     UBYTE membank;
-    if (mRamSize == 64)              // 64KB of RAM?
+    if (mRamSize == 64) // 64KB of RAM?
     {
         membank = 0;                 // no expansion memory
         mGateArray->setRamConfig(0); // the only valid configuration is 0
     }
     else
     {
-        membank = (mGateArray->ramConfig() >> 3) & 7; // extract expansion memory bank
-        if (((membank+1)*64) > mRamSize)              // @todo selection is beyond available memory? ### +2 ###
+        membank =
+            (mGateArray->ramConfig() >> 3) & 7; // extract expansion memory bank
+        if (((membank + 1) * 64) >
+            mRamSize) // @todo selection is beyond available memory? ### +2 ###
         {
-            membank = 0;                              // force default mapping
+            membank = 0; // force default mapping
         }
     }
-    if (membank != mGateArray->ramBank())   // requested bank is different from the active one?
+    if (membank !=
+        mGateArray
+            ->ramBank()) // requested bank is different from the active one?
     {
         mGateArray->setRamBank(membank);
         initBanking();
@@ -212,7 +229,6 @@ void MemMan::memoryManager()
 
     toggleUpperRom();
     toggleLowerRom();
-
 };
 
 /*
@@ -237,7 +253,8 @@ inline void MemMan::toggleUpperRom()
     }
 //  else
 //  {
-//      mZ80->setMembank_read(3, mMemBankConfig[mGateArray->ramConfig() & 7] [3]);
+//      mZ80->setMembank_read(3, mMemBankConfig[mGateArray->ramConfig() & 7]
+[3]);
 //  }
 }
 
@@ -249,10 +266,8 @@ inline void MemMan::toggleLowerRom()
     }
 //  else
 //  {
-//      mZ80->setMembank_read(0, mMemBankConfig[mGateArray->ramConfig() & 7] [0]);
+//      mZ80->setMembank_read(0, mMemBankConfig[mGateArray->ramConfig() & 7]
+[0]);
 //  }
 }
 */
-
-
-

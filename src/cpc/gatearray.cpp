@@ -21,21 +21,21 @@
 
 void GateArray::init()
 {
-    mPen       = 0;
+    mPen = 0;
     mRomConfig = 0;
     mRamConfig = 0;
-    mRamBank   = 0;
-    mUpperRom  = 0;
-    mCounter   = 0;
-    mSlCount   = 0;
-    mIntDelay  = 0;
+    mRamBank = 0;
+    mUpperRom = 0;
+    mCounter = 0;
+    mSlCount = 0;
+    mIntDelay = 0;
     mInterrupt = true;
 
-    mMode          = 1;
+    mMode = 1;
     mRequestedMode = 1;
 
-    for(UBYTE i=0; i<17; i++) mInk[i]=0;
-    for(UBYTE i=0; i<17; i++) mPalette[i]=0;
+    for (UBYTE i = 0; i < 17; i++)
+        mInk[i] = 0;
+    for (UBYTE i = 0; i < 17; i++)
+        mPalette[i] = 0;
 }
-
-

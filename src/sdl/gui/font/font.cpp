@@ -18,7 +18,7 @@
 
 #include "font.h"
 
-extern int* font[];
+extern int *font[];
 
 // Support function
 // Put a glyph at the specified coordinates
@@ -29,43 +29,45 @@ inline void Font::putglyph(char *p, int Bpp, int pitch, int which)
     int *glyph = font[which];
     int x = 0, i;
 
-    for(; *glyph != -1; ++glyph)
+    for (; *glyph != -1; ++glyph)
     {
-        p += (((x += *glyph) >> 3) * pitch); x &= 7;
-        for(i = 0; i < Bpp; ++i) p[(x * Bpp) + i] = 0xff;
+        p += (((x += *glyph) >> 3) * pitch);
+        x &= 7;
+        for (i = 0; i < Bpp; ++i)
+            p[(x * Bpp) + i] = 0xff;
     }
 }
 
 void Font::write(SDL_Surface *surf, int x, int y, int num)
 {
     char msg[15];
-    sprintf(msg, "%3d", (int) num);
+    sprintf(msg, "%3d", (int)num);
     write(surf, x, y, msg);
 }
 
 void Font::write(SDL_Surface *surf, int x, int y, const char *message, int len)
 {
     int pitch = surf->pitch, Bpp = surf->format->BytesPerPixel;
-    char *p = (char*)surf->pixels + (pitch * y) + (Bpp * x);
+    char *p = (char *)surf->pixels + (pitch * y) + (Bpp * x);
 
-    if(SDL_MUSTLOCK(surf))
-        if(SDL_LockSurface(surf) < 0)
+    if (SDL_MUSTLOCK(surf))
+        if (SDL_LockSurface(surf) < 0)
         {
             fprintf(stderr, "Font: Couldn't lock screen: %s!", SDL_GetError());
             return;
         }
 
-    if (len==0)
+    if (len == 0)
     {
-        for(; *message; p += (8 * Bpp), ++message)
+        for (; *message; p += (8 * Bpp), ++message)
             putglyph(p, Bpp, pitch, *message);
     }
     else
     {
-        for(; len > 0; p += (8 * Bpp), ++message, --len)
+        for (; len > 0; p += (8 * Bpp), ++message, --len)
             putglyph(p, Bpp, pitch, *message);
     }
 
-    if(SDL_MUSTLOCK(surf)) SDL_UnlockSurface(surf);
+    if (SDL_MUSTLOCK(surf))
+        SDL_UnlockSurface(surf);
 }
-
