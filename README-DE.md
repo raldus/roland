@@ -4,7 +4,7 @@ für Linux und Windows.
 
 Roland benötigt SDL > 1.2 und SDL-Image.
 
-## Bedienung
+## Bedienung des Roland CPC Emulators
 Taste|Funktion
 -----|--------
 F2|Diskette in Laufwerk A: einlegen
@@ -39,7 +39,7 @@ nach Ausgabe des Verzeichnises **run "filename"** **Enter**(meistens *.bas).
 In den meisten Fällen ist auf der Disk eine *.bas Datei, die die
 entsprechende Software startet. z.B.: disc.bas
 
-### Konfiguration
+## Konfiguration
 Einstellungen kann man im Installationsverzeichniss in der Datei
 roland.cfg (Windows) oder in der Datei ~/.roland (Linux) ändern.
 
