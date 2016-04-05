@@ -1,66 +1,63 @@
-# Roland Emulator
-Roland is an emulator of the Amstrad/Schneider CPC 464/664/6128 Homecomputer.
-Homepage: https://www.rolendemu.de
+# Roland CPC Emulator
+Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
+for Linux und Windows.
 
-# Linux
-Um die Linuxversion zu starten, ist es notwendig in der Datei "roland-linux.cfg" die folgenden
-Pfade anzupassen:
+Roland needs SDL > 1.2 and SDL-Image.
 
-* cpcrom=/mnt/shared/emu/cpc/roms/cpc6128.rom -> /../dieserOrdner/roms/cpc6128.rom
-* amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
-* diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
-
-Dann die "roland-linux.cfg" als ".roland" ins Homeverzeichnis kopieren und roland starten.
-Es wird die SDL-Bibliothek > 1.2 benötigt.
-
-# Usage
+## Bedienung
 Taste|Funktion
 -----|--------
-F2|Diskette in Laufwerk A: einlegen
-F3|Diskette in Laufwerk B: einlegen
-F4|cat/run Anweisungen ausführen (buggy)
-F5|Joystickemulation ein-/aus-schalten (Cursortasten + Alt)
-F9|Reset
-F10|Exit
-F12|umschalten auf Vollbild
-      (funktioniert unter Windows nicht, stattdessen fullscreen=1 in der roland.cfg)
+F2|insert disk in drive A:
+F3|insert disk in drive B:
+F4|execute cat/run (buggy)
+F5|enable/disable joystickemulation (cursorkeys + alt)
+F9|reset
+F10|exit
+F12|switch to fullscreen (does not work in Windows; instead set fullscreen=1 in roland.cfg)
 
+## Usage of the CPC 464/664/6128
+Insert a disk, enter **cat**  **Enter** and
+you can see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
 
-Nach einlegen einer Diskette <cat> eingeben und
-nach Ausgabe des Verzeichnises <run "filename"> (meistens *.bas).
-Beispiel:
-1. [F2] drücken
-2. Mit den Pfeiltasten eine Disk suchen (HarveyH.dsk) [Enter]
-3. [cat] eingeben
-4. Die zu startende Datei heißt hier "Harvey."
-5. [run "harvey] eingeben. (abschließendes " ist nicht nötig)[Enter]
-6. Taste F5 drücken um den Joystick über die Pfeiltasten und ALT zu emulieren.
+### Example
 
-oder (Bjack1.dsk)
-...
-4. Die zu startende Datei heißt hier "Bomb.bin"
-5. [run "bomb] eingeben. [Enter]
+1. press **F2**
+2. search a disk with **arrowkeys** (HarveyH.dsk) **Enter**
+3. enter **cat**
+4. in this case the file is named **Harvey**
+5. enter **run "harvey** (closing **"** is not necessary) **Enter**
+6. press **F5** to emulate a joystick with **arrowkeys** and **ALT**
 
-In den meisten Fällen ist auf der Disk eine *.bas Datei, die das
-entsprechende Spiel dann startet. z.B.: disc.bas
+### Example 2 (Bjack1.dsk)
 
+1. ...
+2. ...
+3. ...
+4. in this case the file is named **Bomb.bin**
+5. enter **run "bomb**  **Enter**
 
+In most cases, there is a *.bas file on the disk
+to start the appropriate software. e.g.: disc.bas
 
-Einstellungen kann man im Installationsverzeichniss in der Datei
-roland.cfg ändern, es sind aber noch nicht alle implementiert.
-Es funktionieren:
--showfps    (true/false) Framerate
--fullscreen (true/false) Fenster/Vollbild
--monitor    (0=color, 1=green) Farb-/Grünmonitor
--border     (true/false) Rand an/aus, andert (noch) nicht die Anzeigegröße
--intensity  (1-20) Helligkeit der Darstellung
--doublescan (true/false) Der CPC hatte Scanlines...
--jumpers    (DIP-Schalter des CPC - für Experten)
+### Configuration
+Change settings in file roland.cfg inside the installation directory
+(Windows) or in file ~/.roland (Linux).
 
-ToDo:
-- Einige Tasten sind noch nicht richtig zugeordnet...
-- Prozessorauslastung unter Windows ständig bei 100%
-- vieles mehr...
+working settings:
+* showfps    (true/false) framerate
+* fullscreen (true/false) window/fullscreen
+* monitor    (0=color, 1=green) color-/greenscreen
+* border     (true/false) border on/off, does not change display size (for now)
+* intensity  (1-20) brightness
+* doublescan (true/false) the real cpc had scanlines ...
+* jumpers    (DIP-switch of the CPC - for experts)
 
-
-
+## Linux
+Before you can start the Linux version, you have to adjust some pathes in
+**roland-linux.cfg**.
+```text
+cpcrom=/mnt/shared/emu/cpc/roms/cpc6128.rom -> /../dieserOrdner/roms/cpc6128.rom
+amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
+diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
+```
+After that, put **roland-linux.cfg** renamed to **.roland** in your homedir.
