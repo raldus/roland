@@ -21,53 +21,58 @@
 #define PREFS_H
 
 #ifdef HAVE_CONFIG_H
-    #include <config.h>
+#include <config.h>
 #endif
 
 #include <string>
 
 #define PREFCOUNT 22
 
-using std::string;
-
 /** @author Fred Klaus */
 class Prefs
 {
 
-public:
-    
-    enum PrefsArray {paKey=0, paDefault=1};
-    
-    Prefs(bool autowrite=true, bool writealways=true);
+  public:
+    enum PrefsArray {paKey = 0, paValue = 1};
+
+    Prefs(bool autowrite = true, bool writealways = true);
     ~Prefs();
 
-    bool read ();
+    bool read();
     bool write();
 
-    bool set(const string & key, const string & value);
-    bool set(const string & key, int value);
-    bool set(const string & key, bool value);
+    bool set(const std::string & key, const std::string & value);
+    bool set(const std::string & key, int  value);
+    bool set(const std::string & key, bool value);
 
-    const string & getStr (const string & key) const;
-    string         getPath(const string & key) const;
-    int            getNum (const string & key) const;
-    bool           getBool(const string & key) const;
+    const std::string & getStr (const std::string & key) const;
+    std::string         getPath(const std::string & key) const;
+    int                 getNum (const std::string & key) const;
+    bool                getBool(const std::string & key) const;
 
-private:
-    #ifdef _WIN32
-        static const char delim() {return '\\';}
-    #else
-        static const char delim() {return '/';}
-    #endif
-
-    string mFilename;
-    string mNothing;
-    string mStr[PREFCOUNT];
-    static string text[PREFCOUNT][2];
+  private:
+#ifdef _WIN32
+    static const char delim() {return '\\';}
+#else
+    static const char delim() {return '/';}
+#endif
 
     bool mAutoWrite;
     bool mWriteAlways;
     bool mRead;
-};
 
-#endif //PREFS_H
+    std::string mFilename;
+    std::string mNothing;
+    std::string mPrefs[PREFCOUNT][2] =
+    {
+        {"cpctype", "2"},        {"cpcspeed", "4"},    {"cpcrom", "~/"},
+        {"amsdos", "~/"},        {"romdir", "~/"},     {"diskdir", "~/"},
+        {"tapedir", "~/"},       {"snapdir", "~/"},    {"diska", ""},
+        {"diskb", ""},           {"ramsize", "128"},   {"showfps", "true"},
+        {"fullscreen", "false"}, {"fullwidth", "640"}, {"fullheight", "480"},
+        {"winwidth", "640"},     {"winheight", "480"}, {"monitor", "0"},
+        {"border", "true"},      {"intensity", "10"},  {"doublescan", "true"},
+        {"jumpers", "58"}};
+    };
+
+#endif // PREFS_H

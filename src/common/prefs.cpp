@@ -27,8 +27,6 @@
 #include <iostream>
 #include <cstdlib>
 
-#include <limits.h>
-
 #ifdef _WIN32
 #include <io.h>
 #else
@@ -45,33 +43,19 @@
 #define DOUT(a)
 #endif
 
-using std::string;
-using std::ofstream;
-using std::ifstream;
-
-string Prefs::text[][2] = {
-    {"cpctype", "2"},        {"cpcspeed", "4"},    {"cpcrom", "~/"},
-    {"amsdos", "~/"},        {"romdir", "~/"},     {"diskdir", "~/"},
-    {"tapedir", "~/"},       {"snapdir", "~/"},    {"diska", ""},
-    {"diskb", ""},           {"ramsize", "128"},   {"showfps", "true"},
-    {"fullscreen", "false"}, {"fullwidth", "640"}, {"fullheight", "480"},
-    {"winwidth", "640"},     {"winheight", "480"}, {"monitor", "0"},
-    {"border", "true"},      {"intensity", "10"},  {"doublescan", "true"},
-    {"jumpers", "58"}};
-
 Prefs::Prefs(bool autowrite, bool writealways)
 {
-    mAutoWrite = autowrite;
+    mAutoWrite   = autowrite;
     mWriteAlways = writealways;
 
 #ifdef _WIN32
     char buf[NAME_MAX + 1];
-    mFilename = getcwd(buf, NAME_MAX);
+    mFilename  = getcwd(buf, NAME_MAX);
     mFilename += delim();
     mFilename += PACKAGE_NAME;
     mFilename += ".cfg";
 #else
-    mFilename = getenv("HOME");
+    mFilename  = getenv("HOME");
     mFilename += delim();
     mFilename += ".";
     mFilename += PACKAGE_NAME;
@@ -84,30 +68,27 @@ Prefs::Prefs(bool autowrite, bool writealways)
 
 Prefs::~Prefs()
 {
-    if (mAutoWrite)
-        write();
+    if (mAutoWrite) write();
 }
 
 bool Prefs::read()
 {
     DOUT("\nReading Preferences...\n");
 
-    ifstream in(mFilename.c_str());
-    if (!in)
-        return false;
+    std::ifstream in(mFilename.c_str());
+    if (!in) return false;
 
-    string tmp;
+    std::string tmp;
     while (!in.eof())
     {
         std::getline(in, tmp);
-        if (in.eof())
-            break;
+        if (in.eof()) break;
         for (int i = 0; i < PREFCOUNT; i++)
         {
-            // mStr[i].clear();
-            if (tmp.substr(0, tmp.find('=')) == text[i][paKey])
+            if (tmp.substr(0, tmp.find('=')) == mPrefs[i][paKey])
             {
-                mStr[i] = tmp.substr(tmp.rfind('=') + 1);
+                std::string tmpval(tmp.substr(tmp.rfind('=') + 1));
+                if (!tmpval.empty()) mPrefs[i][paValue] = tmpval;
                 break;
             }
         }
@@ -116,9 +97,7 @@ bool Prefs::read()
 
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (mStr[i].empty())
-            mStr[i] = text[i][paDefault];
-        DOUT(text[i][paKey] << ": " << mStr[i] << "\n");
+        DOUT(mPrefs[i][paKey] << ": " << mPrefs[i][paValue] << "\n");
     }
 
     return true;
@@ -128,92 +107,83 @@ bool Prefs::write()
 {
     DOUT("\nWriting Preferences...\n");
 
-    ofstream out(mFilename.c_str());
-    if (!out)
-        return false;
+    std::ofstream out(mFilename.c_str());
+    if (!out) return false;
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        out << text[i][paKey] << "=" << mStr[i] << "\n";
-        DOUT(text[i][paKey] << ": " << mStr[i] << "\n");
+        out << mPrefs[i][paKey] << "=" << mPrefs[i][paValue] << "\n";
+        DOUT(mPrefs[i][paKey] << ": " << mPrefs[i][paValue] << "\n");
     }
     out.close();
     return true;
 }
 
-bool Prefs::set(const string &key, const string &value)
+bool Prefs::set(const std::string & key, const std::string &value)
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == text[i][paKey])
+        if (key == mPrefs[i][paKey])
         {
-            mStr[i] = value;
-            if (mWriteAlways)
-                write();
+            mPrefs[i][paValue] = value;
+            if (mWriteAlways) write();
             return true;
         }
     }
     return false;
 }
 
-bool Prefs::set(const string &key, int value)
+bool Prefs::set(const std::string & key, int value)
 {
     int d, n;
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == text[i][paKey])
+        if (key == mPrefs[i][paKey])
         {
-            mStr[i] = fcvt(value, 0, &d, &n);
-            if (mWriteAlways)
-                write();
+            mPrefs[i][paValue] = fcvt(value, 0, &d, &n);
+            if (mWriteAlways) write();
             return true;
         }
     }
     return false;
 }
 
-bool Prefs::set(const string &key, bool value)
+bool Prefs::set(const std::string & key, bool value)
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == text[i][paKey])
+        if (key == mPrefs[i][paKey])
         {
-            if (value == getBool(key))
-                return true; // @todo change this for all members to "is
+            if (value == getBool(key)) return true; // @todo change this for all members to "is
                              // changed"
-            mStr[i] = value ? "yes" : "no";
-            if (mWriteAlways)
-                write();
+            mPrefs[i][paValue] = value ? "yes" : "no";
+            if (mWriteAlways) write();
             return true;
         }
     }
     return false;
 }
 
-const string &Prefs::getStr(const string &key) const
+const std::string & Prefs::getStr(const std::string & key) const
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == text[i][paKey])
-        {
-            return mStr[i];
-        }
+        if (key == mPrefs[i][paKey]) return mPrefs[i][paValue];
     }
     return mNothing;
 }
 
-string Prefs::getPath(const string &key) const
+std::string Prefs::getPath(const std::string & key) const
 {
-    string text = getStr(key);
-    if (text.empty())
-        return mNothing;
+    std::string text = getStr(key);
+    if (text.empty()) return mNothing;
 
-    string tmp = text;
+    std::string tmp = text;
 
     if ((text.find_first_of('.') == 0) && (text.find_first_of(delim()) == 1))
     {
-        string tmp;
+        std::string tmp;
         char buf[NAME_MAX + 1];
-        tmp = getcwd(buf, NAME_MAX);
+        tmp  = getcwd(buf, NAME_MAX);
         tmp += delim();
         tmp += text.substr(2);
         return tmp;
@@ -222,30 +192,28 @@ string Prefs::getPath(const string &key) const
         return tmp;
 }
 
-int Prefs::getNum(const string &key) const
+int Prefs::getNum(const std::string & key) const
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == text[i][paKey])
+        if (key == mPrefs[i][paKey])
         {
-            if (mStr[i].empty())
-                return 0;
-            return atoi(mStr[i].c_str());
+            if (mPrefs[i][paValue].empty()) return 0;
+            return atoi(mPrefs[i][paValue].c_str());
         }
     }
     return 0;
 }
 
-bool Prefs::getBool(const string &key) const
+bool Prefs::getBool(const std::string & key) const
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == text[i][paKey])
+        if (key == mPrefs[i][paKey])
         {
-            if (mStr[i].empty())
-                return false;
-            if ((mStr[i] == "yes") || (mStr[i] == "true") ||
-                (mStr[i] == "on") || (mStr[i] == "1"))
+            if (mPrefs[i][paValue].empty()) return false;
+            if ((mPrefs[i][paValue] == "yes") || (mPrefs[i][paValue] == "true") ||
+                (mPrefs[i][paValue] == "on")  || (mPrefs[i][paValue] == "1"))
                 return true;
             else
                 return false;
