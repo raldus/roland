@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus   *
- *   frednet@web.de   *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -33,9 +33,9 @@ class Prefs
 {
 
   public:
-    enum PrefsArray {paKey = 0, paValue = 1};
+    enum PrefsArray {paKey=0, paValue=1};
 
-    Prefs(bool autowrite = true, bool writealways = true);
+    Prefs(bool autowrite=true, bool writealways=true);
     ~Prefs();
 
     bool read();
@@ -45,10 +45,10 @@ class Prefs
     bool set(const std::string & key, int  value);
     bool set(const std::string & key, bool value);
 
-    const std::string & getStr (const std::string & key) const;
-    std::string         getPath(const std::string & key) const;
-    int                 getNum (const std::string & key) const;
-    bool                getBool(const std::string & key) const;
+    std::string getStr (const std::string & key) const;
+    std::string getPath(const std::string & key) const;
+    int         getNum (const std::string & key) const;
+    bool        getBool(const std::string & key) const;
 
   private:
 #ifdef _WIN32

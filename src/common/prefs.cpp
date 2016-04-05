@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus   *
- *   frednet@web.de   *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -163,7 +163,7 @@ bool Prefs::set(const std::string & key, bool value)
     return false;
 }
 
-const std::string & Prefs::getStr(const std::string & key) const
+std::string Prefs::getStr(const std::string & key) const
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {

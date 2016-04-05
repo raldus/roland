@@ -21,16 +21,16 @@
 #define CPC_H
 
 #ifdef HAVE_CONFIG_H
-    #include <config.h>
+#include <config.h>
 #endif
 
 #include "types.h"
 #include "prefs.h"
 
 #ifdef ENABLE_RAZE
-    #include "raze.h"
+#include "raze.h"
 #endif
-    
+
 #include "z80.h"
 #include "crtc.h"
 #include "ppi.h"
