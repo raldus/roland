@@ -8,7 +8,7 @@ include_directories(${ROLAND_SOURCE_DIR})
 include_directories(filesys)
 
 
-add_library(common SHARED prefs.cpp)
+add_library(common STATIC prefs.cpp)
 
 
 
