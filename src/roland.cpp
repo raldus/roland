@@ -50,7 +50,7 @@
 
 using namespace std;
 
-KeyTrans keytrans;
+sdltk::KeyTrans keytrans;
 
 SDL_Surface *screen = 0;
 SDL_Surface *buffer = 0;
@@ -62,8 +62,8 @@ int depth = 0;
 
 bool joystick = false;
 
-Clock mainClock;
-Clock displayClock;
+sdltk::Clock mainClock;
+sdltk::Clock displayClock;
 
 uint framecount = 0;
 uint framecountsum = 0;
@@ -184,7 +184,7 @@ void mainloop()
     {
         if (keytrans.hasSequence())
         {
-            KeyTrans::SeqPair sp = keytrans.sequenceVal();
+            sdltk::KeyTrans::SeqPair sp = keytrans.sequenceVal();
             cpc_key = sp.keyval;
             if (sp.down)
                 cpc.keyboard().setValue((cpc_key >> 4),
@@ -219,7 +219,7 @@ void mainloop()
                                 {
                                     audioPause();
                                     SDL_Delay(20);
-                                    FileSelect *f = new FileSelect(
+                                    sdltk::FileSelect *f = new sdltk::FileSelect(
                                         screen, prefs.getPath("diskdir"),
                                         prefs.getPath("diska"), "A: ");
                                     SDL_EnableKeyRepeat(
@@ -246,7 +246,7 @@ void mainloop()
                                 {
                                     audioPause();
                                     SDL_Delay(20);
-                                    FileSelect *f = new FileSelect(
+                                    sdltk::FileSelect *f = new sdltk::FileSelect(
                                         screen, prefs.getPath("diskdir"),
                                         prefs.getPath("diskb"), "B: ");
                                     SDL_EnableKeyRepeat(
@@ -426,7 +426,7 @@ inline void fillRect(SDL_Rect *rect)
 
 inline void display()
 {
-    Font fnt;
+    sdltk::Font fnt;
 
     if (cpc.fdc().led())
     {

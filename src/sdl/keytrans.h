@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus   *
- *   frednet@web.de   *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,6 +23,9 @@
 #include "types.h"
 #include "SDL.h"
 
+namespace sdltk
+{
+
 /** @author Fred Klaus */
 class KeyTrans
 {
@@ -43,9 +46,9 @@ public:
         bool  down;
     };
 
-    enum Language {German, English};
+    enum class Language {German, English};
 
-    void init(Language lang=German);
+    void init(Language lang = Language::German);
 
     UBYTE get(SDL_Event & event);
 
@@ -59,7 +62,7 @@ public:
 
 private:
     SeqPair mSequence[64];
-    uint mSeqIndex;
+    uint    mSeqIndex;
 
     static UBYTE mTable[320];
 
@@ -67,4 +70,6 @@ private:
     bool     mJoyEnabled;
 };
 
-#endif
+} // sdltk
+
+#endif //KEYTRANS_H

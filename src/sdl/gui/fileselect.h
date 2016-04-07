@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   frednet@web.de                                                        *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -26,17 +26,21 @@
 #include "directory.h"
 #include "SDL.h"
 
+namespace sdltk
+{
+
 /** @author Fred Klaus */
 class FileSelect
 {
 public:
-    FileSelect(SDL_Surface* scrn, const string & dir, const string & last, const string & prefix="File: ");
+    FileSelect() = delete;
+    FileSelect(SDL_Surface* scrn, const std::string & dir, const std::string & last, const std::string & prefix="File: ");
     ~FileSelect();
 
-    void openDir(const string &  dir);
+    void openDir(const std::string &  dir);
     void closeDir();
 
-    const string & filename();
+    const std::string & filename();
 
     bool loop();
 
@@ -49,8 +53,8 @@ private:
 
     Font mFont;
 
-    string mDirname;
-    string mPrefix;
+    std::string mDirname;
+    std::string mPrefix;
     FileName mFilename;
     FileName mLast;
 
@@ -63,4 +67,6 @@ private:
 
 };
 
-#endif
+} // sdltk
+
+#endif // FILESELECT_H

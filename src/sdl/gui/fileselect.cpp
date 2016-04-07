@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   frednet@web.de                                                        *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,16 +22,20 @@
 
 #include <cstring>
 
-using std::string;
-
-FileSelect::FileSelect(SDL_Surface *scrn, const string &dir, const string &last,
-                       const string &prefix)
+namespace sdltk
 {
-    mDir = 0;
-    mScrn = scrn;
+
+FileSelect::FileSelect(
+    SDL_Surface *scrn,
+    const std::string & dir,
+    const std::string & last,
+    const std::string & prefix)
+{
+    mDir     = 0;
+    mScrn    = scrn;
     mDirname = dir;
-    mLast = last;
-    mPrefix = prefix;
+    mLast    = last;
+    mPrefix  = prefix;
 
     running = true;
     abort = false;
@@ -51,7 +55,7 @@ FileSelect::~FileSelect()
     clear();
 }
 
-void FileSelect::openDir(const string &dir)
+void FileSelect::openDir(const std::string & dir)
 {
     if (mDir)
         closeDir();
@@ -84,7 +88,7 @@ void FileSelect::closeDir()
     }
 }
 
-const string &FileSelect::filename()
+const std::string &FileSelect::filename()
 {
     mFilename = *mDirIt;
     mFilename.setPath(mDirname);
@@ -136,7 +140,7 @@ void FileSelect::display()
         }
     }
 
-    string msg = mPrefix + *mDirIt;
+    std::string msg = mPrefix + *mDirIt;
 
     mFont.write(mScrn, rect.x + 2, rect.y + 2, msg.c_str());
 
@@ -281,3 +285,5 @@ void FileSelect::events()
         display();
     }
 }
+
+} // sdltk

@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   frednet@web.de                                                        *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,20 +22,25 @@
 
 #include "SDL.h"
 
+namespace sdltk
+{
+
 /** @author Fred Klaus */
 class Clock
 {
 
 public:
-    Clock() {mLast=SDL_GetTicks();}
+    Clock() : mLast(SDL_GetTicks()) {}
     ~Clock() {}
 
     uint elapsed() {return SDL_GetTicks()-mLast;}
-    void init()            {mLast=SDL_GetTicks();}
+    void init()    {mLast = SDL_GetTicks();}
 
 private:
     uint mLast;
 
 };
 
-#endif
+} // sdltk
+
+#endif // CLOCK_H

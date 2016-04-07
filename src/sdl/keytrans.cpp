@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus   *
- *   frednet@web.de   *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -18,6 +18,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "keytrans.h"
+
+namespace sdltk
+{
 
 #ifdef _WIN32
 UBYTE KeyTrans::mTable[320] = {
@@ -376,3 +379,5 @@ void KeyTrans::sequenceCatRun()
 
     mSequence[18].keyval = 0x00;
 }
+
+} // sdltk
