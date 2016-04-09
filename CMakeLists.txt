@@ -2,6 +2,11 @@ cmake_minimum_required(VERSION 2.6)
 
 project(ROLAND)
 
+set(PROJECT_NAME "Roland" CACHE STRING "Project Name")
+set(PACKAGE_NAME "roland" CACHE STRING "Package Name")
+exec_program(git ARGS describe --abbrev=0 --tags OUTPUT_VARIABLE PACKAGE_VERSION)
+set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
+
 set(CMAKE_BINARY_DIR      "${CMAKE_SOURCE_DIR}/bin")
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH    ${CMAKE_BINARY_DIR})
@@ -28,19 +33,29 @@ find_package(SDL REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
 # roland
-set(PACKAGE_STRING 1)
-set(PACKAGE_NAME 1)
-
-set(APP_NAME "Roland" CACHE STRING "App Name")
-exec_program(git ARGS describe --abbrev=0 --tags OUTPUT_VARIABLE APP_VERSION)
-set(APP_VERSION "${APP_VERSION}" CACHE STRING "App Version")
-
 set(DEBUG 1)
-configure_file("${PROJECT_SOURCE_DIR}/config.h.in" "${PROJECT_SOURCE_DIR}/src/config.h")
+configure_file("${PROJECT_SOURCE_DIR}/files/config.h.in" "${PROJECT_SOURCE_DIR}/src/config.h")
 add_definitions("-DHAVE_CONFIG_H")
 
-# cache-variables
-# set(CACHE_VAR_CHECK CACHE STRING TestString)
+# doxygen target to generate API documentation with Doxygen
+find_package(Doxygen)
+if(DOXYGEN_FOUND)
+    configure_file("${CMAKE_SOURCE_DIR}/files/doxyfile.in" "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
+    add_custom_target(doc
+        ${DOXYGEN_EXECUTABLE} "${CMAKE_SOURCE_DIR}/build/doxyfile"
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen" VERBATIM)
+endif(DOXYGEN_FOUND)
+
+
+# uninstall target
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/build/CMakeModules)
+configure_file(
+    "${CMAKE_SOURCE_DIR}/files/uninstall.in"
+    "${CMAKE_SOURCE_DIR}/build/uninstall"
+    IMMEDIATE @ONLY)
+add_custom_target(uninstall
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/build/uninstall)
 
 
 
@@ -59,7 +74,7 @@ add_subdirectory(src)
 
 # output
 message("")
-message("Package: ${ROLAND_NAME} ${ROLAND_VERSION}")
-message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-message("CMAKE_CXX_FLAGS_DEBUG:   ${CMAKE_CXX_FLAGS_DEBUG}")
-message("CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+message("  * ${PROJECT_NAME} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
+message("  * CMAKE_CXX_FLAGS_DEBUG..: ${CMAKE_CXX_FLAGS_DEBUG}")
+message("  * CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+message("")

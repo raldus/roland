@@ -3,8 +3,8 @@
 mkdir -p bin
 mkdir -p build
 
-rm -R bin/*
-rm -R build/*
+rm -Rf bin/*
+rm -Rf build/*
 
 if [ ! $# == 1 ]; then
     set $1 Release
