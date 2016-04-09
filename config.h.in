@@ -45,13 +45,13 @@
 /* #undef NDEBUG */
 
 /* Define to the address where bug reports for this package should be sent. */
-#cmakedefine PACKAGE_BUGREPORT "frednet@web.de"
+#cmakedefine PACKAGE_BUGREPORT "development@fkweb.de"
 
 /* Define to the full name of this package. */
 #cmakedefine PACKAGE_NAME "roland"
 
 /* Define to the full name and version of this package. */
-#cmakedefine PACKAGE_STRING "roland 0.5"
+#cmakedefine PACKAGE_STRING "@APP_NAME@ @APP_VERSION@"
 
 /* Define to the one symbol short name of this package. */
 #cmakedefine PACKAGE_TARNAME "roland"
@@ -60,7 +60,7 @@
 #cmakedefine PACKAGE_URL ""
 
 /* Define to the version of this package. */
-#cmakedefine PACKAGE_VERSION "0.5"
+#define PACKAGE_VERSION "@APP_VERSION@"
 
 /* Define to 1 if you have the ANSI C header files. */
 #cmakedefine STDC_HEADERS 1

@@ -30,6 +30,11 @@ include_directories(${SDL_INCLUDE_DIR})
 # roland
 set(PACKAGE_STRING 1)
 set(PACKAGE_NAME 1)
+
+set(APP_NAME "Roland" CACHE STRING "App Name")
+exec_program(git ARGS describe --abbrev=0 --tags OUTPUT_VARIABLE APP_VERSION)
+set(APP_VERSION "${APP_VERSION}" CACHE STRING "App Version")
+
 set(DEBUG 1)
 configure_file("${PROJECT_SOURCE_DIR}/config.h.in" "${PROJECT_SOURCE_DIR}/src/config.h")
 add_definitions("-DHAVE_CONFIG_H")
@@ -51,7 +56,10 @@ include_directories("${PROJECT_SOURCE_DIR}/src/sdl/gui/font")
 
 add_subdirectory(src)
 
+
 # output
+message("")
+message("Package: ${ROLAND_NAME} ${ROLAND_VERSION}")
 message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
-message("CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
+message("CMAKE_CXX_FLAGS_DEBUG:   ${CMAKE_CXX_FLAGS_DEBUG}")
 message("CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
