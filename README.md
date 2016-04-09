@@ -4,7 +4,7 @@ for Linux und Windows.
 
 Roland needs SDL > 1.2 and SDL-Image.
 
-[:de: german readme](https://github.com/raldus/roland/blob/master/README.md)
+[:de: german readme](https://github.com/raldus/roland/blob/master/README-DE.md)
 
 ## Usage of the Roland CPC Emulator
 Taste|Funktion
