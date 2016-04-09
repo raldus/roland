@@ -3,6 +3,7 @@ bin/*
 build/*
 doc/*
 src/config.h
+*.spec
 
 ### Backup ###
 *~

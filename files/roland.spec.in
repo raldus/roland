@@ -3,19 +3,19 @@
 #%define debug	full
 %define debug	0
 
-%define	name	roland
-%define	version	0.5
+%define	name	@PACKAGE_NAME@
+%define	version	@PACKAGE_VERSION@
 %define release	1
 
 
 Name:      %{name}
 Version:   %{version}
 Release:   %{release}
-Vendor:    Fred Klaus <frednet@web.de>
+Vendor:    Fred Klaus <development@fkweb.de>
 License:   GPL
-Summary:   Amstrad Emulator based on Caprice Source rewritten in C++
+Summary:   "Amstrad Emulator based on Caprice Source rewritten in C++"
 Group:     Emulators
-Packager:  Fred Klaus <frednet@web.de>
+Packager:  Fred Klaus <development@fkweb.de>
 BuildRoot: %{_tmppath}/%{name}-%{version}-root
 Source:    %{name}-%{version}.tar.bz2
 

@@ -36,6 +36,7 @@ include_directories(${SDL_INCLUDE_DIR})
 set(DEBUG 1)
 configure_file("${PROJECT_SOURCE_DIR}/files/config.h.in" "${PROJECT_SOURCE_DIR}/src/config.h")
 add_definitions("-DHAVE_CONFIG_H")
+configure_file("${PROJECT_SOURCE_DIR}/files/roland.spec.in" "${PROJECT_SOURCE_DIR}/roland.spec")
 
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
@@ -75,6 +76,6 @@ add_subdirectory(src)
 # output
 message("")
 message("  * ${PROJECT_NAME} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
-message("  * CMAKE_CXX_FLAGS_DEBUG..: ${CMAKE_CXX_FLAGS_DEBUG}")
-message("  * CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+message("  * CXX_FLAGS_DEBUG..: ${CMAKE_CXX_FLAGS_DEBUG}")
+message("  * CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
 message("")
