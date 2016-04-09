@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.6)
 
 project(ROLAND)
 
@@ -35,7 +35,8 @@ configure_file("${PROJECT_SOURCE_DIR}/config.h.in" "${PROJECT_SOURCE_DIR}/src/co
 add_definitions("-DHAVE_CONFIG_H")
 
 # cache-variables
-set(CACHE_VAR_CHECK CACHE STRING TestString)
+# set(CACHE_VAR_CHECK CACHE STRING TestString)
+
 
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
@@ -49,3 +50,8 @@ include_directories("${PROJECT_SOURCE_DIR}/src/sdl/gui")
 include_directories("${PROJECT_SOURCE_DIR}/src/sdl/gui/font")
 
 add_subdirectory(src)
+
+# output
+message("CMAKE_BUILD_TYPE: ${CMAKE_BUILD_TYPE}")
+message("CMAKE_CXX_FLAGS_DEBUG: ${CMAKE_CXX_FLAGS_DEBUG}")
+message("CMAKE_CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")

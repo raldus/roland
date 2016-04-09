@@ -4,6 +4,8 @@ für Linux und Windows.
 
 Roland benötigt SDL > 1.2 und SDL-Image.
 
+[:us: Englische Version](https://github.com/raldus/roland/blob/master/README.md)
+
 ## Bedienung des Roland CPC Emulators
 Taste|Funktion
 -----|--------
@@ -61,3 +63,6 @@ amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
 diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
 ```
 und dann die "roland-linux.cfg" als ".roland" ins Homeverzeichnis kopieren.
+
+## Sonstiges
+[Changelog](https://github.com/raldus/roland/blob/master/CHANGELOG.md)

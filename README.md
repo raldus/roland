@@ -61,3 +61,6 @@ amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
 diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
 ```
 After that, put **roland-linux.cfg** renamed to **.roland** in your homedir.
+
+## Misc
+[Changelog](https://github.com/raldus/roland/blob/master/CHANGELOG.md)
