@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   frednet@web.de                                                        *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,10 +22,8 @@
 
 #include "types.h"
 
-
-/// The 8255
-/** Parallel Peripheral Interface\n\n @htmlinclude  8255.html
-    @author Fred Klaus */
+//! The 8255 Parallel Peripheral Interface
+//! Parallel Peripheral Interface\n\n @htmlinclude  8255.html
 class Ppi
 {
 
@@ -46,8 +44,8 @@ public:
         TapeRead       = 128     ///< Tape will be read (internal)
     };
 
-    Ppi();     ///< does nothing
-    ~Ppi() {}  ///< does nothing
+    Ppi()  {init();}
+    ~Ppi() {}
 
     void init();                                   ///< set initial values
 
@@ -57,11 +55,11 @@ public:
     UBYTE control() {return mControl;}             ///< get control bits
     UBYTE jumpers() {return mJumpers;}             ///< get jumpers
 
-    void setA(UBYTE val)       {mPortA=val;}       ///< set Port A
-    void setB(UBYTE val)       {mPortB=val;}       ///< set Port B
-    void setC(UBYTE val)       {mPortC=val;}       ///< set Port C
-    void setControl(UBYTE val) {mControl=val;}     ///< set control bits
-    void setJumpers(UBYTE val) {mJumpers=val;}     ///< set jumpers
+    void setA(UBYTE val)       {mPortA   = val;}   ///< set Port A
+    void setB(UBYTE val)       {mPortB   = val;}   ///< set Port B
+    void setC(UBYTE val)       {mPortC   = val;}   ///< set Port C
+    void setControl(UBYTE val) {mControl = val;}   ///< set control bits
+    void setJumpers(UBYTE val) {mJumpers = val;}   ///< set jumpers
 
     void addB(UBYTE flags)     {mPortB |= flags;}  ///< add a flag to Port B
     void removeB(UBYTE flags)  {mPortB &= ~flags;} ///< remove a flag from Port B

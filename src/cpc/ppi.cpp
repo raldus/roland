@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   frednet@web.de                                                        *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,14 +19,11 @@
  ***************************************************************************/
 #include "ppi.h"
 
-Ppi::Ppi() { init(); }
-
 void Ppi::init()
 {
-    mPortA = 0;
-    mPortB = 0;
-    mPortC = 0;
+    mPortA   = 0;
+    mPortB   = 0;
+    mPortC   = 0;
     mControl = 0;
-
     mJumpers = 0;
 }
