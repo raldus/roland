@@ -1,0 +1,666 @@
+<HTML>
+<HEAD>
+<TITLE>The 6845 Cathode Ray Tube Controller (CRTC)</TITLE>
+<meta name="keywords" content="cpc,cpc+,crtc,6845,um6845,um6845r,hd6845s,mc6845,crtc6845">
+<meta name="description" content="A description of the 6845 CRTC design, a comparison of the HD6845S,UM6845,UM6845R and MC6845 implementations and a description of the 6845 in the Amstrad CPC/CPC+ and KC compact designs">
+<link rel="stylesheet" type="text/css" href="../arnold.css">
+<meta name="uawww-category" content="docs-hardware">
+</head>
+<BODY>
+<h1>The 6845 Cathode Ray Tube Controller (CRTC)</h1>
+
+<h2>Introduction</h2>
+<p>The 6845 Cathode Ray Tube Controller (CRTC) is a programmable IC used to generate video displays. This IC
+is used in a variety of computers including the Amstrad CPC, Amstrad CPC+ and KC Compact.
+
+<h2>CRTC in the Amstrad CPC/CPC+ and KC Compact designs</h2>
+  
+<p>The CRTC was a common part available from many different manufacturers. 
+During the life of the CPC, Amstrad sourced the CRTC from various manufacturers.
+
+<p>All ICs used were based on the same design but have a different implementation. As a result they do not 
+operate identically in all situations. This document highlights these differences.
+
+<p>This table lists the known ICs used, with their part number, manufacturer and type number.
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Part number</th>
+<th>Manufacturer</th>
+<th>Type number (note 3)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UM6845</td>
+<td>UMC</td>
+<td>0</td>
+</tr>
+<tr>
+<td>HD6845S</td>
+<td>Hitachi</td>
+<td>0</td>
+</tr>
+<tr>
+<td>UM6845R</td>
+<td>UMC</td>
+<td>1</td>
+</tr>
+<tr>
+<td>MC6845</td>
+<td>Motorola</td>
+<td>2</td>
+</tr>
+<tr>
+<td>AMS40489</td>
+<td>Amstrad</td>
+<td>3 (note 1)</td>
+</tr>
+<tr>
+<td>???</td>
+<td>Amstrad?</td>
+<td>4 (note 2)</td>
+</tr>
+</tbody>
+</table>
+
+<p>NOTES:
+<ol>
+<li>The CRTC functionality is integrated into the CPC+ ASIC. This type exists only in
+the CPC464+,CPC6128+ and GX4000.
+<li>As far as I know, this type exists only in &quot;cost-down&quot; CPC6128 systems.
+In the &quot;cost-down&quot; CPC6128, the CRTC functionality is integrated into a single ASIC IC.
+This ASIC is often refered to as the &quot;Pre-ASIC&quot; because it preceeded the CPC+ ASIC.
+<li>
+<p>In the Amstrad community each 6845 implementation has been assigned a type number. This type
+identifies a group of implementations which operate in exactly the same way.
+
+<p>As far as I know, the type number system was originally used by demo programmers.
+
+<p>It is possible to detect the 6845 present using software methods, and this is done to:
+<ul>
+<li>warn that the software was not designed for the detected 6845 and may function incorrectly,
+<li>to adapt the software so that it will run with the detected 6845
+</ul>
+<p>In most cases, the type of the detected 6845 is reported. 
+</li>
+<li>As far as I know, the KC compact used HD6845S only.
+</ol>
+
+<p>The 6845 is selected when bit 14 of the I/O port address is set to &quot;0&quot;. 
+Bit 1 and 0 of the I/O port address define the function to access. The remaining bits
+can be any value, but it is adviseable to set these to &quot;1&quot; to avoid conflict
+with other devices in the system.
+
+<p>The recommended I/O port addressess are:
+<p><table border="1">
+<thead>
+<tr>
+<th>I/O port address</th>
+<th>Function</th>
+<th>Read/Write</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;BCxx</td>
+<td>Select 6845 register</td>
+<td>Write only</td>
+</tr>
+<tr>
+<td>&amp;BDxx</td>
+<td>Write 6845 register data</td>
+<td>Write only</td>
+</tr>
+<tr>
+<td>&amp;BExx</td>
+<td>(note 1)</td>
+<td>Read only</td>
+</tr>
+<tr>
+<td>&amp;BFxx</td>
+<td>(note 1)</td>
+<td>Read only</td>
+</tr>
+</tbody>
+</table>
+<p>NOTE:
+<ol>
+<li>The function of these I/O ports is dependant on the CRTC type
+</ol>
+
+
+
+<h3>Signals</h3>
+
+<p>The following table defines the generated memory address from the CRTC and Gate-Array signals.
+
+<p>
+<table border="1">
+<thead>
+<tr>
+<th>Memory Address Signal</th>
+<th>Signal source</th>
+<th>Signal name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>A15</td>
+<td>6845</td>
+<td>MA13</td>
+</tr>
+<tr>
+<td>A15</td>
+<td>6845</td>
+<td>MA12</td>
+</tr>
+<tr>
+<td>A14</td>
+<td>6845</td>
+<td>MA11</td>
+</tr>
+<tr>
+<td>A13</td>
+<td>6845</td>
+<td>RA2</td>
+</tr>
+<tr>
+<td>A12</td>
+<td>6845</td>
+<td>RA1</td>
+</tr>
+<tr>
+<td>A11</td>
+<td>6845</td>
+<td>RA0</td>
+</tr>
+<tr>
+<td>A10</td>
+<td>6845</td>
+<td>MA9</td>
+</tr>
+<tr>
+<td>A9</td>
+<td>6845</td>
+<td>MA8</td>
+</tr>
+<tr>
+<td>A8</td>
+<td>6845</td>
+<td>MA7</td>
+</tr>
+<tr>
+<td>A7</td>
+<td>6845</td>
+<td>MA6</td>
+</tr>
+<tr>
+<td>A6</td>
+<td>6845</td>
+<td>MA5</td>
+</tr>
+<tr>
+<td>A5</td>
+<td>6845</td>
+<td>MA4</td>
+</tr>
+<tr>
+<td>A4</td>
+<td>6845</td>
+<td>MA3</td>
+</tr>
+<tr>
+<td>A3</td>
+<td>6845</td>
+<td>MA2</td>
+</tr>
+<tr>
+<td>A2</td>
+<td>6845</td>
+<td>MA1</td>
+</tr>
+<tr>
+<td>A1</td>
+<td>6845</td>
+<td>MA0</td>
+</tr>
+<tr>
+<td>A0</td>
+<td>Gate-Array</td>
+<td>CCLK</td>
+</tr>
+</tbody>
+</table>
+
+<dl>
+<dt>DISPTMG</dt>
+<dd>DISPTMG signal defines the border. When DISPTMG is &quot;1&quot; the border colour is output to the display.</dd>
+<dt>HSYNC and VSYNC</dt>
+<dd>HSYNC and VSYNC from the CRTC are passed into the Gate-Array. The Gate-Array modifies the signals and then mixes these to form the Composite-Sync which is output to the display</dd>
+</dl>
+
+
+<h2>The 6845 Design</h2>
+
+<h3>Registers</h3>
+<p>The Internal registers of the 6845 are:
+<p><table border="1">
+<thead>
+<tr>
+<th>Register Index</th>
+<th>Register Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Horizontal Total</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Horizontal Displayed</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Horizontal Sync Position</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Horizontal and Vertical Sync Widths</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Vertical Total</td>
+</tr>
+<td>5</td>
+<td>Vertical Total Adjust</td>
+</tr>
+<td>6</td>
+<td>Vertical Displayed</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Vertical Sync position</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Interlace and Skew</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Maximum Raster Address</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Cursor Start Raster</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Cursor End Raster</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Display Start Address (High)</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Display Start Address (Low)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Cursor Address (High)</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Cursor Address (High)</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Light Pen Address (High)</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Light Pen Address (High)</td>
+</tr>
+</tbody>
+</table>
+
+
+<h2>CRTC Differences</h2>
+
+<p>In this section I will attempt to identify all the differences between each CRTC.
+
+<p>The following tables list the functions that can be accessed for each type:
+
+<h4>Type 0</h4>
+
+<table border="1">
+<thead>
+<tr>
+<th>b1</th>
+<th>b0</th>
+<th>Function</th>
+<th>Read/Write</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Select internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Write to selected internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Read from selected internal 6845 register</td>
+<td>Read only</td>
+</tr>
+<tbody>
+</table>
+<h4>Type 1</h4>
+
+<table border="1">
+<thead>
+<tr>
+<th>b1</th>
+<th>b0</th>
+<th>Function</th>
+<th>Read/Write</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Select internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Write to selected internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>Read Status Register</td>
+<td>Read Only</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Read from selected internal 6845 register</td>
+<td>Read only</td>
+</tr>
+</tbody>
+</table>
+
+<h4>Type 2</h4>
+
+
+<table border="1">
+<thead>
+<tr>
+<th>b1</th>
+<th>b0</th>
+<th>Function</th>
+<th>Read/Write</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Select internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Write to selected internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>-</td>
+<td>-</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Read from selected internal 6845 register</td>
+<td>Read only</td>
+</tr>
+</tbody>
+</table>
+
+
+<h4>Type 3 and 4</h4>
+<table border="1">
+<thead>
+<tr>
+<th>b1</th>
+<th>b0</th>
+<th>Function</th>
+<th>Read/Write</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Select internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Write to selected internal 6845 register</td>
+<td>Write Only</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>Read from selected internal 6845 register</td>
+<td>Read Only</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Read from selected internal 6845 register</td>
+<td>Read only</td>
+</tr>
+</tbody>
+</table>
+
+<p>It is not possible to read from all the internal registers, this table shows the read/write status of each register
+for each type:
+
+<p><table border="1">
+<thead>
+<tr>
+<th rowspan="2">Register Index</th>
+<th rowspan="2">Register Name</th>
+<th colspan="4">Type</th>
+</tr>
+<tr>
+<th>0</th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Horizontal Total</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Horizontal Displayed</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Horizontal Sync Position</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Horizontal and Vertical Sync Widths</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Vertical Total</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<td>5</td>
+<td>Vertical Total Adjust</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<td>6</td>
+<td>Vertical Displayed</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Vertical Sync position</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Interlace and Skew</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Maximum Raster Address</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Cursor Start Raster</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Cursor End Raster</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Display Start Address (High)</td>
+<td>Read/Write</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Read/Write (note 2)</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Display Start Address (Low)</td>
+<td>Read/Write</td>
+<td>Write Only</td>
+<td>Write Only</td>
+<td>Read/Write (note 2)</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Cursor Address (High)</td>
+<td>Read/Write</td>
+<td>Read/Write</td>
+<td>Read/Write</td>
+<td>Read/Write (note 2) ***check</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Cursor Address (Low)</td>
+<td>Read/Write</td>
+<td>Read/Write</td>
+<td>Read/Write</td>
+<td>Read/Write (note 2) **check</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Light Pen Address (High)</td>
+<td>Read Only</td>
+<td>Read Only</td>
+<td>Read Only</td>
+<td>Read Only (note 2) **check</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Light Pen Address (High)</td>
+<td>Read Only</td>
+<td>Read Only</td>
+<td>Read Only</td>
+<td>Read Only (note 2) **check</td>
+</tr>
+</tbody>
+</table>
+
+<p>Notes:
+<ol>
+<li>On type 0 and 1, if a Write Only register is read from, &quot;0&quot; is returned.
+<li>See the document &quot;Extra CPC Plus Hardware Information&quot; for more details.
+</ol>
+
+
+
+</BODY>
+</HTML>
+

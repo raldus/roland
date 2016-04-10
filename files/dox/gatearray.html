@@ -1,0 +1,1213 @@
+<html><head>
+
+<title>Amstrad CPC Gate-Array</title><meta name="keywords" content="cpc,cpc+,kc compact,gate array, gatearray,amstrad,schneider,cpc464,cpc6128,cpc664,kccompact,cpc464+,cpc6128+">
+<meta name="description" content="This document describes the Amstrad Gate-Array IC used in the Amstrad CPC computers.">
+<meta name="uawww-category" content="docs-hardware">
+<link rel="stylesheet" type="text/css" href="garray_dateien/arnold.css"></head>
+<body>
+<b><h1>Gate Array</h1></b>
+<h2>Introduction</h2>
+<p>The gate array is a specially designed chip exclusively for use in the 
+Amstrad CPC and was designed by Amstrad plc. 
+</p><p>In the CPC+ system, the functions of the Gate-Array are
+integrated into a
+single ASIC. When the ASIC is "locked", the extra features are not
+available and the ASIC operates the same as the Gate-Array in the CPC
+allowing programs written for the CPC to work on the Plus without
+modification. The ASIC must be "un-locked" to access the new features.
+</p><p>In the KC compact system, the functions of the Gate-Array are "emulated"
+in TTL logic and by the Zilog Z8536 CIO.
+</p><p>In the "cost-down" version of the CPC6128, the functions of the Gate-Array are
+integrated into a ASIC.
+</p><p>The Gate Array is described here,  as it is in a standard CPC.
+</p><h2>What does it do?</h2>
+<p>The Gate Array is responsible for the display (colour palette, resolution,
+horizontal and vertical sync), interrupt generation and memory arrangement.
+</p><h2>Controlling the Gate Array</h2>
+
+<p>The gate array is  controlled  by  I/O. The gate array is selected when
+bit 15 of the I/O port address is set to "0" and bit 14 of the I/O
+port address is set to "1". The values of the other bits are ignored.
+However, to avoid conflict with other devices in the system, these bits should
+be set to "1".
+</p><p>The recommended I/O port address is &amp;7Fxx.
+
+</p><p>The function to be performed is selected by writing data to the Gate-Array, bit 7 and 6 of the
+data define the function selected (see table below). It is not possible to read from the Gate-Array.
+
+</p><p><table border="1">
+<thead>
+<tr>
+<th>Bit 7</th>
+<th>Bit 6</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Select pen</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Select colour for selected pen</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Select screen mode, rom configuration and interrupt control</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Ram Memory Management (note 1)</td>
+</tr>
+</tbody>
+</table>
+
+</p><p>Note:
+</p><ol>
+<li>This function is not available in the Gate-Array, but is performed by a device
+at the same I/O port address location.
+In the CPC464,CPC664 and KC compact, this function is performed in a memory-expansion (e.g. Dk'Tronics 64K Ram Expansion),
+if this expansion is not present then the function is not available.
+In the CPC6128, this function is performed by a PAL located on the main PCB, or a memory-expansion.
+In the 464+ and 6128+ this function is performed by the ASIC or a memory expansion.
+Please read the document on Ram Management for more information.
+</li>
+</ol>
+<h2>Pen selection</h2>
+<p>When bit 7 and bit 6 are set  to "0", the remaining bits determine which
+pen is to have its colour changed. When bit 4 is set to "0", bits  3 to 0 define which pen is to
+be selected. When bit 4 is set  to  "1", the value contained in bits 3-0
+is ignored and the border is selected.
+
+</p><p>The pen remains selected until another is chosen.
+
+</p><p>Each mode has a fixed number of pens. Mode 0 has 16 pens, mode 1 has 4
+pens and mode 2 has 2 pens.
+
+</p><h3>Summary</h3>
+
+<table border="1">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>0</td>
+<td rowspan="2">Gate Array function "Pen Selection"</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>x</td>
+<td>not used</td>
+</tr>
+<tr>
+<td>4</td>
+<td>1</td>
+<td>Select border</td>
+</tr>
+<tr>
+<td>3</td>
+<td>x</td>
+<td>ignored</td>
+</tr>
+<tr>
+<td>2</td>
+<td>x</td>
+<td>ignored</td>
+</tr>
+<tr>
+<td>1</td>
+<td>x</td>
+<td>ignored</td>
+</tr>
+<tr>
+<td>0</td>
+<td>x</td>
+<td>ignored</td>
+</tr>
+</tbody>
+</table>
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>0</td>
+<td rowspan="2">Gate Array function "Pen Selection"</td>
+</tr>
+<tr>
+<td>6</td>
+<td>0</td>
+</tr>
+<tr>
+<td>5</td>
+<td>x</td>
+<td>not used</td>
+</tr>
+<tr>
+<td>4</td>
+<td>0</td>
+<td>Select pen</td>
+</tr>
+<tr>
+<td>3</td>
+<td>x</td>
+<td rowspan="4">Pen Number</td>
+</tr>
+<tr>
+<td>2</td>
+<td>x</td>
+</tr>
+<tr>
+<td>1</td>
+<td>x</td>
+</tr>
+<tr>
+<td>0</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+</p><h2>Colour selection</h2>
+
+<p>Once the pen has been selected the  colour can then be changed. Bits 4
+to 0 specify the hardware colour number from the hardware colour palette.
+
+</p><p>Even though there is provision for  32  colours, only 27 are possible.
+The remaining colours are duplicates  of  those  already in the colour
+palette.
+
+</p><h3>Summary</h3>
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>0</td>
+<td rowspan="2">Gate Array function "Colour Selection"</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>x</td>
+<td>not used</td>
+</tr>
+<tr>
+<td>4</td>
+<td>x</td>
+<td rowspan="5">Colour number</td>
+</tr>
+<tr>
+<td>3</td>
+<td>x</td>
+</tr>
+<tr>
+<td>2</td>
+<td>x</td>
+</tr>
+<tr>
+<td>1</td>
+<td>x</td>
+</tr>
+<tr>
+<td>0</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+
+
+</p><p>Hardware colour palette:
+
+</p><p><table border="1">
+<thead>
+<tr>
+<th>Colour Number</th>
+<th>Colour Name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>White</td>
+</tr>
+<tr>
+<td>1</td>
+<td>White (note 1)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sea Green</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pastel Yellow</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Blue</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Purple</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Cyan</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Pink</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Purple (note 1)</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Pastel Yellow (note 1)</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Bright Yellow</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Bright White</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Bright Red</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Bright Magenta</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Orange</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Pastel Magenta</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Blue (note 1)</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Sea Green (note 1)</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Bright Green</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Bright Cyan</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Black</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Bright Blue</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Green</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Sky Blue</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Magenta</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Pastel Green</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Lime</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Pastel Cyan</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Red</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Mauve</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Yellow</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Pastel Blue</td>
+</tr>
+</tbody>
+</table>
+</p><p>Notes:
+</p><ul>
+<li>This is not an official colour
+</li></ul>
+
+<h2>Select screen mode and rom configuration</h2>
+
+This is a general purpose register responsible for the screen mode and
+the rom configuration.<br><br>
+
+<h3>Screen mode selection</h3>
+
+<p>The function of bits  1  and  0  is  to  define  the  screen mode. The
+settings for bits 1 and 0 and  the corresponding screen mode are given
+in the table below.
+
+</p><p><table border="1">
+<thead>
+<tr>
+<th>Bit 1</th>
+<th>Bit 0</th>
+<th>Screen mode</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Mode 0, 160x200 resolution, 16 colours</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Mode 1, 320x200 resolution, 4 colours</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>Mode 2, 640x200 resolution, 2 colours</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Mode 3, 160x200 resolution, 4 colours (note 1)</td>
+</tr>
+</tbody>
+</table>
+</p><ul>
+<li>This mode is not official. From the  combinations  possible,  we  can  see  that  4  modes can be
+defined, although the Amstrad only has 3. Mode 3 is similar to mode 0,
+because it has the  same  resolution,  but  it  is  limited  to only 4
+colours. 
+</li><li>Mode changing is synchronised with HSYNC. If the mode is changed, it will take effect from the next HSYNC.
+</li></ul>
+<h3>Rom configuration selection</h3>
+
+<p>Bit 2  is  used  to  enable  or  disable  the  lower  rom area.  The  lower
+rom area occupies memory addressess  &amp;0000-&amp;3fff and is used
+to access the operating system rom.
+When the lower rom area is  is enabled, reading from  &amp;0000-&amp;3FFF  will return data in the
+rom. When a value is written to &amp;0000-&amp;3FFF, it will be written to the
+ram underneath the rom. When it is disabled, data read  from  &amp;0000-&amp;3FFF will return the data
+in the ram.
+
+</p><p>Similarly, bit 3 controls enabling or disabling of the upper rom area. 
+The upper rom area occupies memory  addressess &amp;C000-&amp;FFFF and is BASIC
+or any expansion roms which may be plugged into a rom board/box. See the document
+on upper rom selection for more details. When the upper rom area  enabled,  reading from &amp;c000-&amp;ffff, will return
+data in the rom.  When  data  is  written  to  &amp;c000-&amp;FFFF, it will be
+written to the ram at the same address as the rom.
+When the upper rom area is disabled, and  data is read from &amp;c000-&amp;ffff the
+data returned will be the data in the ram.
+
+</p><p>Bit 4 controls the interrupt generation. It can be used to delay interrupts. See the document
+on interrupt generation for more information.
+
+</p><h3>Summary</h3>
+
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Value</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>0</td>
+<td rowspan="2">Gate Array function</td>
+</tr>
+<tr>
+<td>6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>x</td>
+<td>not used</td>
+</tr>
+<tr>
+<td>4</td>
+<td>x</td>
+<td>Interrupt generation control</td>
+</tr>
+<tr>
+<td rowspan="2">3</td>
+<td>1</td>
+<td>Upper rom area disable</td>
+</tr>
+<tr>
+<td>0</td>
+<td>Upper rom area enable</td>
+</tr>
+<tr>
+<td rowspan="2">2</td>
+<td>1</td>
+<td>Lower rom area disable</td>
+</tr>
+<tr>
+<td>0</td>
+<td>Lower rom area enable</td>
+</tr>
+<tr>
+<td>1</td>
+<td>x</td>
+<td rowspan="2">Mode selection</td>
+</tr>
+<tr>
+<td>0</td>
+<td>x</td>
+</tr>
+</tbody>
+</table>
+</p><hr>
+<h2>Programming the Gate Array - Examples</h2>
+<ol><li>Defining the colours,
+
+<p>Setting pen 0 to Bright White.
+</p><pre>LD BC,&amp;7F00                     ;Gate Array port
+LD A,%00000000+0                ;Pen number (and Gate Array function)
+OUT (C),A                       ;Send pen number
+LD A,%01000000+11               ;Pen colour (and Gate Array function)
+OUT (C),A                       ;Send it
+RET
+</pre>
+</li><li>Setting the mode and rom configuration,
+
+<p>Mode 2, upper and lower rom disabled.
+</p><pre>LD BC,&amp;7F00                     ;Gate array port
+LD A,%10000000+%00001110        ;Mode  and  rom  selection  (and Gate
+                                ;Array function)
+OUT (C),A                       ;Send it
+RET
+</pre>
+</li></ol>
+<hr>
+
+<h2>conversion chart</h2>
+<p>The hardware colour number is  different  to  the colour range used by
+the firmware, so a conversion chart  is provided for the corresponding
+firmware/hardware colour values and the corresponding colour name.
+
+</p><p>Note: 
+</p><ul>
+<li>The firmware keeps track of the colours it is using. Every VSYNC
+(assuming interrupts are enabled) the  firmware sets the colours. This
+enables the user to have flashing  colours.  If the user selects a new
+colour using the gate array, the new colour will flash temporarily and
+then return to it's original colour.  This  is due to the firmware re-
+setting the colour. When  using  the  firmware,  use  it's routines to
+select the colour, and the colour will remain.
+</li></ul>
+
+<table border="1">
+<thead>
+<tr>
+<th>Firmware Colour Number</th>
+<th>Colour Name</th>
+<th>Hardware Colour Number</th>
+<th>Quick reference hardware colour select value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Black</td>
+<td>20</td>
+<td>&amp;54</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Blue</td>
+<td>4</td>
+<td>&amp;44</td></tr>
+<tr>
+<td>2</td>
+<td>Bright Blue</td>
+<td>21</td><td>&amp;55</td></tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>28</td><td>&amp;5C</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Magenta</td>
+<td>24</td><td>&amp;58</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Mauve</td>
+<td>29</td><td>&amp;5D</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Bright Red</td>
+<td>12</td><td>&amp;4C</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Purple</td>
+<td>5</td><td>&amp;45</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Bright Magenta</td>
+<td>13</td><td>&amp;4D</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Green</td>
+<td>22</td><td>&amp;56</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Cyan</td>
+<td>6</td><td>&amp;46</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Sky Blue</td>
+<td>23</td><td>&amp;57</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Yellow</td>
+<td>30</td><td>&amp;5E</td>
+</tr>
+<tr>
+<td>13</td>
+<td>White</td>
+<td>0</td><td>&amp;40</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Pastel Blue</td>
+<td>31</td><td>&amp;5F</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Orange</td>
+<td>14</td><td>&amp;4E</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Pink</td>
+<td>7</td><td>&amp;47</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Pastel Magenta</td>
+<td>15</td><td>&amp;4F</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Bright Green</td>
+<td>18</td><td>&amp;52</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Sea Green</td>
+<td>2</td><td>&amp;42</td></tr>
+<tr>
+<td>20</td>
+<td>Bright Cyan</td>
+<td>19</td><td>&amp;53</td></tr>
+<tr>
+<td>21</td>
+<td>Lime</td>
+<td>26</td><td>&amp;5A</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Pastel Green</td>
+<td>25</td><td>&amp;59</td></tr>
+<tr>
+<td>23</td>
+<td>Pastel Cyan</td>
+<td>27</td><td>&amp;5B</td></tr>
+<tr>
+<td>24</td>
+<td>Bright Yellow</td>
+<td>10</td><td>&amp;4A</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Pastel Yellow</td>
+<td>3</td><td>&amp;43</td></tr>
+<tr>
+<td>26</td>
+<td>Bright White</td>
+<td>11</td><td>&amp;4B</td></tr></tbody>
+</table>
+
+
+
+<p>This chart also gives  a  quick  reference  guide  for programming the
+colours. The number is the colour  number  which can be sent directly,
+once the pen has been selected, to get the colour wanted.
+</p><p>
+Example:
+<br>
+</p><pre>ld bc,&amp;7f00+1           ;Gate array function (set pen)
+                        ;and pen number
+out (c),c
+ld bc,&amp;7f00+&amp;41         ;Gate array function (set colour)
+                        ;and colour number
+out (c),c
+ret
+</pre>
+<hr>
+<h2>Pallette R,G,B definitions</h2>
+<p>There are 27 colours which are generated from red, green and blue
+mixed in different quantities. There are 3 levels of red, 3 levels
+of green and 3 levels of blue, and these can be thought of as off/no colour,
+half-on/half-colour, and on/full-colour.
+</p><p>To display a CPC image you will need to use a analogue monitor with
+a composite sync.
+</p><p>
+This table shows the relationship between hardware colour number, colour
+name and RGB mixing. 
+
+</p><p><table border="1">
+<thead>
+<tr>
+<th rowspan="2">Hardware Colour Index</th>
+<th rowspan="2">Colour Name</th>
+<th colspan="3">RGB</th>
+</tr>
+<tr>
+<th>R %</th>
+<th>G %</th>
+<th>B %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>White</td>
+<td>50</td>
+<td>50</td>
+<td>50</td>
+</tr>
+<tr>
+<td>1</td>
+<td>White</td>
+<td>50</td>
+<td>50</td>
+<td>50</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Sea Green</td>
+<td>0</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Pastel Yellow</td>
+<td>100</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Blue</td>
+<td>0</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Purple</td>
+<td>100</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Cyan</td>
+<td>0</td>
+<td>50</td>
+<td>50</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Pink</td>
+<td>100</td>
+<td>50</td>
+<td>50</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Purple</td>
+<td>100</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Pastel Yellow</td>
+<td>100</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Bright Yellow</td>
+<td>100</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Bright White</td>
+<td>100</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Bright Red</td>
+<td>100</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>13</td>
+<td>Bright Magenta</td>
+<td>100</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Orange</td>
+<td>100</td>
+<td>50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Pastel Magenta</td>
+<td>100</td>
+<td>50</td>
+<td>100</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Blue</td>
+<td>0</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Sea Green</td>
+<td>0</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Bright Green</td>
+<td>0</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Bright Cyan</td>
+<td>0</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Black</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Bright Blue</td>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Green</td>
+<td>0</td>
+<td>50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Sky Blue</td>
+<td>0</td>
+<td>50</td>
+<td>100</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Magenta</td>
+<td>50</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Pastel Green</td>
+<td>50</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Lime</td>
+<td>50</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>27</td>
+<td>Pastel Cyan</td>
+<td>50</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>28</td>
+<td>Red</td>
+<td>50</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>29</td>
+<td>Mauve</td>
+<td>50</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>30</td>
+<td>Yellow</td>
+<td>50</td>
+<td>50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>31</td>
+<td>Pastel Blue</td>
+<td>50</td>
+<td>50</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+
+</p><hr>
+<h2>RGB assignments for the software colours</h2>
+This is simply a sidenote to illustrate a pattern in the RGB assignments
+of the software colours and to show how their value is calculated.
+
+<table border="1">
+<thead>
+<tr>
+<th>Firmware Colour Number</th>
+<th>Colour Name</th>
+<th>R %</th>
+<th>G %</th>
+<th>B %</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>Black</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Blue</td>
+<td>0</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Bright Blue</td>
+<td>0</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Red</td>
+<td>50</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Magenta</td>
+<td>50</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Mauve</td>
+<td>50</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Bright Red</td>
+<td>100</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Purple</td>
+<td>100</td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Bright Magenta</td>
+<td>100</td>
+<td>0</td>
+<td>100</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Green</td>
+<td>0</td>
+<td>50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Cyan</td>
+<td>0</td>
+<td>50</td>
+<td>50</td>
+</tr>
+<tr>
+<td>11</td>
+<td>Sky Blue</td>
+<td>0</td>
+<td>50</td>
+<td>100</td>
+</tr>
+<tr>
+<td>12</td>
+<td>Yellow</td>
+<td>50</td>
+<td>50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>13</td>
+<td>White</td>
+<td>50</td>
+<td>50</td>
+<td>50</td>
+</tr>
+<tr>
+<td>14</td>
+<td>Pastel Blue</td>
+<td>50</td>
+<td>50</td>
+<td>100</td>
+</tr>
+<tr>
+<td>15</td>
+<td>Orange</td>
+<td>100</td>
+<td>50</td>
+<td>0</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Pink</td>
+<td>100</td>
+<td>50</td>
+<td>50</td>
+</tr>
+<tr>
+<td>17</td>
+<td>Pastel Magenta</td>
+<td>100</td>
+<td>50</td>
+<td>100</td>
+</tr>
+<tr>
+<td>18</td>
+<td>Bright Green</td>
+<td>0</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>19</td>
+<td>Sea Green</td>
+<td>0</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>20</td>
+<td>Bright Cyan</td>
+<td>0</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>21</td>
+<td>Lime</td>
+<td>50</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>22</td>
+<td>Pastel Green</td>
+<td>50</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>23</td>
+<td>Pastel Cyan</td>
+<td>50</td>
+<td>100</td>
+<td>100</td>
+</tr>
+<tr>
+<td>24</td>
+<td>Bright Yellow</td>
+<td>100</td>
+<td>100</td>
+<td>0</td>
+</tr>
+<tr>
+<td>25</td>
+<td>Pastel Yellow</td>
+<td>100</td>
+<td>100</td>
+<td>50</td>
+</tr>
+<tr>
+<td>26</td>
+<td>Bright White</td>
+<td>100</td>
+<td>100</td>
+<td>100</td>
+</tr>
+</tbody>
+</table>
+
+To calculate the colour value:
+<ul>
+<li>Red
+<ul>
+<li>0% =&gt; do not add anything
+</li><li>50% =&gt; add 3
+</li><li>100% =&gt; add 6
+</li></ul>
+</li><li>Green
+<ul>
+<li>0% =&gt; do not add anything
+</li><li>50% =&gt; add 9
+</li><li>100% =&gt; add 18
+</li></ul>
+</li><li>Blue
+<ul>
+<li>0% =&gt; do not add anything
+</li><li>50% =&gt; add 1
+</li><li>100% =&gt; add 2
+</li></ul>
+</li></ul>
+
+<hr>
+<h2>Green Screen Colours</h2>
+On a green screen (where all colours are shades of green), the colours
+(in the software/firmware colours), are in order of increasing intensity. So
+that black is very dark, and white is bright green, and colour 13 is
+a medium green. (Thanks to Mark Rison for this information)
+</body></html>

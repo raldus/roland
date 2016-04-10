@@ -1,0 +1,454 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<HTML>
+<head><TITLE>8255 PPI</TITLE>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Language" content="en-gb">
+ <meta name="uawww-category" content="docs-hardware">
+<meta name="description" content="Description of the 8255 PPI IC in the Amstrad CPC/CPC+ and KC compact systems">
+<link rel="stylesheet" type="text/css" href="../arnold.css">
+</head>
+<body>
+<H1>8255 PPI</H1>
+
+<ul>
+<li>If a port is defined as input, then it's output's will be at high impedance.
+A device connected to a port of the 8255 will see &amp;FF on the port outputs.
+</ul>
+<p>This can be tested with the following code:
+
+<p>
+
+
+<p>The 8255 is a general purpose  input/output  IC. This document will
+describe it's role in the Amstrad CPC,CPC+ and KC compact systems. To
+understand it's full functions please read the datasheet.
+
+<p>In these systems it is connected to the AY-3-8912 Programmable Sound Generator (PSG),
+keyboard, cassette recorder, the VSYNC of the 6845 CRTC and the &quot;busy&quot; signal
+from the parallel port.
+
+<p>The PPI is selected when bit 11 of the I/O port address is set to &quot;0&quot;,
+bits 9 and 8 then define the PPI function access as shown below:
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit 9</th>
+<th>Bit 8</th>
+<th>PPI Function</th>
+<th>Read/Write status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Port A data</td>
+<td>Read/Write</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Port B data</td>
+<td>Read/Write</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>Port C data</td>
+<td>Read/Write</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Control</td>
+<td>Write Only</td>
+</tr>
+</tbody>
+</table>
+
+<p>It is advised that the remaining bits of the I/O address are set to &quot;1&quot; 
+to avoid conflict with other devices. The recommended I/O addressess are:
+
+<p>
+<table border="1">
+<thead>
+<tr>
+<th>I/O address</th>
+<th>PPI Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&amp;F4xx</td>
+<td>Port A data</td>
+</tr>
+<tr>
+<td>&amp;F5xx</td>
+<td>Port B data</td>
+</tr>
+<tr>
+<td>&amp;F6xx</td>
+<td>Port C data</td>
+</tr>
+<tr>
+<td>&amp;F7xx</td>
+<td>Control</td>
+</tr>
+</tbody>
+</table>
+
+<p>In the CPC+, the 8255 is integrated into the ASIC. The &quot;emulation&quot; is not complete and
+some functionality is not available. Please see the &quot;Extra CPC+ documentation&quot;
+for more information.
+
+<p>
+<ul>
+<li>Mode 1 (Strobed Input/Output) and Mode 2 (Bi-Directional Bus), as far as I know,
+are not used by any program, Mode 0 (Basic Input/Output) is always used.
+</ul>
+
+<h2>Port Usage</h2>
+
+<p>NOTE:
+<ul>
+<li>If you are using the firmware, always return the operating modes
+and I/O state of the ports used  to their settings below. The firmware  expects  the  settings
+to be the same as given below and may operate incorrectly if they are not.
+</ul>
+<h3>PPI Port A</h3>
+
+<p>Operating system settings:
+<ul>
+<li>I/O Mode 0,
+<li>Output
+</ul>
+
+<p>NOTE:
+<ul>
+<li>For <b>writing</b> data to PSG all bits must be set to output,
+<li>for <b>reading</b> data from PSG all bits must be set to input.
+</ul>
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Description</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td rowspan="8">PSG databus</td>
+<td rowspan="8">Read data from PSG or Write data to PSG</td>
+</tr>
+<tr>
+<td>6</td>
+</tr>
+<tr>
+<td>5</td>
+</tr>
+<tr>
+<td>4</td>
+</tr>
+<tr>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<h3>PPI Port B</h3>
+
+<p>Operating system settings:
+<ul>
+<li>I/O Mode 0,
+<li>Input
+</ul>
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Description</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>Cassette read data</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Parallel/Printer port ready signal</td>
+<td>&quot;1&quot; = not ready, &quot;0&quot; = Ready</td>
+</tr>
+<tr>
+<td>5</td>
+<td>/EXP</td>
+<td>(note 6)
+</td> 
+</tr>
+<tr>
+<td>4</td>
+<td colspan="2">(note 5)</td>
+</tr>
+<tr>
+<td>3</td>
+<td>(note 1)</td>
+<td rowspan="3">(note 4)</tr>
+<tr>
+<td>2</td>
+<td>(note 2)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>(note 3)</td>
+</tr>
+<tr>
+<td>0</td>
+<td>6845 VSYNC</td>
+<td>State of VSYNC from 6845. &quot;1&quot; = VSYNC active, &quot;0&quot; = VSYNC inactive</td>
+</tr>
+</tbody>
+</table>
+<p>Note:
+<ol>
+<li>On CPC464,CPC664,CPC6128 and GX4000 this is LK3 on the PCB. On the CPC464+ and CPC6128+ this is LK103
+on the PCB. On the KC compact this is &quot;1&quot;.
+<li>On CPC464,CPC664,CPC6128 and GX4000 this is LK2 on the PCB. On the CPC464+ and CPC6128+ this is LK102
+on the PCB. On the KC compact this is &quot;0&quot;.
+<li>On CPC464,CPC664,CPC6128 and GX4000 this is LK1 on the PCB. On the CPC464+ and CPC6128+ this is LK101
+on the PCB. On the KC compact this is /TEST signal from the expansion port.
+<li>On the CPC464,CPC664,CPC6128,CPC464+,CPC6128+ and GX4000 bits 3,2 and 1 define the manufacturer name.
+See below to see the options available. The manufacturer name is defined on the PCB and cannot be changed
+through software.
+<li>On the CPC464,CPC664,CPC6128,CPC464+,CPC6128+ and GX4000 bit 4 defines the Screen refresh frequency.
+&quot;1&quot; = 50Hz, &quot;0&quot; = 60Hz. This is defined on the PCB and cannot be changed with software.
+On the KC compact bit 4 is &quot;1&quot;
+<li>This bit is connected to /EXP signal on the expansion port.
+<ul>
+<li>On the KC Compact this bit is used to define bit 7 of the printer data.
+<li>On the CPC, it is possible to use this bit to define bit 7 of the printer data, so a 8-bit printer
+port is made, with a hardware modification,
+<li>On the CPC this can be used by a expansion device to report it's presence.
+&quot;1&quot; = device connected, &quot;0&quot; = device not connected.
+This is not always used by all expansion devices.
+</ul>
+</ol>
+
+<p>Table showing manufacturer name on power-up (CPC and CPC+ only):
+
+<p>
+<table border="1">
+<tr>
+<th>Bit 3</th>
+<th>Bit 2</th>
+<th>Bit 1</th>
+<th>Manufacturer Name</th>
+</tr>
+<tr>
+<td>0</td><td>0</td><td>0</td><td>Isp</td>
+</tr>
+<tr>
+<td>0</td><td>0</td><td>1</td><td>Triumph</td>
+</tr>
+<tr>
+<td>0</td><td>1</td><td>0</td><td>Saisho</td>
+</tr>
+<tr>
+<td>0</td><td>1</td><td>1</td><td>Solavox</td>
+</tr>
+<tr>
+<td>1</td><td>0</td><td>0</td><td>Awa</td>
+</tr>
+<tr>
+<td>1</td><td>0</td><td>1</td><td>Schneider</td>
+</tr>
+<tr>
+<td>1</td><td>1</td><td>0</td><td>Orion</td>
+</tr>
+<tr>
+<td>1</td><td>1</td><td>1</td><td>Amstrad</td>
+</tr>
+</tbody>
+</table>
+
+<h3>PPI Port C</h3>
+
+<p>Operating system settings:
+<ul>
+<li>upper: I/O Mode 0, lower: I/O mode 0,
+<li>upper: output, lower: output
+</ul>
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit</th>
+<th>Description</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>7</td>
+<td>PSG BDIR</td>
+<td rowspan="2">PSG function selection</td>
+</tr>
+<tr>
+<td>6</td>
+<td>PSG BC1</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Cassette Write data</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Cassette Motor Control</td>
+<td>set bit to &quot;1&quot; for motor on, or &quot;0&quot; for motor off</td>
+</tr>
+<tr>
+<td>3</td>
+<td rowspan="4">Keyboard line</td>
+<td rowspan="4">Select keyboard line to be scanned (0-15)</td>
+</tr>
+<tr>
+<td>2</td>
+</tr>
+<tr>
+<td>1</td>
+</tr>
+<tr>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+
+<p>PSG function selection:
+
+<p><table border="1">
+<thead>
+<tr>
+<th>Bit 7</th>
+<th>Bit 6</th>
+<th>Function</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>0</td>
+<td>Inactive</td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>Read from selected PSG register</td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>Write to selected PSG register</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>Select PSG register</td>
+</tr>
+</tbody>
+</table>
+
+<h2>Programming Examples</h2>
+
+<ol>
+<li>Using the control byte
+<ul>
+<li> Setting bit 7 of port C to 1,
+<pre>
+LD B,&amp;F7                ;8255 Control port
+LD A,%00001111          ;Bit Set/reset function
+OUT (C),A               ;Send it to 8255
+RET
+</pre>
+<li> Set port A  to  input,  operating  in  mode  0,  port  B to output,
+operating in mode 0 and port C to input, operating in mode 0.
+<pre>
+LD B,&amp;F7                ;8255 Control port
+LD A,%10011001          ;Configuration function
+OUT (C),A               ;Send it to 8255
+RET
+</pre>
+</ul>
+<li>Using port A/B/C,
+<p>In this example, port A is set to  output, port B is set to input, and
+port C is set to output, and they are all operating in mode 0.
+<p>We will only be using port A for these examples.
+<ul>
+<li>Reading from port A,
+<pre>
+                        ;Set port A to input
+
+LD B,&amp;F7                ;8255 Control port
+LD A,%10010010          ;Configuration function
+OUT (C),A               ;Send to 8255
+
+LD B,&amp;F4                ;Port A port address
+IN E,(C)                ;Get byte from port
+
+                        ;Register E holds value from port
+
+                        ;Return port I/O status and operating modes
+                        ;to previous settings.
+
+LD B,&amp;F7                ;8255 Control port
+LD A,%10000010          ;Configuration function
+OUT (C),A               ;Send to 8255
+RET
+</pre>
+<li>Writing to port A,
+<pre>
+                        ;Set port A to output
+
+                        ;(Note the next few lines are not necessary
+                        ;as port A is already acting as output, however
+                        ;it is given here just to make the example
+                        ;more understandable)
+
+LD B,&amp;F7                ;8255 Control port
+LD A,%10000010          ;Configuration function
+OUT (C),A               ;Send to 8255
+
+LD B,&amp;F4                ;port A port address
+
+                        ;Register E holds value to put into port
+
+LD E,&amp;FF                ;Data to put into port
+OUT (C),A               ;Send to port A
+
+                        ;Return port I/O status and operating modes
+                        ;to previous settings.
+
+LD B,&amp;F7                ;8255 Control port
+LD A,%10000010          ;Configuration function
+OUT (C),A
+RET
+</pre>
+</ul>
+</ol>
+</body>
+</html>

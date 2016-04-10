@@ -1,0 +1,27 @@
+/** @mainpage Roland - The Amstrad CPC Emulator
+
+	@image html cpc6128g.jpg
+
+
+
+
+	@section General Overview
+	@ref crtc-doc "The 6845 Cathode Ray Tube Controller (CRTC)" \n
+	@ref Crtc "  ...Crtc Class" \n
+
+	@ref ppi8255-doc "The 8255 Parallel Peripheral Interface" \n
+	@ref Ppi "  ...Ppi Class" \n
+
+	@ref gatearray-doc "The Gate Array" \n
+	@ref GateArray "  ...Gatearray Class" \n
+
+	@ref todo "Todo (Inline)" \n
+	@ref Bugs "Bugs" \n
+	@ref ReadMe "ReadMe" \n
+	@ref ChangeLog "ChangeLog" \n
+	@ref Licence "Licence" \n
+
+	@author Fred Klaus
+*/
+
+// @version 0.1
