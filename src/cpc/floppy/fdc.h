@@ -61,21 +61,21 @@ public:
     inline void cmd_readtrk();
     inline void cmd_scan();
 
-    int  dsk_load(const char *pchFileName, int drv, char chID='A');
-    void dsk_eject(int drv);
+    int  dsk_load(const char *pchFileName, int drv = 0, char chID='A');
+    void dsk_eject(int drv = 0);
 
     //void scanlo();
     //void scanhi();
 
-    int motor()              {return mMotor;}
-    void setMotor(int s)     {mMotor=s;}
-    int flags()              {return mFlags;}
+    int  motor()             {return mMotor;}
+    void setMotor(int s)     {mMotor = s;}
+    int  flags()             {return mFlags;}
     void addFlags(int flags) {mFlags |= flags;}
-    int phase()              {return mPhase;}
+    int  phase()             {return mPhase;}
     int  timeout()           {return mTimeout;}
-    void setTimeout(int val) {mTimeout=val;}
+    void setTimeout(int val) {mTimeout = val;}
 
-    int cmdDirection() {return mCmdDirection;}
+    int  cmdDirection()      {return mCmdDirection;}
 
     bool led()               {return mLed;}
 

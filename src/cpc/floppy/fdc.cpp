@@ -1179,12 +1179,10 @@ loop:
 
 int Fdc::dsk_load(const char *pchFileName, int drv, char chID)
 {
-    Drive *drive;
+    Drive *drive = &mDriveA;
 
-    if (drv == 0)
-        drive = &mDriveA;
-    if (drv == 1)
-        drive = &mDriveB;
+    if (drv == 0) drive = &mDriveA;
+    if (drv == 1) drive = &mDriveB;
 
     int iRetCode;
     UWORD dwTrackSize, track, side, sector, dwSectorSize, dwSectors;
@@ -1405,12 +1403,10 @@ int Fdc::dsk_load(const char *pchFileName, int drv, char chID)
 void Fdc::dsk_eject(int drv)
 {
     UWORD track, side;
-    Drive *drive;
+    Drive *drive = &mDriveA; // default
 
-    if (drv == 0)
-        drive = &mDriveA;
-    if (drv == 1)
-        drive = &mDriveB;
+    if (drv == 0) drive = &mDriveA;
+    if (drv == 1) drive = &mDriveB;
 
     for (track = 0; track < DSK_TRACKMAX; track++)
     { // loop for all tracks

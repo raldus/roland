@@ -67,29 +67,29 @@ public:
     int  amplitudeEnv() const {return mAmplitudeEnv;}
     bool firstPeriod()  const {return mFirstPeriod;}
 
-    void setControl (UBYTE val)            {mControl = val;}
+    void setControl (UBYTE val)            {mControl  = val;}
     void setSelected(UBYTE val)            {mSelected = val;}
-    void setRegisterAY(int num, UBYTE val) {mRegisterAY[num]=val;}
+    void setRegisterAY(int num, UBYTE val) {mRegisterAY[num] = val;}
 
-    void setTonALo(UBYTE value)     {mRegisterAY[0]=value;}
-    void setTonAHi(UBYTE value)     {mRegisterAY[1]=value;}
-    void setTonBLo(UBYTE value)     {mRegisterAY[2]=value;}
-    void setTonBHi(UBYTE value)     {mRegisterAY[3]=value;}
-    void setTonCLo(UBYTE value)     {mRegisterAY[4]=value;}
-    void setTonCHi(UBYTE value)     {mRegisterAY[5]=value;}
-    void setNoise(UBYTE value)      {mRegisterAY[6]=value;}
-    void setMixer(UBYTE value)      {mRegisterAY[7]=value;}
-    void setAmplitudeA(UBYTE value) {mRegisterAY[8]=value;}
-    void setAmplitudeB(UBYTE value) {mRegisterAY[9]=value;}
-    void setAmplitudeC(UBYTE value) {mRegisterAY[10]=value;}
-    void setEnvelopeLo(UBYTE value) {mRegisterAY[11]=value;}
-    void setEnvelopeHi(UBYTE value) {mRegisterAY[12]=value;}
-    void setEnvType(UBYTE value)    {mRegisterAY[13]=value;}
-    void setPortA(UBYTE value)      {mRegisterAY[14]=value;}
-    void setPortB(UBYTE value)      {mRegisterAY[15]=value;}
+    void setTonALo(UBYTE value)     {mRegisterAY[0]  = value;}
+    void setTonAHi(UBYTE value)     {mRegisterAY[1]  = value;}
+    void setTonBLo(UBYTE value)     {mRegisterAY[2]  = value;}
+    void setTonBHi(UBYTE value)     {mRegisterAY[3]  = value;}
+    void setTonCLo(UBYTE value)     {mRegisterAY[4]  = value;}
+    void setTonCHi(UBYTE value)     {mRegisterAY[5]  = value;}
+    void setNoise(UBYTE value)      {mRegisterAY[6]  = value;}
+    void setMixer(UBYTE value)      {mRegisterAY[7]  = value;}
+    void setAmplitudeA(UBYTE value) {mRegisterAY[8]  = value;}
+    void setAmplitudeB(UBYTE value) {mRegisterAY[9]  = value;}
+    void setAmplitudeC(UBYTE value) {mRegisterAY[10] = value;}
+    void setEnvelopeLo(UBYTE value) {mRegisterAY[11] = value;}
+    void setEnvelopeHi(UBYTE value) {mRegisterAY[12] = value;}
+    void setEnvType(UBYTE value)    {mRegisterAY[13] = value;}
+    void setPortA(UBYTE value)      {mRegisterAY[14] = value;}
+    void setPortB(UBYTE value)      {mRegisterAY[15] = value;}
 
-    void setAmplitudeEnv(int value)  {mAmplitudeEnv=value;}
-    void setFirstPeriod (bool value) {mFirstPeriod =value;}
+    void setAmplitudeEnv(int value)  {mAmplitudeEnv = value;}
+    void setFirstPeriod (bool value) {mFirstPeriod  = value;}
 
 private:
 
