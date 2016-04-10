@@ -10,8 +10,6 @@ for Linux und Windows.
 
 Roland needs SDL > 1.2 and SDL-Image.
 
-[:de: german readme](https://github.com/raldus/roland/blob/master/README-DE.md)
-
 ## Usage of the Roland CPC Emulator
 Taste|Funktion
 -----|--------
@@ -34,7 +32,7 @@ you can see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
 3. type **cat**  **Enter**
 4. in this case the file is named **Harvey**
 5. type **run "harvey"**  **Enter**
-6. press **F5** to emulate a joystick with **arrowkeys** and **ALT**
+6. press **F5** to emulate a joystick with **arrowkeys** and  **alt**
 
 ### Example 2 (Bjack1.dsk)
 
@@ -70,8 +68,6 @@ diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
 ```
 After that, put **roland-linux.cfg** renamed to **.roland** in your homedir.
 
-## Misc
-[Changelog](https://github.com/raldus/roland/blob/master/CHANGELOG.md)
 
 
 
@@ -94,7 +90,5 @@ After that, put **roland-linux.cfg** renamed to **.roland** in your homedir.
 	@ref ChangeLog "ChangeLog" \n
 	@ref Licence "Licence" \n
 
-	@author Fred Klaus
 */
 
-// @version 0.1
