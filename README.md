@@ -25,9 +25,9 @@ you can see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
 
 1. press **F2**
 2. search a disk with **arrowkeys** (HarveyH.dsk) **Enter**
-3. enter **cat**
+3. type **cat**  **Enter**
 4. in this case the file is named **Harvey**
-5. enter **run "harvey** (closing **"** is not necessary) **Enter**
+5. type **run "harvey"**  **Enter**
 6. press **F5** to emulate a joystick with **arrowkeys** and **ALT**
 
 ### Example 2 (Bjack1.dsk)
