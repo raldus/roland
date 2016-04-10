@@ -38,7 +38,7 @@ configure_file("${PROJECT_SOURCE_DIR}/files/config.h.in" "${PROJECT_SOURCE_DIR}/
 add_definitions("-DHAVE_CONFIG_H")
 configure_file("${PROJECT_SOURCE_DIR}/files/roland.spec.in" "${PROJECT_SOURCE_DIR}/roland.spec")
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/roms" DESTINATION share/roland)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/roms"  DESTINATION share/roland)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/disks" DESTINATION share/roland)
 
 # doxygen target to generate API documentation with Doxygen
@@ -60,7 +60,10 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/build/uninstall)
 
-include(InstallRequiredSystemLibraries)
+
+#cmake_policy(SET CMP0010 OLD)
+
+#include(InstallRequiredSystemLibraries)
 
 set(CPACK_CMAKE_GENERATOR "Kate - Unix Makefiles")
 set(CPACK_GENERATOR "STGZ;TGZ;TZ")
@@ -74,11 +77,9 @@ set(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}-${PACKAGE_VERSION}")
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "${PACKAGE_NAME}-${PACKAGE_VERSION}")
 set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "${PACKAGE_NAME}-${PACKAGE_VERSION}")
 set(CPACK_PACKAGE_NAME ${PACKAGE_NAME})
-set(CPACK_PACKAGE_VENDOR "none")
+set(CPACK_PACKAGE_CONTACT "Fred Klaus <development@fkweb.de")
+set(CPACK_PACKAGE_VENDOR  "Fred Klaus <development@fkweb.de")
 set(CPACK_PACKAGE_VERSION ${PACKAGE_VERSION})
-set(CPACK_PACKAGE_VERSION_MAJOR "0")
-set(CPACK_PACKAGE_VERSION_MINOR "0")
-set(CPACK_PACKAGE_VERSION_PATCH "0")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README  "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/README.md")
@@ -89,9 +90,8 @@ set(CPACK_SOURCE_STRIP_FILES "")
 set(CPACK_STRIP_FILES "bin/roland")
 set(CPACK_SYSTEM_NAME "Linux-i686")
 set(CPACK_TOPLEVEL_TAG "Linux-i686")
-set(CPACK_SOURCE_IGNORE_FILES "build/;")
+set(CPACK_SOURCE_IGNORE_FILES "\\.directory;\\.git/;bin/;build/;doc/")
 
-SET(CPACK_BINARY_RPM "on")
 SET(CPACK_GENERATOR "RPM")
 SET(CPACK_RPM_PACKAGE_MAINTAINER "Fred Klaus") #required
 include(CPack)
@@ -113,6 +113,10 @@ add_subdirectory(src)
 # output
 message("")
 message("  * ${PROJECT_NAME} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
-message("  * CXX_FLAGS_DEBUG..: ${CMAKE_CXX_FLAGS_DEBUG}")
-message("  * CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS_RELEASE}")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message("  * CXX_FLAGS_DEBUG..: ${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
+endif()
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    message("  * CXX_FLAGS_RELEASE: ${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_RELEASE}")
+endif()
 message("")
