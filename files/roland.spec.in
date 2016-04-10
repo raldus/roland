@@ -26,11 +26,6 @@ Amstrad Emulator based on Caprice Source rewritten in C++.
 %prep
 %setup
 
-%ifarch athlon
-export RPM_OPT_FLAGS="%{optflags} -ffast-math -mfpmath=sse -mmmx -msse -m3dnow"
-%define optflags $RPM_OPT_FLAGS
-%endif
-
 %if %{debug}
 	CFLAGS="$RPM_OPT_FLAGS -O0 -Wall -g3" \
 	CXXFLAGS="$RPM_OPT_FLAGS -O0 -Wall -g3" \

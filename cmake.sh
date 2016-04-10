@@ -11,3 +11,5 @@ if [ ! $# == 1 ]; then
 fi
 
 cmake -H. -Bbuild -G"Kate - Unix Makefiles" -DCMAKE_BUILD_TYPE=$1 -DCMAKE_INSTALL_PREFIX=/usr/local
+
+cmake --build build --target help

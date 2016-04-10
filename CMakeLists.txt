@@ -38,6 +38,9 @@ configure_file("${PROJECT_SOURCE_DIR}/files/config.h.in" "${PROJECT_SOURCE_DIR}/
 add_definitions("-DHAVE_CONFIG_H")
 configure_file("${PROJECT_SOURCE_DIR}/files/roland.spec.in" "${PROJECT_SOURCE_DIR}/roland.spec")
 
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/roms" DESTINATION share/roland)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/disks" DESTINATION share/roland)
+
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
@@ -48,7 +51,6 @@ if(DOXYGEN_FOUND)
         COMMENT "Generating API documentation with Doxygen" VERBATIM)
 endif(DOXYGEN_FOUND)
 
-
 # uninstall target
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/build/CMakeModules)
 configure_file(
@@ -58,6 +60,41 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/build/uninstall)
 
+include(InstallRequiredSystemLibraries)
+
+set(CPACK_CMAKE_GENERATOR "Kate - Unix Makefiles")
+set(CPACK_GENERATOR "STGZ;TGZ;TZ")
+set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_SOURCE_DIR}/build;${PACKAGE_NAME};ALL;/")
+set(CPACK_NSIS_DISPLAY_NAME "${PROJECT_NAME} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
+set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/build/CPackConfig.cmake")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Amstrad Emulator based on Caprice Source rewritten in C++")
+set(CPACK_PACKAGE_EXECUTABLES "ccmake;CMake")
+set(CPACK_PACKAGE_FILE_NAME "${PACKAGE_NAME}-${PACKAGE_VERSION}")
+set(CPACK_PACKAGE_INSTALL_DIRECTORY "${PACKAGE_NAME}-${PACKAGE_VERSION}")
+set(CPACK_PACKAGE_INSTALL_REGISTRY_KEY "${PACKAGE_NAME}-${PACKAGE_VERSION}")
+set(CPACK_PACKAGE_NAME ${PACKAGE_NAME})
+set(CPACK_PACKAGE_VENDOR "none")
+set(CPACK_PACKAGE_VERSION ${PACKAGE_VERSION})
+set(CPACK_PACKAGE_VERSION_MAJOR "0")
+set(CPACK_PACKAGE_VERSION_MINOR "0")
+set(CPACK_PACKAGE_VERSION_PATCH "0")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README  "${CMAKE_SOURCE_DIR}/README.md")
+set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/README.md")
+set(CPACK_SOURCE_GENERATOR "TBZ2;RPM")
+set(CPACK_SOURCE_OUTPUT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/build/CPackSourceConfig.cmake")
+set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PACKAGE_NAME}-${PACKAGE_VERSION}.src")
+set(CPACK_SOURCE_STRIP_FILES "")
+set(CPACK_STRIP_FILES "bin/roland")
+set(CPACK_SYSTEM_NAME "Linux-i686")
+set(CPACK_TOPLEVEL_TAG "Linux-i686")
+set(CPACK_SOURCE_IGNORE_FILES "build/;")
+
+SET(CPACK_BINARY_RPM "on")
+SET(CPACK_GENERATOR "RPM")
+SET(CPACK_RPM_PACKAGE_MAINTAINER "Fred Klaus") #required
+include(CPack)
 
 
 include_directories("${PROJECT_SOURCE_DIR}/src")
