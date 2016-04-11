@@ -13,3 +13,8 @@ src/config.h
 .directory
 .kateproject
 .swp
+
+### Eclipse ###
+.project
+.cproject
+.settings/

@@ -37,7 +37,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <string>WATCH
+#include <string>
 
 #include "SDL.h"
 
@@ -56,9 +56,9 @@ SDL_Surface *screen = 0;
 SDL_Surface *buffer = 0;
 SDL_AudioSpec *audio_spec = 0;
 
-int width = CPC_VISIBLE_SCR_WIDTH * 2 + 3;
+int width  = CPC_VISIBLE_SCR_WIDTH * 2 + 3;
 int height = CPC_VISIBLE_SCR_HEIGHT * 2 + 3;
-int depth = 0;
+int depth  = 0;
 
 bool joystick = false;
 

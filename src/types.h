@@ -24,10 +24,10 @@
 //enum Bits {Bit0=1, Bit1=2, Bit2=4, Bit3=8, Bit4=16, Bit5=32, Bit6=64, Bit7=128};
 
 
-#define CPC_SCR_WIDTH 1024         // max width
-#define CPC_SCR_HEIGHT 312         // max height
-#define CPC_VISIBLE_SCR_WIDTH  384 // visible width : 4+40+4 * 8
-#define CPC_VISIBLE_SCR_HEIGHT 272 // visible height: 5+25+4 * 8  @todo original is 272
+static const uint16_t CPC_SCR_WIDTH(1024);         // max width
+static const uint16_t CPC_SCR_HEIGHT(312);         // max height
+static const uint16_t CPC_VISIBLE_SCR_WIDTH(384);  // visible width : 4+40+4 * 8
+static const uint16_t CPC_VISIBLE_SCR_HEIGHT(272); // visible height: 5+25+4 * 8  @todo original is 272
 
 
 // **************
