@@ -37,7 +37,7 @@
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <string>
+#include <string>WATCH
 
 #include "SDL.h"
 
@@ -404,6 +404,7 @@ void mainloop()
             {
                 while (mainClock.elapsed() < frametime)
                 {
+                    SDL_Delay(1); // TODO: Watch This! Make a switch in Prefs
                 }
             }
             // while (mainClock.elapsed()<frametime) {} @todo is this  OK ???
