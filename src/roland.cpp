@@ -109,12 +109,9 @@ void init()
             cerr << "[SDL] Could not lock screen: " << SDL_GetError() << endl;
             SDL_Delay(20);
         }
-    if (screen->format->BitsPerPixel == 16)
-        cpc.vdu().setBpp(Vdu::Bpp16);
-    if (screen->format->BitsPerPixel == 24)
-        cpc.vdu().setBpp(Vdu::Bpp24);
-    if (screen->format->BitsPerPixel == 32)
-        cpc.vdu().setBpp(Vdu::Bpp32);
+    if (screen->format->BitsPerPixel == 16) cpc.vdu().setBpp(Vdu::Bpp16);
+    if (screen->format->BitsPerPixel == 24) cpc.vdu().setBpp(Vdu::Bpp24);
+    if (screen->format->BitsPerPixel == 32) cpc.vdu().setBpp(Vdu::Bpp32);
 
     cpc.colours().setDepth(screen->format->BitsPerPixel);
 

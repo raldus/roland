@@ -1,15 +1,17 @@
 cmake_minimum_required(VERSION 2.6)
 
-project(ROLAND)
+project(ROLAND C CXX)
 
-set(PROJECT_NAME "Roland" CACHE STRING "Project Name")
+set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME "roland" CACHE STRING "Package Name")
 exec_program(git ARGS describe --abbrev=0 --tags OUTPUT_VARIABLE PACKAGE_VERSION)
 set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
 
+
 set(CMAKE_BINARY_DIR      "${CMAKE_SOURCE_DIR}/bin")
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH    ${CMAKE_BINARY_DIR})
+
 
 # C++ version
 include(CheckCXXCompilerFlag)
@@ -61,10 +63,6 @@ add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/build/uninstall)
 
 
-#cmake_policy(SET CMP0010 OLD)
-
-#include(InstallRequiredSystemLibraries)
-
 set(CPACK_CMAKE_GENERATOR "Kate - Unix Makefiles")
 set(CPACK_GENERATOR "STGZ;TGZ;TZ")
 set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_SOURCE_DIR}/build;${PACKAGE_NAME};ALL;/")
@@ -112,7 +110,7 @@ add_subdirectory(src)
 
 # output
 message("")
-message("  * ${PROJECT_NAME} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
+message("  * ${PACKAGE_TITLE} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("  * CXX_FLAGS_DEBUG..: ${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
 endif()

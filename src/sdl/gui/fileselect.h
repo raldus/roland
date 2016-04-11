@@ -32,6 +32,7 @@ namespace sdltk
 /** @author Fred Klaus */
 class FileSelect
 {
+
 public:
     FileSelect() = delete;
     FileSelect(SDL_Surface* scrn, const std::string & dir, const std::string & last, const std::string & prefix="File: ");
@@ -64,7 +65,6 @@ private:
     void clear();
     void display();
     void events();
-
 };
 
 } // sdltk
