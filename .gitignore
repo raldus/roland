@@ -18,3 +18,9 @@ src/config.h
 .project
 .cproject
 .settings/
+
+### vim ###
+*.swp
+
+### misc ###
+tags

@@ -11,6 +11,6 @@ if [ ! $# == 1 ]; then
     exit 1
 fi
 
-cmake -H. -Bbuild -G"Kate - Unix Makefiles" -DCMAKE_BUILD_TYPE=$1 -DCMAKE_INSTALL_PREFIX=/usr/local
+cmake -H. -Bbuild -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=$1 -DCMAKE_INSTALL_PREFIX=/usr/local
 
 cmake --build build --target help
