@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   frednet@web.de                                                        *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -95,8 +95,8 @@ public:
     UBYTE rasterCount()    {return mRasterCount;}
     UBYTE lineCount()      {return mLineCount;}
     UBYTE charCount()      {return mCharCount;}
-    uint requestedAddr()  {return mRequestedAddr;}
-    uint addr()           {return mAddr;}
+    uint requestedAddr()   {return mRequestedAddr;}
+    uint addr()            {return mAddr;}
 
     void setFlags   (uint flags) {mFlags = flags;}
     void addFlags   (uint flags) {mFlags |= flags;}
@@ -107,7 +107,7 @@ public:
 
     void setHswActive     (UBYTE value) {mHswActive     = value;}
     void setHswCount      (UBYTE value) {mHswCount      = value;}
-    void setAddr   (uint value) {mAddr          = value;}
+    void setAddr          (uint value)  {mAddr          = value;}
     void setVtAdjust      (UBYTE value) {mVtAdjust      = value;}
     void setVtAdjustCount (UBYTE value) {mVtAdjustCount = value;}
     void setVswCount      (UBYTE value) {mVswCount      = value;}

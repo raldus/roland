@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   frednet@web.de                                                        *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -23,8 +23,9 @@
 #include "psg.h"
 #include "types.h"
 
-#define TAPE_VOLUME 32
-#define CYCLE_COUNT_INIT 80000 // 4MHz divided by 50Hz = number of CPU cycles per frame
+const static unsigned char TAPE_VOLUME(32);
+// 4MHz divided by 50Hz = number of CPU cycles per frame
+const static uint32_t CYCLE_COUNT_INIT(80000);
 
 /** @author Fred Klaus */
 class Sound
@@ -131,7 +132,7 @@ private:
     UBYTE* mSndBufferPtr;
     // **############################***********
     // **############################***********
-    // qtodo change and init this !!!!!
+    // TODO change and init this !!!!!
     // **############################***********
     static DWORD mFreqTable[];
     UBYTE* mSndBuffer;
