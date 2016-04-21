@@ -30,12 +30,11 @@ UWORD Sound::mAmplitudesAY[16] = {0,     836,   1212,  1773,  2619,  3875,
                                   5397,  8823,  10392, 16706, 23339, 29292,
                                   36969, 46421, 55195, 65535};
 
-#define MAX_FREQ_ENTRIES 5
+static const char MAX_FREQ_ENTRIES(5);
 DWORD Sound::mFreqTable[MAX_FREQ_ENTRIES] = {11025, 22050, 44100, 48000, 96000};
 
-Sound::Sound(Psg *psg)
+Sound::Sound(Psg *psg) : mPsg(psg)
 {
-    mPsg = psg;
     init(psg);
 }
 
@@ -53,12 +52,9 @@ void Sound::init(Psg *psg)
 
     mBufferFull = false;
 
-    if (psg)
-        mPsg = psg;
-    if (mPsg)
-        mPsg->init();
-    else
-        return;
+    if (psg)  mPsg = psg;
+    if (mPsg) mPsg->init();
+    else return;
 
     for (int n = 0; n < 16; n++)
     {

@@ -649,7 +649,7 @@ int main(int argc, char *argv[])
 
     SDL_WM_SetCaption(PACKAGE_STRING, NULL);
     // SDL_WM_GrabInput (SDL_GRAB_ON);
-    SDL_ShowCursor(0);
+    // SDL_ShowCursor(0);
     // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
     // SDL_DEFAULT_REPEAT_INTERVAL);
     SDL_EnableKeyRepeat(0, 0);
