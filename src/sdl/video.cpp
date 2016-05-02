@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYTRANS_H
-#define KEYTRANS_H
-
-#include "types.h"
-#include "SDL.h"
+#include "video.h"
 
 namespace sdltk
 {
 
-    //! This class provides Keyboard translaation between CPC/EN/DE/SDL/WIN/LINUX
-    class KeyTrans
+    bool  Video::mFullscreen = false;
+    bool  Video::mDoubling   = true;
+    bool  Video::mFilter     = true;
+    uint  Video::mDesktopWidth  = 0;
+    uint  Video::mDesktopHeight = 0;
+
+    Video::Video(Cpc* cpc)
     {
+        const SDL_VideoInfo* vinfo = SDL_GetVideoInfo();
 
-    public:
-        KeyTrans();
-        ~KeyTrans() {}
+        mDesktopWidth  = vinfo->current_w;
+        mDesktopHeight = vinfo->current_h;
 
-        struct JoyAlloc
-        {
-            UBYTE joy;
-            UBYTE orig;
-            UWORD key;
-        };
-        struct SeqPair
-        {
-            UBYTE keyval;
-            bool  down;
-        };
+        mCpc     = cpc;
+        mBuffer  = 0;
+        mScreen  = 0;
 
-        enum Language {German, English};
+        mCanvas.x    = 0;
+        mCanvas.y    = 0;
+        mCanvas.w    = 0;
+        mCanvas.h    = 0;
 
-        void init(Language lang=German);
+        IOUT("[Video]", "desktopwidth",  mDesktopWidth);
+        IOUT("[Video]", "desktopheight", mDesktopHeight);
 
-        UBYTE get(SDL_Event & event);
+    }
+    
+    void Video::setIcon(const string & icon)
+    {
+        SDL_Surface * surface = SDL_LoadBMP(icon.c_str());
+        SDL_SetColorKey(surface, SDL_SRCCOLORKEY, SDL_MapRGB(surface->format, 255, 0 ,255));
+        SDL_WM_SetIcon(surface, 0);
+    }
 
-        bool toggleJoystick();
-        bool joystickEnabled() {return mJoyEnabled;}
-
-        const SeqPair & sequenceVal();
-        bool hasSequence();
-
-        void sequenceCatRun();
-
-    private:
-        SeqPair mSequence[64];
-        uint mSeqIndex;
-
-        static UBYTE mTable[320];
-
-        JoyAlloc mJoyAlloc[6];
-        bool     mJoyEnabled;
-    };
-
-} // sdltk
-
-#endif // KEYTRANS_H
+} //sdltk

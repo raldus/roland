@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,55 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYTRANS_H
-#define KEYTRANS_H
+#ifndef SDLVIDEOGL_H
+#define SDLVIDEOGL_H
 
+#include "predef.h"
+
+#include "video.h"
+#include "cpc.h"
 #include "types.h"
+
+#include "drawgl.h"
+#include "gui.h"
 #include "SDL.h"
+#include "glfuncs.h"
 
 namespace sdltk
 {
 
-    //! This class provides Keyboard translaation between CPC/EN/DE/SDL/WIN/LINUX
-    class KeyTrans
+    /** @author Fred Klaus development@fkweb.de*/
+    class VideoGL : public Video
     {
-
     public:
-        KeyTrans();
-        ~KeyTrans() {}
+        VideoGL(Cpc * cpc);
+        virtual ~VideoGL();
 
-        struct JoyAlloc
-        {
-            UBYTE joy;
-            UBYTE orig;
-            UWORD key;
-        };
-        struct SeqPair
-        {
-            UBYTE keyval;
-            bool  down;
-        };
+        virtual int init();
+        virtual int init(uint width, uint height, uint depth, bool fullscreen, unsigned char scale);
 
-        enum Language {German, English};
+        virtual Draw * getDraw() {return &mDraw;}
 
-        void init(Language lang=German);
+        virtual void setup();
+        virtual void update() {SDL_GL_SwapBuffers();}
 
-        UBYTE get(SDL_Event & event);
-
-        bool toggleJoystick();
-        bool joystickEnabled() {return mJoyEnabled;}
-
-        const SeqPair & sequenceVal();
-        bool hasSequence();
-
-        void sequenceCatRun();
+        virtual void quit();
+        virtual void lock()   {}
+        virtual void unlock() {}
 
     private:
-        SeqPair mSequence[64];
-        uint mSeqIndex;
+        GLuint mTexWidth;
+        GLuint mTexHeight;
+        GLuint mTexnum;
 
-        static UBYTE mTable[320];
+        uint*  calcScreenStart();
+        uint*  calcScreenEnd();
 
-        JoyAlloc mJoyAlloc[6];
-        bool     mJoyEnabled;
+        static volatile bool mIsLoaded;
+
+        DrawGL mDraw;
     };
 
-} // sdltk
+} //sdltk
 
-#endif // KEYTRANS_H
+#endif

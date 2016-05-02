@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYTRANS_H
-#define KEYTRANS_H
+#ifndef SDLGUIDRAWGL_H
+#define SDLGUIDRAWGL_H
 
-#include "types.h"
-#include "SDL.h"
+#include <draw.h>
+#include "glfuncs.h"
 
 namespace sdltk
 {
 
-    //! This class provides Keyboard translaation between CPC/EN/DE/SDL/WIN/LINUX
-    class KeyTrans
+    /** @author Fred Klaus development@fkweb.de */
+    class DrawGL : public Draw
     {
-
     public:
-        KeyTrans();
-        ~KeyTrans() {}
+        DrawGL();
+        virtual ~DrawGL();
 
-        struct JoyAlloc
-        {
-            UBYTE joy;
-            UBYTE orig;
-            UWORD key;
-        };
-        struct SeqPair
-        {
-            UBYTE keyval;
-            bool  down;
-        };
+        virtual void begin();
+        virtual void end();
 
-        enum Language {German, English};
+        virtual void point(const Point & pos);
+        virtual void rect (const Rect  & rect);
+        virtual void fill (const Rect  & rect);
+        virtual void line (const Point & pos1, const Point & pos2);
+        virtual void image(const Image & image, const Rect &  src,  const Rect  & dest);
 
-        void init(Language lang=German);
+        virtual void setColor(const Color & color);
+        
+        virtual void setClipRect(const Rect & rect);
+        virtual void clearClipRect();
 
-        UBYTE get(SDL_Event & event);
-
-        bool toggleJoystick();
-        bool joystickEnabled() {return mJoyEnabled;}
-
-        const SeqPair & sequenceVal();
-        bool hasSequence();
-
-        void sequenceCatRun();
-
-    private:
-        SeqPair mSequence[64];
-        uint mSeqIndex;
-
-        static UBYTE mTable[320];
-
-        JoyAlloc mJoyAlloc[6];
-        bool     mJoyEnabled;
     };
 
-} // sdltk
+} //namespace sdltk
 
-#endif // KEYTRANS_H
+#endif //SDLGUIDRAWGL_H

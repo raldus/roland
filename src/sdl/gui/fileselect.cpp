@@ -26,10 +26,10 @@ namespace sdltk
 {
 
 FileSelect::FileSelect(
-    SDL_Surface *scrn,
-    const std::string & dir,
-    const std::string & last,
-    const std::string & prefix)
+            SDL_Surface *scrn,
+            const std::string & dir,
+            const std::string & last,
+            const std::string & prefix)
 {
     mDir     = 0;
     mScrn    = scrn;

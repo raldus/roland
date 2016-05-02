@@ -32,6 +32,7 @@ set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 # SDL
 find_package(SDL REQUIRED)
+find_package(SDL_image REQUIRED)
 include_directories(${SDL_INCLUDE_DIR})
 
 # roland

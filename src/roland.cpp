@@ -46,6 +46,8 @@
 #include "fileselect.h"
 #include "clock.h"
 #include "keytrans.h"
+#include "videogl.h"
+#include "videostd.h"
 
 using namespace std;
 
@@ -91,6 +93,7 @@ inline void audioUpdate(void *userdata, UBYTE *stream, int len);
 
 inline void fillRect(SDL_Rect *rect);
 
+Video * video = nullptr;
 Prefs prefs;
 Cpc cpc(&prefs);
 
@@ -99,32 +102,27 @@ void init()
     cpc.init();
     showfps = prefs.getBool("showfps");
 
-    // cpc.vdu().setDisplay(&display);
+    cpc.fdc().dsk_eject(0);
+    cpc.fdc().dsk_load(prefs.getPath("diska").c_str(), 0);
 
-    //*** Video @todo 24bit OK ?
-    if (SDL_MUSTLOCK(screen))
-        while (SDL_LockSurface(screen))
+    cpc.fdc().dsk_eject(1);
+    cpc.fdc().dsk_load(prefs.getPath("diskb").c_str(), 0);
+
+
+    //video->init(0, 0, 0, prefs.getBool("fullscreen"));
+    if (!video)
+    {
+        video = new sdltk::VideoStd(&cpc);
+        if (video->init(0, 0, 0, false, 2) != 0)
         {
-            cerr << "[SDL] Could not lock screen: " << SDL_GetError() << endl;
-            SDL_Delay(20);
+            delete video;
+            EOUT("[SDLVidStd]", "could not init video device", "abort");
+            quit();
         }
-    if (screen->format->BitsPerPixel == 16) cpc.vdu().setBpp(Vdu::Bpp16);
-    if (screen->format->BitsPerPixel == 24) cpc.vdu().setBpp(Vdu::Bpp24);
-    if (screen->format->BitsPerPixel == 32) cpc.vdu().setBpp(Vdu::Bpp32);
+        //initGui();
+    }
 
-    cpc.colours().setDepth(screen->format->BitsPerPixel);
 
-    cpc.vdu().setScrBase(calcScreenStart());
-    cpc.vdu().setScrEnd(calcScreenEnd());
-
-    cerr << "[CORE] ScrBase: " << screen->pixels << "\n";
-    cerr << "[CORE] ScrEnd:  "
-         << (uint *)screen->pixels + ((screen->pitch / 4) * height) << "\n";
-
-    cpc.vdu().setScrLineOffset(screen->pitch / 2);
-
-    SDL_UnlockSurface(screen);
-    // *** Video !!!!
 
     clearBuffer();
 
@@ -216,7 +214,7 @@ void mainloop()
                                     audioPause();
                                     SDL_Delay(20);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
-                                        screen, prefs.getPath("diskdir"),
+                                        video->screen(), prefs.getPath("diskdir"),
                                         prefs.getPath("diska"), "A: ");
                                     SDL_EnableKeyRepeat(
                                         SDL_DEFAULT_REPEAT_DELAY,
@@ -243,7 +241,7 @@ void mainloop()
                                     audioPause();
                                     SDL_Delay(20);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
-                                        screen, prefs.getPath("diskdir"),
+                                        video->screen(), prefs.getPath("diskdir"),
                                         prefs.getPath("diskb"), "B: ");
                                     SDL_EnableKeyRepeat(
                                         SDL_DEFAULT_REPEAT_DELAY,
@@ -265,6 +263,39 @@ void mainloop()
                                 }
                                 break;
 
+                                case SDLK_F7:
+                                    audioPause();
+                                    delete video;
+                                    video = new VideoStd(&cpc);
+                                    if (video->init() != 0)
+                                    {
+                                        delete video;
+                                        quit();
+                                    }
+                                    //initGui();
+                                    audioResume();
+                                    break;
+
+                                case SDLK_F8:
+                                    audioPause();
+                                    delete video;
+                                    video = new VideoGL(&cpc);
+                                    if (video->init() != 0)
+                                    {
+                                        delete video;
+                                        video = new VideoStd(&cpc);
+                                        if (video->init() != 0)
+                                        {
+                                            EOUT("[Core]", "could not init any video device", "quit");
+                                            delete video;
+                                            quit();
+                                        }
+                                        IOUT("[Core]", "fallback to VideoStd", "OK");
+                                    }
+                                    //initGui();
+                                    audioResume();
+                                    break;
+
                                 case SDLK_F9:
                                     audioPause();
                                     SDL_Delay(20);
@@ -272,12 +303,18 @@ void mainloop()
                                     audioResume();
                                     break;
 
-                                case SDLK_F5:
+                                case SDLK_F4:
                                     cout << "Joystick: " << boolalpha
                                          << keytrans.toggleJoystick() << "\n";
                                     break;
 
-                                case SDLK_F4:
+                                case SDLK_F5:
+                                    audioPause();
+                                    video->toggleDoubling();
+                                    audioResume();
+                                    break;
+
+                                case SDLK_F6:
                                     keytrans.sequenceCatRun();
                                     break;
 
@@ -289,7 +326,7 @@ void mainloop()
                                 case SDLK_F12:
                                     audioPause();
                                     SDL_Delay(20);
-                                    SDL_WM_ToggleFullScreen(screen);
+                                    video->toggleFullscreen();
                                     audioResume();
                                     break;
 
@@ -378,8 +415,7 @@ void mainloop()
             continue;
         }
 
-        if (cpc.vdu()
-                .frameCompleted()) // video emulation finished building frame?
+        if (cpc.vdu().frameCompleted()) // video emulation finished building frame?
         {
             cyclesElapsed = 0;
             cpc.vdu().setFrameCompleted(false);
@@ -390,9 +426,8 @@ void mainloop()
             display();
             framecount++;
 
-            cpc.vdu().setScrBase(
-                calcScreenStart()); //@todo do not calculate if no pageflip
-            cpc.vdu().setScrEnd(calcScreenEnd());
+            cpc.vdu().setScrBase(video->bufferStart()); //@todo do not calculate if no pageflip
+            //cpc.vdu().setScrEnd(video->bufferEnd());
 
             // if (mainClock.elapsed() > frametime) frameskip=true; // skip next
             // frame
@@ -423,6 +458,9 @@ inline void fillRect(SDL_Rect *rect)
 
 inline void display()
 {
+    video->setup();
+    video->update();
+    return;
     sdltk::Font fnt;
 
     if (cpc.fdc().led())
@@ -629,41 +667,18 @@ int main(int argc, char *argv[])
 
     bool fs = prefs.getBool("fullscreen");
 
-    screen = SDL_SetVideoMode(width, height, depth,
-                              SDL_DOUBLEBUF | SDL_HWSURFACE | SDL_HWPALETTE |
-                                  SDL_ANYFORMAT | (fs ? SDL_FULLSCREEN : 0));
-    if (screen == NULL)
-    {
-        cerr << "[SDL_VIDEO] Couldn't set " << width << "x" << height << "-"
-             << screen->format->BitsPerPixel
-             << " video mode: " << SDL_GetError() << endl;
-        SDL_Quit();
-    }
 
-    char buf[16];
-    memset(buf, 0, 16);
-    SDL_VideoDriverName(buf, 15);
-    string driver = buf;
-    cout << "[SDL_VIDEO] Driver: " << driver << "\n";
-    cout << "[SDL_VIDEO] BPP: " << (int)screen->format->BitsPerPixel << "\n";
-
-    SDL_WM_SetCaption(PACKAGE_STRING, NULL);
-    // SDL_WM_GrabInput (SDL_GRAB_ON);
-    // SDL_ShowCursor(0);
-    // SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
-    // SDL_DEFAULT_REPEAT_INTERVAL);
+    //SDL_WM_SetCaption(PACKAGE_STRING, 0);
+    Video::setCaption(PACKAGE_STRING);
+    //Video::setIcon(datadir + "icon32x32-256.bmp");
+    //SDL_WM_GrabInput (SDL_GRAB_ON);
+    //SDL_ShowCursor (0);
+    //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
     SDL_EnableKeyRepeat(0, 0);
+
 
     initSound();
     init();
-
-    if (SDL_MUSTLOCK(screen))
-        while (SDL_LockSurface(screen))
-        {
-            cerr << "[SDL_VIDEO] Could not lock screen: " << SDL_GetError()
-                 << endl;
-            SDL_Delay(20);
-        }
 
     audioResume();
 

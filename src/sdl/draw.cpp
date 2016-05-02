@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYTRANS_H
-#define KEYTRANS_H
-
-#include "types.h"
-#include "SDL.h"
+#include "draw.h"
 
 namespace sdltk
 {
 
-    //! This class provides Keyboard translaation between CPC/EN/DE/SDL/WIN/LINUX
-    class KeyTrans
+    Draw::Draw()
+    {}
+
+    Draw::~Draw()
+    {}
+
+    void Draw::setFont(const string & fname, const string & glyphs)
     {
-
-    public:
-        KeyTrans();
-        ~KeyTrans() {}
-
-        struct JoyAlloc
-        {
-            UBYTE joy;
-            UBYTE orig;
-            UWORD key;
-        };
-        struct SeqPair
-        {
-            UBYTE keyval;
-            bool  down;
-        };
-
-        enum Language {German, English};
-
-        void init(Language lang=German);
-
-        UBYTE get(SDL_Event & event);
-
-        bool toggleJoystick();
-        bool joystickEnabled() {return mJoyEnabled;}
-
-        const SeqPair & sequenceVal();
-        bool hasSequence();
-
-        void sequenceCatRun();
-
-    private:
-        SeqPair mSequence[64];
-        uint mSeqIndex;
-
-        static UBYTE mTable[320];
-
-        JoyAlloc mJoyAlloc[6];
-        bool     mJoyEnabled;
-    };
+        mFont.load(fname, glyphs);
+    }
 
 } // sdltk
-
-#endif // KEYTRANS_H

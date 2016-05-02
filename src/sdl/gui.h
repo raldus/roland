@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,51 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYTRANS_H
-#define KEYTRANS_H
+#ifndef GUI_H
+#define GUI_H
 
-#include "types.h"
+#include "widget.h"
+#include "video.h"
 #include "SDL.h"
 
+#include <vector>
+
+
+/** @brief the SDL based GUI */
 namespace sdltk
 {
 
-    //! This class provides Keyboard translaation between CPC/EN/DE/SDL/WIN/LINUX
-    class KeyTrans
+    using std::vector;
+    using sdltk::Video;
+
+    /** @author Fred Klaus development@fkweb.de */
+    class Gui
     {
-
     public:
-        KeyTrans();
-        ~KeyTrans() {}
+        Gui(Video * video);
+        ~Gui();
 
-        struct JoyAlloc
-        {
-            UBYTE joy;
-            UBYTE orig;
-            UWORD key;
-        };
-        struct SeqPair
-        {
-            UBYTE keyval;
-            bool  down;
-        };
+        void add(Widget * widget);
 
-        enum Language {German, English};
+        /** returns true if event is accepted */
+        bool checkEvent(SDL_Event * event);
+        void update();
 
-        void init(Language lang=German);
+        bool enabled()                {return mEnabled;}
+        void setEnabled(bool enabled) {mEnabled = enabled;}
+        void toggleEnabled()          {mEnabled = !mEnabled;}
 
-        UBYTE get(SDL_Event & event);
+        void setFocus(Widget * focus) {mHasFocus = focus;}
 
-        bool toggleJoystick();
-        bool joystickEnabled() {return mJoyEnabled;}
+    protected:
+        vector<Widget*> mWidgets;
+        vector<Widget*>::iterator mIt;
+        bool mEnabled;
+        Widget * mHasFocus; // receives the incoming events
 
-        const SeqPair & sequenceVal();
-        bool hasSequence();
-
-        void sequenceCatRun();
-
-    private:
-        SeqPair mSequence[64];
-        uint mSeqIndex;
-
-        static UBYTE mTable[320];
-
-        JoyAlloc mJoyAlloc[6];
-        bool     mJoyEnabled;
+        Video * mVideo;
     };
 
 } // sdltk
 
-#endif // KEYTRANS_H
+#endif // GUI_H

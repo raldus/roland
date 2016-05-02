@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,59 +17,39 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYTRANS_H
-#define KEYTRANS_H
+#include "widget.h"
 
-#include "types.h"
-#include "SDL.h"
+#include <iostream>
 
 namespace sdltk
 {
 
-    //! This class provides Keyboard translaation between CPC/EN/DE/SDL/WIN/LINUX
-    class KeyTrans
+    Widget::Widget()
     {
+        mDraw   = 0;
+        mParent = 0;
+        
+        mEnabled    = true;
+        mWantEvents = false;
+        mMouseOver  = false;
+        mMouseGrab  = false;
+        
+        
+        mColor.set(128, 128, 128, 128);
+        
+        mRect.set(0, 0, 0, 0);
+    }
 
-    public:
-        KeyTrans();
-        ~KeyTrans() {}
+    Widget::~Widget()
+    {
+    }
+    
+    void Widget::setDraw(Draw * draw)
+    {
+        mDraw = draw;
+    }
 
-        struct JoyAlloc
-        {
-            UBYTE joy;
-            UBYTE orig;
-            UWORD key;
-        };
-        struct SeqPair
-        {
-            UBYTE keyval;
-            bool  down;
-        };
 
-        enum Language {German, English};
+} //namespace sdltk
 
-        void init(Language lang=German);
 
-        UBYTE get(SDL_Event & event);
-
-        bool toggleJoystick();
-        bool joystickEnabled() {return mJoyEnabled;}
-
-        const SeqPair & sequenceVal();
-        bool hasSequence();
-
-        void sequenceCatRun();
-
-    private:
-        SeqPair mSequence[64];
-        uint mSeqIndex;
-
-        static UBYTE mTable[320];
-
-        JoyAlloc mJoyAlloc[6];
-        bool     mJoyEnabled;
-    };
-
-} // sdltk
-
-#endif // KEYTRANS_H
