@@ -38,8 +38,8 @@ extern Cpc cpc;
 /** @author Fred Klaus */
 class Z80
 {
-    typedef tUBYTE (Cpc::*Z80_IN_Handler) (REGPAIR port);
-    typedef void  (Cpc::*Z80_OUT_Handler)(REGPAIR port, tUBYTE value);
+    typedef tUBYTE (Cpc::*Z80_IN_Handler) (tREGPAIR port);
+    typedef void  (Cpc::*Z80_OUT_Handler)(tREGPAIR port, tUBYTE value);
     typedef void  (Cpc::*Z80_WS_Handler) (void);
 
 public:

@@ -38,7 +38,7 @@ public:
     void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
 
 private:
-    REGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;
+    tREGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;
     tUBYTE   I, R, Rb7, IFF1, IFF2, IM, HALT, EI_issued, int_pending;
     tDWORD   break_point, trace;
 

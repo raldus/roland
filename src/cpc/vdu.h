@@ -124,7 +124,7 @@ private:
 
     Bpp mBpp;
 
-    REGPAIR addr;
+    tREGPAIR addr;
 
     bool mFrameCompleted;
     bool mBorder;

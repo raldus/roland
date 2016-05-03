@@ -85,8 +85,8 @@ public:
     uint    speed()   {return mSpeed;}
     //Monitor monitor() {return mMonitor;}
 
-    tUBYTE z80_in_handler (REGPAIR port); //@todo change This !!
-    void  z80_out_handler(REGPAIR port, tUBYTE value);
+    tUBYTE z80_in_handler (tREGPAIR port); //@todo change This !!
+    void  z80_out_handler(tREGPAIR port, tUBYTE value);
     void waitstates();
 
 

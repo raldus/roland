@@ -462,7 +462,7 @@ void Sound::synthesizerStereo16()
         mLoopCount.high--;
     }
     mLoopCount.both += mLoopCountInit;
-    REGPAIR val;
+    tREGPAIR val;
     val.w.l = mLeftChan / tickcounter;
     val.w.h = mRightChan / tickcounter;
     *(tDWORD *)mSndBufferPtr = val.d; // @todo check this,write to mixing buffer
@@ -488,7 +488,7 @@ void Sound::synthesizerStereo8()
         mLoopCount.high--;
     }
     mLoopCount.both += mLoopCountInit;
-    REGPAIR val;
+    tREGPAIR val;
     val.b.l = 128 + mLeftChan / tickcounter;
     val.b.h = 128 + mRightChan / tickcounter;
     setBufferPtrW(val.w.l); // @todo check this,write to mixing buffer

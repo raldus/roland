@@ -109,7 +109,7 @@ int Cpc::init(Prefs *prefs)
     return 0;
 }
 
-tUBYTE Cpc::z80_in_handler(REGPAIR port)
+tUBYTE Cpc::z80_in_handler(tREGPAIR port)
 {
     tUBYTE retval = 0xff;
 
@@ -249,7 +249,7 @@ tUBYTE Cpc::z80_in_handler(REGPAIR port)
     return retval;
 }
 
-void Cpc::z80_out_handler(REGPAIR port, tUBYTE value)
+void Cpc::z80_out_handler(tREGPAIR port, tUBYTE value)
 {
     // **********************************************************************
     // *** CRTC

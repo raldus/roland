@@ -842,7 +842,7 @@ int Z80::execute(int cc)
                 break;
             case ina:
             {
-                REGPAIR p;
+                tREGPAIR p;
                 p.b.l = read_mem(z80.PC.w.l++);
                 p.b.h = z80.AF.b.h;
                 z80.AF.b.h = z80_IN_handler(p);
@@ -1056,7 +1056,7 @@ int Z80::execute(int cc)
                 break;
             case ld_a_mword:
             {
-                REGPAIR addr;
+                tREGPAIR addr;
                 addr.b.l = read_mem(z80.PC.w.l++);
                 addr.b.h = read_mem(z80.PC.w.l++);
                 z80.AF.b.h = read_mem(addr.w.l);
@@ -1268,7 +1268,7 @@ int Z80::execute(int cc)
                 break;
             case ld_mword_a:
             {
-                REGPAIR addr;
+                tREGPAIR addr;
                 addr.b.l = read_mem(z80.PC.w.l++);
                 addr.b.h = read_mem(z80.PC.w.l++);
                 write_mem(addr.w.l, z80.AF.b.h);
@@ -1319,7 +1319,7 @@ int Z80::execute(int cc)
                 break;
             case outa:
             {
-                REGPAIR p;
+                tREGPAIR p;
                 p.b.l = read_mem(z80.PC.w.l++);
                 p.b.h = z80.AF.b.h;
                 z80_OUT_handler(p, z80.AF.b.h);
@@ -2802,7 +2802,7 @@ void Z80::z80_pfx_dd()
             break;
         case ina:
         {
-            REGPAIR p;
+            tREGPAIR p;
             p.b.l = read_mem(z80.PC.w.l++);
             p.b.h = z80.AF.b.h;
             z80.AF.b.h = z80_IN_handler(p);
@@ -3020,7 +3020,7 @@ void Z80::z80_pfx_dd()
         break;
         case ld_a_mword:
         {
-            REGPAIR addr;
+            tREGPAIR addr;
             addr.b.l = read_mem(z80.PC.w.l++);
             addr.b.h = read_mem(z80.PC.w.l++);
             z80.AF.b.h = read_mem(addr.w.l);
@@ -3272,7 +3272,7 @@ void Z80::z80_pfx_dd()
         break;
         case ld_mword_a:
         {
-            REGPAIR addr;
+            tREGPAIR addr;
             addr.b.l = read_mem(z80.PC.w.l++);
             addr.b.h = read_mem(z80.PC.w.l++);
             write_mem(addr.w.l, z80.AF.b.h);
@@ -3326,7 +3326,7 @@ void Z80::z80_pfx_dd()
         break;
         case outa:
         {
-            REGPAIR p;
+            tREGPAIR p;
             p.b.l = read_mem(z80.PC.w.l++);
             p.b.h = z80.AF.b.h;
             z80_OUT_handler(p, z80.AF.b.h);
@@ -5627,7 +5627,7 @@ void Z80::z80_pfx_fd()
             break;
         case ina:
         {
-            REGPAIR p;
+            tREGPAIR p;
             p.b.l = read_mem(z80.PC.w.l++);
             p.b.h = z80.AF.b.h;
             z80.AF.b.h = z80_IN_handler(p);
@@ -5845,7 +5845,7 @@ void Z80::z80_pfx_fd()
         break;
         case ld_a_mword:
         {
-            REGPAIR addr;
+            tREGPAIR addr;
             addr.b.l = read_mem(z80.PC.w.l++);
             addr.b.h = read_mem(z80.PC.w.l++);
             z80.AF.b.h = read_mem(addr.w.l);
@@ -6097,7 +6097,7 @@ void Z80::z80_pfx_fd()
         break;
         case ld_mword_a:
         {
-            REGPAIR addr;
+            tREGPAIR addr;
             addr.b.l = read_mem(z80.PC.w.l++);
             addr.b.h = read_mem(z80.PC.w.l++);
             write_mem(addr.w.l, z80.AF.b.h);
@@ -6151,7 +6151,7 @@ void Z80::z80_pfx_fd()
         break;
         case outa:
         {
-            REGPAIR p;
+            tREGPAIR p;
             p.b.l = read_mem(z80.PC.w.l++);
             p.b.h = z80.AF.b.h;
             z80_OUT_handler(p, z80.AF.b.h);

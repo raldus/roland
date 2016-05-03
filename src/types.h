@@ -98,7 +98,7 @@ static const uint16_t CPC_VISIBLE_SCR_HEIGHT(272); // visible height: 5+25+4 * 8
 #endif
 
 
-#ifndef REGPAIR
+#ifndef tREGPAIR
     typedef union
     {
     #if SDL_BYTEORDER == SDL_LIL_ENDIAN
@@ -109,9 +109,9 @@ static const uint16_t CPC_VISIBLE_SCR_HEIGHT(272); // visible height: 5+25+4 * 8
        struct { tUWORD h, l; } w;
     #endif
        tDWORD d;
-    }  REGPAIR;
+    }  tREGPAIR;
 #else
-    #warning "*** REGPAIR is already defined and may not match requested size. ***"
+    #warning "*** tREGPAIR is already defined and may not match requested size. ***"
 #endif
 
 #ifndef uint

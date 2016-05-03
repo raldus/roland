@@ -89,8 +89,8 @@ public:
     Raze()  {mIntPending=0;}
     ~Raze() {}
 
-    typedef tUBYTE (*Z80_IN_Handler) (REGPAIR port);
-    typedef void  (*Z80_OUT_Handler)(REGPAIR port, tUBYTE value);
+    typedef tUBYTE (*Z80_IN_Handler) (tREGPAIR port);
+    typedef void  (*Z80_OUT_Handler)(tREGPAIR port, tUBYTE value);
 
     void setInHandler (Z80_IN_Handler handler)  {}
     void setOutHandler(Z80_OUT_Handler handler) {}
@@ -130,8 +130,8 @@ private:
     //Z80_IN_Handler  IN_handler;
     //Z80_OUT_Handler OUT_handler;
 
-    //tUBYTE z80_in_handler(REGPAIR port)
-    //void z80_out_handler(REGPAIR port, tUBYTE value)
+    //tUBYTE z80_in_handler(tREGPAIR port)
+    //void z80_out_handler(tREGPAIR port, tUBYTE value)
     int mLastCyclecount;
     int mCycleCountInit;
     tUBYTE mIntPending;

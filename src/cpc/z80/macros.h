@@ -77,7 +77,7 @@
          z80_wait_states \
       } \
       else { // interrupt mode 2  \
-         REGPAIR addr; \
+         tREGPAIR addr; \
          iCycleCount = 28; // was 76  \
          if (iWSAdjust) { \
             iCycleCount -= 4; \
@@ -120,7 +120,7 @@
         } \
         else    \
         {   \
-            REGPAIR addr; \
+            tREGPAIR addr; \
             iCycleCount = 28;  \
             if (iWSAdjust)    \
             { \
@@ -172,7 +172,7 @@
 
 #define CALL \
 { \
-   REGPAIR dest; \
+   tREGPAIR dest; \
    dest.b.l = read_mem(z80.PC.w.l++); /* subroutine address low byte */ \
    dest.b.h = read_mem(z80.PC.w.l++); /* subroutine address high byte */ \
    write_mem(--z80.SP.w.l, z80.PC.b.h); /* store high byte of current PC */ \
@@ -215,7 +215,7 @@
 
 #define EXX \
 { \
-   REGPAIR temp; \
+   tREGPAIR temp; \
    temp = z80.BCx; \
    z80.BCx = z80.BC; \
    z80.BC = temp; \
@@ -229,7 +229,7 @@
 
 #define EX(op1, op2) \
 { \
-   REGPAIR temp; \
+   tREGPAIR temp; \
    temp = op1; \
    op1 = op2; \
    op2 = temp; \
@@ -237,7 +237,7 @@
 
 #define EX_SP(reg) \
 { \
-   REGPAIR temp; \
+   tREGPAIR temp; \
    temp.b.l = read_mem(z80.SP.w.l++); \
    temp.b.h = read_mem(z80.SP.w.l); \
    write_mem(z80.SP.w.l--, z80.reg.b.h); \
@@ -253,7 +253,7 @@
 
 #define JP \
 { \
-   REGPAIR addr; \
+   tREGPAIR addr; \
    addr.b.l = read_mem(z80.PC.w.l++); \
    addr.b.h = read_mem(z80.PC.w.l); \
    z80.PC.w.l = addr.w.l; \
@@ -261,7 +261,7 @@
 
 #define LD16_MEM(reg) \
 { \
-   REGPAIR addr; \
+   tREGPAIR addr; \
    addr.b.l = read_mem(z80.PC.w.l++); \
    addr.b.h = read_mem(z80.PC.w.l++); \
    z80.reg.b.l = read_mem(addr.w.l); \
@@ -270,7 +270,7 @@
 
 #define LDMEM_16(reg) \
 { \
-   REGPAIR addr; \
+   tREGPAIR addr; \
    addr.b.l = read_mem(z80.PC.w.l++); \
    addr.b.h = read_mem(z80.PC.w.l++); \
    write_mem(addr.w.l, z80.reg.b.l); \

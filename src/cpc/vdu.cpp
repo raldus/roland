@@ -581,7 +581,7 @@ void Vdu::draw16bpp_mode2()
     tUBYTE pat;
     register tUDWORD *mem_ptr;
     tUDWORD pen_on, pen_off;
-    REGPAIR val;
+    tREGPAIR val;
 
     mem_ptr = (tUDWORD *)mScrBase + mScrOffset; // PC screen buffer addr.w.less
     pen_on = mGateArray->palette(1);
