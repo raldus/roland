@@ -53,7 +53,7 @@
 
 #define mPsg_write \
 { \
-   UBYTE control = mPsg.control() & 0xc0; /* isolate PSG control bits */ \
+   tUBYTE control = mPsg.control() & 0xc0; /* isolate PSG control bits */ \
    if (control == 0xc0) { /* latch address? */ \
       mPsg.setSelected(mPsg_data); /* select new PSG register */ \
 } else if (control == 0x80) { /* write? */ \
@@ -85,8 +85,8 @@ public:
     uint    speed()   {return mSpeed;}
     //Monitor monitor() {return mMonitor;}
 
-    UBYTE z80_in_handler (REGPAIR port); //@todo change This !!
-    void  z80_out_handler(REGPAIR port, UBYTE value);
+    tUBYTE z80_in_handler (REGPAIR port); //@todo change This !!
+    void  z80_out_handler(REGPAIR port, tUBYTE value);
     void waitstates();
 
 

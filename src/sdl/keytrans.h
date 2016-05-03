@@ -36,13 +36,13 @@ namespace sdltk
 
         struct JoyAlloc
         {
-            UBYTE joy;
-            UBYTE orig;
-            UWORD key;
+            tUBYTE joy;
+            tUBYTE orig;
+            tUWORD key;
         };
         struct SeqPair
         {
-            UBYTE keyval;
+            tUBYTE keyval;
             bool  down;
         };
 
@@ -50,7 +50,7 @@ namespace sdltk
 
         void init(Language lang=German);
 
-        UBYTE get(SDL_Event & event);
+        tUBYTE get(SDL_Event & event);
 
         bool toggleJoystick();
         bool joystickEnabled() {return mJoyEnabled;}
@@ -64,7 +64,7 @@ namespace sdltk
         SeqPair mSequence[64];
         uint mSeqIndex;
 
-        static UBYTE mTable[320];
+        static tUBYTE mTable[320];
 
         JoyAlloc mJoyAlloc[6];
         bool     mJoyEnabled;

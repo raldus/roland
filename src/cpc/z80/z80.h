@@ -38,8 +38,8 @@ extern Cpc cpc;
 /** @author Fred Klaus */
 class Z80
 {
-    typedef UBYTE (Cpc::*Z80_IN_Handler) (REGPAIR port);
-    typedef void  (Cpc::*Z80_OUT_Handler)(REGPAIR port, UBYTE value);
+    typedef tUBYTE (Cpc::*Z80_IN_Handler) (REGPAIR port);
+    typedef void  (Cpc::*Z80_OUT_Handler)(REGPAIR port, tUBYTE value);
     typedef void  (Cpc::*Z80_WS_Handler) (void);
 
 public:
@@ -195,14 +195,14 @@ public:
 
     //void  access_video_memory(int repeat_count);     // not provided by Z80.c
 
-    UBYTE read_mem  (UWORD addr)                       // returns a UBYTE from a 16KB memory bank
+    tUBYTE read_mem  (tUWORD addr)                       // returns a tUBYTE from a 16KB memory bank
         {return (*(membank_read[addr >> 14] + (addr & 0x3fff)));}
 
-    void  write_mem (UWORD addr, UBYTE val)          // writes a UBYTE to a 16KB memory bank
+    void  write_mem (tUWORD addr, tUBYTE val)          // writes a tUBYTE to a 16KB memory bank
         {*(membank_write[addr >> 14] + (addr & 0x3fff)) = val;}
 
-    void setMembank_read (UBYTE bank, UBYTE* ptr) {membank_read [bank]=ptr;}
-    void setMembank_write(UBYTE bank, UBYTE* ptr) {membank_write[bank]=ptr;}
+    void setMembank_read (tUBYTE bank, tUBYTE* ptr) {membank_read [bank]=ptr;}
+    void setMembank_write(tUBYTE bank, tUBYTE* ptr) {membank_write[bank]=ptr;}
 
     void setInHandler (Z80_IN_Handler handler)  {IN_handler=handler;}
     void setOutHandler(Z80_OUT_Handler handler) {OUT_handler=handler;}
@@ -219,12 +219,12 @@ public:
     int  cycleCount() {return iCycleCount;}
 
     void mf2stop();
-    void setMF2ExitAddr(UDWORD addr) {dwMF2ExitAddr=addr;}
+    void setMF2ExitAddr(tUDWORD addr) {dwMF2ExitAddr=addr;}
 
     //void doNothing() {return;}
 
-    void  setIntPending(UBYTE ip) {z80.int_pending=ip;}
-    UBYTE intPending   ()         {return z80.int_pending;}
+    void  setIntPending(tUBYTE ip) {z80.int_pending=ip;}
+    tUBYTE intPending   ()         {return z80.int_pending;}
 
     void initMemMap() {}
     void endMemMap()  {}
@@ -236,29 +236,29 @@ public:
     void z80_pfx_fd();
     void z80_pfx_fdcb();
 
-    inline UBYTE RES(UBYTE bit, UBYTE val);
-    inline UBYTE RLC(UBYTE val);
-    inline UBYTE RL (UBYTE val);
-    inline UBYTE RRC(UBYTE val);
-    inline UBYTE RR (UBYTE val);
-    inline UBYTE SET(UBYTE bit, UBYTE val);
-    inline UBYTE SLA(UBYTE val);
-    inline UBYTE SLL(UBYTE val);
-    inline UBYTE SRA(UBYTE val);
-    inline UBYTE SRL(UBYTE val);
+    inline tUBYTE RES(tUBYTE bit, tUBYTE val);
+    inline tUBYTE RLC(tUBYTE val);
+    inline tUBYTE RL (tUBYTE val);
+    inline tUBYTE RRC(tUBYTE val);
+    inline tUBYTE RR (tUBYTE val);
+    inline tUBYTE SET(tUBYTE bit, tUBYTE val);
+    inline tUBYTE SLA(tUBYTE val);
+    inline tUBYTE SLL(tUBYTE val);
+    inline tUBYTE SRA(tUBYTE val);
+    inline tUBYTE SRL(tUBYTE val);
 
 private:
     Register z80;
 
-    UBYTE* membank_read [4];
-    UBYTE* membank_write[4];
+    tUBYTE* membank_read [4];
+    tUBYTE* membank_write[4];
 
     Z80_IN_Handler  IN_handler;
     Z80_OUT_Handler OUT_handler;
     Z80_WS_Handler  WS_handler;
 
-    DWORD dwMF2ExitAddr;
-    DWORD dwMF2Flags;
+    tDWORD dwMF2ExitAddr;
+    tDWORD dwMF2Flags;
 
     int iCycleCountSum;
     int iCycleCount;
@@ -267,22 +267,22 @@ private:
 
     bool mStop;
 
-    static UBYTE irep_tmp1[4][4];
-    static UBYTE drep_tmp1[4][4];
-    static UBYTE breg_tmp2[256];
-    static UBYTE cc_op[256];
-    static UBYTE cc_cb[256];
-    static UBYTE cc_ed[256];
-    static UBYTE cc_xy[256];
-    static UBYTE cc_ex[256];
-    static UBYTE cc_xycb[256];
-    static UWORD DAATable[2048];
+    static tUBYTE irep_tmp1[4][4];
+    static tUBYTE drep_tmp1[4][4];
+    static tUBYTE breg_tmp2[256];
+    static tUBYTE cc_op[256];
+    static tUBYTE cc_cb[256];
+    static tUBYTE cc_ed[256];
+    static tUBYTE cc_xy[256];
+    static tUBYTE cc_ex[256];
+    static tUBYTE cc_xycb[256];
+    static tUWORD DAATable[2048];
 
-    UBYTE SZ[256];       // zero and sign flags
-    UBYTE SZ_BIT[256];   // zero, sign and parity/overflow (=zero) flags for BIT opcode
-    UBYTE SZP[256];      // zero, sign and parity flags
-    UBYTE SZHV_inc[256]; // zero, sign, half carry and overflow flags INC r8
-    UBYTE SZHV_dec[256]; // zero, sign, half carry and overflow flags DEC r8
+    tUBYTE SZ[256];       // zero and sign flags
+    tUBYTE SZ_BIT[256];   // zero, sign and parity/overflow (=zero) flags for BIT opcode
+    tUBYTE SZP[256];      // zero, sign and parity flags
+    tUBYTE SZHV_inc[256]; // zero, sign, half carry and overflow flags INC r8
+    tUBYTE SZHV_dec[256]; // zero, sign, half carry and overflow flags DEC r8
 
 };
 

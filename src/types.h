@@ -33,28 +33,28 @@ static const uint16_t CPC_VISIBLE_SCR_HEIGHT(272); // visible height: 5+25+4 * 8
 // **************
 // *** signed ***
 // **************
-#ifndef BYTE
-    typedef int8_t BYTE;
+#ifndef tBYTE
+    typedef int8_t tBYTE;
 #else
-    #warning "*** BYTE is already defined and may not match requested size. ***"
+    #warning "*** tBYTE is already defined and may not match requested size. ***"
 #endif
 
-#ifndef WORD
-    typedef int16_t WORD;
+#ifndef tWORD
+    typedef int16_t tWORD;
 #else
-    #warning "*** WORD is already defined and may not match requested size. ***"
+    #warning "*** tWORD is already defined and may not match requested size. ***"
 #endif
 
-#ifndef DWORD
-    typedef int32_t DWORD;
+#ifndef tDWORD
+    typedef int32_t tDWORD;
 #else
-    #warning "*** DWORD is already defined and may not match requested size. ***"
+    #warning "*** tDWORD is already defined and may not match requested size. ***"
 #endif
 
-#ifndef QWORD
-    typedef int64_t QWORD;
+#ifndef tQWORD
+    typedef int64_t tQWORD;
 #else
-    #warning "*** QWORD is already defined and may not match requested size. ***"
+    #warning "*** tQWORD is already defined and may not match requested size. ***"
 #endif
 
 #ifndef INT64
@@ -67,28 +67,28 @@ static const uint16_t CPC_VISIBLE_SCR_HEIGHT(272); // visible height: 5+25+4 * 8
 // ****************
 // *** unsigned ***
 // ****************
-#ifndef BYTE
-    typedef uint8_t UBYTE;
+#ifndef tBYTE
+    typedef uint8_t tUBYTE;
 #else
-    #warning "*** UBYTE is already defined and may not match requested size. ***"
+    #warning "*** tUBYTE is already defined and may not match requested size. ***"
 #endif
 
-#ifndef WORD
-    typedef uint16_t UWORD;
+#ifndef tWORD
+    typedef uint16_t tUWORD;
 #else
-    #warning "*** UWORD is already defined and may not match requested size. ***"
+    #warning "*** tUWORD is already defined and may not match requested size. ***"
 #endif
 
-#ifndef DWORD
-    typedef uint32_t UDWORD;
+#ifndef tDWORD
+    typedef uint32_t tUDWORD;
 #else
-    #warning "*** UDWORD is already defined and may not match requested size. ***"
+    #warning "*** tUDWORD is already defined and may not match requested size. ***"
 #endif
 
-#ifndef QWORD
-    typedef uint64_t UQWORD;
+#ifndef tQWORD
+    typedef uint64_t tUQWORD;
 #else
-    #warning "*** UQWORD is already defined and may not match requested size. ***"
+    #warning "*** tUQWORD is already defined and may not match requested size. ***"
 #endif
 
 #ifndef INT64
@@ -102,13 +102,13 @@ static const uint16_t CPC_VISIBLE_SCR_HEIGHT(272); // visible height: 5+25+4 * 8
     typedef union
     {
     #if SDL_BYTEORDER == SDL_LIL_ENDIAN
-       struct { UBYTE l, h, h2, h3; } b;
-       struct { UWORD l, h; } w;
+       struct { tUBYTE l, h, h2, h3; } b;
+       struct { tUWORD l, h; } w;
     #else
-       struct { UBYTE h3, h2, h, l; } b;
-       struct { UWORD h, l; } w;
+       struct { tUBYTE h3, h2, h, l; } b;
+       struct { tUWORD h, l; } w;
     #endif
-       DWORD d;
+       tDWORD d;
     }  REGPAIR;
 #else
     #warning "*** REGPAIR is already defined and may not match requested size. ***"
@@ -117,12 +117,17 @@ static const uint16_t CPC_VISIBLE_SCR_HEIGHT(272); // visible height: 5+25+4 * 8
 #ifndef uint
     typedef unsigned int uint;
 #else
-    #warning "*** WORD is already defined and may not match requested size. ***"
+    #warning "*** uint is already defined and may not match requested size. ***"
 #endif
 
+#ifndef uint
+    typedef unsigned char uchar;
+#else
+    #warning "*** uchar is already defined and may not match requested size. ***"
+#endif
 
 //@todo Should this be here ??
-static const UBYTE bit_values[8] =
+static const tUBYTE bit_values[8] =
 {
     0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
 };
@@ -130,31 +135,31 @@ static const UBYTE bit_values[8] =
 
 
 /*
-class WORD
+class tWORD
 {
 public:
-    WORD() {}
-    ~WORD() {}
+    tWORD() {}
+    ~tWORD() {}
 
     operator short int() {return mValue.Both;}
-    WORD & operator=(const short int & w)
+    tWORD & operator=(const short int & w)
         {mValue.Both=w; return *this;}
-    WORD & operator--()
+    tWORD & operator--()
         {mValue.Both--; return *this;}
 
-    BYTE low()  {return mValue.Low;}
-    BYTE high() {return mValue.High;}
+    tBYTE low()  {return mValue.Low;}
+    tBYTE high() {return mValue.High;}
 
-    void setLow (BYTE w) {mValue.Low  = w;}
-    void setHigh(BYTE w) {mValue.High = w;}
+    void setLow (tBYTE w) {mValue.Low  = w;}
+    void setHigh(tBYTE w) {mValue.High = w;}
 
 private:
     typedef union
     {
         struct
         {
-            BYTE Low;
-            BYTE High;
+            tBYTE Low;
+            tBYTE High;
         };
         short int Both;
     } WORD_t;
@@ -162,53 +167,53 @@ private:
     WORD_t mValue;
 };
 
-class UWORD
+class tUWORD
 {
 public:
-    UWORD() {}
-    UWORD(unsigned short int v) {mValue.Both=v;}
-    ~UWORD() {}
+    tUWORD() {}
+    tUWORD(unsigned short int v) {mValue.Both=v;}
+    ~tUWORD() {}
 
     operator unsigned short int() {return mValue.Both;}
     operator uint()       {return (uint) mValue.Both;}
     operator int()  {return (int) mValue.Both;}
     operator bool() {return (bool) mValue.Both;}
 
-    //UWORD operator+ (const UWORD & w)
-    //  {return UWORD(mValue.Both + w.both());}
+    //tUWORD operator+ (const tUWORD & w)
+    //  {return tUWORD(mValue.Both + w.both());}
 
-    UWORD operator-(const int & w)
-        {return UWORD(mValue.Both - (unsigned short int) w);}
+    tUWORD operator-(const int & w)
+        {return tUWORD(mValue.Both - (unsigned short int) w);}
 
-    UWORD operator+(const int & w)
-        {return UWORD(mValue.Both + (unsigned short int) w);}
+    tUWORD operator+(const int & w)
+        {return tUWORD(mValue.Both + (unsigned short int) w);}
 
-    UWORD operator*(const int & w)
-        {return UWORD(mValue.Both * (unsigned short int) w);}
+    tUWORD operator*(const int & w)
+        {return tUWORD(mValue.Both * (unsigned short int) w);}
 
-    UWORD* operator&(UWORD & w)
+    tUWORD* operator&(tUWORD & w)
         {return w.ptr();}
 
-    UWORD & operator=(const unsigned short int & w)
+    tUWORD & operator=(const unsigned short int & w)
         {mValue.Both=w; return *this;}
 
-    UWORD & operator-=(const unsigned short int & w)
+    tUWORD & operator-=(const unsigned short int & w)
         {mValue.Both-=w; return *this;}
 
-    UWORD & operator+=(const unsigned short int & w)
+    tUWORD & operator+=(const unsigned short int & w)
         {mValue.Both+=w; return *this;}
 
-    bool operator<(const UWORD & v) const
+    bool operator<(const tUWORD & v) const
         {return (bool) (mValue.Both < v.both());}
-    bool operator<=(const UWORD & v) const
+    bool operator<=(const tUWORD & v) const
         {return (bool) (mValue.Both <= v.both());}
-    bool operator>(const UWORD & v) const
+    bool operator>(const tUWORD & v) const
         {return (bool) (mValue.Both > v.both());}
-    bool operator>=(const UWORD & v) const
+    bool operator>=(const tUWORD & v) const
         {return (bool) (mValue.Both >= v.both());}
-    bool operator==(const UWORD & v) const
+    bool operator==(const tUWORD & v) const
         {return (bool) (mValue.Both == v.both());}
-    bool operator!=(const UWORD & v) const
+    bool operator!=(const tUWORD & v) const
         {return (bool) (mValue.Both != v.both());}
 
     */
@@ -229,36 +234,36 @@ public:
     */
 
 /*
-    UWORD & operator--()
+    tUWORD & operator--()
         {--mValue.Both; return *this;}
 
-    UWORD operator--(int)
-        {UWORD tmp(*this);--mValue.Both; return tmp;}
+    tUWORD operator--(int)
+        {tUWORD tmp(*this);--mValue.Both; return tmp;}
 
-    UWORD & operator++()
+    tUWORD & operator++()
         {++mValue.Both; return *this;}
 
-    UWORD operator++(int)
-        {UWORD tmp(*this);++mValue.Both; return tmp;}
+    tUWORD operator++(int)
+        {tUWORD tmp(*this);++mValue.Both; return tmp;}
 
 
-    UBYTE low()  {return mValue.Low;}
-    UBYTE high() {return mValue.High;}
+    tUBYTE low()  {return mValue.Low;}
+    tUBYTE high() {return mValue.High;}
 
     const unsigned short int both() const {return mValue.Both;}
 
-    void setLow (UBYTE w) {mValue.Low  = w;}
-    void setHigh(UBYTE w) {mValue.High = w;}
+    void setLow (tUBYTE w) {mValue.Low  = w;}
+    void setHigh(tUBYTE w) {mValue.High = w;}
 
-    UWORD* ptr() {return this;}
+    tUWORD* ptr() {return this;}
 
 private:
     typedef union
     {
         struct
         {
-            UBYTE Low;
-            UBYTE High;
+            tUBYTE Low;
+            tUBYTE High;
         };
         unsigned short int Both;
     } UWORD_t;

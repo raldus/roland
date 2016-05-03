@@ -47,7 +47,7 @@ extern "C" {
    /* Z80 main functions */
    void  z80_reset(void);
    int   z80_emulate(int cycles);
-   void  z80_raise_IRQ(UBYTE vector);
+   void  z80_raise_IRQ(tUBYTE vector);
    void  z80_lower_IRQ(void);
    void  z80_cause_NMI(void);
 
@@ -55,8 +55,8 @@ extern "C" {
    int   z80_get_context_size(void);
    void  z80_set_context(void *context);
    void  z80_get_context(void *context);
-   UWORD z80_get_reg(z80_register reg);
-   void  z80_set_reg(z80_register reg, UWORD value);
+   tUWORD z80_get_reg(z80_register reg);
+   void  z80_set_reg(z80_register reg, tUWORD value);
 
    /* Z80 cycle functions */
    int   z80_get_cycles_elapsed(void);
@@ -66,16 +66,16 @@ extern "C" {
 
    /* Z80 I/O functions */
    void  z80_init_memmap(void);
-   void  z80_map_fetch(UWORD start, UWORD end, UBYTE *memory);
-   void  z80_map_read(UWORD start, UWORD end, UBYTE *memory);
-   void  z80_map_write(UWORD start, UWORD end, UBYTE *memory);
-   void  z80_add_read(UWORD start, UWORD end, int method, void *data);
-   void  z80_add_write(UWORD start, UWORD end, int method, void *data);
-   void  z80_set_in(UBYTE (*handler)(UWORD port));
-   void  z80_set_out(void (*handler)(UWORD port, UBYTE value));
+   void  z80_map_fetch(tUWORD start, tUWORD end, tUBYTE *memory);
+   void  z80_map_read(tUWORD start, tUWORD end, tUBYTE *memory);
+   void  z80_map_write(tUWORD start, tUWORD end, tUBYTE *memory);
+   void  z80_add_read(tUWORD start, tUWORD end, int method, void *data);
+   void  z80_add_write(tUWORD start, tUWORD end, int method, void *data);
+   void  z80_set_in(tUBYTE (*handler)(tUWORD port));
+   void  z80_set_out(void (*handler)(tUWORD port, tUBYTE value));
    void  z80_set_reti(void (*handler)(void));
    void  z80_set_av(void (*handler)(void));
-   void  z80_set_fetch_callback(void (*handler)(UWORD pc));
+   void  z80_set_fetch_callback(void (*handler)(tUWORD pc));
    void  z80_end_memmap(void);
 
 #ifdef __cplusplus
@@ -89,8 +89,8 @@ public:
     Raze()  {mIntPending=0;}
     ~Raze() {}
 
-    typedef UBYTE (*Z80_IN_Handler) (REGPAIR port);
-    typedef void  (*Z80_OUT_Handler)(REGPAIR port, UBYTE value);
+    typedef tUBYTE (*Z80_IN_Handler) (REGPAIR port);
+    typedef void  (*Z80_OUT_Handler)(REGPAIR port, tUBYTE value);
 
     void setInHandler (Z80_IN_Handler handler)  {}
     void setOutHandler(Z80_OUT_Handler handler) {}
@@ -100,14 +100,14 @@ public:
     void initMemMap() {z80_init_memmap();}
     void endMemMap()  {z80_end_memmap(); z80_reset();}
 
-    void setMembank_read (UBYTE bank, UBYTE* ptr)
+    void setMembank_read (tUBYTE bank, tUBYTE* ptr)
     {
         if (bank==0) {z80_map_read(0x0000, 0x3fff, ptr); z80_map_fetch(0x0000, 0x3fff, ptr); return;}
         if (bank==1) {z80_map_read(0x4000, 0x7fff, ptr); z80_map_fetch(0x4000, 0x7fff, ptr); return;}
         if (bank==2) {z80_map_read(0x8000, 0xbfff, ptr); z80_map_fetch(0x8000, 0xbfff, ptr); return;}
         if (bank==3) {z80_map_read(0xc000, 0xffff, ptr); z80_map_fetch(0xc000, 0xffff, ptr); return;}
     }
-    void setMembank_write(UBYTE bank, UBYTE* ptr)
+    void setMembank_write(tUBYTE bank, tUBYTE* ptr)
     {
         if (bank==0) {z80_map_write(0x0000, 0x3fff, ptr); return;}
         if (bank==1) {z80_map_write(0x4000, 0x7fff, ptr); return;}
@@ -116,11 +116,11 @@ public:
     }
 
     int  cyclecount() {int i=mLastCyclecount; mLastCyclecount=z80_get_cycles_elapsed(); return mLastCyclecount-i;}
-    void setIntPending(UBYTE ip) {/*mIntPending=ip;*/if (ip) {z80_raise_IRQ(0xff); z80_lower_IRQ();}}
-    UBYTE intPending() {return mIntPending;}
+    void setIntPending(tUBYTE ip) {/*mIntPending=ip;*/if (ip) {z80_raise_IRQ(0xff); z80_lower_IRQ();}}
+    tUBYTE intPending() {return mIntPending;}
 
-    void setInHandler (UBYTE (*handler)(UWORD port))  {z80_set_in(handler);}
-    void setOutHandler(void (*handler)(UWORD port, UBYTE value)) {z80_set_out(handler);}
+    void setInHandler (tUBYTE (*handler)(tUWORD port))  {z80_set_in(handler);}
+    void setOutHandler(void (*handler)(tUWORD port, tUBYTE value)) {z80_set_out(handler);}
     void setWsHandler (void (*handler)(void))  {z80_set_av(handler);}
 
     int  execute(int i) {mLastCyclecount=0; mCycleCountInit=i; return z80_emulate(i);}
@@ -130,11 +130,11 @@ private:
     //Z80_IN_Handler  IN_handler;
     //Z80_OUT_Handler OUT_handler;
 
-    //UBYTE z80_in_handler(REGPAIR port)
-    //void z80_out_handler(REGPAIR port, UBYTE value)
+    //tUBYTE z80_in_handler(REGPAIR port)
+    //void z80_out_handler(REGPAIR port, tUBYTE value)
     int mLastCyclecount;
     int mCycleCountInit;
-    UBYTE mIntPending;
+    tUBYTE mIntPending;
 
 };
 

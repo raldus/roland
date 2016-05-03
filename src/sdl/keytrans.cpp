@@ -23,7 +23,7 @@ namespace sdltk
 {
 
 #ifdef _WIN32
-    UBYTE KeyTrans::mTable[320] =
+    tUBYTE KeyTrans::mTable[320] =
         {
             //
             0xff,   0xff,   0xff,   0xff,   0xff,   0xff,   0xff,   0xff,
@@ -109,7 +109,7 @@ namespace sdltk
 
 #else // *** Linux
 
-    UBYTE KeyTrans::mTable[320] =
+    tUBYTE KeyTrans::mTable[320] =
         {
             //
             0xff,   0xff,   0xff,   0xff,   0xff,   0xff,   0xff,   0xff,
@@ -264,7 +264,7 @@ namespace sdltk
         // @todo Patch to other languages
     }
 
-    UBYTE KeyTrans::get(SDL_Event & event)
+    tUBYTE KeyTrans::get(SDL_Event & event)
     {
         if (event.key.keysym.sym >= 320)
         {

@@ -49,13 +49,13 @@ public:
     inline void toggleLowerRom();
     inline void toggleUpperRom();
 
-    UBYTE* memBankConfig(UBYTE bank, UBYTE seg) {return mMemBankConfig[bank][seg];}
-    UBYTE* rom(int bank) {return mRom[bank];}
+    tUBYTE* memBankConfig(tUBYTE bank, tUBYTE seg) {return mMemBankConfig[bank][seg];}
+    tUBYTE* rom(int bank) {return mRom[bank];}
 
-    UBYTE* upperRom() {return mUpperRom;}
-    UBYTE* lowerRom() {return mLowerRom;}
+    tUBYTE* upperRom() {return mUpperRom;}
+    tUBYTE* lowerRom() {return mLowerRom;}
 
-    UBYTE* base() {return mMemBankConfig[0][0];}
+    tUBYTE* base() {return mMemBankConfig[0][0];}
 
     bool openRom(int idx, const string & filename);
     bool openCpcRom(const string & filename);
@@ -64,13 +64,13 @@ private:
     GateArray* mGateArray;
     Z80* mZ80;
 
-    UBYTE* mRam;
-    UBYTE* mRom[256];
-    UBYTE  mCpcRom[2*16384];
-    UBYTE* mMemBankConfig[8][4];
+    tUBYTE* mRam;
+    tUBYTE* mRom[256];
+    tUBYTE  mCpcRom[2*16384];
+    tUBYTE* mMemBankConfig[8][4];
 
-    UBYTE* mUpperRom;
-    UBYTE* mLowerRom;
+    tUBYTE* mUpperRom;
+    tUBYTE* mLowerRom;
 
     int mRamSize;
 

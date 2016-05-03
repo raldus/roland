@@ -39,8 +39,8 @@ public:
 
 private:
     REGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;
-    UBYTE   I, R, Rb7, IFF1, IFF2, IM, HALT, EI_issued, int_pending;
-    DWORD   break_point, trace;
+    tUBYTE   I, R, Rb7, IFF1, IFF2, IM, HALT, EI_issued, int_pending;
+    tDWORD   break_point, trace;
 
 };
 

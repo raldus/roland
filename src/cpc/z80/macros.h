@@ -151,17 +151,17 @@
 { \
    unsigned val = value; \
    unsigned res = z80.AF.b.h + val; \
-   z80.AF.b.l = SZ[(UBYTE)res] | ((res >> 8) & Cflag) | ((z80.AF.b.h ^ res ^ val) & Hflag) | \
+   z80.AF.b.l = SZ[(tUBYTE)res] | ((res >> 8) & Cflag) | ((z80.AF.b.h ^ res ^ val) & Hflag) | \
       (((val ^ z80.AF.b.h ^ 0x80) & (val ^ res) & 0x80) >> 5); \
-   z80.AF.b.h = (UBYTE)res; \
+   z80.AF.b.h = (tUBYTE)res; \
 }
 
 #define ADD16(dest, src) \
 { \
-   DWORD res = z80.dest.d + z80.src.d; \
+   tDWORD res = z80.dest.d + z80.src.d; \
    z80.AF.b.l = (z80.AF.b.l & (Sflag | Zflag | Vflag)) | (((z80.dest.d ^ res ^ z80.src.d) >> 8) & Hflag) | \
       ((res >> 16) & Cflag) | ((res >> 8) & Xflags); \
-   z80.dest.w.l = (UWORD)res; \
+   z80.dest.w.l = (tUWORD)res; \
 }
 
 #define AND(val) \
@@ -303,8 +303,8 @@
 
 #define RLA \
 { \
-   UBYTE res = (z80.AF.b.h << 1) | (z80.AF.b.l & Cflag); \
-   UBYTE carry = (z80.AF.b.h & 0x80) ? Cflag : 0; \
+   tUBYTE res = (z80.AF.b.h << 1) | (z80.AF.b.l & Cflag); \
+   tUBYTE carry = (z80.AF.b.h & 0x80) ? Cflag : 0; \
    z80.AF.b.l = (z80.AF.b.l & (Sflag | Zflag | Pflag)) | carry | (res & Xflags); \
    z80.AF.b.h = res; \
 }
@@ -317,8 +317,8 @@
 
 #define RRA \
 { \
-   UBYTE res = (z80.AF.b.h >> 1) | (z80.AF.b.l << 7); \
-   UBYTE carry = (z80.AF.b.h & 0x01) ? Cflag : 0; \
+   tUBYTE res = (z80.AF.b.h >> 1) | (z80.AF.b.l << 7); \
+   tUBYTE carry = (z80.AF.b.h & 0x01) ? Cflag : 0; \
    z80.AF.b.l = (z80.AF.b.l & (Sflag | Zflag | Pflag)) | carry | (res & Xflags); \
    z80.AF.b.h = res; \
 }
@@ -370,19 +370,19 @@
 
 #define ADC16(reg) \
 { \
-   DWORD res = z80.HL.d + z80.reg.d + (z80.AF.b.l & Cflag); \
+   tDWORD res = z80.HL.d + z80.reg.d + (z80.AF.b.l & Cflag); \
    z80.AF.b.l = (((z80.HL.d ^ res ^ z80.reg.d) >> 8) & Hflag) | \
       ((res >> 16) & Cflag) | \
       ((res >> 8) & (Sflag | Xflags)) | \
       ((res & 0xffff) ? 0 : Zflag) | \
       (((z80.reg.d ^ z80.HL.d ^ 0x8000) & (z80.reg.d ^ res) & 0x8000) >> 13); \
-   z80.HL.w.l = (UWORD)res; \
+   z80.HL.w.l = (tUWORD)res; \
 }
 
 #define CPD \
 { \
-   UBYTE val = read_mem(z80.HL.w.l); \
-   UBYTE res = z80.AF.b.h - val; \
+   tUBYTE val = read_mem(z80.HL.w.l); \
+   tUBYTE res = z80.AF.b.h - val; \
    z80.HL.w.l--; \
    z80.BC.w.l--; \
    z80.AF.b.l = (z80.AF.b.l & Cflag) | (SZ[res] & ~Xflags) | ((z80.AF.b.h ^ val ^ res) & Hflag) | Nflag; \
@@ -403,8 +403,8 @@
 
 #define CPI \
 { \
-   UBYTE val = read_mem(z80.HL.w.l); \
-   UBYTE res = z80.AF.b.h - val; \
+   tUBYTE val = read_mem(z80.HL.w.l); \
+   tUBYTE res = z80.AF.b.h - val; \
    z80.HL.w.l++; \
    z80.BC.w.l--; \
    z80.AF.b.l = (z80.AF.b.l & Cflag) | (SZ[res] & ~Xflags) | ((z80.AF.b.h ^ val ^ res) & Hflag) | Nflag; \
@@ -425,7 +425,7 @@
 
 #define IND \
 { \
-   UBYTE io = z80_IN_handler(z80.BC); \
+   tUBYTE io = z80_IN_handler(z80.BC); \
    z80.BC.b.h--; \
    write_mem(z80.HL.w.l, io); \
    z80.HL.w.l--; \
@@ -446,7 +446,7 @@
 
 #define INI \
 { \
-   UBYTE io = z80_IN_handler(z80.BC); \
+   tUBYTE io = z80_IN_handler(z80.BC); \
    z80.BC.b.h--; \
    write_mem(z80.HL.w.l, io); \
    z80.HL.w.l++; \
@@ -467,7 +467,7 @@
 
 #define LDD \
 { \
-   UBYTE io = read_mem(z80.HL.w.l); \
+   tUBYTE io = read_mem(z80.HL.w.l); \
    write_mem(z80.DE.w.l, io); \
    z80.AF.b.l &= Sflag | Zflag | Cflag; \
    if((z80.AF.b.h + io) & 0x02) z80.AF.b.l |= 0x20; \
@@ -488,7 +488,7 @@
 
 #define LDI \
 { \
-   UBYTE io = read_mem(z80.HL.w.l); \
+   tUBYTE io = read_mem(z80.HL.w.l); \
    write_mem(z80.DE.w.l, io); \
    z80.AF.b.l &= Sflag | Zflag | Cflag; \
    if((z80.AF.b.h + io) & 0x02) z80.AF.b.l |= 0x20; \
@@ -509,14 +509,14 @@
 
 #define NEG \
 { \
-   UBYTE value = z80.AF.b.h; \
+   tUBYTE value = z80.AF.b.h; \
    z80.AF.b.h = 0; \
    SUB(value); \
 }
 
 #define OUTD \
 { \
-   UBYTE io = read_mem(z80.HL.w.l); \
+   tUBYTE io = read_mem(z80.HL.w.l); \
    z80.BC.b.h--; \
    z80_OUT_handler(z80.BC, io); \
    z80.HL.w.l--; \
@@ -537,7 +537,7 @@
 
 #define OUTI \
 { \
-   UBYTE io = read_mem(z80.HL.w.l); \
+   tUBYTE io = read_mem(z80.HL.w.l); \
    z80.BC.b.h--; \
    z80_OUT_handler(z80.BC, io); \
    z80.HL.w.l++; \
@@ -558,7 +558,7 @@
 
 #define RLD \
 { \
-   UBYTE n = read_mem(z80.HL.w.l); \
+   tUBYTE n = read_mem(z80.HL.w.l); \
    write_mem(z80.HL.w.l, (n << 4) | (z80.AF.b.h & 0x0f)); \
    z80.AF.b.h = (z80.AF.b.h & 0xf0) | (n >> 4); \
    z80.AF.b.l = (z80.AF.b.l & Cflag) | SZP[z80.AF.b.h]; \
@@ -566,7 +566,7 @@
 
 #define RRD \
 { \
-   UBYTE n = read_mem(z80.HL.w.l); \
+   tUBYTE n = read_mem(z80.HL.w.l); \
    write_mem(z80.HL.w.l, (n >> 4) | (z80.AF.b.h << 4)); \
    z80.AF.b.h = (z80.AF.b.h & 0xf0) | (n & 0x0f); \
    z80.AF.b.l = (z80.AF.b.l & Cflag) | SZP[z80.AF.b.h]; \
@@ -574,13 +574,13 @@
 
 #define SBC16(reg) \
 { \
-   DWORD res = z80.HL.d - z80.reg.d - (z80.AF.b.l & Cflag); \
+   tDWORD res = z80.HL.d - z80.reg.d - (z80.AF.b.l & Cflag); \
    z80.AF.b.l = (((z80.HL.d ^ res ^ z80.reg.d) >> 8) & Hflag) | Nflag | \
       ((res >> 16) & Cflag) | \
       ((res >> 8) & (Sflag | Xflags)) | \
       ((res & 0xffff) ? 0 : Zflag) | \
       (((z80.reg.d ^ z80.HL.d) & (z80.HL.d ^ res) &0x8000) >> 13); \
-   z80.HL.w.l = (UWORD)res; \
+   z80.HL.w.l = (tUWORD)res; \
 }
 
 

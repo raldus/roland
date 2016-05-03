@@ -23,15 +23,15 @@
 
 #include "cpc.h"
 
-UBYTE Z80::irep_tmp1[4][4] = {
+tUBYTE Z80::irep_tmp1[4][4] = {
     {0, 0, 1, 0}, {0, 1, 0, 1}, {1, 0, 1, 1}, {0, 1, 1, 0}};
 
 /* tmp1 value for ind/indr/outd/otdr for [C.1-0][io.1-0] */
-UBYTE Z80::drep_tmp1[4][4] = {
+tUBYTE Z80::drep_tmp1[4][4] = {
     {0, 1, 0, 0}, {1, 0, 0, 1}, {0, 0, 1, 0}, {0, 1, 0, 1}};
 
 /* tmp2 value for all in/out repeated opcodes for B.7-0 */
-UBYTE Z80::breg_tmp2[256] = {
+tUBYTE Z80::breg_tmp2[256] = {
     0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1,
     0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0,
     1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1,
@@ -44,7 +44,7 @@ UBYTE Z80::breg_tmp2[256] = {
     0, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 0, 0, 1, 1, 0, 1, 0, 0,
     1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1};
 
-UBYTE Z80::cc_op[256] = {
+tUBYTE Z80::cc_op[256] = {
     4,  12, 8,  8,  4,  4,  8,  4,  4,  12, 8,  8,  4,  4,  8,  4,  12, 12, 8,
     8,  4,  4,  8,  4,  12, 12, 8,  8,  4,  4,  8,  4,  8,  12, 20, 8,  4,  4,
     8,  4,  8,  12, 20, 8,  4,  4,  8,  4,  8,  12, 16, 8,  12, 12, 12, 4,  8,
@@ -60,7 +60,7 @@ UBYTE Z80::cc_op[256] = {
     12, 16, 8,  16, 8,  4,  12, 4,  12, 4,  8,  16, 8,  12, 12, 4,  12, 16, 8,
     16, 8,  8,  12, 4,  12, 4,  8,  16};
 
-UBYTE Z80::cc_cb[256] = {
+tUBYTE Z80::cc_cb[256] = {
     4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4,
     4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4,
     4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 8,  4,
@@ -73,7 +73,7 @@ UBYTE Z80::cc_cb[256] = {
     4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4,
     4, 4, 4, 4, 4, 4, 12, 4, 4, 4, 4, 4, 4, 4, 12, 4};
 
-UBYTE Z80::cc_ed[256] = {
+tUBYTE Z80::cc_ed[256] = {
     4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
     4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
     4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
@@ -89,7 +89,7 @@ UBYTE Z80::cc_ed[256] = {
     4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,  4,
     4,  4,  4,  4,  4,  4,  4,  4,  4};
 
-UBYTE Z80::cc_xy[256] = {
+tUBYTE Z80::cc_xy[256] = {
     4,  12, 8,  8,  4,  4,  8,  4,  4,  12, 8,  8,  4,  4,  8,  4,  12, 12, 8,
     8,  4,  4,  8,  4,  12, 12, 8,  8,  4,  4,  8,  4,  8,  12, 20, 8,  4,  4,
     8,  4,  8,  12, 20, 8,  4,  4,  8,  4,  8,  12, 16, 8,  20, 20, 20, 4,  8,
@@ -105,7 +105,7 @@ UBYTE Z80::cc_xy[256] = {
     12, 16, 8,  16, 8,  4,  12, 4,  12, 4,  8,  16, 8,  12, 12, 4,  12, 16, 8,
     16, 8,  8,  12, 4,  12, 4,  8,  16};
 
-UBYTE Z80::cc_xycb[256] = {
+tUBYTE Z80::cc_xycb[256] = {
     20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
     20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
     20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
@@ -121,7 +121,7 @@ UBYTE Z80::cc_xycb[256] = {
     20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20,
     20, 20, 20, 20, 20, 20, 20, 20, 20};
 
-UBYTE Z80::cc_ex[256] = {
+tUBYTE Z80::cc_ex[256] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0,
     4, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -134,7 +134,7 @@ UBYTE Z80::cc_ex[256] = {
     8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0,
     8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0};
 
-UWORD Z80::DAATable[2048] = {
+tUWORD Z80::DAATable[2048] = {
     0x0044, 0x0100, 0x0200, 0x0304, 0x0400, 0x0504, 0x0604, 0x0700, 0x0808,
     0x090C, 0x1010, 0x1114, 0x1214, 0x1310, 0x1414, 0x1510, 0x1000, 0x1104,
     0x1204, 0x1300, 0x1404, 0x1500, 0x1600, 0x1704, 0x180C, 0x1908, 0x2030,
@@ -364,9 +364,9 @@ UWORD Z80::DAATable[2048] = {
     0x8C9B, 0x8D9F, 0x8E9F, 0x8F9B, 0x9087, 0x9183, 0x9283, 0x9387, 0x9483,
     0x9587, 0x9687, 0x9783, 0x988B, 0x998F};
 
-inline UBYTE Z80::RES(UBYTE bit, UBYTE val) { return val & ~(1 << bit); }
+inline tUBYTE Z80::RES(tUBYTE bit, tUBYTE val) { return val & ~(1 << bit); }
 
-inline UBYTE Z80::RLC(UBYTE val)
+inline tUBYTE Z80::RLC(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x80) ? Cflag : 0;
@@ -375,7 +375,7 @@ inline UBYTE Z80::RLC(UBYTE val)
     return res;
 }
 
-inline UBYTE Z80::RL(UBYTE val)
+inline tUBYTE Z80::RL(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x80) ? Cflag : 0;
@@ -384,7 +384,7 @@ inline UBYTE Z80::RL(UBYTE val)
     return res;
 }
 
-inline UBYTE Z80::RRC(UBYTE val)
+inline tUBYTE Z80::RRC(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x01) ? Cflag : 0;
@@ -393,7 +393,7 @@ inline UBYTE Z80::RRC(UBYTE val)
     return res;
 }
 
-inline UBYTE Z80::RR(UBYTE val)
+inline tUBYTE Z80::RR(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x01) ? Cflag : 0;
@@ -402,9 +402,9 @@ inline UBYTE Z80::RR(UBYTE val)
     return res;
 }
 
-inline UBYTE Z80::SET(UBYTE bit, UBYTE val) { return val | (1 << bit); }
+inline tUBYTE Z80::SET(tUBYTE bit, tUBYTE val) { return val | (1 << bit); }
 
-inline UBYTE Z80::SLA(UBYTE val)
+inline tUBYTE Z80::SLA(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x80) ? Cflag : 0;
@@ -413,7 +413,7 @@ inline UBYTE Z80::SLA(UBYTE val)
     return res;
 }
 
-inline UBYTE Z80::SLL(UBYTE val)
+inline tUBYTE Z80::SLL(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x80) ? Cflag : 0;
@@ -422,7 +422,7 @@ inline UBYTE Z80::SLL(UBYTE val)
     return res;
 }
 
-inline UBYTE Z80::SRA(UBYTE val)
+inline tUBYTE Z80::SRA(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x01) ? Cflag : 0;
@@ -431,7 +431,7 @@ inline UBYTE Z80::SRA(UBYTE val)
     return res;
 }
 
-inline UBYTE Z80::SRL(UBYTE val)
+inline tUBYTE Z80::SRL(tUBYTE val)
 {
     unsigned res = val;
     unsigned carry = (res & 0x01) ? Cflag : 0;
@@ -514,7 +514,7 @@ void Z80::mf2stop()
 
 int Z80::execute(int cc)
 {
-    register UBYTE bOpCode;
+    register tUBYTE bOpCode;
 
     iCycleCountInit = cc;
     iCycleCountSum = 0;
@@ -796,7 +796,7 @@ int Z80::execute(int cc)
                 break;
             case dec_mhl:
             {
-                UBYTE b = read_mem(z80.HL.w.l);
+                tUBYTE b = read_mem(z80.HL.w.l);
                 DEC(b);
                 write_mem(z80.HL.w.l, b);
             }
@@ -883,7 +883,7 @@ int Z80::execute(int cc)
                 break;
             case inc_mhl:
             {
-                UBYTE b = read_mem(z80.HL.w.l);
+                tUBYTE b = read_mem(z80.HL.w.l);
                 INC(b);
                 write_mem(z80.HL.w.l, b);
             }
@@ -1247,7 +1247,7 @@ int Z80::execute(int cc)
                 break;
             case ld_mhl_byte:
             {
-                UBYTE b = read_mem(z80.PC.w.l++);
+                tUBYTE b = read_mem(z80.PC.w.l++);
                 write_mem(z80.HL.w.l, b);
             }
             break;
@@ -1625,7 +1625,7 @@ int Z80::execute(int cc)
 
 void Z80::z80_pfx_cb()
 {
-    register UBYTE bOpCode;
+    register tUBYTE bOpCode;
 
     bOpCode = read_mem(z80.PC.w.l++);
     iCycleCount += cc_cb[bOpCode];
@@ -1847,7 +1847,7 @@ void Z80::z80_pfx_cb()
             break;
         case res0_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(0, b));
         }
         break;
@@ -1874,7 +1874,7 @@ void Z80::z80_pfx_cb()
             break;
         case res1_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(1, b));
         }
         break;
@@ -1901,7 +1901,7 @@ void Z80::z80_pfx_cb()
             break;
         case res2_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(2, b));
         }
         break;
@@ -1928,7 +1928,7 @@ void Z80::z80_pfx_cb()
             break;
         case res3_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(3, b));
         }
         break;
@@ -1955,7 +1955,7 @@ void Z80::z80_pfx_cb()
             break;
         case res4_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(4, b));
         }
         break;
@@ -1982,7 +1982,7 @@ void Z80::z80_pfx_cb()
             break;
         case res5_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(5, b));
         }
         break;
@@ -2009,7 +2009,7 @@ void Z80::z80_pfx_cb()
             break;
         case res6_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(6, b));
         }
         break;
@@ -2036,7 +2036,7 @@ void Z80::z80_pfx_cb()
             break;
         case res7_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RES(7, b));
         }
         break;
@@ -2063,7 +2063,7 @@ void Z80::z80_pfx_cb()
             break;
         case rlc_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RLC(b));
         }
         break;
@@ -2090,7 +2090,7 @@ void Z80::z80_pfx_cb()
             break;
         case rl_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RL(b));
         }
         break;
@@ -2117,7 +2117,7 @@ void Z80::z80_pfx_cb()
             break;
         case rrc_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RRC(b));
         }
         break;
@@ -2144,7 +2144,7 @@ void Z80::z80_pfx_cb()
             break;
         case rr_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, RR(b));
         }
         break;
@@ -2171,7 +2171,7 @@ void Z80::z80_pfx_cb()
             break;
         case set0_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(0, b));
         }
         break;
@@ -2198,7 +2198,7 @@ void Z80::z80_pfx_cb()
             break;
         case set1_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(1, b));
         }
         break;
@@ -2225,7 +2225,7 @@ void Z80::z80_pfx_cb()
             break;
         case set2_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(2, b));
         }
         break;
@@ -2252,7 +2252,7 @@ void Z80::z80_pfx_cb()
             break;
         case set3_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(3, b));
         }
         break;
@@ -2279,7 +2279,7 @@ void Z80::z80_pfx_cb()
             break;
         case set4_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(4, b));
         }
         break;
@@ -2306,7 +2306,7 @@ void Z80::z80_pfx_cb()
             break;
         case set5_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(5, b));
         }
         break;
@@ -2333,7 +2333,7 @@ void Z80::z80_pfx_cb()
             break;
         case set6_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(6, b));
         }
         break;
@@ -2360,7 +2360,7 @@ void Z80::z80_pfx_cb()
             break;
         case set7_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SET(7, b));
         }
         break;
@@ -2387,7 +2387,7 @@ void Z80::z80_pfx_cb()
             break;
         case sla_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SLA(b));
         }
         break;
@@ -2414,7 +2414,7 @@ void Z80::z80_pfx_cb()
             break;
         case sll_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SLL(b));
         }
         break;
@@ -2441,7 +2441,7 @@ void Z80::z80_pfx_cb()
             break;
         case sra_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SRA(b));
         }
         break;
@@ -2468,7 +2468,7 @@ void Z80::z80_pfx_cb()
             break;
         case srl_mhl:
         {
-            UBYTE b = read_mem(z80.HL.w.l);
+            tUBYTE b = read_mem(z80.HL.w.l);
             write_mem(z80.HL.w.l, SRL(b));
         }
         break;
@@ -2477,7 +2477,7 @@ void Z80::z80_pfx_cb()
 
 void Z80::z80_pfx_dd()
 {
-    register UBYTE bOpCode;
+    register tUBYTE bOpCode;
 
     bOpCode = read_mem(z80.PC.w.l++);
     iCycleCount += cc_xy[bOpCode];
@@ -2756,7 +2756,7 @@ void Z80::z80_pfx_dd()
         case dec_mhl:
         {
             signed char o = read_mem(z80.PC.w.l++);
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             DEC(b);
             write_mem(z80.IX.w.l + o, b);
         }
@@ -2844,7 +2844,7 @@ void Z80::z80_pfx_dd()
         case inc_mhl:
         {
             signed char o = read_mem(z80.PC.w.l++);
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             INC(b);
             write_mem(z80.IX.w.l + o, b);
         }
@@ -3236,7 +3236,7 @@ void Z80::z80_pfx_dd()
         case ld_mhl_byte:
         {
             signed char o = read_mem(z80.PC.w.l++);
-            UBYTE b = read_mem(z80.PC.w.l++);
+            tUBYTE b = read_mem(z80.PC.w.l++);
             write_mem(z80.IX.w.l + o, b);
         }
         break;
@@ -3595,7 +3595,7 @@ void Z80::z80_pfx_dd()
 void Z80::z80_pfx_ddcb()
 {
     signed char o;
-    register UBYTE bOpCode;
+    register tUBYTE bOpCode;
 
     o = read_mem(z80.PC.w.l++); // offset
     bOpCode = read_mem(z80.PC.w.l++);
@@ -3824,7 +3824,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res0_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(0, b));
         }
         break;
@@ -3858,7 +3858,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res1_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(1, b));
         }
         break;
@@ -3892,7 +3892,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res2_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(2, b));
         }
         break;
@@ -3926,7 +3926,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res3_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(3, b));
         }
         break;
@@ -3960,7 +3960,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res4_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(4, b));
         }
         break;
@@ -3994,7 +3994,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res5_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(5, b));
         }
         break;
@@ -4028,7 +4028,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res6_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(6, b));
         }
         break;
@@ -4062,7 +4062,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case res7_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RES(7, b));
         }
         break;
@@ -4103,7 +4103,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case rlc_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RLC(b));
         }
         break;
@@ -4144,7 +4144,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case rl_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RL(b));
         }
         break;
@@ -4185,7 +4185,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case rrc_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RRC(b));
         }
         break;
@@ -4226,7 +4226,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case rr_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, RR(b));
         }
         break;
@@ -4260,7 +4260,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set0_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(0, b));
         }
         break;
@@ -4294,7 +4294,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set1_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(1, b));
         }
         break;
@@ -4328,7 +4328,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set2_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(2, b));
         }
         break;
@@ -4362,7 +4362,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set3_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(3, b));
         }
         break;
@@ -4396,7 +4396,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set4_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(4, b));
         }
         break;
@@ -4430,7 +4430,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set5_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(5, b));
         }
         break;
@@ -4464,7 +4464,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set6_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(6, b));
         }
         break;
@@ -4498,7 +4498,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case set7_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SET(7, b));
         }
         break;
@@ -4539,7 +4539,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case sla_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SLA(b));
         }
         break;
@@ -4580,7 +4580,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case sll_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SLL(b));
         }
         break;
@@ -4621,7 +4621,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case sra_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SRA(b));
         }
         break;
@@ -4662,7 +4662,7 @@ void Z80::z80_pfx_ddcb()
             break;
         case srl_mhl:
         {
-            UBYTE b = read_mem(z80.IX.w.l + o);
+            tUBYTE b = read_mem(z80.IX.w.l + o);
             write_mem(z80.IX.w.l + o, SRL(b));
         }
         break;
@@ -4671,7 +4671,7 @@ void Z80::z80_pfx_ddcb()
 
 void Z80::z80_pfx_ed()
 {
-    register UBYTE bOpCode;
+    register tUBYTE bOpCode;
 
     bOpCode = read_mem(z80.PC.w.l++);
     iCycleCount += cc_ed[bOpCode];
@@ -5096,7 +5096,7 @@ void Z80::z80_pfx_ed()
             break;
         case in_0_c:
         {
-            UBYTE res = z80_IN_handler(z80.BC);
+            tUBYTE res = z80_IN_handler(z80.BC);
             z80.AF.b.l = (z80.AF.b.l & Cflag) | SZP[res];
         }
         break;
@@ -5302,7 +5302,7 @@ void Z80::z80_pfx_ed()
 
 void Z80::z80_pfx_fd()
 {
-    register UBYTE bOpCode;
+    register tUBYTE bOpCode;
 
     bOpCode = read_mem(z80.PC.w.l++);
     iCycleCount += cc_xy[bOpCode];
@@ -5581,7 +5581,7 @@ void Z80::z80_pfx_fd()
         case dec_mhl:
         {
             signed char o = read_mem(z80.PC.w.l++);
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             DEC(b);
             write_mem(z80.IY.w.l + o, b);
         }
@@ -5669,7 +5669,7 @@ void Z80::z80_pfx_fd()
         case inc_mhl:
         {
             signed char o = read_mem(z80.PC.w.l++);
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             INC(b);
             write_mem(z80.IY.w.l + o, b);
         }
@@ -6061,7 +6061,7 @@ void Z80::z80_pfx_fd()
         case ld_mhl_byte:
         {
             signed char o = read_mem(z80.PC.w.l++);
-            UBYTE b = read_mem(z80.PC.w.l++);
+            tUBYTE b = read_mem(z80.PC.w.l++);
             write_mem(z80.IY.w.l + o, b);
         }
         break;
@@ -6420,7 +6420,7 @@ void Z80::z80_pfx_fd()
 void Z80::z80_pfx_fdcb()
 {
     signed char o;
-    register UBYTE bOpCode;
+    register tUBYTE bOpCode;
 
     o = read_mem(z80.PC.w.l++); // offset
     bOpCode = read_mem(z80.PC.w.l++);
@@ -6649,7 +6649,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res0_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(0, b));
         }
         break;
@@ -6683,7 +6683,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res1_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(1, b));
         }
         break;
@@ -6717,7 +6717,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res2_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(2, b));
         }
         break;
@@ -6751,7 +6751,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res3_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(3, b));
         }
         break;
@@ -6785,7 +6785,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res4_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(4, b));
         }
         break;
@@ -6819,7 +6819,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res5_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(5, b));
         }
         break;
@@ -6853,7 +6853,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res6_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(6, b));
         }
         break;
@@ -6887,7 +6887,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case res7_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RES(7, b));
         }
         break;
@@ -6928,7 +6928,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case rlc_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RLC(b));
         }
         break;
@@ -6969,7 +6969,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case rl_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RL(b));
         }
         break;
@@ -7010,7 +7010,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case rrc_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RRC(b));
         }
         break;
@@ -7051,7 +7051,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case rr_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, RR(b));
         }
         break;
@@ -7085,7 +7085,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set0_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(0, b));
         }
         break;
@@ -7119,7 +7119,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set1_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(1, b));
         }
         break;
@@ -7153,7 +7153,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set2_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(2, b));
         }
         break;
@@ -7187,7 +7187,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set3_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(3, b));
         }
         break;
@@ -7221,7 +7221,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set4_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(4, b));
         }
         break;
@@ -7255,7 +7255,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set5_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(5, b));
         }
         break;
@@ -7289,7 +7289,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set6_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(6, b));
         }
         break;
@@ -7323,7 +7323,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case set7_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SET(7, b));
         }
         break;
@@ -7364,7 +7364,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case sla_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SLA(b));
         }
         break;
@@ -7405,7 +7405,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case sll_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SLL(b));
         }
         break;
@@ -7446,7 +7446,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case sra_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SRA(b));
         }
         break;
@@ -7487,7 +7487,7 @@ void Z80::z80_pfx_fdcb()
             break;
         case srl_mhl:
         {
-            UBYTE b = read_mem(z80.IY.w.l + o);
+            tUBYTE b = read_mem(z80.IY.w.l + o);
             write_mem(z80.IY.w.l + o, SRL(b));
         }
         break;

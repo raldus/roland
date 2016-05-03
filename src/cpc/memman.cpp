@@ -61,7 +61,7 @@ int MemMan::init(int ramsize, const string &cpcrom, const string &amsdos)
 
     if (mRam)
         delete[] mRam;
-    mRam = new UBYTE[mRamSize * 1024];
+    mRam = new tUBYTE[mRamSize * 1024];
     if (!mRam)
         return ErrMemory;
     memset(mRam, 0, mRamSize * 1024);
@@ -105,7 +105,7 @@ bool MemMan::openRom(int idx, const string &filename)
         delete[] mRom[idx];
         mRom[idx] = 0;
     }
-    mRom[idx] = new UBYTE[16384]; // @todo all new statements should be checked
+    mRom[idx] = new tUBYTE[16384]; // @todo all new statements should be checked
                                   // for enough mem!!
     in.read((char *)mRom[idx], 16384);
     in.close();
@@ -134,8 +134,8 @@ bool MemMan::openCpcRom(const string &filename)
 
 inline void MemMan::initBanking()
 {
-    UBYTE *rom0, *rom1, *rom2, *rom3, *rom4, *rom5, *rom6, *rom7;
-    UBYTE *rambank;
+    tUBYTE *rom0, *rom1, *rom2, *rom3, *rom4, *rom5, *rom6, *rom7;
+    tUBYTE *rambank;
 
     rom0 = mRam;
     rom1 = mRam + 1 * 16384;
@@ -193,7 +193,7 @@ inline void MemMan::initBanking()
 
 void MemMan::memoryManager()
 {
-    UBYTE membank;
+    tUBYTE membank;
     if (mRamSize == 64) // 64KB of RAM?
     {
         membank = 0;                 // no expansion memory

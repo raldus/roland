@@ -49,28 +49,28 @@ public:
 
     void init();                                   ///< set initial values
 
-    UBYTE portA()   {return mPortA;}               ///< get Port A
-    UBYTE portB()   {return mPortB;}               ///< get Port B
-    UBYTE portC()   {return mPortC;}               ///< get Port C
-    UBYTE control() {return mControl;}             ///< get control bits
-    UBYTE jumpers() {return mJumpers;}             ///< get jumpers
+    tUBYTE portA()   {return mPortA;}               ///< get Port A
+    tUBYTE portB()   {return mPortB;}               ///< get Port B
+    tUBYTE portC()   {return mPortC;}               ///< get Port C
+    tUBYTE control() {return mControl;}             ///< get control bits
+    tUBYTE jumpers() {return mJumpers;}             ///< get jumpers
 
-    void setA(UBYTE val)       {mPortA   = val;}   ///< set Port A
-    void setB(UBYTE val)       {mPortB   = val;}   ///< set Port B
-    void setC(UBYTE val)       {mPortC   = val;}   ///< set Port C
-    void setControl(UBYTE val) {mControl = val;}   ///< set control bits
-    void setJumpers(UBYTE val) {mJumpers = val;}   ///< set jumpers
+    void setA(tUBYTE val)       {mPortA   = val;}   ///< set Port A
+    void setB(tUBYTE val)       {mPortB   = val;}   ///< set Port B
+    void setC(tUBYTE val)       {mPortC   = val;}   ///< set Port C
+    void setControl(tUBYTE val) {mControl = val;}   ///< set control bits
+    void setJumpers(tUBYTE val) {mJumpers = val;}   ///< set jumpers
 
-    void addB(UBYTE flags)     {mPortB |= flags;}  ///< add a flag to Port B
-    void removeB(UBYTE flags)  {mPortB &= ~flags;} ///< remove a flag from Port B
+    void addB(tUBYTE flags)     {mPortB |= flags;}  ///< add a flag to Port B
+    void removeB(tUBYTE flags)  {mPortB &= ~flags;} ///< remove a flag from Port B
 
 private:
-    UBYTE mPortA;
-    UBYTE mPortB;
-    UBYTE mPortC;
-    UBYTE mControl;
+    tUBYTE mPortA;
+    tUBYTE mPortB;
+    tUBYTE mPortC;
+    tUBYTE mControl;
 
-    UBYTE mJumpers;
+    tUBYTE mJumpers;
 };
 
 #endif //PPI_H

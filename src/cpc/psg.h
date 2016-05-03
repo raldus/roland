@@ -34,69 +34,69 @@ public:
 
     void init();
 
-    UBYTE control()  {return mControl;}
-    UBYTE selected() {return mSelected;}
-    UBYTE registerAY(int num) const {return mRegisterAY[num];}
-    UBYTE registerAY()        const {return mRegisterAY[mSelected];}
+    tUBYTE control()  {return mControl;}
+    tUBYTE selected() {return mSelected;}
+    tUBYTE registerAY(int num) const {return mRegisterAY[num];}
+    tUBYTE registerAY()        const {return mRegisterAY[mSelected];}
 
-    UBYTE tonALo()     const {return mRegisterAY[0];}
-    UBYTE tonAHi()     const {return mRegisterAY[1];}
-    UBYTE tonBLo()     const {return mRegisterAY[2];}
-    UBYTE tonBHi()     const {return mRegisterAY[3];}
-    UBYTE tonCLo()     const {return mRegisterAY[4];}
-    UBYTE tonCHi()     const {return mRegisterAY[5];}
-    UBYTE noise()      const {return mRegisterAY[6];}
-    UBYTE mixer()      const {return mRegisterAY[7];}
-    UBYTE amplitudeA() const {return mRegisterAY[8];}
-    UBYTE amplitudeB() const {return mRegisterAY[9];}
-    UBYTE amplitudeC() const {return mRegisterAY[10];}
-    UBYTE envelopeLo() const {return mRegisterAY[11];}
-    UBYTE envelopeHi() const {return mRegisterAY[12];}
-    UBYTE envType()    const {return mRegisterAY[13];}
-    UBYTE portA()      const {return mRegisterAY[14];}
-    UBYTE portB()      const {return mRegisterAY[15];}
+    tUBYTE tonALo()     const {return mRegisterAY[0];}
+    tUBYTE tonAHi()     const {return mRegisterAY[1];}
+    tUBYTE tonBLo()     const {return mRegisterAY[2];}
+    tUBYTE tonBHi()     const {return mRegisterAY[3];}
+    tUBYTE tonCLo()     const {return mRegisterAY[4];}
+    tUBYTE tonCHi()     const {return mRegisterAY[5];}
+    tUBYTE noise()      const {return mRegisterAY[6];}
+    tUBYTE mixer()      const {return mRegisterAY[7];}
+    tUBYTE amplitudeA() const {return mRegisterAY[8];}
+    tUBYTE amplitudeB() const {return mRegisterAY[9];}
+    tUBYTE amplitudeC() const {return mRegisterAY[10];}
+    tUBYTE envelopeLo() const {return mRegisterAY[11];}
+    tUBYTE envelopeHi() const {return mRegisterAY[12];}
+    tUBYTE envType()    const {return mRegisterAY[13];}
+    tUBYTE portA()      const {return mRegisterAY[14];}
+    tUBYTE portB()      const {return mRegisterAY[15];}
 
-    WORD tonALoW()     const {return *(WORD*) &mRegisterAY[0];}
-    WORD tonAHiW()     const {return *(WORD*) &mRegisterAY[1];}
-    WORD tonBLoW()     const {return *(WORD*) &mRegisterAY[2];}
-    WORD tonBHiW()     const {return *(WORD*) &mRegisterAY[3];}
-    WORD tonCLoW()     const {return *(WORD*) &mRegisterAY[4];}
-    WORD tonCHiW()     const {return *(WORD*) &mRegisterAY[5];}
-    WORD envelopeLoW() const {return *(WORD*) &mRegisterAY[11];}
+    tWORD tonALoW()     const {return *(tWORD*) &mRegisterAY[0];}
+    tWORD tonAHiW()     const {return *(tWORD*) &mRegisterAY[1];}
+    tWORD tonBLoW()     const {return *(tWORD*) &mRegisterAY[2];}
+    tWORD tonBHiW()     const {return *(tWORD*) &mRegisterAY[3];}
+    tWORD tonCLoW()     const {return *(tWORD*) &mRegisterAY[4];}
+    tWORD tonCHiW()     const {return *(tWORD*) &mRegisterAY[5];}
+    tWORD envelopeLoW() const {return *(tWORD*) &mRegisterAY[11];}
 
     int  amplitudeEnv() const {return mAmplitudeEnv;}
     bool firstPeriod()  const {return mFirstPeriod;}
 
-    void setControl (UBYTE val)            {mControl  = val;}
-    void setSelected(UBYTE val)            {mSelected = val;}
-    void setRegisterAY(int num, UBYTE val) {mRegisterAY[num] = val;}
+    void setControl (tUBYTE val)            {mControl  = val;}
+    void setSelected(tUBYTE val)            {mSelected = val;}
+    void setRegisterAY(int num, tUBYTE val) {mRegisterAY[num] = val;}
 
-    void setTonALo(UBYTE value)     {mRegisterAY[0]  = value;}
-    void setTonAHi(UBYTE value)     {mRegisterAY[1]  = value;}
-    void setTonBLo(UBYTE value)     {mRegisterAY[2]  = value;}
-    void setTonBHi(UBYTE value)     {mRegisterAY[3]  = value;}
-    void setTonCLo(UBYTE value)     {mRegisterAY[4]  = value;}
-    void setTonCHi(UBYTE value)     {mRegisterAY[5]  = value;}
-    void setNoise(UBYTE value)      {mRegisterAY[6]  = value;}
-    void setMixer(UBYTE value)      {mRegisterAY[7]  = value;}
-    void setAmplitudeA(UBYTE value) {mRegisterAY[8]  = value;}
-    void setAmplitudeB(UBYTE value) {mRegisterAY[9]  = value;}
-    void setAmplitudeC(UBYTE value) {mRegisterAY[10] = value;}
-    void setEnvelopeLo(UBYTE value) {mRegisterAY[11] = value;}
-    void setEnvelopeHi(UBYTE value) {mRegisterAY[12] = value;}
-    void setEnvType(UBYTE value)    {mRegisterAY[13] = value;}
-    void setPortA(UBYTE value)      {mRegisterAY[14] = value;}
-    void setPortB(UBYTE value)      {mRegisterAY[15] = value;}
+    void setTonALo(tUBYTE value)     {mRegisterAY[0]  = value;}
+    void setTonAHi(tUBYTE value)     {mRegisterAY[1]  = value;}
+    void setTonBLo(tUBYTE value)     {mRegisterAY[2]  = value;}
+    void setTonBHi(tUBYTE value)     {mRegisterAY[3]  = value;}
+    void setTonCLo(tUBYTE value)     {mRegisterAY[4]  = value;}
+    void setTonCHi(tUBYTE value)     {mRegisterAY[5]  = value;}
+    void setNoise(tUBYTE value)      {mRegisterAY[6]  = value;}
+    void setMixer(tUBYTE value)      {mRegisterAY[7]  = value;}
+    void setAmplitudeA(tUBYTE value) {mRegisterAY[8]  = value;}
+    void setAmplitudeB(tUBYTE value) {mRegisterAY[9]  = value;}
+    void setAmplitudeC(tUBYTE value) {mRegisterAY[10] = value;}
+    void setEnvelopeLo(tUBYTE value) {mRegisterAY[11] = value;}
+    void setEnvelopeHi(tUBYTE value) {mRegisterAY[12] = value;}
+    void setEnvType(tUBYTE value)    {mRegisterAY[13] = value;}
+    void setPortA(tUBYTE value)      {mRegisterAY[14] = value;}
+    void setPortB(tUBYTE value)      {mRegisterAY[15] = value;}
 
     void setAmplitudeEnv(int value)  {mAmplitudeEnv = value;}
     void setFirstPeriod (bool value) {mFirstPeriod  = value;}
 
 private:
 
-    UBYTE mControl;
-    UBYTE mSelected;
+    tUBYTE mControl;
+    tUBYTE mSelected;
 
-    UBYTE mRegisterAY[16];
+    tUBYTE mRegisterAY[16];
 
     int   mAmplitudeEnv;
     bool  mFirstPeriod;

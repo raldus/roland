@@ -73,28 +73,28 @@ public:
     void init(Vdu* vdu=0, Ppi* ppi=0);
     void reset() {init();}
 
-    UBYTE selected() {return mSelected;}
+    tUBYTE selected() {return mSelected;}
 
-    void  select(UBYTE reg)             {if (reg < 18) mSelected=reg;}
-    UBYTE read()                        {return mRegister[mSelected];}
-    UBYTE read(UBYTE num)               {return (num < 18) ? mRegister[num] : 0;}
-    void  write(UBYTE reg, UBYTE value) {mRegister[reg]=value;}
-    void  write(UBYTE value);
+    void  select(tUBYTE reg)             {if (reg < 18) mSelected=reg;}
+    tUBYTE read()                        {return mRegister[mSelected];}
+    tUBYTE read(tUBYTE num)               {return (num < 18) ? mRegister[num] : 0;}
+    void  write(tUBYTE reg, tUBYTE value) {mRegister[reg]=value;}
+    void  write(tUBYTE value);
 
     uint flags()   {return mFlags;}
-    UBYTE hsw()            {return mHsw;}
-    UBYTE hswCount()       {return mHswCount;}
-    UBYTE hswActive()      {return mHswActive;}
-    UBYTE vsw()            {return mVsw;}
-    UBYTE vswCount()       {return mVswCount;}
-    UBYTE lastHDisp()      {return mLastHDisp;}
-    UBYTE skew()           {return mSkew;}
-    UBYTE vtAdjust()       {return mVtAdjust;}
-    UBYTE vtAdjustCount()  {return mVtAdjustCount;}
-    UBYTE maxRaster()      {return mMaxRaster;}
-    UBYTE rasterCount()    {return mRasterCount;}
-    UBYTE lineCount()      {return mLineCount;}
-    UBYTE charCount()      {return mCharCount;}
+    tUBYTE hsw()            {return mHsw;}
+    tUBYTE hswCount()       {return mHswCount;}
+    tUBYTE hswActive()      {return mHswActive;}
+    tUBYTE vsw()            {return mVsw;}
+    tUBYTE vswCount()       {return mVswCount;}
+    tUBYTE lastHDisp()      {return mLastHDisp;}
+    tUBYTE skew()           {return mSkew;}
+    tUBYTE vtAdjust()       {return mVtAdjust;}
+    tUBYTE vtAdjustCount()  {return mVtAdjustCount;}
+    tUBYTE maxRaster()      {return mMaxRaster;}
+    tUBYTE rasterCount()    {return mRasterCount;}
+    tUBYTE lineCount()      {return mLineCount;}
+    tUBYTE charCount()      {return mCharCount;}
     uint requestedAddr()   {return mRequestedAddr;}
     uint addr()            {return mAddr;}
 
@@ -102,20 +102,20 @@ public:
     void addFlags   (uint flags) {mFlags |= flags;}
     void removeFlags(uint flags) {mFlags &= ~flags;}
 
-    //void setHsw(UBYTE val) {write(read(SyncWidth) | (val & 0x0f));}
-    //void setVsw(UBYTE val) {write(read(SyncWidth) | (val >> 4));}
+    //void setHsw(tUBYTE val) {write(read(SyncWidth) | (val & 0x0f));}
+    //void setVsw(tUBYTE val) {write(read(SyncWidth) | (val >> 4));}
 
-    void setHswActive     (UBYTE value) {mHswActive     = value;}
-    void setHswCount      (UBYTE value) {mHswCount      = value;}
+    void setHswActive     (tUBYTE value) {mHswActive     = value;}
+    void setHswCount      (tUBYTE value) {mHswCount      = value;}
     void setAddr          (uint value)  {mAddr          = value;}
-    void setVtAdjust      (UBYTE value) {mVtAdjust      = value;}
-    void setVtAdjustCount (UBYTE value) {mVtAdjustCount = value;}
-    void setVswCount      (UBYTE value) {mVswCount      = value;}
-    void setLastHDisp     (UBYTE value) {mLastHDisp     = value;}
-    void setCharCount     (UBYTE value) {mCharCount     = value;}
-    void setLineCount     (UBYTE value) {mLineCount     = value;}
-    void setRasterCount   (UBYTE value) {mRasterCount   = value;}
-    void setSkew          (UBYTE value) {mSkew          = value;}
+    void setVtAdjust      (tUBYTE value) {mVtAdjust      = value;}
+    void setVtAdjustCount (tUBYTE value) {mVtAdjustCount = value;}
+    void setVswCount      (tUBYTE value) {mVswCount      = value;}
+    void setLastHDisp     (tUBYTE value) {mLastHDisp     = value;}
+    void setCharCount     (tUBYTE value) {mCharCount     = value;}
+    void setLineCount     (tUBYTE value) {mLineCount     = value;}
+    void setRasterCount   (tUBYTE value) {mRasterCount   = value;}
+    void setSkew          (tUBYTE value) {mSkew          = value;}
 
     void incVswCount()  {mVswCount++;}
     //void decVswCount()  {--mVswCount;}
@@ -125,23 +125,23 @@ private:
     Vdu* mVdu;
     Ppi* mPpi;
     
-    UBYTE mRegister[18];
-    UBYTE mSelected;
+    tUBYTE mRegister[18];
+    tUBYTE mSelected;
 
     uint mFlags;
-    UBYTE mHsw;
-    UBYTE mHswCount;
-    UBYTE mHswActive;
-    UBYTE mVsw;
-    UBYTE mVswCount;
-    UBYTE mLastHDisp;
-    UBYTE mSkew;
-    UBYTE mVtAdjust;
-    UBYTE mVtAdjustCount;
-    UBYTE mMaxRaster;
-    UBYTE mRasterCount;
-    UBYTE mLineCount;
-    UBYTE mCharCount;
+    tUBYTE mHsw;
+    tUBYTE mHswCount;
+    tUBYTE mHswActive;
+    tUBYTE mVsw;
+    tUBYTE mVswCount;
+    tUBYTE mLastHDisp;
+    tUBYTE mSkew;
+    tUBYTE mVtAdjust;
+    tUBYTE mVtAdjustCount;
+    tUBYTE mMaxRaster;
+    tUBYTE mRasterCount;
+    tUBYTE mLineCount;
+    tUBYTE mCharCount;
     uint mRequestedAddr;
     uint mAddr;
 

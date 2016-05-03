@@ -156,7 +156,7 @@ href="mailto:richard.mitton@bigfoot.com">Richard Mitton</a>.<br>
       <p>Once the memory-map has been defined, it can't be changed. So, in order 
         to accommodate bank-switching etc, you can use the 'map' functions: </p>
       <blockquote> 
-        <pre><code>void Write_Bankswitch(UWORD addr, UBYTE value)
+        <pre><code>void Write_Bankswitch(tUWORD addr, tUBYTE value)
 {
    /* map in a new bit of memory into the bank */
    z80_map_fetch(0x8000, 0x9fff, &amp;banked_rom[value * 0x2000]);
@@ -233,7 +233,7 @@ href="mailto:richard.mitton@bigfoot.com">Richard Mitton</a>.<br>
   Causes an NMI immediately. Because the Z80 NMI line is edge-triggered, there 
   is no function to lower the line (it doesn't matter to the Z80 when it is lowered, 
   you see). </p>
-<p><code><strong>void z80_set_fetch_callback(void (*handler)(UWORD pc));<br>
+<p><code><strong>void z80_set_fetch_callback(void (*handler)(tUWORD pc));<br>
   </strong></code>This sets an opcode-fetch callback function. Every time a byte 
   is fetched from the instruction stream, your function will be called.</p>
 <p><strong>NOTE!:</strong> For this to work, you have to edit RAZE.ASM and uncomment 
@@ -243,7 +243,7 @@ href="mailto:richard.mitton@bigfoot.com">Richard Mitton</a>.<br>
 </blockquote>
 <p>Your handler should be like this - (example) </p>
 <blockquote>
-  <pre><code>void debug(UWORD pc)
+  <pre><code>void debug(tUWORD pc)
 {
    if (pc == 0x1234) printf(&quot;Breakpoint hit!\n&quot;);
 } </code></pre>
@@ -266,11 +266,11 @@ href="mailto:richard.mitton@bigfoot.com">Richard Mitton</a>.<br>
   </strong></code>Temporarily halt the CPU, by stopping for 'n' T-states. This 
   can be called from a memory-handler, or the opcode-callback function, to reproduce 
   effects such as the ZX Spectrum's ULA delays, etc. </p>
-<p><code><strong>UWORD z80_get_reg(z80_register reg);<br>
+<p><code><strong>tUWORD z80_get_reg(z80_register reg);<br>
   </strong></code>Returns the given internal register from the Z80. If this is 
   called from inside a read/write handler, then only <var>Z80_REG_PC</var> can 
   be used. See RAZE.H for possible values. </p>
-<p><code><strong>void z80_set_reg(z80_register reg, UWORD value);<br>
+<p><code><strong>void z80_set_reg(z80_register reg, tUWORD value);<br>
   </strong></code>Sets the given internal register in the Z80 to a new value. 
   This cannot be called from inside a read/write handler. See RAZE.H for possible 
   values. </p>

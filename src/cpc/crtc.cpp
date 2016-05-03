@@ -32,11 +32,11 @@ void Crtc::init(Vdu *vdu, Ppi *ppi)
     if (!mPpi || !mVdu)
         return;
 
-    UBYTE ini[2][14] = {{0x3f, 0x28, 0x2e, 0x8e, 0x1f, 0x06, 0x19, 0x1b, 0x00,
+    tUBYTE ini[2][14] = {{0x3f, 0x28, 0x2e, 0x8e, 0x1f, 0x06, 0x19, 0x1b, 0x00,
                          0x07, 0x00, 0x00, 0x30, 0x00},
                         {0x3f, 0x28, 0x2e, 0x8e, 0x26, 0x00, 0x19, 0x1e, 0x00,
                          0x07, 0x00, 0x00, 0x30, 0x00}};
-    for (UBYTE i = 0; i < 14; i++)
+    for (tUBYTE i = 0; i < 14; i++)
         mRegister[i] = ini[(mPpi->jumpers() & 0x10) >> 4][i]; // PAL
     mSelected = 0;
 
@@ -66,7 +66,7 @@ void Crtc::init(Vdu *vdu, Ppi *ppi)
     mLastHDisp = 0x28;
 }
 
-void Crtc::write(UBYTE value)
+void Crtc::write(tUBYTE value)
 {
     mRegister[mSelected] = value;
 
@@ -111,8 +111,8 @@ void Crtc::write(UBYTE value)
         case 12: // start address high byte
         case 13: // start address low byte
         {
-            DWORD value1 = mRegister[12] & 0x3f;
-            DWORD value2 = value1 & 0x0f;  // isolate screen size
+            tDWORD value1 = mRegister[12] & 0x3f;
+            tDWORD value2 = value1 & 0x0f;  // isolate screen size
             value1 = (value1 << 1) & 0x60; // isolate CPC RAM bank
             value2 |= value1;              // combine
             mRequestedAddr = (mRegister[13] + (value2 << 8)) << 1;

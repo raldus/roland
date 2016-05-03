@@ -33,22 +33,22 @@ public:
     Track() {std::memset(this, 0, sizeof(*this));}
     ~Track() {}
 
-    UBYTE* data()    {return mData;}
+    tUBYTE* data()    {return mData;}
     uint sectors()   {return mSectors;}
     uint size()      {return mSize;}
     Sector & sector(int num) {return mSector[num];}
 
     void setSectors(uint sectors) {mSectors=sectors;}
     void setSize(uint size)       {mSize=size;}
-    void setData(UBYTE* data)             {mData=data;}
+    void setData(tUBYTE* data)             {mData=data;}
 
     void clear()             {delete [] mData; mData=0;}
-    void set(UBYTE num, int size)      {memset(mData, num, size);}
+    void set(tUBYTE num, int size)      {memset(mData, num, size);}
 
 private:
     uint mSectors;         // sector count for this track
     uint mSize;            // track size in bytes
-    UBYTE* mData;                  // pointer to track data
+    tUBYTE* mData;                  // pointer to track data
     Sector mSector[DSK_SECTORMAX]; // array of sector information structures
 
 };

@@ -26,12 +26,12 @@
 
 extern Cpc cpc;
 
-UWORD Sound::mAmplitudesAY[16] = {0,     836,   1212,  1773,  2619,  3875,
+tUWORD Sound::mAmplitudesAY[16] = {0,     836,   1212,  1773,  2619,  3875,
                                   5397,  8823,  10392, 16706, 23339, 29292,
                                   36969, 46421, 55195, 65535};
 
 static const char MAX_FREQ_ENTRIES(5);
-DWORD Sound::mFreqTable[MAX_FREQ_ENTRIES] = {11025, 22050, 44100, 48000, 96000};
+tDWORD Sound::mFreqTable[MAX_FREQ_ENTRIES] = {11025, 22050, 44100, 48000, 96000};
 
 Sound::Sound(Psg *psg) : mPsg(psg)
 {
@@ -64,7 +64,7 @@ void Sound::init(Psg *psg)
 }
 
 /*
-inline void Sound::setMixerRegister(UBYTE value)
+inline void Sound::setMixerRegister(tUBYTE value)
 {
     mPsg->setMixer(value);
     mTonEnA = value & 1 ? false : true;
@@ -77,7 +77,7 @@ inline void Sound::setMixerRegister(UBYTE value)
 
 
 
-inline void Sound::setAmplA(UBYTE value)
+inline void Sound::setAmplA(tUBYTE value)
 {
     mPsg->setAmplitudeA(value);
     mEnvelopeEnA = value & 16 ? false : true;
@@ -85,7 +85,7 @@ inline void Sound::setAmplA(UBYTE value)
 
 
 
-inline void Sound::setAmplB(UBYTE value)
+inline void Sound::setAmplB(tUBYTE value)
 {
     mPsg->setAmplitudeB(value);
     mEnvelopeEnB = value & 16 ? false : true;
@@ -93,7 +93,7 @@ inline void Sound::setAmplB(UBYTE value)
 
 
 
-inline void Sound::setAmplC(UBYTE value)
+inline void Sound::setAmplC(tUBYTE value)
 {
     mPsg->setAmplitudeC(value);
     mEnvelopeEnC = value & 16 ? false : true;
@@ -206,7 +206,7 @@ void Sound::caseEnvType14()
 }
 
 /*
-inline void Sound::setEnvelopeRegister(UBYTE value)
+inline void Sound::setEnvelopeRegister(tUBYTE value)
 {
     mEnvelopeCounter.high = 0;
     mPsg->setFirstPeriod(true);
@@ -256,7 +256,7 @@ inline void Sound::setEnvelopeRegister(UBYTE value)
     }
 }
 
-void Sound::setAYRegister(int num, UBYTE value)
+void Sound::setAYRegister(int num, tUBYTE value)
 {
     switch(num)
     {
@@ -465,7 +465,7 @@ void Sound::synthesizerStereo16()
     REGPAIR val;
     val.w.l = mLeftChan / tickcounter;
     val.w.h = mRightChan / tickcounter;
-    *(DWORD *)mSndBufferPtr = val.d; // @todo check this,write to mixing buffer
+    *(tDWORD *)mSndBufferPtr = val.d; // @todo check this,write to mixing buffer
                                      // ########################
     mSndBufferPtr += 4;
     mLeftChan = 0;

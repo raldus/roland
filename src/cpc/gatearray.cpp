@@ -34,8 +34,8 @@ void GateArray::init()
     mMode = 1;
     mRequestedMode = 1;
 
-    for (UBYTE i = 0; i < 17; i++)
+    for (tUBYTE i = 0; i < 17; i++)
         mInk[i] = 0;
-    for (UBYTE i = 0; i < 17; i++)
+    for (tUBYTE i = 0; i < 17; i++)
         mPalette[i] = 0;
 }

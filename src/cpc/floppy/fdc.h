@@ -38,9 +38,9 @@ public:
 
     typedef void (Fdc::*CmdHandler)(void);
 
-    void  write_data(UBYTE val);
-    UBYTE read_status();
-    UBYTE read_data();
+    void  write_data(tUBYTE val);
+    tUBYTE read_status();
+    tUBYTE read_data();
     void  specify();
     void  drvstat();
     void  recalib();
@@ -55,7 +55,7 @@ public:
 
     void check_unit();
     int  init_status_regs();
-    Sector* find_sector(UBYTE *requested_CHRN);
+    Sector* find_sector(tUBYTE *requested_CHRN);
     inline void cmd_write();
     inline void cmd_read();
     inline void cmd_readtrk();
@@ -93,20 +93,20 @@ private:
     CmdHandler mCmdHandler;
     //void (Fdc::*mCmdHandler)(void);
 
-    UBYTE* pbGPBuffer;
+    tUBYTE* pbGPBuffer;
 
-    UBYTE* mBufferPtr;
-    UBYTE* mBufferEndPtr;
-    UBYTE  mCommand[12];
-    UBYTE  mResult[8];
+    tUBYTE* mBufferPtr;
+    tUBYTE* mBufferEndPtr;
+    tUBYTE  mCommand[12];
+    tUBYTE  mResult[8];
 
     Drive mDriveA;
     Drive mDriveB;
 
     Drive *mActiveDrive; // reference to the currently selected drive
     Track *mActiveTrack; // reference to the currently selected track, of the active_drive
-    UWORD mReadStatusDelay;
-    UWORD mBytesTransferred;
+    tUWORD mReadStatusDelay;
+    tUWORD mBytesTransferred;
 
     CmdTable mCmdTable;
 

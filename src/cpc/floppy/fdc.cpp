@@ -103,10 +103,10 @@ Fdc::Fdc()
     mPhase = CMD_PHASE;
     mFlags = STATUSDRVA_flag | STATUSDRVB_flag;
 
-    pbGPBuffer = new UBYTE[128 * 1024];
+    pbGPBuffer = new tUBYTE[128 * 1024];
 }
 
-void Fdc::write_data(UBYTE val)
+void Fdc::write_data(tUBYTE val)
 {
     int idx;
 
@@ -132,17 +132,17 @@ void Fdc::write_data(UBYTE val)
                 mCommand[mByteCount++] = val; // copy to buffer
                 if (mByteCount == mCmdLength)
                 {                        // received all mCommand UBYTEs?
-                    mByteCount = 0;      // clear UBYTE counter
+                    mByteCount = 0;      // clear tUBYTE counter
                     mPhase = EXEC_PHASE; // switch to execution mPhase
                     (this->*mCmdHandler)();
                 }
             }
             else
-            { // first mCommand UBYTE received
+            { // first mCommand tUBYTE received
                 if (val & 0x20)
                 {                        // skip DAM or DDAM?
                     mFlags |= SKIP_flag; // DAM/DDAM will be skipped
-                    val &= ~0x20;        // reset skip bit in mCommand UBYTE
+                    val &= ~0x20;        // reset skip bit in mCommand tUBYTE
                 }
                 else
                 {
@@ -172,7 +172,7 @@ void Fdc::write_data(UBYTE val)
                         val; // copy mCommand code to buffer
                     if (mByteCount == mCmdLength)
                     {                   // already received all mCommand UBYTEs?
-                        mByteCount = 0; // clear UBYTE counter
+                        mByteCount = 0; // clear tUBYTE counter
                         mPhase = EXEC_PHASE; // switch to execution mPhase
                         (this->*mCmdHandler)();
                         // mCmdHandler();
@@ -193,7 +193,7 @@ void Fdc::write_data(UBYTE val)
                 if ((mFlags & SCAN_flag))
                 { // processing any of the scan mCommands?
                     if (val != 0xff)
-                    { // no comparison on CPU UBYTE = 0xff
+                    { // no comparison on CPU tUBYTE = 0xff
                         switch ((mCommand[CMD_CODE] & 0x1f))
                         {
                             case 0x51: // scan equal
@@ -232,7 +232,7 @@ void Fdc::write_data(UBYTE val)
                 }
                 else
                 {
-                    *mBufferPtr++ = val; // write UBYTE to sector
+                    *mBufferPtr++ = val; // write tUBYTE to sector
                 }
                 if (mBufferPtr > mBufferEndPtr)
                 {
@@ -263,8 +263,8 @@ void Fdc::write_data(UBYTE val)
                     }
                     else if (mCommand[CMD_CODE] == 0x4d)
                     { // write ID mCommand?
-                        UWORD sector_size, track_size;
-                        UBYTE *pbPtr, *pbDataPtr;
+                        tUWORD sector_size, track_size;
+                        tUBYTE *pbPtr, *pbDataPtr;
 
                         if (mActiveTrack->sectors() != 0)
                         { // track is formatted?
@@ -288,7 +288,7 @@ void Fdc::write_data(UBYTE val)
                             track_size = sector_size * mCommand[CMD_H];
                             mActiveTrack->setSectors(mCommand[CMD_H]);
                             mActiveTrack->setData(
-                                new UBYTE[track_size]); // attempt to allocate
+                                new tUBYTE[track_size]); // attempt to allocate
                                                         // the required memory
                             pbDataPtr = mActiveTrack->data();
                             pbPtr = pbGPBuffer;
@@ -305,7 +305,7 @@ void Fdc::write_data(UBYTE val)
                             }
                             memset(mActiveTrack->data(), mCommand[CMD_N],
                                    track_size); // fill track data with
-                                                // specified UBYTE value
+                                                // specified tUBYTE value
                         }
                         pbPtr =
                             pbGPBuffer +
@@ -344,9 +344,9 @@ void Fdc::write_data(UBYTE val)
     }
 }
 
-UBYTE Fdc::read_status()
+tUBYTE Fdc::read_status()
 {
-    UBYTE val;
+    tUBYTE val;
 
     val = 0x80; // data register ready
     if (mPhase == EXEC_PHASE)
@@ -379,9 +379,9 @@ UBYTE Fdc::read_status()
     return val;
 }
 
-UBYTE Fdc::read_data()
+tUBYTE Fdc::read_data()
 {
-    UBYTE val;
+    tUBYTE val;
 
     val = 0xff; // default value
     switch (mPhase)
@@ -390,7 +390,7 @@ UBYTE Fdc::read_data()
             if (mCmdDirection == FDC_TO_CPU)
             { // proper direction?
                 mTimeout = OVERRUN_TIMEOUT;
-                val = *mBufferPtr++; // read UBYTE from current sector
+                val = *mBufferPtr++; // read tUBYTE from current sector
 #ifdef DEBUG_FDC
                 if (!(mFlags & OVERRUN_flag))
                 {
@@ -495,7 +495,7 @@ UBYTE Fdc::read_data()
             if (mByteCount == mResLength)
             {                         // sent all result UBYTEs?
                 mFlags &= ~SCAN_flag; // reset scan mCommand flag
-                mByteCount = 0;       // clear UBYTE counter
+                mByteCount = 0;       // clear tUBYTE counter
                 mPhase = CMD_PHASE;   // switch to mCommand mPhase
                 mLed = false;         // turn the drive LED off
             }
@@ -512,7 +512,7 @@ void Fdc::specify()
 
 void Fdc::drvstat()
 {
-    UBYTE val;
+    tUBYTE val;
 
     check_unit();                 // switch to target drive
     val = mCommand[CMD_UNIT] & 7; // keep head and unit of mCommand
@@ -540,7 +540,7 @@ void Fdc::recalib()
 
 void Fdc::intstat()
 {
-    UBYTE val;
+    tUBYTE val;
 
     val = mResult[RES_ST0] & 0xf8; // clear Head Address and Unit bits
     if (mFlags & SEEKDRVA_flag)
@@ -618,7 +618,7 @@ void Fdc::readtrk()
     { // drive Ready?
         mActiveDrive->setCurrentSide((mCommand[CMD_UNIT] & 4) >>
                                      2); // extract target side
-        UWORD side = mActiveDrive->sides()
+        tUWORD side = mActiveDrive->sides()
                          ? mActiveDrive->currentSide()
                          : 0; // single sided drives only acccess side 1
         if ((mActiveDrive->flipped()))
@@ -659,7 +659,7 @@ void Fdc::write()
     { // drive Ready?
         mActiveDrive->setCurrentSide((mCommand[CMD_UNIT] & 4) >>
                                      2); // extract target side
-        UWORD side = mActiveDrive->sides()
+        tUWORD side = mActiveDrive->sides()
                          ? mActiveDrive->currentSide()
                          : 0; // single sided drives only acccess side 1
         if ((mActiveDrive->flipped()))
@@ -706,7 +706,7 @@ void Fdc::read()
     { // drive Ready?
         mActiveDrive->setCurrentSide((mCommand[CMD_UNIT] & 4) >>
                                      2); // extract target side
-        UWORD side = mActiveDrive->sides()
+        tUWORD side = mActiveDrive->sides()
                          ? mActiveDrive->currentSide()
                          : 0; // single sided drives only acccess side 1
         if ((mActiveDrive->flipped()))
@@ -744,7 +744,7 @@ void Fdc::readID()
     { // drive Ready?
         mActiveDrive->setCurrentSide((mCommand[CMD_UNIT] & 4) >>
                                      2); // extract target side
-        UWORD side = mActiveDrive->sides()
+        tUWORD side = mActiveDrive->sides()
                          ? mActiveDrive->currentSide()
                          : 0; // single sided drives only acccess side 1
         if ((mActiveDrive->flipped()))
@@ -754,7 +754,7 @@ void Fdc::readID()
         mActiveTrack = &mActiveDrive->track(mActiveDrive->currentTrack(), side);
         if (mActiveTrack->sectors() != 0)
         { // track is formatted?
-            UWORD idx;
+            tUWORD idx;
 
             idx = mActiveDrive->currentSector(); // get the active sector index
             if (idx >= mActiveTrack->sectors())
@@ -785,7 +785,7 @@ void Fdc::writeID()
     { // drive Ready?
         mActiveDrive->setCurrentSide((mCommand[CMD_UNIT] & 4) >>
                                      2); // extract target side
-        UWORD side = mActiveDrive->sides()
+        tUWORD side = mActiveDrive->sides()
                          ? mActiveDrive->currentSide()
                          : 0; // single sided drives only acccess side 1
         if ((mActiveDrive->flipped()))
@@ -830,7 +830,7 @@ void Fdc::scan()
     { // drive Ready?
         mActiveDrive->setCurrentSide((mCommand[CMD_UNIT] & 4) >>
                                      2); // extract target side
-        UWORD side = mActiveDrive->sides()
+        tUWORD side = mActiveDrive->sides()
                          ? mActiveDrive->currentSide()
                          : 0; // single sided drives only acccess side 1
         if ((mActiveDrive->flipped()))
@@ -881,7 +881,7 @@ void Fdc::check_unit()
 
 int Fdc::init_status_regs()
 {
-    UBYTE val;
+    tUBYTE val;
 
     memset(&mResult, 0, sizeof(mResult)); // clear result codes buffer
     val = mCommand[CMD_UNIT] & 7;         // keep head and unit of command
@@ -894,10 +894,10 @@ int Fdc::init_status_regs()
             8); // return value indicates whether drive is ready (0) or not (8)
 }
 
-Sector *Fdc::find_sector(UBYTE *requested_CHRN)
+Sector *Fdc::find_sector(tUBYTE *requested_CHRN)
 {
     int loop_count;
-    UWORD idx;
+    tUWORD idx;
     Sector *sector;
 
     sector = NULL;  // return value indicates 'sector not found' by default
@@ -921,7 +921,7 @@ Sector *Fdc::find_sector(UBYTE *requested_CHRN)
                   0x10); // remove possible Bad Cylinder + No Cylinder flags
             break;
         }
-        UBYTE cylinder = mActiveTrack->sector(idx).CHRN(0); // extract C
+        tUBYTE cylinder = mActiveTrack->sector(idx).CHRN(0); // extract C
         if (cylinder == 0xff)
         {
             mResult[RES_ST2] |= 0x02; // Bad Cylinder
@@ -1185,8 +1185,8 @@ int Fdc::dsk_load(const char *pchFileName, int drv, char chID)
     if (drv == 1) drive = &mDriveB;
 
     int iRetCode;
-    UWORD dwTrackSize, track, side, sector, dwSectorSize, dwSectors;
-    UBYTE *pbPtr, *pbDataPtr, *pbTempPtr, *pbTrackSizeTable;
+    tUWORD dwTrackSize, track, side, sector, dwSectorSize, dwSectors;
+    tUBYTE *pbPtr, *pbDataPtr, *pbTempPtr, *pbTrackSizeTable;
 
     iRetCode = 0;
     dsk_eject(drv);
@@ -1238,7 +1238,7 @@ int Fdc::dsk_load(const char *pchFileName, int drv, char chID)
                     drive->track(track, side)
                         .setSize(dwTrackSize); // store track size
                     drive->track(track, side)
-                        .setData(new UBYTE[dwTrackSize]); // attempt to allocate
+                        .setData(new tUBYTE[dwTrackSize]); // attempt to allocate
                                                           // the required memory
                     if (drive->track(track, side).data() == NULL)
                     { // abort if not enough
@@ -1325,7 +1325,7 @@ int Fdc::dsk_load(const char *pchFileName, int drv, char chID)
                             drive->track(track, side)
                                 .setSize(dwTrackSize); // store track size
                             drive->track(track, side)
-                                .setData(new UBYTE[dwTrackSize]); // attempt to
+                                .setData(new tUBYTE[dwTrackSize]); // attempt to
                                                                   // allocate
                                                                   // the
                                                                   // required
@@ -1402,7 +1402,7 @@ int Fdc::dsk_load(const char *pchFileName, int drv, char chID)
 
 void Fdc::dsk_eject(int drv)
 {
-    UWORD track, side;
+    tUWORD track, side;
     Drive *drive = &mDriveA; // default
 
     if (drv == 0) drive = &mDriveA;
@@ -1421,7 +1421,7 @@ void Fdc::dsk_eject(int drv)
             }
         }
     }
-    UWORD dwTemp = drive->currentTrack(); // save the drive head position
+    tUWORD dwTemp = drive->currentTrack(); // save the drive head position
     drive->init();                        // clear drive info structure
     drive->setCurrentTrack(dwTemp);
 }

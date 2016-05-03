@@ -43,10 +43,10 @@ public:
     void setSynthesizer(Synthesizer syn) {mSynthesizer=syn;}
     Synthesizer synthesizer()            {return mSynthesizer;}
 
-    inline void setMixerRegister(UBYTE value);
-    inline void setAmplA(UBYTE value);
-    inline void setAmplB(UBYTE value);
-    inline void setAmplC(UBYTE value);
+    inline void setMixerRegister(tUBYTE value);
+    inline void setAmplA(tUBYTE value);
+    inline void setAmplB(tUBYTE value);
+    inline void setAmplC(tUBYTE value);
     void caseEnvType0_3__9();
     void caseEnvType4_7__15();
     void caseEnvType8();
@@ -55,8 +55,8 @@ public:
     void caseEnvType12();
     void caseEnvType13();
     void caseEnvType14();
-    inline void setEnvelopeRegister(UBYTE value);
-    inline void setAYRegister(int num, UBYTE value);
+    inline void setEnvelopeRegister(tUBYTE value);
+    inline void setAYRegister(int num, tUBYTE value);
     inline void synthesizerLogicQ();
     inline void synthesizerMixerQ();
     void synthesizerStereo16();
@@ -69,15 +69,15 @@ public:
     void initAYCounterVars();
     void initAY();
 
-    UBYTE* buffer()    {return mSndBuffer;}
-    UBYTE* bufferEnd() {return mSndBufferEnd;}
-    UBYTE* stream()    {return mSndStream;}
+    tUBYTE* buffer()    {return mSndBuffer;}
+    tUBYTE* bufferEnd() {return mSndBufferEnd;}
+    tUBYTE* stream()    {return mSndStream;}
 
-    void setBuffer   (UBYTE* ptr) {mSndBuffer=ptr;}
-    void setBufferEnd(UBYTE* ptr) {mSndBufferEnd=ptr;}
-    void setStream   (UBYTE* ptr) {mSndStream=ptr;}
+    void setBuffer   (tUBYTE* ptr) {mSndBuffer=ptr;}
+    void setBufferEnd(tUBYTE* ptr) {mSndBufferEnd=ptr;}
+    void setStream   (tUBYTE* ptr) {mSndStream=ptr;}
 
-    DWORD freqTable(int num) {return mFreqTable[num];}
+    tDWORD freqTable(int num) {return mFreqTable[num];}
 
     void setEnabled(bool value)      {mSndEnabled=value;}
     void setPlaybackRate(uint value) {mSndPlaybackRate=value;}
@@ -86,10 +86,10 @@ public:
     void setVolume(uint value)       {mSndVolume=value;}
     void setDevice(uint value)       {mSndDevice=value;}
     void setBufferSize(uint value)   {mSndBufferSize=value;}
-    void setBufferPtr(UBYTE* ptr)    {mSndBufferPtr=ptr;}
-    void setBufferPtrDW(DWORD ptr)   {*(DWORD*)mSndBufferPtr=ptr;}
-    void setBufferPtrW(WORD ptr)     {*(WORD*)mSndBufferPtr=ptr;}
-    void setBufferPtrU(UBYTE ptr)    {*(UBYTE*)mSndBufferPtr=ptr;}
+    void setBufferPtr(tUBYTE* ptr)    {mSndBufferPtr=ptr;}
+    void setBufferPtrDW(tDWORD ptr)   {*(tDWORD*)mSndBufferPtr=ptr;}
+    void setBufferPtrW(tWORD ptr)     {*(tWORD*)mSndBufferPtr=ptr;}
+    void setBufferPtrU(tUBYTE ptr)    {*(tUBYTE*)mSndBufferPtr=ptr;}
     
     void setBufferFull(bool bf)      {mBufferFull=bf;}
     bool bufferFull()   {return mBufferFull;}
@@ -101,7 +101,7 @@ public:
     uint volume()       {return mSndVolume;}
     uint device()       {return mSndDevice;}
     uint bufferSize()   {return mSndBufferSize;}
-    UBYTE* bufferPtr()  {return mSndBufferPtr;}
+    tUBYTE* bufferPtr()  {return mSndBufferPtr;}
 
 
     const INT64 & cycleCountInitBoth() const {return mCycleCountInit.both;}
@@ -129,16 +129,16 @@ private:
     uint   mSndVolume;
     uint   mSndDevice;
     uint   mSndBufferSize;
-    UBYTE* mSndBufferPtr;
+    tUBYTE* mSndBufferPtr;
     // **############################***********
     // **############################***********
     // TODO change and init this !!!!!
     // **############################***********
-    static DWORD mFreqTable[];
-    UBYTE* mSndBuffer;
-    UBYTE* mSndBufferEnd;
-    UBYTE* mSndStream;
-    UBYTE  mTapeLevel;
+    static tDWORD mFreqTable[];
+    tUBYTE* mSndBuffer;
+    tUBYTE* mSndBufferEnd;
+    tUBYTE* mSndStream;
+    tUBYTE  mTapeLevel;
     // **############################***********
     // **############################***********
     // **############################***********
@@ -165,7 +165,7 @@ private:
       INT64 both;
    } mCycleCountInit;
 
-    //DWORD mLoopCount[2];
+    //tDWORD mLoopCount[2];
     INT64* mLoopCount64;
 
     INT64 mLoopCountInit;
@@ -174,8 +174,8 @@ private:
     {
         struct
         {
-            DWORD low;
-            DWORD high;
+            tDWORD low;
+            tDWORD high;
         };
         INT64 both;
     } mLoopCount;
@@ -184,10 +184,10 @@ private:
     {
         struct
         {
-            WORD low;
-            WORD high;
+            tWORD low;
+            tWORD high;
         };
-        DWORD both;
+        tDWORD both;
     };
     TCounter mTonCounterA, mTonCounterB, mTonCounterC, mNoiseCounter;
 
@@ -195,18 +195,18 @@ private:
     {
         struct
         {
-            WORD low;
-            WORD val;
+            tWORD low;
+            tWORD val;
         };
-        DWORD seed;
+        tDWORD seed;
     } mNoise;
 
     union
     {
         struct
         {
-            DWORD low;
-            DWORD high;
+            tDWORD low;
+            tDWORD high;
         };
         INT64 both;
     } mEnvelopeCounter;
@@ -215,7 +215,7 @@ private:
 
     int mLevelPP[256];
 
-    static UWORD mAmplitudesAY[16];
+    static tUWORD mAmplitudesAY[16];
 
     bool mTonEnA;
     bool mTonEnB;
@@ -227,9 +227,9 @@ private:
     bool mEnvelopeEnB;
     bool mEnvelopeEnC;
 
-    UBYTE mTonA;
-    UBYTE mTonB;
-    UBYTE mTonC;
+    tUBYTE mTonA;
+    tUBYTE mTonB;
+    tUBYTE mTonC;
 
     int mLevelAR[32];
     int mLevelAL[32];
@@ -239,12 +239,12 @@ private:
     int mLevelCL[32];
 
     int   mLevelTape;
-    UBYTE mIndexAL;
-    UBYTE mIndexAR;
-    UBYTE mIndexBL;
-    UBYTE mIndexBR;
-    UBYTE mIndexCL;
-    UBYTE mIndexCR;
+    tUBYTE mIndexAL;
+    tUBYTE mIndexAR;
+    tUBYTE mIndexBL;
+    tUBYTE mIndexBR;
+    tUBYTE mIndexCL;
+    tUBYTE mIndexCR;
 
     int mPreAmp;
     int mPreAmpMax;
@@ -254,7 +254,7 @@ private:
 };
 
 
-inline void Sound::setAYRegister(int num, UBYTE value)
+inline void Sound::setAYRegister(int num, tUBYTE value)
 {
     switch(num)
     {
@@ -291,7 +291,7 @@ inline void Sound::setAYRegister(int num, UBYTE value)
     }
 }
 
-inline void Sound::setEnvelopeRegister(UBYTE value)
+inline void Sound::setEnvelopeRegister(tUBYTE value)
 {
     mEnvelopeCounter.high = 0;
     mPsg->setFirstPeriod(true);
@@ -341,7 +341,7 @@ inline void Sound::setEnvelopeRegister(UBYTE value)
     }
 }
 
-inline void Sound::setMixerRegister(UBYTE value)
+inline void Sound::setMixerRegister(tUBYTE value)
 {
     mPsg->setMixer(value);
     mTonEnA   = value & 1  ? false : true;
@@ -354,7 +354,7 @@ inline void Sound::setMixerRegister(UBYTE value)
 
 
 
-inline void Sound::setAmplA(UBYTE value)
+inline void Sound::setAmplA(tUBYTE value)
 {
     mPsg->setAmplitudeA(value);
     mEnvelopeEnA = value & 16 ? false : true;
@@ -362,7 +362,7 @@ inline void Sound::setAmplA(UBYTE value)
 
 
 
-inline void Sound::setAmplB(UBYTE value)
+inline void Sound::setAmplB(tUBYTE value)
 {
     mPsg->setAmplitudeB(value);
     mEnvelopeEnB = value & 16 ? false : true;
@@ -370,7 +370,7 @@ inline void Sound::setAmplB(UBYTE value)
 
 
 
-inline void Sound::setAmplC(UBYTE value)
+inline void Sound::setAmplC(tUBYTE value)
 {
     mPsg->setAmplitudeC(value);
     mEnvelopeEnC = value & 16 ? false : true;

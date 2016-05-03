@@ -32,17 +32,17 @@ public:
 
     void init();
 
-    UBYTE value() {return mLine[mRow];}
-    UBYTE value(UBYTE row) {return mLine[row];}
-    UBYTE row() {return mRow;}
+    tUBYTE value() {return mLine[mRow];}
+    tUBYTE value(tUBYTE row) {return mLine[row];}
+    tUBYTE row() {return mRow;}
 
-    void setRow(UBYTE row) {mRow=row;}
-    void setValue(UBYTE val) {mLine[mRow]=val;}
-    void setValue(UBYTE row, UBYTE val) {mLine[row]=val;}
+    void setRow(tUBYTE row) {mRow=row;}
+    void setValue(tUBYTE val) {mLine[mRow]=val;}
+    void setValue(tUBYTE row, tUBYTE val) {mLine[row]=val;}
 
 private:
-    UBYTE mRow;
-    UBYTE mLine[16];
+    tUBYTE mRow;
+    tUBYTE mLine[16];
 };
 
 #endif

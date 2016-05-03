@@ -36,12 +36,12 @@ public:
     void setDepth    (uint depth)     {mDepth     = depth;     init();}
     void setMonitor  (uint monitor)   {mMonitor   = monitor;   init();}
 
-    UDWORD get(int num) {return mTable[num];}
+    tUDWORD get(int num) {return mTable[num];}
 
 private:
     static double mColour[32][3];
     static double mGreen [32];
-    UDWORD        mTable [32];
+    tUDWORD        mTable [32];
     
     uint mDepth;
     uint mIntensity;

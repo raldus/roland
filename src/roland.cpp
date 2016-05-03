@@ -71,8 +71,8 @@ uint framecountsum = 0;
 bool showfps = false;
 bool running = true;
 
-DWORD dwSndMinSafeDist = 0;
-DWORD dwSndMaxSafeDist = 0;
+tDWORD dwSndMinSafeDist = 0;
+tDWORD dwSndMaxSafeDist = 0;
 
 bool sndBufferCopied = false;
 
@@ -89,7 +89,7 @@ inline void update();
 inline void display();
 inline void audioPause();
 inline void audioResume();
-inline void audioUpdate(void *userdata, UBYTE *stream, int len);
+inline void audioUpdate(void *userdata, tUBYTE *stream, int len);
 
 inline void fillRect(SDL_Rect *rect);
 
@@ -164,7 +164,7 @@ inline uint *calcScreenEnd()
 void mainloop()
 {
     SDL_Event event;
-    UBYTE cpc_key;
+    tUBYTE cpc_key;
     static uint frametime =
         (int)((double)20.0 / (double)((cpc.speed() * 25) / 100.0));
     static uint cyclesElapsed = 0;
@@ -355,7 +355,7 @@ void mainloop()
                 }
             }
 
-        DWORD dwSndDist;
+        tDWORD dwSndDist;
         if (cpc.sound().stream() < cpc.sound().bufferPtr())
         {
             dwSndDist = cpc.sound().bufferPtr() -
@@ -450,7 +450,7 @@ inline void fillRect(SDL_Rect *rect)
     {
         for (int ix = 0; ix < rect->w * screen->format->BytesPerPixel; ix++)
         {
-            *(((UBYTE *)screen->pixels) + ((screen->pitch * (rect->y + iy))) +
+            *(((tUBYTE *)screen->pixels) + ((screen->pitch * (rect->y + iy))) +
               ((rect->x * screen->format->BytesPerPixel) + ix)) = 0;
         }
     }
@@ -530,7 +530,7 @@ void clearBuffer()
     };
 }
 
-inline void audioUpdate(void *userdata, UBYTE *stream, int len)
+inline void audioUpdate(void *userdata, tUBYTE *stream, int len)
 {
 #ifdef USE_MMX
     mmx_memcpy(stream, cpc.sound().stream(), len);
@@ -598,7 +598,7 @@ int initSound()
         audio_spec
             ->size); // size is samples * channels * bytes per sample (1 or 2)
     cpc.sound().setBuffer(
-        new UBYTE[cpc.sound().bufferSize() *
+        new tUBYTE[cpc.sound().bufferSize() *
                   6]); // allocate a ring buffer with 10 segments
     cpc.sound().setBufferEnd(cpc.sound().buffer() +
                              (cpc.sound().bufferSize() * 6));
@@ -665,7 +665,7 @@ int main(int argc, char *argv[])
          << "\n";
 #endif
 
-    bool fs = prefs.getBool("fullscreen");
+    //bool fs = prefs.getBool("fullscreen");
 
 
     //SDL_WM_SetCaption(PACKAGE_STRING, 0);

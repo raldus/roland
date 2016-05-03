@@ -113,7 +113,7 @@ public:
     void setScrLineOffset(uint   value) {mScrLineOffset = value;}
     void setScrOffset    (uint   value) {mScrOffset     = value;}
     void setScrLine      (uint   value) {mScrLine       = value;}
-    void setCpcRamBase   (UBYTE* value) {mCpcRamBase    = value;}
+    void setCpcRamBase   (tUBYTE* value) {mCpcRamBase    = value;}
     
     inline void doublescan();
 
@@ -168,10 +168,10 @@ private:
     uint  mScrOffset;
     uint  mScrLine;
 
-    UBYTE* mCpcRamBase;
+    tUBYTE* mCpcRamBase;
 
-    UBYTE mode0_table[512];
-    UBYTE mode1_table[1024];
+    tUBYTE mode0_table[512];
+    tUBYTE mode1_table[1024];
 
     ModeHandler   mModeHandler[3][4];     // [bpp][mode]
     BorderHandler mBorderHandler[4];      // [mode]

@@ -3186,7 +3186,7 @@ z80_reset:
    mov [z80_AF], word 04000h
    ret
 
-; void z80_raise_IRQ(UBYTE vector)
+; void z80_raise_IRQ(tUBYTE vector)
 ; Causes an interrupt with the given vector.
 ; In IM 0, the vector has to be an RST opcode.
 ; If interrupts are disabled, the interrupt will still happen as long as
@@ -3348,7 +3348,7 @@ z80_do_wait_states:
    add [z80_Initial_ICount], eax
    ret
 
-; UWORD z80_get_reg(z80_register reg)
+; tUWORD z80_get_reg(z80_register reg)
 ; Return the value of the specified register.
 cglobal z80_get_reg
 z80_get_reg:
@@ -3407,7 +3407,7 @@ getreg_boolean:
    mov al, 1
    ret
 
-; void z80_set_reg(z80_register reg, UWORD value)
+; void z80_set_reg(z80_register reg, tUWORD value)
 ; Set the specified register to a new value.
 cglobal z80_set_reg
 z80_set_reg:
@@ -3540,7 +3540,7 @@ ew_find:
    mov [edx+12], dword z80_default_write
    ret
 
-; void z80_map_fetch(UWORD start, UWORD end, UBYTE *memory)
+; void z80_map_fetch(tUWORD start, tUWORD end, tUBYTE *memory)
 ; Set the given area for op-code fetching
 ; start/end = the area it covers
 ; memory = the ROM/RAM to read from
@@ -3570,7 +3570,7 @@ mf_finish:
    pop ebx
    ret
 
-; void z80_map_read(UWORD start, UWORD end, UBYTE *memory)
+; void z80_map_read(tUWORD start, tUWORD end, tUBYTE *memory)
 ; Moves a Z80_MAP_MAPPED area to use a different region of memory
 ; start/end = the area it covers (must be page-aligned)
 ; memory = the ROM/RAM to read from
@@ -3601,7 +3601,7 @@ mr_finish:
    pop ebx
    ret
 
-; void z80_map_write(UWORD start, UWORD end, UBYTE *memory)
+; void z80_map_write(tUWORD start, tUWORD end, tUBYTE *memory)
 ; Moves a Z80_MAP_MAPPED area to use a different region of memory
 ; start/end = the area it covers (must be page-aligned)
 ; memory = the ROM/RAM to read from
@@ -3632,7 +3632,7 @@ mw_finish:
    pop ebx
    ret
 
-; void z80_add_read(UWORD start, UWORD end, int method, void *data)
+; void z80_add_read(tUWORD start, tUWORD end, int method, void *data)
 ; Add a READ memory handler to the memory map
 ; start/end = the area it covers
 ; method = 0 for direct, 1 for handled
@@ -3727,7 +3727,7 @@ ar_finish:
    pop ebx
    ret
 
-; void z80_add_write(UWORD start, UWORD end, int method, void *data)
+; void z80_add_write(tUWORD start, tUWORD end, int method, void *data)
 ; Add a WRITE memory handler to the memory map
 ; start/end = the area it covers
 ; method = 0 for direct, 1 for handled
@@ -3822,7 +3822,7 @@ aw_finish:
    pop ebx
    ret
 
-; void z80_set_in(UBYTE (*handler)(UWORD port))
+; void z80_set_in(tUBYTE (*handler)(tUWORD port))
 ; Set the IN port handler to the given function
 cglobal z80_set_in
 z80_set_in:
@@ -3830,7 +3830,7 @@ z80_set_in:
    mov [z80_In], eax
    ret
 
-; void z80_set_out(void (*handler)(UWORD port, UBYTE value))
+; void z80_set_out(void (*handler)(tUWORD port, tUBYTE value))
 ; Set the OUT port handler to the given function
 cglobal z80_set_out
 z80_set_out:
@@ -3854,7 +3854,7 @@ z80_set_av:
    mov [z80_AV], eax
    ret
 
-; void z80_set_fetch_callback(void (*handler)(UWORD pc))
+; void z80_set_fetch_callback(void (*handler)(tUWORD pc))
 ; Set the fetch callback to the given function
 cglobal z80_set_fetch_callback
 z80_set_fetch_callback:

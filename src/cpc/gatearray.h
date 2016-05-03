@@ -34,58 +34,58 @@ public:
 
     void init();
 
-    UBYTE  pen()              {return mPen;}
-    UBYTE* ink()              {return mInk;}
-    UBYTE  ink(UBYTE num)     {return mInk[num];}
-    UDWORD palette(UBYTE num) {return mPalette[num];}
+    tUBYTE  pen()              {return mPen;}
+    tUBYTE* ink()              {return mInk;}
+    tUBYTE  ink(tUBYTE num)     {return mInk[num];}
+    tUDWORD palette(tUBYTE num) {return mPalette[num];}
 
-    UBYTE romConfig()         {return mRomConfig;}
-    UBYTE ramConfig()         {return mRamConfig;}
-    UBYTE ramBank()           {return mRamBank;}
-    UBYTE upperRom()          {return mUpperRom;}
-    UBYTE counter()           {return mCounter;}
-    UBYTE mode()              {return mMode;}
-    UBYTE requestedMode()     {return mRequestedMode;}
+    tUBYTE romConfig()         {return mRomConfig;}
+    tUBYTE ramConfig()         {return mRamConfig;}
+    tUBYTE ramBank()           {return mRamBank;}
+    tUBYTE upperRom()          {return mUpperRom;}
+    tUBYTE counter()           {return mCounter;}
+    tUBYTE mode()              {return mMode;}
+    tUBYTE requestedMode()     {return mRequestedMode;}
     bool  interrupt()         {return mInterrupt;}
-    UBYTE intDelay()          {return mIntDelay;}
-    UBYTE slCount()           {return mSlCount;}
+    tUBYTE intDelay()          {return mIntDelay;}
+    tUBYTE slCount()           {return mSlCount;}
 
-    void setPen(UBYTE pen)               {mPen = pen;}
-    //void setInk(UBYTE* ink) {for (int i=0; i<17; i++) mInk[i] = ink[i];}
-    void setInk(UBYTE ink)               {mInk[mPen] = ink;}
-    void setInk(UBYTE num, UBYTE ink)    {mInk[num]  = ink;}
+    void setPen(tUBYTE pen)               {mPen = pen;}
+    //void setInk(tUBYTE* ink) {for (int i=0; i<17; i++) mInk[i] = ink[i];}
+    void setInk(tUBYTE ink)               {mInk[mPen] = ink;}
+    void setInk(tUBYTE num, tUBYTE ink)    {mInk[num]  = ink;}
 
-    void setPalette(UBYTE num, uint col) {mPalette[num]  = col;}
+    void setPalette(tUBYTE num, uint col) {mPalette[num]  = col;}
     void setPalette(uint col)            {mPalette[mPen] = col;}
 
-    void setRomConfig(UBYTE romcfg)      {mRomConfig = romcfg;}
-    void setRamConfig(UBYTE ramcfg)      {mRamConfig = ramcfg;}
-    void setRamBank  (UBYTE ramcfg)      {mRamBank   = ramcfg;}
-    void setUpperRom (UBYTE ramcfg)      {mUpperRom  = ramcfg;}
+    void setRomConfig(tUBYTE romcfg)      {mRomConfig = romcfg;}
+    void setRamConfig(tUBYTE ramcfg)      {mRamConfig = ramcfg;}
+    void setRamBank  (tUBYTE ramcfg)      {mRamBank   = ramcfg;}
+    void setUpperRom (tUBYTE ramcfg)      {mUpperRom  = ramcfg;}
 
-    void setMode(UBYTE mode)             {mMode = mode;}
-    void setRequestedMode(UBYTE mode)    {mRequestedMode = mode;}
+    void setMode(tUBYTE mode)             {mMode = mode;}
+    void setRequestedMode(tUBYTE mode)    {mRequestedMode = mode;}
 
     void setInterrupt(bool enabled)      {mInterrupt = enabled;}
-    void setIntDelay (UBYTE value)       {mIntDelay  = value;}
-    void setSlCount  (UBYTE value)       {mSlCount   = value;}
+    void setIntDelay (tUBYTE value)       {mIntDelay  = value;}
+    void setSlCount  (tUBYTE value)       {mSlCount   = value;}
 
 private:
-    UBYTE mRomConfig;
-    UBYTE mRamConfig;
-    UBYTE mRamBank;
-    UBYTE mUpperRom;
-    UBYTE mCounter;
-    UBYTE mMode;
-    UBYTE mRequestedMode;
-    UBYTE mSlCount;
+    tUBYTE mRomConfig;
+    tUBYTE mRamConfig;
+    tUBYTE mRamBank;
+    tUBYTE mUpperRom;
+    tUBYTE mCounter;
+    tUBYTE mMode;
+    tUBYTE mRequestedMode;
+    tUBYTE mSlCount;
     
-    UBYTE   mPen;
-    UBYTE   mInk[17];
-    UDWORD  mPalette[17];
+    tUBYTE   mPen;
+    tUBYTE   mInk[17];
+    tUDWORD  mPalette[17];
 
     bool  mInterrupt;
-    UBYTE mIntDelay;
+    tUBYTE mIntDelay;
 
 };
 

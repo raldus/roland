@@ -109,9 +109,9 @@ int Cpc::init(Prefs *prefs)
     return 0;
 }
 
-UBYTE Cpc::z80_in_handler(REGPAIR port)
+tUBYTE Cpc::z80_in_handler(REGPAIR port)
 {
-    UBYTE retval = 0xff;
+    tUBYTE retval = 0xff;
 
     // **********************************************************************
     // *** CRTC
@@ -131,7 +131,7 @@ UBYTE Cpc::z80_in_handler(REGPAIR port)
     // **********************************************************************
     else if (!(port.b.h & 0x08)) // PPI Port ?
     {
-        UBYTE mPpi_port = port.b.h & 3;
+        tUBYTE mPpi_port = port.b.h & 3;
         switch (mPpi_port)
         {
             case 0:                        // read from port A?
@@ -192,14 +192,14 @@ UBYTE Cpc::z80_in_handler(REGPAIR port)
 
             case 2: // PPI PortC
             {
-                UBYTE direction = mPpi.control() & 9;
-                UBYTE retval = mPpi.portC();
+                tUBYTE direction = mPpi.control() & 9;
+                tUBYTE retval = mPpi.portC();
                 if (direction) // either half set to input?
                 {
                     if (direction & 8) // upper half set to input?
                     {
                         retval &= 0x0f; // blank out upper half
-                        UBYTE value =
+                        tUBYTE value =
                             mPpi.portC() & 0xc0; // isolate PSG control bits
                         if (value == 0xc0)       // PSG specify register?
                         {
@@ -249,14 +249,14 @@ UBYTE Cpc::z80_in_handler(REGPAIR port)
     return retval;
 }
 
-void Cpc::z80_out_handler(REGPAIR port, UBYTE value)
+void Cpc::z80_out_handler(REGPAIR port, tUBYTE value)
 {
     // **********************************************************************
     // *** CRTC
     // **********************************************************************
     if (!(port.b.h & 0x40)) // CRTC select?
     {
-        UBYTE sel = (port.b.h & 3);
+        tUBYTE sel = (port.b.h & 3);
         if (sel == 0)
             mCrtc.select(value); // CRTC register select?
         else if (sel == 1)       // CRTC write data?
@@ -277,7 +277,7 @@ void Cpc::z80_out_handler(REGPAIR port, UBYTE value)
 
             case 1: // set colour
             {
-                UBYTE col = value & 0x1f; // isolate colour value
+                tUBYTE col = value & 0x1f; // isolate colour value
                 mGatearray.setInk(col);
                 mGatearray.setPalette(mColours.get(col));
             }
@@ -328,7 +328,7 @@ void Cpc::z80_out_handler(REGPAIR port, UBYTE value)
                 mPpi.setA(value);
                 if (!(mPpi.control() & 0x10)) // port A set to output?
                 {
-                    UBYTE mPsg_data = value;
+                    tUBYTE mPsg_data = value;
                     mPsg_write
                 }
                 break;
@@ -347,7 +347,7 @@ void Cpc::z80_out_handler(REGPAIR port, UBYTE value)
                 {
                     // cpc.tape_motor = val & 0x10; // update tape motor control
                     mPsg.setControl(value); // change PSG control
-                    UBYTE mPsg_data = mPpi.portA();
+                    tUBYTE mPsg_data = mPpi.portA();
                     mPsg_write;
                 }
                 break;
@@ -364,7 +364,7 @@ void Cpc::z80_out_handler(REGPAIR port, UBYTE value)
                 {
                     if (value & 1) // set bit?
                     {
-                        UBYTE bit = (value >> 1) & 7; // isolate bit to set
+                        tUBYTE bit = (value >> 1) & 7; // isolate bit to set
                         mPpi.setC(mPpi.portC() |
                                   bit_values[bit]); // set requested bit
                         if (!(mPpi.control() & 1))  // output lower half?
@@ -376,13 +376,13 @@ void Cpc::z80_out_handler(REGPAIR port, UBYTE value)
                         {
                             // CPC.tape_motor = PPI.portC & 0x10;
                             mPsg.setControl(mPpi.portC()); // change PSG control
-                            UBYTE mPsg_data = mPpi.portA();
+                            tUBYTE mPsg_data = mPpi.portA();
                             mPsg_write
                         }
                     }
                     else
                     {
-                        UBYTE bit = (value >> 1) & 7; // isolate bit to reset
+                        tUBYTE bit = (value >> 1) & 7; // isolate bit to reset
                         mPpi.setC(mPpi.portC() &
                                   ~(bit_values[bit])); // reset requested bit
                         if (!(mPpi.control() & 1))     // output lower half?
@@ -394,7 +394,7 @@ void Cpc::z80_out_handler(REGPAIR port, UBYTE value)
                         {
                             // CPC.tape_motor = PPI.portC & 0x10;
                             mPsg.setControl(mPpi.portC()); // change PSG control
-                            UBYTE mPsg_data = mPpi.portA();
+                            tUBYTE mPsg_data = mPpi.portA();
                             mPsg_write
                         }
                     }
