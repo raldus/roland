@@ -35,7 +35,7 @@ GL_FUNC(void,glPopMatrix,(void));
 GL_FUNC(void,glPointSize,(GLfloat size));
 GL_FUNC(void,glLineWidth,(GLfloat size));
 GL_FUNC(void,glScissor,(GLint x, GLint y, GLsizei width, GLsizei height));
-GL_FUNC(void,glDrawPixels,(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels));
+GL_FUNC(void,glCanvasPixels,(GLsizei width, GLsizei height, GLenum format, GLenum type, const GLvoid *pixels));
 GL_FUNC(GLenum,glGetError,(void));
 GL_FUNC_OPTIONAL(void,glColorTableEXT, (GLenum, GLenum, GLsizei, GLenum, GLenum, const GLvoid *));
 GL_FUNC_OPTIONAL(void,glActiveTextureARB, (GLenum));

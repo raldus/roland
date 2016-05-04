@@ -22,7 +22,7 @@
 
 #include "predef.h"
 
-#include "draw.h"
+#include "canvas.h"
 #include "cpc.h"
 #include "SDL.h"
 
@@ -44,7 +44,7 @@ namespace sdltk
         /** inits all @param width = width @param height = height */
         virtual int  init(uint width, uint height, uint depth, bool fullscreen, unsigned char scale) = 0;
 
-        virtual Draw * getDraw()  = 0;
+        virtual Canvas * getCanvas()  = 0;
 
         /** updates the Screen (flip or something) */
         virtual void update()  = 0;
@@ -80,23 +80,23 @@ namespace sdltk
     protected:
         Cpc* mCpc;
 
-        static uint mDesktopWidth;
-        static uint mDesktopHeight;
+        static unsigned int mDesktopWidth;
+        static unsigned int mDesktopHeight;
 
         static bool mFullscreen;
         static bool mDoubling;
         static bool mFilter;
 
-        uint  mCpcWidth;
-        uint  mCpcHeight;
+        unsigned int  mCpcWidth;
+        unsigned int  mCpcHeight;
         unsigned char mCpcScale;
 
-        uint * mBufferStart;
-        uint * mBufferEnd;
+        unsigned int * mBufferStart;
+        unsigned int * mBufferEnd;
 
         SDL_Surface * mBuffer;
         SDL_Surface * mScreen;
-        SDL_Rect      mCanvas;
+        SDL_Rect      mCanvasRect;
 
     };
 

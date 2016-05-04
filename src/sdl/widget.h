@@ -20,7 +20,7 @@
 #ifndef WIDGET_H
 #define WIDGET_H
 
-#include "draw.h"
+#include "canvas.h"
 #include "color.h"
 #include "rect.h"
 #include "SDL.h"
@@ -28,7 +28,7 @@
 
 namespace sdltk
 {
-    
+
     class Gui;
     class Size;
     class Point;
@@ -39,57 +39,56 @@ namespace sdltk
     public:
         Widget();
         virtual ~Widget();
-        
+
         virtual void draw() = 0;
         virtual void onMouseMotion (SDL_MouseMotionEvent * event) {}
         virtual void onMouseButton (SDL_MouseButtonEvent * event) {}
         virtual bool onKeyboard    (SDL_KeyboardEvent * event)    {return false;}
-        
+
         virtual void setPos(int x, int y)            {mRect.setX(x), mRect.setY(y);}
         virtual void setSize(int width, int height)  {mRect.setWidth(width), mRect.setHeight(height);}
-        
-        
-        virtual void setDraw(Draw * draw);
-        
-        
+
+
+        virtual void setCanvas(Canvas * draw);
+
+
         void setParent (Widget * parent) {mParent  = parent;}
         Widget * parent() {return mParent;}
-        
-        
+
+
         void setColor(Color color)                    {mColor = color;}
         void setColor(int r, int g, int b, int a=255) {mColor.set(r,g,b,a);}
-        
+
         void setEnabled   (bool val) {mEnabled    = val;}
         void setWantEvents(bool val) {mWantEvents = val;}
         void setMouseOver (bool val) {mMouseOver  = val;}
-        
+
         bool enabled()      {return mEnabled;}
         bool wantEvents()   {return mWantEvents;}
         bool mouseOver()    {return mMouseOver;}
         bool hasMouseGrab() {return mMouseGrab;}
-        
+
         Sint16 x()      {return mRect.x();}
         Sint16 y()      {return mRect.y();}
         Point  pos()    {return mRect.pos();}
         Uint16 width()  {return mRect.width();}
         Uint16 height() {return mRect.height();}
         Size   size()   {return mRect.size();}
-        
+
         Point relativePos(Sint16 x, Sint16 y) {return Point(x - mRect.x(), y - mRect.y());}
         void  relativePos(Sint16 x, Sint16 y, Point & target) {return target.set(x - mRect.x(), y - mRect.y());}
-        
+
         const Rect & rect()   {return mRect;}
-        const Rect & canvas() {return mCanvas;}
-        
+        const Rect & canvas() {return mCanvasRect;}
+
     protected:
-        Draw  * mDraw;
-        
+        Canvas * mCanvas;
         Widget * mParent;
-        
+
         Rect  mRect;
-        Rect  mCanvas;
+        Rect  mCanvasRect;
         Color mColor;
-        
+
         bool mMouseOver;
         bool mMouseGrab;
         bool mEnabled;

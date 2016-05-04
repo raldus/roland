@@ -17,7 +17,7 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "drawstd.h"
+#include "canvasstd.h"
 
 #include "sdlpixel.h"
 #include "bitglyph.h"
@@ -29,25 +29,25 @@
 namespace sdltk
 {
 
-    DrawStd::DrawStd() : Draw()
+    CanvasStd::CanvasStd() : Canvas()
     {}
 
-    DrawStd::~DrawStd()
+    CanvasStd::~CanvasStd()
     {}
     
-    void DrawStd::setClipRect(const Rect & rect)
+    void CanvasStd::setClipRect(const Rect & rect)
     {
         mClipRect = rect;
         SDL_SetClipRect(mSurface, &rect);
     }
     
-    void DrawStd::clearClipRect() 
+    void CanvasStd::clearClipRect() 
     {
         mClipRect.set(0, 0, mSurface->w, mSurface->h);
         SDL_SetClipRect(mSurface, 0);
     }
 
-    void DrawStd::point(const Point& pos)
+    void CanvasStd::point(const Point& pos)
     {
         if (mColor.a())
         {
@@ -59,7 +59,7 @@ namespace sdltk
         }
     }
 
-    void DrawStd::rect(const Rect & rect)
+    void CanvasStd::rect(const Rect & rect)
     {
         Sint32  x  = rect.x();
         Sint32  x2 = rect.x() + rect.width()  - 1;
@@ -73,7 +73,7 @@ namespace sdltk
         vLine(x2, y, y2);
     }
 
-    void DrawStd::fill(const Rect & rect)
+    void CanvasStd::fill(const Rect & rect)
     {
         if (mColor.a())
         {
@@ -96,7 +96,7 @@ namespace sdltk
         }
     }
 
-    void DrawStd::line(const Point & pos1, const Point & pos2)
+    void CanvasStd::line(const Point & pos1, const Point & pos2)
     {
         Point p1(pos1);
         Point p2(pos2);
@@ -120,7 +120,7 @@ namespace sdltk
         p2.y() += top.yOffset;
         */
 
-        // Draw a line with Bresenham
+        // Canvas a line with Bresenham
 
         Sint32  dx = ABS(p2.x() - p1.x());
         Sint32  dy = ABS(p2.y() - p1.y());
@@ -271,7 +271,7 @@ namespace sdltk
         }
     }
 
-    void DrawStd::image(const Image & image, const Rect& src, const Rect& dest)
+    void CanvasStd::image(const Image & image, const Rect& src, const Rect& dest)
     {
         Image* img = (Image*) &image;
         Rect s(src);
@@ -279,7 +279,7 @@ namespace sdltk
         SDL_BlitSurface(img->surface(), &s, mSurface, &d);
     }
 
-    void DrawStd::hLine(Sint32 x, Sint32 y, Sint32  x2)
+    void CanvasStd::hLine(Sint32 x, Sint32 y, Sint32  x2)
     {
         //ClipRectangle top = mClipStack.top();
         //x  += top.xOffset;
@@ -392,7 +392,7 @@ namespace sdltk
         SDL_UnlockSurface(mSurface);
     }
 
-    void DrawStd::vLine(Sint32 x, Sint32 y, Sint32  y2)
+    void CanvasStd::vLine(Sint32 x, Sint32 y, Sint32  y2)
     {
         //ClipRectangle top = mClipStack.top();
         //x  += top.xOffset;
@@ -505,7 +505,7 @@ namespace sdltk
     }
     
     /*
-    void DrawStd::write(Point & pos, string & text)
+    void CanvasStd::write(Point & pos, string & text)
     {
         Rect src, dest;
         for (Uint16 i=0; i < text.length(); i++)

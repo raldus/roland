@@ -26,7 +26,7 @@
 #include "cpc.h"
 #include "types.h"
 
-#include "drawstd.h"
+#include "canvasstd.h"
 #include "SDL.h"
 
 using namespace sdltk;
@@ -44,7 +44,7 @@ namespace sdltk
         virtual int init();
         virtual int init(uint width, uint height, uint depth, bool fullscreen, unsigned char scale);
         
-        virtual Draw * getDraw() {return &mDraw;}
+        virtual Canvas * getCanvas() {return &mCanvas;}
 
         virtual void update();
         virtual void quit();
@@ -55,7 +55,7 @@ namespace sdltk
         uint* calcBufferStart();
         uint* calcBufferEnd();
 
-        DrawStd mDraw;
+        CanvasStd mCanvas;
     };
 
 } //sdltk

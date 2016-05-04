@@ -22,16 +22,16 @@
 namespace sdltk
 {
 
-	ListItem::ListItem()
-	{
-		mOrigin.set(0, 0);
-		mEnabled = true;
-		//mWantEvents = false;
-	}
+    ListItem::ListItem()
+    {
+        mOrigin.set(0, 0);
+        mEnabled = true;
+        //mWantEvents = false;
+    }
 
 
-	ListItem::~ListItem()
-	{}
+    ListItem::~ListItem()
+    {}
 
 
 }

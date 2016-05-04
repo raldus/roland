@@ -25,23 +25,23 @@
 
 namespace sdltk
 {
-	//using namespace sdltk;
-	
-	/** @author Fred Klaus development@fkweb.de */
-	class ListItem : public Button
-	{
-		
-	public:
-		ListItem();
-		~ListItem();
-		
-		void setOrigin(Sint16 x, Sint16 y) {mOrigin.set(x, y);}
-		void reset() {mRect.setPos(mOrigin.x(), mOrigin.y());}
-		
-	private:
-		Point mOrigin;
+    //using namespace sdltk;
+    
+    /** @author Fred Klaus development@fkweb.de */
+    class ListItem : public Button
+    {
+        
+    public:
+        ListItem();
+        ~ListItem();
+        
+        void setOrigin(Sint16 x, Sint16 y) {mOrigin.set(x, y);}
+        void reset() {mRect.setPos(mOrigin.x(), mOrigin.y());}
+        
+    private:
+        Point mOrigin;
 
-	};
+    };
 
 } //namespace sdltk
 

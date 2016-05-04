@@ -39,16 +39,15 @@ namespace sdltk
         mBuffer  = 0;
         mScreen  = 0;
 
-        mCanvas.x    = 0;
-        mCanvas.y    = 0;
-        mCanvas.w    = 0;
-        mCanvas.h    = 0;
+        mCanvasRect.x    = 0;
+        mCanvasRect.y    = 0;
+        mCanvasRect.w    = 0;
+        mCanvasRect.h    = 0;
 
         IOUT("[Video]", "desktopwidth",  mDesktopWidth);
         IOUT("[Video]", "desktopheight", mDesktopHeight);
-
     }
-    
+
     void Video::setIcon(const string & icon)
     {
         SDL_Surface * surface = SDL_LoadBMP(icon.c_str());

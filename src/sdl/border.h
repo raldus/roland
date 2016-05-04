@@ -32,30 +32,30 @@ namespace sdltk
 class Border
 {
 public:
-	enum BorderPos 
-	{
-		bpTop          = 0,
-		bpBottom       = 1,
-		bpLeft         = 2,
-		bpRight        = 3,
-		bpLeftTop      = 4,
-		bpLeftBottom   = 5,
-		bpRightTop     = 6,
-		bpRightBottom  = 7,
-	};
-	
-	void setColor(uint color);
-	void setUniSize(uint width, uint height, uint thickness);
-	void paint(SDL_Surface * surf);
-	
-	Border();
-	~Border();
-	
-	
+    enum BorderPos 
+    {
+        bpTop          = 0,
+        bpBottom       = 1,
+        bpLeft         = 2,
+        bpRight        = 3,
+        bpLeftTop      = 4,
+        bpLeftBottom   = 5,
+        bpRightTop     = 6,
+        bpRightBottom  = 7,
+    };
+    
+    void setColor(uint color);
+    void setUniSize(uint width, uint height, uint thickness);
+    void paint(SDL_Surface * surf);
+    
+    Border();
+    ~Border();
+    
+    
 protected:
-	SDL_Rect mBorder[8];
-	
-	uint mColor;
+    SDL_Rect mBorder[8];
+    
+    uint mColor;
 
 };
 

@@ -148,10 +148,10 @@ namespace sdltk
         SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
         //if (fullscreen) SDL_ShowCursor (0); else SDL_ShowCursor (1);
 
-        mCanvas.x = 0;
-        mCanvas.y = 0;
-        mCanvas.w = mCpcWidth;
-        mCanvas.h = mCpcHeight;
+        mCanvasRect.x = 0;
+        mCanvasRect.y = 0;
+        mCanvasRect.w = mCpcWidth;
+        mCanvasRect.h = mCpcHeight;
 
         /*
         int major, minor;
@@ -240,7 +240,7 @@ namespace sdltk
         mCpc->vdu().setScrBase(mBufferStart);
         mCpc->vdu().setScrEnd (mBufferEnd);
 
-        mDraw.setSurface(mScreen);
+        mCanvas.setSurface(mScreen);
 
         //unlock(); // <-not used with SWSurface
         return 0;
@@ -284,11 +284,11 @@ namespace sdltk
     {
         if (mBuffer->format->BitsPerPixel == 16)
         {
-            return (uint*) (unsigned short int*) mBuffer->pixels+((mBuffer->pitch / 2)*mCanvas.y)+mCanvas.x;
+            return (uint*) (unsigned short int*) mBuffer->pixels+((mBuffer->pitch / 2)*mCanvasRect.y)+mCanvasRect.x;
         }
         else
         {
-            return  (uint*) mBuffer->pixels+((mBuffer->pitch / 4)*(mCanvas.y))+mCanvas.x;
+            return  (uint*) mBuffer->pixels+((mBuffer->pitch / 4)*(mCanvasRect.y))+mCanvasRect.x;
         }
     }
 
@@ -305,4 +305,4 @@ namespace sdltk
     }
 
 
-} //sdltk
+} // sdltk

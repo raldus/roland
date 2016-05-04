@@ -38,17 +38,17 @@ namespace sdltk
     {
         if (mImage) delete mImage;
     }
-    
+
     void Label::onMouseMotion(SDL_MouseMotionEvent * event)
     {
         move(event);
     }
-    
+
     void Label::onMouseButton(SDL_MouseButtonEvent * event)
     {
         moveInit(event);
     }
-    
+
     void Label::moveInit(SDL_MouseButtonEvent * event)
     {
         if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_MIDDLE))
@@ -56,14 +56,14 @@ namespace sdltk
             relativePos(event->x, event->y, mRelativeMousePos);
             mMouseGrab = true;
         }
-        
+
         if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_MIDDLE))
         {
             mRelativeMousePos.set(0, 0);
             mMouseGrab = false;
         }
     }
-    
+
     void Label::move(SDL_MouseMotionEvent * event)
     {
         if (event->state & SDL_BUTTON(SDL_BUTTON_MIDDLE))
@@ -73,94 +73,94 @@ namespace sdltk
             setBorder(mBorder);
         }
     }
-    
+
     void Label::setBorder(bool val)
     {
         mBorder = val;
-        
+
         if (mBorder)
         {
-            mCanvas.setX(mRect.x() + 1);
-            mCanvas.setY(mRect.y() + 1);
-            mCanvas.setWidth( mRect.width()  - 2);
-            mCanvas.setHeight(mRect.height() - 2);
-            
+            mCanvasRect.setX(mRect.x() + 1);
+            mCanvasRect.setY(mRect.y() + 1);
+            mCanvasRect.setWidth( mRect.width()  - 2);
+            mCanvasRect.setHeight(mRect.height() - 2);
+
             mLeftTop.set(mRect.pos());
             mRightTop.set(mRect.x() + mRect.width(), mRect.y());
             mRightBottom.set(mRect.x() + mRect.width(), mRect.y() + mRect.height() );
             mLeftBottom.set(mRect.x(), mRect.y() + mRect.height() );
-            
+
             mBorderColor1.set(150, 150, 150, 230);
             mBorderColor2.set(20, 20, 20, 230);
         }
-        else mCanvas = mRect;
+        else mCanvasRect = mRect;
     }
-    
+
     void Label::setImage(const string & fname, bool autosize, bool bg)
     {
         mBackground = bg;
-        
+
         mImage = new Image(fname);
-        if (autosize) 
+        if (autosize)
         {
             mRect.setSize(mImage->size());
             setBorder(false);
         }
     }
-    
+
     void Label::drawBorder()
     {
         if (mBorder)
         {
-            mDraw->setColor(mBorderColor2);
-            mDraw->line(mLeftBottom, mRightBottom);
-            mDraw->line(mRightTop, mRightBottom);
-            mDraw->setColor(mBorderColor1);
-            mDraw->line(mLeftTop, mRightTop);
-            mDraw->line(mLeftTop, mLeftBottom);
+            mCanvas->setColor(mBorderColor2);
+            mCanvas->line(mLeftBottom, mRightBottom);
+            mCanvas->line(mRightTop, mRightBottom);
+            mCanvas->setColor(mBorderColor1);
+            mCanvas->line(mLeftTop, mRightTop);
+            mCanvas->line(mLeftTop, mLeftBottom);
         }
     }
-    
+
     void Label::drawBackground()
     {
         if (mBackground)
         {
-            mDraw->setColor(mColor);
-            mDraw->fill(mCanvas);
+            mCanvas->setColor(mColor);
+            mCanvas->fill(mCanvasRect);
         }
-        if (mImage) mDraw->image(mImage, mRect.pos());
+        if (mImage) mCanvas->image(mImage, mRect.pos());
     }
-    
+
     void Label::drawBackground(const Color & color)
     {
         if (mBackground)
         {
-            mDraw->setColor(color);
-            mDraw->fill(mCanvas);
+            mCanvas->setColor(color);
+            mCanvas->fill(mCanvasRect);
         }
-        if (mImage) mDraw->image(mImage, mRect.pos());
+        if (mImage) mCanvas->image(mImage, mRect.pos());
     }
-    
+
     void Label::drawText()
     {
         if (!mText.empty())
         {
-            mTextPos = mCanvas.pos();
-            mTextPos.setX(mCanvas.x() + ((mCanvas.width()  - mDraw->textSize(mText).width()) / 2 ) + mTextOffset.x());
-            mTextPos.setY(mCanvas.y() + ((mCanvas.height() - mDraw->textHeight()) / 2) + 1 + mTextOffset.y());
-            mDraw->write(mTextPos, mText);
+            mTextPos = mCanvasRect.pos();
+            mTextPos.setX(mCanvasRect.x() + ((mCanvasRect.width()  - mCanvas->textSize(mText).width()) / 2 ) + mTextOffset.x());
+            mTextPos.setY(mCanvasRect.y() + ((mCanvasRect.height() - mCanvas->textHeight()) / 2) + 1 + mTextOffset.y());
+            mCanvas->write(mTextPos, mText);
         }
     }
-    
+
     void Label::draw()
     {
-        mDraw->begin();
-        
+        mCanvas->begin();
+
         drawBorder();
         drawBackground();
         drawText();
-        
-        mDraw->end();
+
+        mCanvas->end();
     }
 
 } //namespace sdltk

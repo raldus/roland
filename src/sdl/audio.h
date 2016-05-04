@@ -23,9 +23,9 @@
 #include "predef.h"
 
 #ifdef USE_MMX
-	#include "mmx_memcpy.h"
+    #include "mmx_memcpy.h"
 #else
-	#include <memory>
+    #include <memory>
 #endif
 
 #include "types.h"
@@ -39,53 +39,53 @@ using namespace std;
 namespace sdltk
 {
 
-	/** @author Fred Klaus development@fkweb.de */
-	class Audio
-	{
+    /** @author Fred Klaus development@fkweb.de */
+    class Audio
+    {
 
-	public:
-		Audio(Cpc * cpc);
-		~Audio();
+    public:
+        Audio(Cpc * cpc);
+        ~Audio();
 
-		int init();
-		void quit();
+        int init();
+        void quit();
 
-		inline uint dist();
-		uint mindist()           {return mMinSafeDist;}
-		uint maxdist()           {return mMaxSafeDist;}
+        inline uint dist();
+        uint mindist()           {return mMinSafeDist;}
+        uint maxdist()           {return mMaxSafeDist;}
 
-		bool copied()            {return mBufferCopied;}
-		void setCopied(bool val) {mBufferCopied=val;}
-		void waitCopied()        {while (!mBufferCopied) {SDL_Delay(1);} mBufferCopied=false;}
+        bool copied()            {return mBufferCopied;}
+        void setCopied(bool val) {mBufferCopied=val;}
+        void waitCopied()        {while (!mBufferCopied) {SDL_Delay(1);} mBufferCopied=false;}
 
-		void pause(bool value);
+        void pause(bool value);
 
-		static void update(void *userdata, Uint8 *stream, int len);
+        static void update(void *userdata, Uint8 *stream, int len);
 
-	private:
-		static Cpc* mCpc;
-		static volatile bool mBufferCopied; ///@todo not threadsafe
-		SDL_AudioSpec* mSpec;
+    private:
+        static Cpc* mCpc;
+        static volatile bool mBufferCopied; ///@todo not threadsafe
+        SDL_AudioSpec* mSpec;
 
-		bool isInit;
+        bool isInit;
 
-		uint mMinSafeDist;
-		uint mMaxSafeDist;
+        uint mMinSafeDist;
+        uint mMaxSafeDist;
 
-		uint alignSamples(uint given);
-	};
+        uint alignSamples(uint given);
+    };
 
-	inline uint Audio::dist() // determine distance between play and write cursors
-	{
-		if (mCpc->sound().stream() < mCpc->sound().bufferPtr())
-		{
-			return mCpc->sound().bufferPtr()-mCpc->sound().stream();
-		}
-		else
-		{
-			return (mCpc->sound().bufferEnd()-mCpc->sound().stream())+(mCpc->sound().bufferPtr()-mCpc->sound().buffer());
-		}
-	}
+    inline uint Audio::dist() // determine distance between play and write cursors
+    {
+        if (mCpc->sound().stream() < mCpc->sound().bufferPtr())
+        {
+            return mCpc->sound().bufferPtr()-mCpc->sound().stream();
+        }
+        else
+        {
+            return (mCpc->sound().bufferEnd()-mCpc->sound().stream())+(mCpc->sound().bufferPtr()-mCpc->sound().buffer());
+        }
+    }
 
 } //sdl
 

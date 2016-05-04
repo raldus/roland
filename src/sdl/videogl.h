@@ -26,7 +26,7 @@
 #include "cpc.h"
 #include "types.h"
 
-#include "drawgl.h"
+#include "canvasgl.h"
 #include "gui.h"
 #include "SDL.h"
 #include "glfuncs.h"
@@ -44,7 +44,7 @@ namespace sdltk
         virtual int init();
         virtual int init(uint width, uint height, uint depth, bool fullscreen, unsigned char scale);
 
-        virtual Draw * getDraw() {return &mDraw;}
+        virtual Canvas * getCanvas() {return &mCanvas;}
 
         virtual void setup();
         virtual void update() {SDL_GL_SwapBuffers();}
@@ -63,7 +63,7 @@ namespace sdltk
 
         static volatile bool mIsLoaded;
 
-        DrawGL mDraw;
+        CanvasGL mCanvas;
     };
 
 } //sdltk

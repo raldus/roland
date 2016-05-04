@@ -27,7 +27,6 @@
 
 namespace sdltk
 {
-    using namespace sdltk;
     using std::string;
 
     /** @author Fred Klaus development@fkweb.de */
@@ -36,51 +35,49 @@ namespace sdltk
     public:
         Label();
         virtual ~Label();
-        
+
         virtual void draw();
-        
+
         virtual void setPos(int x, int y) {mRect.setX(x), mRect.setY(y); setBorder(mBorder);}
-        
+
         virtual void onMouseMotion (SDL_MouseMotionEvent * event);
         virtual void onMouseButton (SDL_MouseButtonEvent * event);
-        
+
         void setImage(const string & fname, bool autosize=true, bool bg=false);
         void setBorder(bool val);
         void setBackground(bool val) {mBackground=val;}
         void setText(const string & text) {mText = text;}
-        
+
     protected:
         void drawBorder();
         void drawBackground();
         void drawBackground(const Color & color);
         void drawText();
-        
+
         void moveInit(SDL_MouseButtonEvent * event);
         void move(SDL_MouseMotionEvent * event);
-        
-        
+
+
         bool mBorder;
         bool mBackground;
-        
-        
+
+
         Image * mImage;
-        
+
         string mText;
         Point mTextPos;
         Point mTextOffset;
-        
+
         Point mRelativeMousePos;
-        
+
         Point mLeftTop;
         Point mRightTop;
         Point mRightBottom;
         Point mLeftBottom;
-        
+
         Color mBorderColor1;
         Color mBorderColor2;
-        
-        
-        
+
     };
 
 } //namespace sdltk

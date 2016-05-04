@@ -26,27 +26,27 @@ namespace sdltk
 
     Widget::Widget()
     {
-        mDraw   = 0;
+        mCanvas = 0;
         mParent = 0;
-        
+
         mEnabled    = true;
         mWantEvents = false;
         mMouseOver  = false;
         mMouseGrab  = false;
-        
-        
+
+
         mColor.set(128, 128, 128, 128);
-        
+
         mRect.set(0, 0, 0, 0);
     }
 
     Widget::~Widget()
     {
     }
-    
-    void Widget::setDraw(Draw * draw)
+
+    void Widget::setCanvas(Canvas * canvas)
     {
-        mDraw = draw;
+        mCanvas = canvas;
     }
 
 

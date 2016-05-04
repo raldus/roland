@@ -28,28 +28,28 @@
 
 namespace sdltk
 {
-	using namespace sdltk;
-	using std::string;
+    using namespace sdltk;
+    using std::string;
 
-	/** @author Fred Klaus development@fkweb.de */
-	class Button : public Label
-	{
-	public:
-		Button();
-		virtual ~Button();
-		
-		virtual void draw();
-		
-		virtual void onMouseMotion (SDL_MouseMotionEvent * event);
-		virtual void onMouseButton (SDL_MouseButtonEvent * event);
-		
-		void setHighliteColor(const Color & color) {mHighlightColor = color;}
-		
-	private:
-		Color mHighlightColor;
-		bool  mDown;
-		
-	};
+    /** @author Fred Klaus development@fkweb.de */
+    class Button : public Label
+    {
+    public:
+        Button();
+        virtual ~Button();
+        
+        virtual void draw();
+        
+        virtual void onMouseMotion (SDL_MouseMotionEvent * event);
+        virtual void onMouseButton (SDL_MouseButtonEvent * event);
+        
+        void setHighliteColor(const Color & color) {mHighlightColor = color;}
+        
+    private:
+        Color mHighlightColor;
+        bool  mDown;
+        
+    };
 
 } //namespace sdltk
 

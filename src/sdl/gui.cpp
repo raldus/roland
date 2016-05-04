@@ -40,7 +40,7 @@ namespace sdltk
     
     void Gui::add(Widget * widget)
     {
-        widget->setDraw(mVideo->getDraw());
+        widget->setCanvas(mVideo->getCanvas());
         mWidgets.push_back(widget);
         mHasFocus = widget;
     }

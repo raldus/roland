@@ -17,30 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "drawgl.h"
+#include "canvasgl.h"
 
 namespace sdltk
 {
 
-    DrawGL::DrawGL() : Draw()
+    CanvasGL::CanvasGL() : Canvas()
     {}
 
-    DrawGL::~DrawGL()
+    CanvasGL::~CanvasGL()
     {}
     
-    void DrawGL::clearClipRect()
+    void CanvasGL::clearClipRect()
     {
         mClipRect.set(0, 0, mSurface->w, mSurface->h);
         oglScissor(0, 0, mSurface->w, mSurface->h);
     }
 
-    void DrawGL::setClipRect(const Rect & rect)
+    void CanvasGL::setClipRect(const Rect & rect)
     {
         mClipRect = rect;
         oglScissor(mClipRect.x(), mSurface->h - (mClipRect.y() + mClipRect.height()), mClipRect.width(), mClipRect.height());
     }
 
-    void DrawGL::begin()
+    void CanvasGL::begin()
     {
         oglPushAttrib
         (
@@ -93,7 +93,7 @@ namespace sdltk
         else oglDisable(GL_BLEND);
     }
 
-    void DrawGL::end()
+    void CanvasGL::end()
     {       
         oglMatrixMode(GL_MODELVIEW);
         oglPopMatrix();
@@ -108,14 +108,14 @@ namespace sdltk
     }
 
 
-    void DrawGL::point(const Point & pos)
+    void CanvasGL::point(const Point & pos)
     {
         oglBegin(GL_POINTS);
         oglVertex2i(pos.x(), pos.y());
         oglEnd();
     }
 
-    void DrawGL::rect(const Rect & rect)
+    void CanvasGL::rect(const Rect & rect)
     {
         oglBegin(GL_LINE_LOOP);
         oglVertex2f(rect.x() + 0.5f, rect.y() + 0.5f );
@@ -125,7 +125,7 @@ namespace sdltk
         oglEnd();
     }
 
-    void DrawGL::fill(const Rect & rect)
+    void CanvasGL::fill(const Rect & rect)
     {
         oglBegin(GL_QUADS);
         oglVertex2i(rect.x(), rect.y() - 1);
@@ -135,7 +135,7 @@ namespace sdltk
         oglEnd();
     }
 
-    void DrawGL::line(const Point & pos1, const Point & pos2)
+    void CanvasGL::line(const Point & pos1, const Point & pos2)
     {
         oglBegin(GL_LINES);
         oglVertex2i(pos1.x(), pos1.y());
@@ -143,7 +143,7 @@ namespace sdltk
         oglEnd();
     }
 
-    void DrawGL::image(const Image & image, const Rect & src, const Rect & dest)
+    void CanvasGL::image(const Image & image, const Rect & src, const Rect & dest)
     {
         // switch only if necessary
         if (image.hasAlpha() && !mColor.hasAlpha()) oglEnable(GL_BLEND);
@@ -158,7 +158,7 @@ namespace sdltk
         oglEnable(GL_TEXTURE_2D);
         oglBindTexture(GL_TEXTURE_2D, image.texNum());
 
-        // Draw a textured quad -- the image
+        // Canvas a textured quad -- the image
         oglBegin(GL_QUADS);
         oglTexCoord2f(texX1, texY1);
         oglVertex2i(dest.x(), dest.y());
@@ -180,7 +180,7 @@ namespace sdltk
         oglDisable(GL_TEXTURE_2D);
     }
 
-    void DrawGL::setColor(const Color & color)
+    void CanvasGL::setColor(const Color & color)
     {
         mColor = color;
         oglColor4ub(mColor.r(), mColor.g(), mColor.b(), mColor.a());
@@ -188,7 +188,7 @@ namespace sdltk
     }
     
     /*
-    void DrawGL::write(Point & pos, string & text)
+    void CanvasGL::write(Point & pos, string & text)
     {
     }*/
 

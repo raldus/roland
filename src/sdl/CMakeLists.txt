@@ -13,9 +13,9 @@ audio.cpp
 border.cpp
 button.cpp
 color.cpp
-draw.cpp
-drawgl.cpp
-drawstd.cpp
+canvas.cpp
+canvasgl.cpp
+canvasstd.cpp
 exception.cpp
 fileselect.cpp
 glfuncs.cpp

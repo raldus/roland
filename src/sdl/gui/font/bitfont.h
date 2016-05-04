@@ -1,7 +1,7 @@
 #ifndef BITFONT_H
 #define BITFONT_H
 
-#include "draw.h"
+#include "canvas.h"
 #include "image.h"
 #include "bitfont.h"
 #include "SDL.h"

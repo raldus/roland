@@ -94,10 +94,10 @@ namespace sdltk
         uint hp = (width  - mCpcWidth)  / 2;
         uint vp = (height - mCpcHeight) / 2;
 
-        mCanvas.x = hp;
-        mCanvas.y = vp;
-        mCanvas.w = mCpcWidth;
-        mCanvas.h = mCpcHeight;
+        mCanvasRect.x = hp;
+        mCanvasRect.y = vp;
+        mCanvasRect.w = mCpcWidth;
+        mCanvasRect.h = mCpcHeight;
 
         if (mBuffer->format->BitsPerPixel == 16) mCpc->vdu().setBpp(Vdu::Bpp16);
         if (mBuffer->format->BitsPerPixel == 24) mCpc->vdu().setBpp(Vdu::Bpp24);
@@ -127,7 +127,7 @@ namespace sdltk
 
         mScreen = mBuffer;
 
-        mDraw.setSurface(mScreen);
+        mCanvas.setSurface(mScreen);
 
         return 0;
     }
@@ -141,11 +141,11 @@ namespace sdltk
     {
         if (mBuffer->format->BitsPerPixel == 16)
         {
-            return (uint*) (unsigned short int*) mBuffer->pixels+((mBuffer->pitch / 2)*mCanvas.y)+mCanvas.x;
+            return (uint*) (unsigned short int*) mBuffer->pixels+((mBuffer->pitch / 2)*mCanvasRect.y)+mCanvasRect.x;
         }
         else
         {
-            return  (uint*) mBuffer->pixels+((mBuffer->pitch / 4)*(mCanvas.y))+mCanvas.x;
+            return  (uint*) mBuffer->pixels+((mBuffer->pitch / 4)*(mCanvasRect.y))+mCanvasRect.x;
         }
     }
 

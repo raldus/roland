@@ -22,63 +22,63 @@
 namespace sdltk
 {
 
-	Button::Button() : Label()
-	{
-		mDown = false;
-		mHighlightColor.set(mColor.r()+30, mColor.g()+30, mColor.b(), 225);
-	}
+    Button::Button() : Label()
+    {
+        mDown = false;
+        mHighlightColor.set(mColor.r()+30, mColor.g()+30, mColor.b(), 225);
+    }
 
-	Button::~Button()
-	{
-		if (mImage) delete mImage;
-	}
-	
-	void Button::onMouseMotion(SDL_MouseMotionEvent * event)
-	{
-		string tmp;
-		tmp  = "x:"  + mDraw->numberToText(event->x);
-		tmp += "/y:" + mDraw->numberToText(event->y);
-		setText(tmp);
-		
-		move(event);
-	}
-	
-	void Button::onMouseButton(SDL_MouseButtonEvent * event)
-	{
-		if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_LEFT))
-		{
-			Color tmp;
-			tmp = mBorderColor1;
-			mBorderColor1 = mBorderColor2;
-			mBorderColor2 = tmp;
-			mTextOffset.set(1, 1);
-			mDown = true;
-		}
-		
-		if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))
-		{
-			mDown = false;
-		}
-		
-		moveInit(event);
-	}
-	
-	void Button::draw()
-	{
-		mDraw->begin();
-		
-		if (!mDown || !mMouseOver)
-		{
-			mTextOffset.set(0, 0);
-			setBorder(mBorder);
-		}
-		
-		drawBorder();
-		if (mMouseOver) drawBackground(mHighlightColor);
-		else drawBackground(mColor);
-		drawText();
-		
-		mDraw->end();
-	}
+    Button::~Button()
+    {
+        if (mImage) delete mImage;
+    }
+    
+    void Button::onMouseMotion(SDL_MouseMotionEvent * event)
+    {
+        string tmp;
+        tmp  = "x:"  + mCanvas->numberToText(event->x);
+        tmp += "/y:" + mCanvas->numberToText(event->y);
+        setText(tmp);
+        
+        move(event);
+    }
+    
+    void Button::onMouseButton(SDL_MouseButtonEvent * event)
+    {
+        if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_LEFT))
+        {
+            Color tmp;
+            tmp = mBorderColor1;
+            mBorderColor1 = mBorderColor2;
+            mBorderColor2 = tmp;
+            mTextOffset.set(1, 1);
+            mDown = true;
+        }
+        
+        if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))
+        {
+            mDown = false;
+        }
+        
+        moveInit(event);
+    }
+    
+    void Button::draw()
+    {
+        mCanvas->begin();
+        
+        if (!mDown || !mMouseOver)
+        {
+            mTextOffset.set(0, 0);
+            setBorder(mBorder);
+        }
+        
+        drawBorder();
+        if (mMouseOver) drawBackground(mHighlightColor);
+        else drawBackground(mColor);
+        drawText();
+        
+        mCanvas->end();
+    }
 
 } //namespace sdltk

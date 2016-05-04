@@ -29,32 +29,32 @@
 
 namespace sdltk
 {
-	using std::list;
-	
-	/** @author Fred Klaus development@fkweb.de */
-	class List : public Widget
-	{
-	public:
-		List(Gui * gui);
-		~List();
-		
-		virtual bool onKeyboard(SDL_KeyboardEvent * event);
-		
-		void add(ListItem * item);
-		void reposition(Sint16 val);
-		
-		void draw();
-		
-	private:
-		list<ListItem*> mList;
-		list<ListItem*>::iterator mIt;
-		Uint16 mPosH;
-		Gui * mGui;
-		
-		Sint8 mSpeed;
-		Uint8 mMotion;
+    using std::list;
+    
+    /** @author Fred Klaus development@fkweb.de */
+    class List : public Widget
+    {
+    public:
+        List(Gui * gui);
+        ~List();
+        
+        virtual bool onKeyboard(SDL_KeyboardEvent * event);
+        
+        void add(ListItem * item);
+        void reposition(Sint16 val);
+        
+        void draw();
+        
+    private:
+        list<ListItem*> mList;
+        list<ListItem*>::iterator mIt;
+        Uint16 mPosH;
+        Gui * mGui;
+        
+        Sint8 mSpeed;
+        Uint8 mMotion;
 
-	};
+    };
 
 } //namespace sdltk
 

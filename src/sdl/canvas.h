@@ -36,11 +36,11 @@ namespace sdltk
 {
 
     /** @author Fred Klaus development@fkweb.de */
-    class Draw
+    class Canvas
     {
     public:
-        Draw();
-        virtual ~Draw();
+        Canvas();
+        virtual ~Canvas();
 
         virtual void begin() {}
         virtual void end()   {}
@@ -85,7 +85,7 @@ namespace sdltk
     };
 
 
-    inline void Draw::image(const Image & img, const Point & pos)
+    inline void Canvas::image(const Image & img, const Point & pos)
     {
         Rect src(0, 0, img.size());
         Rect dst(pos, img.size());
@@ -93,7 +93,7 @@ namespace sdltk
         image(img, src, dst);
     }
 
-    inline void Draw::write(const Point & pos, const string & text)
+    inline void Canvas::write(const Point & pos, const string & text)
     {
         Rect src, dest;
         Point p(pos);
@@ -106,7 +106,7 @@ namespace sdltk
         }
     }
 
-    inline const Size & Draw::textSize(const string & text)
+    inline const Size & Canvas::textSize(const string & text)
     {
         Rect rect;
         mTextSize.clear();
@@ -120,13 +120,13 @@ namespace sdltk
         return mTextSize;
     }
 
-    inline const Uint16 Draw::textHeight()
+    inline const Uint16 Canvas::textHeight()
     {
         Rect rect = mFont.glyph(' ');
         return rect.height();
     }
 
-    inline const string & Draw::numberToText(Sint32 num, Uint8 base)
+    inline const string & Canvas::numberToText(Sint32 num, Uint8 base)
     {
         mNumber.clear();
 
