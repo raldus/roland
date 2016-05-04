@@ -104,11 +104,11 @@ void init()
         //initGui();
     }
 
-	audio.init();
-	mainClock.init();
-	displayClock.init();
+    audio.init();
+    mainClock.init();
+    displayClock.init();
 
-	clearBuffer();
+    clearBuffer();
 }
 
 void mainloop()
@@ -305,20 +305,20 @@ void mainloop()
                 }
             }
 
-		if (audio.dist() < audio.mindist())
-		{
-			ticksadjust=-1; // speed emulation up to compensate @todo what to do here ???
-			//cerr <<  "X";
+        if (audio.dist() < audio.mindist())
+        {
+            ticksadjust=-1; // speed emulation up to compensate @todo what to do here ???
+            //cerr <<  "X";
 
-		}
-		else if (audio.dist() > audio.maxdist())
-		{
-			ticksadjust=1; // slow emulation down to compensate
-			//SDL_Delay(1);
-			//cerr <<  "O";
-			continue;
-			//cyclesElapsed=0;
-		}
+        }
+        else if (audio.dist() > audio.maxdist())
+        {
+            ticksadjust=1; // slow emulation down to compensate
+            //SDL_Delay(1);
+            //cerr <<  "O";
+            continue;
+            //cyclesElapsed=0;
+        }
 
 
 
@@ -341,37 +341,37 @@ void mainloop()
         // cyclesElapsed = cpc.z80().execute(CYCLE_COUNT_INIT);
         // cerr << cyclesElapsed  << " ";
 
-		cyclesElapsed += cpc.z80().execute(CYCLE_COUNT_INIT);
-		//cyclesElapsed = cpc.z80().execute(CYCLE_COUNT_INIT-cyclesElapsed);
+        cyclesElapsed += cpc.z80().execute(CYCLE_COUNT_INIT);
+        //cyclesElapsed = cpc.z80().execute(CYCLE_COUNT_INIT-cyclesElapsed);
 
-		if (cpc.sound().bufferFull())
-		{
-			//while (!audio.copied()) {SDL_Delay(1);} // delay emulation
-			//audio.setCopied(false);
-			audio.waitCopied();
-			cpc.sound().setBufferFull(false);
-			continue;
-		}
+        if (cpc.sound().bufferFull())
+        {
+            //while (!audio.copied()) {SDL_Delay(1);} // delay emulation
+            //audio.setCopied(false);
+            audio.waitCopied();
+            cpc.sound().setBufferFull(false);
+            continue;
+        }
 
-		if (cpc.vdu().frameCompleted()) // video emulation finished building frame?
-		{
-			cyclesElapsed=0;
-			cpc.vdu().setFrameCompleted(false);
+        if (cpc.vdu().frameCompleted()) // video emulation finished building frame?
+        {
+            cyclesElapsed=0;
+            cpc.vdu().setFrameCompleted(false);
 
-			//if (frameskip) {frameskip=false;mainClock.init();}
-			//else {display();framecount++;}
+            //if (frameskip) {frameskip=false;mainClock.init();}
+            //else {display();framecount++;}
 
 
-			display();
-			framecount++;
+            display();
+            framecount++;
 
-			cpc.vdu().setScrBase(video->bufferStart()); //@todo do not calculate if no pageflip or do in Video..
-			//cpc.vdu().setScrEnd (video->buffer()End);//@todo do not calculate if no pageflip
+            cpc.vdu().setScrBase(video->bufferStart()); //@todo do not calculate if no pageflip or do in Video..
+            //cpc.vdu().setScrEnd (video->buffer()End);//@todo do not calculate if no pageflip
 
-			//if (mainClock.elapsed() > frametime) frameskip=true; // skip next frame
-			if (ticksadjust >= 0) while (mainClock.elapsed()<frametime) {SDL_Delay(1);}
-			//while (mainClock.elapsed()<frametime) {} @todo is this  OK ???
-			mainClock.init();
+            //if (mainClock.elapsed() > frametime) frameskip=true; // skip next frame
+            if (ticksadjust >= 0) while (mainClock.elapsed()<frametime) {SDL_Delay(1);}
+            //while (mainClock.elapsed()<frametime) {} @todo is this  OK ???
+            mainClock.init();
         }
     }
 }
@@ -449,9 +449,9 @@ void clearBuffer()
 
 void quit()
 {
-	audio.quit();
-	SDL_Quit();
-	IOUT("[Core]", "SDL", "cleanly finished");
+    audio.quit();
+    SDL_Quit();
+    IOUT("[Core]", "SDL", "cleanly finished");
 }
 
 int main(int argc, char *argv[])
@@ -465,9 +465,9 @@ int main(int argc, char *argv[])
     }
 
 #ifdef USE_MMX
-	IOUT("[Core]", "MMX", "enabled");
+    IOUT("[Core]", "MMX", "enabled");
 #else
-	IOUT("[Core]", "MMX", "disabled");
+    IOUT("[Core]", "MMX", "disabled");
 #endif
 
     //bool fs = prefs.getBool("fullscreen");
