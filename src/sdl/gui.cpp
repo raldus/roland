@@ -22,14 +22,11 @@
 namespace sdltk
 {
 
-    Gui::Gui(Video * video)
+    Gui::Gui(Video * video) : mEnabled(false), mHasFocus(0), mVideo(video)
     {
         SDL_EnableUNICODE(1);
-        mEnabled  = false;
-        mHasFocus = 0;
-        mVideo    = video;
     }
-    
+
     Gui::~Gui()
     {
         for (mIt = mWidgets.begin(); mIt < mWidgets.end(); mIt++)
@@ -37,29 +34,29 @@ namespace sdltk
             delete (*mIt);
         }
     }
-    
+
     void Gui::add(Widget * widget)
     {
         widget->setCanvas(mVideo->getCanvas());
         mWidgets.push_back(widget);
         mHasFocus = widget;
     }
-    
+
     bool Gui::checkEvent(SDL_Event * event)
     {
         if (!mEnabled) return false;
-        
+
         SDL_Event ev2;
         int i = SDL_PeepEvents(&ev2, 1, SDL_PEEKEVENT, SDL_MOUSEMOTIONMASK);
         if ((i > 0) && (ev2.type == event->type)) return true;
-        
+
         bool ret = false;
-        
+
         if (((event->type == SDL_KEYUP) || (event->type == SDL_KEYDOWN)) && mHasFocus)
         {
             return mHasFocus->onKeyboard(&event->key);
         }
-        
+
         for (mIt = mWidgets.begin(); mIt < mWidgets.end(); mIt++)
         {
             if ((*mIt)->wantEvents())
@@ -75,7 +72,7 @@ namespace sdltk
                         }
                         else (*mIt)->setMouseOver(false);
                         break;
-                        
+
                     case SDL_MOUSEBUTTONUP:
                     case SDL_MOUSEBUTTONDOWN:
                         if ((*mIt)->rect().inside(event->button.x, event->button.y))
@@ -84,7 +81,7 @@ namespace sdltk
                             ret = true;
                         }
                         break;
-                        
+
                     default:
                         (*mIt)->setMouseOver(false);
                         break;
@@ -93,11 +90,11 @@ namespace sdltk
         }
         return ret;
     }
-    
+
     void Gui::update()
     {
         if (!mEnabled) return;
-        
+
         for (mIt = mWidgets.begin(); mIt < mWidgets.end(); mIt++)
         {
             if (((*mIt)->parent() == 0) && (*mIt)->enabled()) (*mIt)->draw();

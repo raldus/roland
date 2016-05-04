@@ -154,13 +154,19 @@ namespace sdltk
 
     void Label::draw()
     {
+        mCanvas->setClipRect(&mRect);
         mCanvas->begin();
+
+        mCanvas->setColor(mColor);
+        //mCanvas->rect(mRect);
 
         drawBorder();
         drawBackground();
         drawText();
 
         mCanvas->end();
+
+        mCanvas->clearClipRect();
     }
 
 } //namespace sdltk

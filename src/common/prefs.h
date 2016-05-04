@@ -26,7 +26,7 @@
 
 #include <string>
 
-#define PREFCOUNT 22
+#define PREFCOUNT 23
 
 /** @author Fred Klaus */
 class Prefs
@@ -67,9 +67,10 @@ class Prefs
     {
         {"cpctype", "2"},        {"cpcspeed", "4"},    {"cpcrom", "~/"},
         {"amsdos", "~/"},        {"romdir", "~/"},     {"diskdir", "~/"},
-        {"tapedir", "~/"},       {"snapdir", "~/"},    {"diska", ""},
-        {"diskb", ""},           {"ramsize", "128"},   {"showfps", "true"},
-        {"fullscreen", "false"}, {"fullwidth", "640"}, {"fullheight", "480"},
+        {"tapedir", "~/"},       {"snapdir", "~/"},    {"datadir", "~/"},
+        {"diska", ""},           {"diskb", ""},        {"ramsize", "128"},
+        {"showfps", "true"},     {"fullscreen", "false"},
+        {"fullwidth", "640"},    {"fullheight", "480"},
         {"winwidth", "640"},     {"winheight", "480"}, {"monitor", "0"},
         {"border", "true"},      {"intensity", "10"},  {"doublescan", "true"},
         {"jumpers", "58"}};

@@ -50,6 +50,6 @@ namespace sdltk
     }
 
 
-} //namespace sdltk
+} // sdltk
 
 

@@ -40,15 +40,21 @@
 
 #include "SDL.h"
 
-#include "types.h"
-#include "cpc.h"
-#include "prefs.h"
-#include "fileselect.h"
+#include "videogl.h"
+#include "videostd.h"
+#include "gui.h"
+#include "label.h"
+#include "button.h"
+#include "list.h"
+#include "listitem.h"
+#include "size.h"
 #include "audio.h"
 #include "clock.h"
 #include "keytrans.h"
-#include "videogl.h"
-#include "videostd.h"
+
+#include "cpc.h"
+#include "prefs.h"
+#include "fileselect.h"
 
 using namespace std;
 
@@ -65,6 +71,7 @@ bool showfps = false;
 bool running = true;
 
 void init();
+void initGui();
 void quit();
 void clearBuffer();
 void waitstates();
@@ -73,11 +80,22 @@ void mainloop();
 inline void update();
 inline void display();
 
-Video * video = nullptr;
+sdltk::Video * video = nullptr;
+sdltk::Gui   * gui   = nullptr;
+
+sdltk::Label  * lblFps   = nullptr;
+sdltk::Label  * lblJoy   = nullptr;
+sdltk::Label  * lblDisk  = nullptr;
+sdltk::Button * btnTest  = nullptr;
+sdltk::Button * btnTest2 = nullptr;
+sdltk::List   * lstTest  = nullptr;
+
 Prefs prefs;
 Cpc cpc(&prefs);
 sdltk::Audio audio (&cpc);
 sdltk::KeyTrans keytrans;
+
+static const string datadir(prefs.getPath("datadir"));
 
 void init()
 {
@@ -101,7 +119,7 @@ void init()
             EOUT("[SDLVidStd]", "could not init video device", "abort");
             quit();
         }
-        //initGui();
+        initGui();
     }
 
     audio.init();
@@ -109,6 +127,90 @@ void init()
     displayClock.init();
 
     clearBuffer();
+}
+
+void initGui()
+{
+    if (gui) delete gui;
+    gui = new Gui(video);
+
+    video->getCanvas()->setFont(
+        datadir + "rpgfont.png",
+        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;");
+
+    Size textsize = video->getCanvas()->textSize("50/50");
+
+
+    lblFps = new Label;
+    lblFps->setColor(128, 128, 128, 144);
+    lblFps->setPos(10, video->screen()->h - textsize.height() - 10);
+    lblFps->setSize(textsize.width() + 7, textsize.height() + 3);
+    lblFps->setBorder(true);
+
+    lblJoy = new Label;
+    lblJoy->setImage(datadir + "joykeyb.png");
+    lblJoy->setPos(video->screen()->w - lblJoy->width() - 5, video->screen()->h - lblJoy->height() - 5);
+    lblJoy->setEnabled(joystick);
+
+    lblDisk = new Label;
+    lblDisk->setImage(datadir + "disk.png");
+    lblDisk->setPos(video->screen()->w - lblJoy->width() - 10 - lblJoy->width() - 3, video->screen()->h - lblJoy->height() - 3);
+    lblDisk->setEnabled(false);
+
+/*
+    btnTest = new Button;
+    btnTest->setPos(50, 50);
+    btnTest->setSize(100, 100);
+    btnTest->setEnabled(true);
+    btnTest->setBorder(true);
+    btnTest->setWantEvents(true);
+    btnTest->setText("Knopf1");
+
+    btnTest2 = new Button;
+    btnTest2->setPos(110, 110);
+    btnTest2->setSize(100, 100);
+    btnTest2->setEnabled(true);
+    btnTest2->setBorder(true);
+    btnTest2->setWantEvents(true);
+    btnTest2->setText("Knopf2");
+
+
+    lstTest = new List(gui);
+    lstTest->setPos(250, 100);
+    lstTest->setSize(50, 200);
+    lstTest->setEnabled(true);
+
+    ListItem * item;
+    item = new ListItem;
+    item->setSize(100, 25);
+    item->setBorder(true);
+    item->setText("Nummer 1");
+    lstTest->add(item);
+
+    item = new ListItem;
+    item->setSize(100, 25);
+    item->setBorder(true);
+    item->setText("Nummer 2");
+    lstTest->add(item);
+
+    item = new ListItem;
+    item->setSize(100, 25);
+    item->setBorder(true);
+    item->setText("Nummer 3");
+    lstTest->add(item);
+
+*/
+
+    gui->add(lblFps);
+    gui->add(lblDisk);
+    gui->add(lblJoy);
+    //gui->add(btnTest);
+    //gui->add(btnTest2);
+    //gui->add(lstTest);
+
+    //gui->setFocus(lstTest);
+    gui->setEnabled(true);
+
 }
 
 void mainloop()
@@ -140,8 +242,10 @@ void mainloop()
                                          bit_values[(cpc_key & 7)]));
         }
         else
-            while (SDL_PollEvent(&event))
+            while (SDL_PollEvent(&event) > 0)
             {
+                if (gui->checkEvent(&event)) continue;
+
                 switch (event.type)
                 {
                     case SDL_KEYDOWN:
@@ -158,11 +262,24 @@ void mainloop()
                         {
                             switch ((int)event.key.keysym.sym)
                             {
+                                case SDLK_RETURN:
+                                    if (event.key.keysym.mod & KMOD_LALT)
+                                    {
+                                        audio.pause(true);
+                                        video->toggleFullscreen();
+                                        audio.pause(false);
+                                    }
+                                    break;
+
+                                case SDLK_F1:
+                                {
+                                    gui->toggleEnabled();
+                                    break;
+                                }
 
                                 case SDLK_F2:
                                 {
                                     audio.pause(true);
-                                    SDL_Delay(20);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
                                         video->screen(), prefs.getPath("diskdir"),
                                         prefs.getPath("diska"), "A: ");
@@ -189,7 +306,6 @@ void mainloop()
                                 case SDLK_F3:
                                 {
                                     audio.pause(true);
-                                    SDL_Delay(20);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
                                         video->screen(), prefs.getPath("diskdir"),
                                         prefs.getPath("diskb"), "B: ");
@@ -213,6 +329,24 @@ void mainloop()
                                 }
                                 break;
 
+                                case SDLK_F4:
+                                    joystick=keytrans.toggleJoystick();
+                                    lblJoy->setEnabled(joystick);
+                                    cout << "Joystick: " << boolalpha << joystick << "\n";
+                                    break;
+
+                                case SDLK_F5:
+                                    audio.pause(true);
+                                    video->toggleDoubling();
+                                    audio.pause(false);
+                                    break;
+
+                                case SDLK_F6:
+                                    audio.pause(true);
+                                    video->toggleFilter();
+                                    audio.pause(false);
+                                    break;
+
                                 case SDLK_F7:
                                     audio.pause(true);
                                     delete video;
@@ -222,7 +356,7 @@ void mainloop()
                                         delete video;
                                         quit();
                                     }
-                                    //initGui();
+                                    initGui();
                                     audio.pause(false);
                                     break;
 
@@ -242,41 +376,25 @@ void mainloop()
                                         }
                                         IOUT("[Core]", "fallback to VideoStd", "OK");
                                     }
-                                    //initGui();
+                                    initGui();
                                     audio.pause(false);
                                     break;
 
                                 case SDLK_F9:
                                     audio.pause(true);
-                                    SDL_Delay(20);
-                                    init();
+                                    cpc.init();
                                     audio.pause(false);
-                                    break;
-
-                                case SDLK_F4:
-                                    cout << "Joystick: " << boolalpha
-                                         << keytrans.toggleJoystick() << "\n";
-                                    break;
-
-                                case SDLK_F5:
-                                    audio.pause(true);
-                                    video->toggleDoubling();
-                                    audio.pause(false);
-                                    break;
-
-                                case SDLK_F6:
-                                    keytrans.sequenceCatRun();
                                     break;
 
                                 case SDLK_F10:
-                                    running = false;
+                                    running=false;
                                     return;
                                     break;
 
                                 case SDLK_F12:
                                     audio.pause(true);
-                                    SDL_Delay(20);
                                     video->toggleFullscreen();
+                                    initGui();
                                     audio.pause(false);
                                     break;
 
@@ -378,26 +496,7 @@ void mainloop()
 
 inline void display()
 {
-    video->setup();
-    video->update();
-    return;
-    sdltk::Font fnt;
-
-    if (cpc.fdc().led())
-    {
-        SDL_Rect rect;
-        rect.w = 20;
-        rect.h = 12;
-        rect.x = screen->w - (rect.w + 3);
-        rect.y = screen->h - (rect.h + 3);
-        SDL_FillRect(screen, &rect, SDL_MapRGB(screen->format, 96, 96, 96));
-
-        rect.w = 18;
-        rect.h = 10;
-        rect.x = screen->w - (rect.w + 4);
-        rect.y = screen->h - (rect.h + 4);
-        SDL_FillRect(screen, &rect, SDL_MapRGB(screen->format, 0, 255, 0));
-    }
+    lblDisk->setEnabled(cpc.fdc().led());
 
     if (showfps)
     {
@@ -407,37 +506,15 @@ inline void display()
             framecountsum = framecount;
             framecount = 0;
         }
-        SDL_Rect rectFPS;
-        rectFPS.w = 56;
-        rectFPS.h = 15;
-        rectFPS.x = 5;
-        rectFPS.y = screen->h - 18;
-        SDL_FillRect(screen, &rectFPS, SDL_MapRGB(screen->format, 96, 96, 96));
-        rectFPS.w = 54;
-        rectFPS.h = 13;
-        rectFPS.x = 6;
-        rectFPS.y = screen->h - 17;
-        SDL_FillRect(screen, &rectFPS, SDL_MapRGB(screen->format, 0, 0, 0));
-        // SDL_FillRect(screen, &rectFPS, 0);
-        fnt.write(screen, 5, screen->h - 17, framecountsum);
-        fnt.write(screen, 30, screen->h - 17, "/50");
+
+        string str = to_string(framecountsum);
+        str += "/50";
+        lblFps->setText(str);
     }
 
-    if (SDL_MUSTLOCK(screen))
-        SDL_UnlockSurface(screen);
-
-    // SDL_UpdateRect(screen, 0, 0, width, height);
-    SDL_UpdateRect(screen, 0, 0, 0, 0);
-    // SDL_UpdateRect(screen, rectFPS.x, rectFPS.y, rectFPS.w, rectFPS.h);
-
-    // SDL_Flip(screen);
-
-    if (SDL_MUSTLOCK(screen))
-        while (SDL_LockSurface(screen))
-        {
-            cerr << "[SDL] Could not lock screen: " << SDL_GetError() << "\n";
-            SDL_Delay(20);
-        }
+    video->setup();
+    gui->update();
+    video->update();
 }
 
 void clearBuffer()
@@ -474,7 +551,7 @@ int main(int argc, char *argv[])
 
     //SDL_WM_SetCaption(PACKAGE_STRING, 0);
     Video::setCaption(PACKAGE_STRING);
-    //Video::setIcon(datadir + "icon32x32-256.bmp");
+    Video::setIcon(datadir + "icon32x32-256.bmp");
     //SDL_WM_GrabInput (SDL_GRAB_ON);
     //SDL_ShowCursor (0);
     //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
