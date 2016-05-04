@@ -143,20 +143,28 @@ void initGui()
 
     lblFps = new Label;
     lblFps->setColor(128, 128, 128, 144);
-    lblFps->setPos(10, video->screen()->h - textsize.height() - 10);
+    lblFps->setPos(7, video->screen()->h - textsize.height() - 10);
     lblFps->setSize(textsize.width() + 7, textsize.height() + 3);
     lblFps->setBorder(true);
 
     lblJoy = new Label;
     lblJoy->setImage(datadir + "joykeyb.png");
-    lblJoy->setPos(video->screen()->w - lblJoy->width() - 5, video->screen()->h - lblJoy->height() - 5);
+    lblJoy->setPos(
+            video->screen()->w - lblJoy->width()  - 5 - lblJoy->width(),
+            video->screen()->h - lblJoy->height() - 5);
     lblJoy->setEnabled(joystick);
 
     lblDisk = new Label;
-    lblDisk->setImage(datadir + "disk.png");
-    lblDisk->setPos(video->screen()->w - lblJoy->width() - 10 - lblJoy->width() - 3, video->screen()->h - lblJoy->height() - 3);
+    textsize = video->getCanvas()->textSize("disk");
+    lblDisk->setSize(textsize.width() + 7, textsize.height() + 3);
+    lblDisk->setText("disk");
+    //lblDisk->setImage(datadir + "disk.png");
+    lblDisk->setColor(64, 255, 64, 164);
+    lblDisk->setPos(
+            video->screen()->w - textsize.width()  - 14,
+            video->screen()->h - textsize.height() - 10);
+    lblDisk->setBorder(true);
     lblDisk->setEnabled(false);
-
 /*
     btnTest = new Button;
     btnTest->setPos(50, 50);
@@ -198,9 +206,7 @@ void initGui()
     item->setBorder(true);
     item->setText("Nummer 3");
     lstTest->add(item);
-
 */
-
     gui->add(lblFps);
     gui->add(lblDisk);
     gui->add(lblJoy);
