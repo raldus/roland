@@ -9,7 +9,7 @@ include_directories(${SDL_INCLUDE_DIR})
 
 
 add_library(sdltk STATIC 
-        image.cpp imagefont.cpp color.cpp exception.cpp gui.cpp draw.cpp drawgl.cpp drawstd.cpp glfuncs.cpp video.cpp videogl.cpp videostd.cpp keytrans.cpp)
+        image.cpp imagefont.cpp color.cpp exception.cpp gui.cpp draw.cpp drawgl.cpp drawstd.cpp glfuncs.cpp video.cpp videogl.cpp videostd.cpp keytrans.cpp audio.cpp)
 
 
 target_link_libraries(sdltk sdlgui ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY})

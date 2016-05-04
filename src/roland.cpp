@@ -44,6 +44,7 @@
 #include "cpc.h"
 #include "prefs.h"
 #include "fileselect.h"
+#include "audio.h"
 #include "clock.h"
 #include "keytrans.h"
 #include "videogl.h"
@@ -51,15 +52,7 @@
 
 using namespace std;
 
-sdltk::KeyTrans keytrans;
-
 SDL_Surface *screen = 0;
-SDL_Surface *buffer = 0;
-SDL_AudioSpec *audio_spec = 0;
-
-int width  = CPC_VISIBLE_SCR_WIDTH * 2 + 3;
-int height = CPC_VISIBLE_SCR_HEIGHT * 2 + 3;
-int depth  = 0;
 
 bool joystick = false;
 
@@ -71,31 +64,20 @@ uint framecountsum = 0;
 bool showfps = false;
 bool running = true;
 
-tDWORD dwSndMinSafeDist = 0;
-tDWORD dwSndMaxSafeDist = 0;
-
-bool sndBufferCopied = false;
-
 void init();
 void quit();
 void clearBuffer();
 void waitstates();
 void mainloop();
 
-inline uint *calcScreenStart();
-inline uint *calcScreenEnd();
-
 inline void update();
 inline void display();
-inline void audioPause();
-inline void audioResume();
-inline void audioUpdate(void *userdata, tUBYTE *stream, int len);
-
-inline void fillRect(SDL_Rect *rect);
 
 Video * video = nullptr;
 Prefs prefs;
 Cpc cpc(&prefs);
+sdltk::Audio audio (&cpc);
+sdltk::KeyTrans keytrans;
 
 void init()
 {
@@ -122,43 +104,11 @@ void init()
         //initGui();
     }
 
+	audio.init();
+	mainClock.init();
+	displayClock.init();
 
-
-    clearBuffer();
-
-    mainClock.init();
-    displayClock.init();
-}
-
-inline uint *calcScreenStart()
-{
-    uint vp = (height - (CPC_VISIBLE_SCR_HEIGHT * 2)) / 2;
-    uint hp = (width - (CPC_VISIBLE_SCR_WIDTH * 2)) / 2;
-
-    if (screen->format->BitsPerPixel == 16)
-    {
-        unsigned short int *pix = (unsigned short int *)screen->pixels +
-                                  ((screen->pitch / 2) * vp) + hp;
-        return (uint *)pix;
-    }
-    else
-    {
-        uint *pix = (uint *)screen->pixels + ((screen->pitch / 4) * vp) + hp;
-        return (uint *)pix;
-    }
-}
-
-inline uint *calcScreenEnd()
-{
-    if (screen->format->BitsPerPixel == 16)
-    {
-        return (uint *)(unsigned short int *)screen->pixels +
-               ((screen->pitch / 2) * height);
-    }
-    else
-    {
-        return (uint *)screen->pixels + ((screen->pitch / 4) * height);
-    }
+	clearBuffer();
 }
 
 void mainloop()
@@ -171,7 +121,7 @@ void mainloop()
     static int ticksadjust = 0;
     // bool frameskip=false;
 
-    // audioResume();
+    // audio.pause(false);
 
     // Check key events
     while (running)
@@ -211,7 +161,7 @@ void mainloop()
 
                                 case SDLK_F2:
                                 {
-                                    audioPause();
+                                    audio.pause(true);
                                     SDL_Delay(20);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
                                         video->screen(), prefs.getPath("diskdir"),
@@ -231,14 +181,14 @@ void mainloop()
                                         prefs.set("diska", f->filename());
                                     }
                                     clearBuffer();
-                                    audioResume();
+                                    audio.pause(false);
                                     delete f;
                                 }
                                 break;
 
                                 case SDLK_F3:
                                 {
-                                    audioPause();
+                                    audio.pause(true);
                                     SDL_Delay(20);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
                                         video->screen(), prefs.getPath("diskdir"),
@@ -258,13 +208,13 @@ void mainloop()
                                         prefs.set("diskb", f->filename());
                                     }
                                     clearBuffer();
-                                    audioResume();
+                                    audio.pause(false);
                                     delete f;
                                 }
                                 break;
 
                                 case SDLK_F7:
-                                    audioPause();
+                                    audio.pause(true);
                                     delete video;
                                     video = new VideoStd(&cpc);
                                     if (video->init() != 0)
@@ -273,11 +223,11 @@ void mainloop()
                                         quit();
                                     }
                                     //initGui();
-                                    audioResume();
+                                    audio.pause(false);
                                     break;
 
                                 case SDLK_F8:
-                                    audioPause();
+                                    audio.pause(true);
                                     delete video;
                                     video = new VideoGL(&cpc);
                                     if (video->init() != 0)
@@ -293,14 +243,14 @@ void mainloop()
                                         IOUT("[Core]", "fallback to VideoStd", "OK");
                                     }
                                     //initGui();
-                                    audioResume();
+                                    audio.pause(false);
                                     break;
 
                                 case SDLK_F9:
-                                    audioPause();
+                                    audio.pause(true);
                                     SDL_Delay(20);
                                     init();
-                                    audioResume();
+                                    audio.pause(false);
                                     break;
 
                                 case SDLK_F4:
@@ -309,9 +259,9 @@ void mainloop()
                                     break;
 
                                 case SDLK_F5:
-                                    audioPause();
+                                    audio.pause(true);
                                     video->toggleDoubling();
-                                    audioResume();
+                                    audio.pause(false);
                                     break;
 
                                 case SDLK_F6:
@@ -324,10 +274,10 @@ void mainloop()
                                     break;
 
                                 case SDLK_F12:
-                                    audioPause();
+                                    audio.pause(true);
                                     SDL_Delay(20);
                                     video->toggleFullscreen();
-                                    audioResume();
+                                    audio.pause(false);
                                     break;
 
                                 default:
@@ -355,33 +305,22 @@ void mainloop()
                 }
             }
 
-        tDWORD dwSndDist;
-        if (cpc.sound().stream() < cpc.sound().bufferPtr())
-        {
-            dwSndDist = cpc.sound().bufferPtr() -
-                        cpc.sound().stream(); // determine distance between play
-                                              // and write cursors
-            // cerr << dwSndDist << " ";
-        }
-        else
-        {
-            dwSndDist = (cpc.sound().bufferEnd() - cpc.sound().stream()) +
-                        (cpc.sound().bufferPtr() - cpc.sound().buffer());
-        }
-        if (dwSndDist < dwSndMinSafeDist)
-        {
-            ticksadjust = -1; // speed emulation up to compensate @todo what to
-                              // do here ???
-            // cerr <<  "X";
-        }
-        else if (dwSndDist > dwSndMaxSafeDist)
-        {
-            ticksadjust = 1; // slow emulation down to compensate
-            // SDL_Delay(1);
-            // cerr <<  "O";
-            continue;
-            // cyclesElapsed=0;
-        }
+		if (audio.dist() < audio.mindist())
+		{
+			ticksadjust=-1; // speed emulation up to compensate @todo what to do here ???
+			//cerr <<  "X";
+
+		}
+		else if (audio.dist() > audio.maxdist())
+		{
+			ticksadjust=1; // slow emulation down to compensate
+			//SDL_Delay(1);
+			//cerr <<  "O";
+			continue;
+			//cyclesElapsed=0;
+		}
+
+
 
         /*
                 while (mainClock.elapsed() < frametime+ticksadjust)
@@ -402,56 +341,37 @@ void mainloop()
         // cyclesElapsed = cpc.z80().execute(CYCLE_COUNT_INIT);
         // cerr << cyclesElapsed  << " ";
 
-        cyclesElapsed += cpc.z80().execute(CYCLE_COUNT_INIT);
-        // cyclesElapsed = cpc.z80().execute(CYCLE_COUNT_INIT-cyclesElapsed);
+		cyclesElapsed += cpc.z80().execute(CYCLE_COUNT_INIT);
+		//cyclesElapsed = cpc.z80().execute(CYCLE_COUNT_INIT-cyclesElapsed);
 
-        if (cpc.sound().bufferFull())
-        {
-            while (!sndBufferCopied)
-            {
-            } // delay emulation
-            sndBufferCopied = false;
-            cpc.sound().setBufferFull(false);
-            continue;
-        }
+		if (cpc.sound().bufferFull())
+		{
+			//while (!audio.copied()) {SDL_Delay(1);} // delay emulation
+			//audio.setCopied(false);
+			audio.waitCopied();
+			cpc.sound().setBufferFull(false);
+			continue;
+		}
 
-        if (cpc.vdu().frameCompleted()) // video emulation finished building frame?
-        {
-            cyclesElapsed = 0;
-            cpc.vdu().setFrameCompleted(false);
+		if (cpc.vdu().frameCompleted()) // video emulation finished building frame?
+		{
+			cyclesElapsed=0;
+			cpc.vdu().setFrameCompleted(false);
 
-            // if (frameskip) {frameskip=false;mainClock.init();}
-            // else {display();framecount++;}
+			//if (frameskip) {frameskip=false;mainClock.init();}
+			//else {display();framecount++;}
 
-            display();
-            framecount++;
 
-            cpc.vdu().setScrBase(video->bufferStart()); //@todo do not calculate if no pageflip
-            //cpc.vdu().setScrEnd(video->bufferEnd());
+			display();
+			framecount++;
 
-            // if (mainClock.elapsed() > frametime) frameskip=true; // skip next
-            // frame
-            if (ticksadjust >= 0)
-            {
-                while (mainClock.elapsed() < frametime)
-                {
-                    SDL_Delay(1); // TODO: Watch This! Make a switch in Prefs
-                }
-            }
-            // while (mainClock.elapsed()<frametime) {} @todo is this  OK ???
-            mainClock.init();
-        }
-    }
-}
+			cpc.vdu().setScrBase(video->bufferStart()); //@todo do not calculate if no pageflip or do in Video..
+			//cpc.vdu().setScrEnd (video->buffer()End);//@todo do not calculate if no pageflip
 
-inline void fillRect(SDL_Rect *rect)
-{
-    for (int iy = 0; iy < rect->h; iy++)
-    {
-        for (int ix = 0; ix < rect->w * screen->format->BytesPerPixel; ix++)
-        {
-            *(((tUBYTE *)screen->pixels) + ((screen->pitch * (rect->y + iy))) +
-              ((rect->x * screen->format->BytesPerPixel) + ix)) = 0;
+			//if (mainClock.elapsed() > frametime) frameskip=true; // skip next frame
+			if (ticksadjust >= 0) while (mainClock.elapsed()<frametime) {SDL_Delay(1);}
+			//while (mainClock.elapsed()<frametime) {} @todo is this  OK ???
+			mainClock.init();
         }
     }
 }
@@ -492,7 +412,6 @@ inline void display()
         rectFPS.h = 15;
         rectFPS.x = 5;
         rectFPS.y = screen->h - 18;
-        // fillRect(&rectFPS);
         SDL_FillRect(screen, &rectFPS, SDL_MapRGB(screen->format, 96, 96, 96));
         rectFPS.w = 54;
         rectFPS.h = 13;
@@ -525,129 +444,14 @@ void clearBuffer()
 {
     SDL_Event event;
     cpc.keyboard().init();
-    while (SDL_PollEvent(&event))
-    {
-    };
-}
-
-inline void audioUpdate(void *userdata, tUBYTE *stream, int len)
-{
-#ifdef USE_MMX
-    mmx_memcpy(stream, cpc.sound().stream(), len);
-#else
-    memcpy(stream, cpc.sound().stream(), len);
-#endif
-
-    sndBufferCopied = true;
-
-    cpc.sound().setStream(cpc.sound().stream() + len);
-    if (cpc.sound().stream() >= cpc.sound().bufferEnd())
-        cpc.sound().setStream(cpc.sound().buffer());
-}
-
-int audioAlignSamples(int given)
-{
-    int actual = 1;
-    while (actual < given)
-    {
-        actual <<= 1;
-    }
-    return actual; // return the closest match as 2^n
-}
-
-int initSound()
-{
-    SDL_AudioSpec *desired, *obtained;
-
-    if (!cpc.sound().enabled())
-        return 0;
-
-    desired = new SDL_AudioSpec;
-    obtained = new SDL_AudioSpec;
-
-    desired->freq = cpc.sound().freqTable(cpc.sound().playbackRate());
-    desired->format = cpc.sound().bits() ? AUDIO_S16LSB : AUDIO_S8;
-    desired->channels = cpc.sound().stereo() + 1;
-    // desired->samples  = audioAlignSamples(desired->freq / 100);
-    desired->samples =
-        audioAlignSamples(desired->freq / 50); // @todo 100,75 or 50 ??? desired
-                                               // is 20ms (50 is default) at the
-                                               // given frequency
-    desired->callback = audioUpdate;
-    desired->userdata = NULL;
-
-    cout << "[SDL_AUDIO] daudioAlign:  "
-         << (audioAlignSamples(desired->freq / 50)) << "\n";
-
-    if (SDL_OpenAudio(desired, obtained) < 0)
-    {
-        cerr << "[SDL_AUDIO] Could not open audio: " << SDL_GetError() << "\n";
-        return 1;
-    }
-    cout << "[SDL_AUDIO] Frequence: "
-         << cpc.sound().freqTable(cpc.sound().playbackRate()) << "\n";
-    cout << "[SDL_AUDIO] Bits:      " << (cpc.sound().bits() ? 16 : 8) << "\n";
-    cout << "[SDL_AUDIO] Channels:  " << (cpc.sound().stereo() + 1) << "\n";
-
-    cout << "[SDL_AUDIO] desired->samples:  " << desired->samples << "\n";
-    delete desired;
-    audio_spec = obtained;
-    cout << "[SDL_AUDIO] obtained->samples: " << desired->samples << "\n";
-
-    cpc.sound().setBufferSize(
-        audio_spec
-            ->size); // size is samples * channels * bytes per sample (1 or 2)
-    cpc.sound().setBuffer(
-        new tUBYTE[cpc.sound().bufferSize() *
-                  6]); // allocate a ring buffer with 10 segments
-    cpc.sound().setBufferEnd(cpc.sound().buffer() +
-                             (cpc.sound().bufferSize() * 6));
-    cpc.sound().setStream(
-        cpc.sound().buffer()); // put the play cursor at the start
-    memset(cpc.sound().buffer(), 0, cpc.sound().bufferSize() * 6);
-    cpc.sound().setBufferPtr(cpc.sound().buffer() + (cpc.sound().bufferSize() *
-                                                     3)); // init write cursor
-
-    dwSndMinSafeDist =
-        cpc.sound().bufferSize() * 2; // the closest together the cursors may be
-    dwSndMaxSafeDist =
-        cpc.sound().bufferSize() * 4; // the farthest apart the cursors may be
-
-    cpc.sound().initAY();
-
-    cout << "[SDL_AUDIO] init OK\n";
-
-    return 0;
-}
-
-inline void audioPause()
-{
-    if (cpc.sound().enabled())
-        SDL_PauseAudio(1);
-    cout << "[SDL_AUDIO] pause\n";
-}
-
-inline void audioResume()
-{
-    if (cpc.sound().enabled())
-        SDL_PauseAudio(0);
-    cout << "[SDL_AUDIO] resume\n";
-}
-
-void audioShutdown()
-{
-    SDL_Delay(20);
-    SDL_CloseAudio();
-    if (cpc.sound().buffer())
-        delete[] cpc.sound().buffer();
-    if (audio_spec)
-        delete audio_spec;
+    while (SDL_PollEvent(&event)) {};
 }
 
 void quit()
 {
-    audioShutdown();
-    SDL_Quit();
+	audio.quit();
+	SDL_Quit();
+	IOUT("[Core]", "SDL", "cleanly finished");
 }
 
 int main(int argc, char *argv[])
@@ -661,12 +465,12 @@ int main(int argc, char *argv[])
     }
 
 #ifdef USE_MMX
-    cout << "[CORE] MMX enabled"
-         << "\n";
+	IOUT("[Core]", "MMX", "enabled");
+#else
+	IOUT("[Core]", "MMX", "disabled");
 #endif
 
     //bool fs = prefs.getBool("fullscreen");
-
 
     //SDL_WM_SetCaption(PACKAGE_STRING, 0);
     Video::setCaption(PACKAGE_STRING);
@@ -676,11 +480,9 @@ int main(int argc, char *argv[])
     //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
     SDL_EnableKeyRepeat(0, 0);
 
-
-    initSound();
     init();
 
-    audioResume();
+    audio.pause(false);
 
     mainloop();
 
