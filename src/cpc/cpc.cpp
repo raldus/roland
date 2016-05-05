@@ -22,12 +22,6 @@
 #include <iostream>
 //#include <memory>
 
-#ifdef DEBUG
-#define DOUT(a) cout << a
-#else
-#define DOUT(a)
-#endif
-
 using namespace std;
 
 Cpc::Cpc(Prefs *prefs)
@@ -51,10 +45,10 @@ int Cpc::init(Prefs *prefs)
     // mPpi.setJumpers(Ppi::Schneider | Ppi::Refresh50Hz | Ppi::Expansion);
     mPpi.setJumpers(mPrefs->getNum("jumpers"));
 
-    mCrtc.init(&mVdu, &mPpi);
+    mCrtc.init(&mPpi);
     mVdu.init(true, &mCrtc, &mGatearray, &mZ80);
     mVdu.setBorder(mPrefs->getBool("border"));
-    mVdu.setDoublescan(mPrefs->getBool("doublescan"));
+    //mVdu.setDoublescan(mPrefs->getBool("doublescan"));
 
     mColours.setIntensity(mPrefs->getNum("intensity"));
     mColours.setMonitor(mPrefs->getNum("monitor"));

@@ -90,7 +90,7 @@ public:
     void setBufferPtrDW(tDWORD ptr)   {*(tDWORD*)mSndBufferPtr=ptr;}
     void setBufferPtrW(tWORD ptr)     {*(tWORD*)mSndBufferPtr=ptr;}
     void setBufferPtrU(tUBYTE ptr)    {*(tUBYTE*)mSndBufferPtr=ptr;}
-    
+
     void setBufferFull(bool bf)      {mBufferFull=bf;}
     bool bufferFull()   {return mBufferFull;}
 
@@ -104,16 +104,16 @@ public:
     tUBYTE* bufferPtr()  {return mSndBufferPtr;}
 
 
-    const INT64 & cycleCountInitBoth() const {return mCycleCountInit.both;}
+    const tINT64 & cycleCountInitBoth() const {return mCycleCountInit.both;}
     uint  cycleCountInitLow()          const {return mCycleCountInit.low;}
     uint  cycleCountInitHigh()         const {return mCycleCountInit.high;}
 
-    const INT64 & cycleCountBoth()     const {return mCycleCount.both;}
+    const tINT64 & cycleCountBoth()     const {return mCycleCount.both;}
     uint  cycleCountLow()              const {return mCycleCount.low;}
     uint  cycleCountHigh()             const {return mCycleCount.high;}
 
-    void setCycleCountInitBoth(const INT64 & value) {mCycleCountInit.both=value;}
-    void setCycleCountBoth(const INT64 & value)     {mCycleCount.both=value;}
+    void setCycleCountInitBoth(const tINT64 & value) {mCycleCountInit.both=value;}
+    void setCycleCountBoth(const tINT64 & value)     {mCycleCount.both=value;}
     void setCycleCountLow (uint value)              {mCycleCount.low =value;}
     void setCycleCountHigh(uint value)              {mCycleCount.high=value;}
 
@@ -142,7 +142,7 @@ private:
     // **############################***********
     // **############################***********
     // **############################***********
-    
+
     bool mBufferFull;
 
     union
@@ -152,7 +152,7 @@ private:
             uint  low;
             uint  high;
         };
-        INT64 both;
+        tINT64 both;
     } mCycleCount;
 
     union
@@ -162,13 +162,13 @@ private:
          uint low;
          uint high;
       };
-      INT64 both;
+      tINT64 both;
    } mCycleCountInit;
 
     //tDWORD mLoopCount[2];
-    INT64* mLoopCount64;
+    tINT64* mLoopCount64;
 
-    INT64 mLoopCountInit;
+    tINT64 mLoopCountInit;
 
     union
     {
@@ -177,7 +177,7 @@ private:
             tDWORD low;
             tDWORD high;
         };
-        INT64 both;
+        tINT64 both;
     } mLoopCount;
 
     union TCounter
@@ -208,7 +208,7 @@ private:
             tDWORD low;
             tDWORD high;
         };
-        INT64 both;
+        tINT64 both;
     } mEnvelopeCounter;
 
     CaseEnvType mCaseEnvType;

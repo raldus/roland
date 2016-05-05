@@ -99,6 +99,8 @@ namespace sdltk
         mCanvasRect.w = mCpcWidth;
         mCanvasRect.h = mCpcHeight;
 
+        mCpc->vdu().setLineDoubling(true);
+
         if (mBuffer->format->BitsPerPixel == 16) mCpc->vdu().setBpp(Vdu::Bpp16);
         if (mBuffer->format->BitsPerPixel == 24) mCpc->vdu().setBpp(Vdu::Bpp24);
         if (mBuffer->format->BitsPerPixel == 32) mCpc->vdu().setBpp(Vdu::Bpp32);

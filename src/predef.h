@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,7 +22,7 @@
 
 
 #include <config.h>
-#include "types.h"
+
 
 
 #include <iostream>
@@ -37,28 +37,33 @@ using std::boolalpha;
 #define EOUT(a,b,c) cerr << setw(12) << setfill(' ') << left << a << "(E) " << setw(40) << setfill('.') << left << b << c << "\n";
 
 #ifdef DEBUG
-    //#if DEBUG == 1
-        #define IOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b  << c << "\n";
-        //#define DOUT(a,b,c)
-    //#endif
-        /*
-    #if DEBUG == 2
-        #define IOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b << c << "\n";
-        #define DOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b << c << "\n";
-    #endif
+	//#if DEBUG == 1
+		#define IOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b  << c << "\n";
+		#define DOUT(a,b,c)
+	//#endif
+		/*
+	#if DEBUG == 2
+		#define IOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b << c << "\n";
+		#define DOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b << c << "\n";
+	#endif
 
-    #define PREOUT \
-        void preout() { \
-        cout << setw(12) << "Compiler" << __VERSION__<< "\n"; \
-        cout << setw(12) << "GnuC" << __GNUC__ << __GNUC_MINOR__ << __GNUC_PATCHLEVEL__ << "\n"; \
-        cout << setw(12) << "Buildtime" << __DATE__ << __TIME__ << "\n\n"; \
-        } \
-        preout(); */
+	#define PREOUT \
+		void preout() { \
+		cout << setw(12) << "Compiler" << __VERSION__<< "\n"; \
+		cout << setw(12) << "GnuC" << __GNUC__ << __GNUC_MINOR__ << __GNUC_PATCHLEVEL__ << "\n"; \
+		cout << setw(12) << "Buildtime" << __DATE__ << __TIME__ << "\n\n"; \
+		} \
+		preout(); */
 #else
-    #define IOUT(a,b,c)
-    //#define DOUT(a,b,c)
-    #define PREOUT
+	#define IOUT(a,b,c)
+	#define DOUT(a,b,c)
+	#define PREOUT
 #endif
+
+#define CPC_SCR_WIDTH 1024         // max width
+#define CPC_SCR_HEIGHT 312         // max height
+#define CPC_VISIBLE_SCR_WIDTH  384 // visible width : 4+40+4 * 8
+#define CPC_VISIBLE_SCR_HEIGHT 270 // visible height: 5+25+4 * 8  @todo original is 272
 
 
 #endif //PREDEF_H

@@ -760,11 +760,11 @@ void Sound::resetAYChipEmulation()
 
 void Sound::initAYCounterVars()
 {
-    mCycleCountInit.both = (INT64)rint(
+    mCycleCountInit.both = (tINT64)rint(
         (4000000 * ((cpc.speed() * 25) / 100.0)) / mFreqTable[playbackRate()] *
         4294967296.0); // number of Z80 cycles per sample
 
-    mLoopCountInit = (INT64)rint(
+    mLoopCountInit = (tINT64)rint(
         1000000.0 / (4000000.0 * ((cpc.speed() * 25) / 100.0)) / 8.0 *
         mCycleCountInit.both); // number of AY counter increments per sample
     mLoopCount.both = mLoopCountInit;

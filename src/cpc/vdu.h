@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) by Fred Klaus                                           *
- *       development@fkweb.de                                              *
+ *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
+ *                                                                         *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -19,6 +19,8 @@
  ***************************************************************************/
 #ifndef VDU_H
 #define VDU_H
+
+#include "predef.h"
 
 #ifdef USE_MMX
     #include "mmx_memcpy.h"
@@ -68,9 +70,27 @@ public:
     void draw32bpp_mode0();      ///< Mode 0, 32 bpp
     void draw32bpp_mode1();      ///< Mode 1, 32 bpp
     void draw32bpp_mode2();      ///< Mode 2, 32 bpp
-    
 
-    uint hsw()            {return mHsw;}
+    void draw16bppx2_border();     ///< Border=true,  16 bpp
+    void draw16bppx2_nullborder(); ///< Border=false, 16 bpp @todo nullborder should clipped from the Screen
+    void draw16bppx2_mode0();      ///< Mode 0, 16 bpp
+    void draw16bppx2_mode1();      ///< Mode 1, 16 bpp
+    void draw16bppx2_mode2();      ///< Mode 2, 16 bpp
+
+    void draw24bppx2_border();     ///< Border=true,  24 bpp
+    void draw24bppx2_nullborder(); ///< Border=false, 24 bpp @todo nullborder should clipped from the Screen
+    void draw24bppx2_mode0();      ///< Mode 0, 24 bpp
+    void draw24bppx2_mode1();      ///< Mode 1, 24 bpp
+    void draw24bppx2_mode2();      ///< Mode 2, 24 bpp
+
+    void draw32bppx2_border();     ///< Border=true,  32 bpp
+    void draw32bppx2_nullborder(); ///< Border=false, 32 bpp @todo nullborder should clipped from the Screen
+    void draw32bppx2_mode0();      ///< Mode 0, 32 bpp
+    void draw32bppx2_mode1();      ///< Mode 1, 32 bpp
+    void draw32bppx2_mode2();      ///< Mode 2, 32 bpp
+
+
+    //uint hsw()            {return mHsw;}
     uint hswActive()      {return mHswActive;}
     uint hswCount()       {return mHswCount;}
     uint vswCount()       {return mVswCount;}
@@ -86,27 +106,27 @@ public:
     uint vCount()         {return mVCount;}
     uint vStart()         {return mVStart;}
     uint vHeight()        {return mVHeight;}
-    
-    void setBpp        (Bpp bpp);
-    void setBorder     (bool border     = true);
-    void setDoublescan (bool doublescan = true);
 
-    void setHsw            (uint value) {mHsw            = value;}
-    void setHswActive      (uint value) {mHswActive      = value;}
-    void setHswCount       (uint value) {mHswCount       = value;}
-    void setVswCount       (uint value) {mVswCount       = value;}
-    void setHDelay         (uint value) {mHDelay         = value;}
-    void setVDelay         (uint value) {mVDelay         = value;}
-    void setScanline       (uint value) {mScanline       = value;}
-    void setScanlineMin    (uint value) {mScanlineMin    = value;}
-    void setFrameCompleted (bool value) {mFrameCompleted = value;}
-    void setCharCount      (uint value) {mCharCount      = value;}
-    void setHCount         (uint value) {mHCount         = value;}
-    void setHStart         (uint value) {mHStart         = value;}
-    void setHWidth         (uint value) {mHWidth         = value;}
-    void setVCount         (uint value) {mVCount         = value;}
-    void setVStart         (uint value) {mVStart         = value;}
-    void setVHeight        (uint value) {mVHeight        = value;}
+    void setBpp       (Bpp bpp);
+    void setBorder    (bool border     = true);
+    void setLineDoubling(bool doubling = true);
+
+    //void setHsw            (uint value) {mHsw            = value;}
+    void setHswActive     (uint value) {mHswActive      = value;}
+    void setHswCount      (uint value) {mHswCount       = value;}
+    void setVswCount      (uint value) {mVswCount       = value;}
+    void setHDelay        (uint value) {mHDelay         = value;}
+    void setVDelay        (uint value) {mVDelay         = value;}
+    void setScanline      (uint value) {mScanline       = value;}
+    void setScanlineMin   (uint value) {mScanlineMin    = value;}
+    void setFrameCompleted(bool value) {mFrameCompleted = value;}
+    void setCharCount     (uint value) {mCharCount      = value;}
+    void setHCount        (uint value) {mHCount         = value;}
+    void setHStart        (uint value) {mHStart         = value;}
+    void setHWidth        (uint value) {mHWidth         = value;}
+    void setVCount        (uint value) {mVCount         = value;}
+    void setVStart        (uint value) {mVStart         = value;}
+    void setVHeight       (uint value) {mVHeight        = value;}
 
     void setScrBase      (uint*  value) {mScrBase       = value;}
     void setScrEnd       (uint*  value) {mScrEnd        = value;}
@@ -114,8 +134,10 @@ public:
     void setScrOffset    (uint   value) {mScrOffset     = value;}
     void setScrLine      (uint   value) {mScrLine       = value;}
     void setCpcRamBase   (tUBYTE* value) {mCpcRamBase    = value;}
-    
-    inline void doublescan();
+
+    void setScale(uchar scale);
+
+    inline void doubling();
 
 private:
     Crtc*      mCrtc;
@@ -128,9 +150,9 @@ private:
 
     bool mFrameCompleted;
     bool mBorder;
-    bool mDoublescan;
+    bool mLineDoubling;
 
-    uint mHsw;
+    //uint mHsw;
     uint mHswActive;
     uint mHswCount;
     uint mVswCount;
@@ -167,6 +189,8 @@ private:
     uint  mScrLineOffset;
     uint  mScrOffset;
     uint  mScrLine;
+
+    uchar mScale;
 
     tUBYTE* mCpcRamBase;
 

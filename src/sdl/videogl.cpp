@@ -236,6 +236,8 @@ namespace sdltk
         mCpc->colours().setDepth(mBuffer->format->BitsPerPixel);
         // BUG: mCpc->vdu().setScale(mCpcScale);
         // BUG: mCpc->vdu().setLineDoubling(false);
+
+        mCpc->vdu().setLineDoubling(false);
         mCpc->vdu().setScrLineOffset((mBuffer->pitch/4)*1); //*mCpcScale
         mCpc->vdu().setScrBase(mBufferStart);
         mCpc->vdu().setScrEnd (mBufferEnd);

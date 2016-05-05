@@ -27,12 +27,6 @@
 #include <memory>
 #endif
 
-#ifdef DEBUG
-#define DOUT(a) cout << a
-#else
-#define DOUT(a)
-#endif
-
 #include <iostream>
 #include <iomanip>
 #include <fstream>
