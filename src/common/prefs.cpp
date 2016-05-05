@@ -76,7 +76,12 @@ bool Prefs::read()
     DOUT("\nReading Preferences...\n");
 
     std::ifstream in(mFilename.c_str());
-    if (!in) return false;
+    if (!in)
+    {
+        write();
+        in.open(mFilename.c_str());
+        if (!in) return false;
+    }
 
     std::string tmp;
     while (!in.eof())

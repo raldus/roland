@@ -74,8 +74,8 @@ void mainloop();
 inline void update();
 inline void display();
 
-sdltk::Video * video = nullptr;
-sdltk::Gui   * gui   = nullptr;
+sdltk::Video  * video    = nullptr;
+sdltk::Gui    * gui      = nullptr;
 
 sdltk::Label  * lblFps   = nullptr;
 sdltk::Label  * lblJoy   = nullptr;

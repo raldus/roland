@@ -32,7 +32,6 @@ namespace sdltk
 {
 
     using std::vector;
-    using sdltk::Video;
 
     /** @author Fred Klaus development@fkweb.de */
     class Gui

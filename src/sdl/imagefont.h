@@ -41,23 +41,23 @@ namespace sdltk
         ImageFont(const string & fname, const string & glyphs);
         /** Standarddestructor */
         ~ImageFont();
-        
+
         /** Check whether the Image is valid and sets up the glyphs and their Rect class */
         void init();
         /** Frees all used resources */
         void clear();
-        
+
         /** loads an Image and calls ImageFont::init to set up the glyphs
             @param fname = the filename of an Image @param glyphs = the available glyphs in the Image */
         void load(const string & fname, const string & glyphs);
-        
+
         inline const Rect & glyph(Uint8 chr) const;
-        
+
         const Image & image() {return mImage;}
-        
+
         void setSpacing(Uint16 spacing);
         Uint16 spacing() const {return mSpacing;}
-        
+
     private:
         Image mImage;
         string mGlyphs;
@@ -65,8 +65,8 @@ namespace sdltk
         Uint16 mSpacing;
 
     };
-    
-    
+
+
     inline const Rect & ImageFont::glyph(Uint8 chr) const
     {
         string::size_type i = mGlyphs.find(chr);
@@ -76,4 +76,4 @@ namespace sdltk
 
 } //namespace sdltk
 
-#endif
+#endif // SDLGUIIMAGEFONT_H

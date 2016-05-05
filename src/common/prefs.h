@@ -65,9 +65,9 @@ class Prefs
     std::string mNothing;
     std::string mPrefs[PREFCOUNT][2] =
     {
-        {"cpctype", "2"},        {"cpcspeed", "4"},    {"cpcrom", "~/"},
-        {"amsdos", "~/"},        {"romdir", "~/"},     {"diskdir", "~/"},
-        {"tapedir", "~/"},       {"snapdir", "~/"},    {"datadir", "~/"},
+        {"cpctype", "2"},        {"cpcspeed", "4"},    {"cpcrom", CPCROM},
+        {"amsdos", AMSROM},    {"romdir", ROMDIR}, {"diskdir", DISKDIR},
+        {"tapedir", "~/.roland"},{"snapdir", "~/.roland"},{"datadir", DATADIR},
         {"diska", ""},           {"diskb", ""},        {"ramsize", "128"},
         {"showfps", "true"},     {"fullscreen", "false"},
         {"fullwidth", "640"},    {"fullheight", "480"},

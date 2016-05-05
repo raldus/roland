@@ -31,7 +31,7 @@ public:
     ~Colours() {}
 
     void init();
-    
+
     void setIntensity(uint intensity) {mIntensity = intensity; init();}
     void setDepth    (uint depth)     {mDepth     = depth;     init();}
     void setMonitor  (uint monitor)   {mMonitor   = monitor;   init();}
@@ -41,11 +41,11 @@ public:
 private:
     static double mColour[32][3];
     static double mGreen [32];
-    tUDWORD        mTable [32];
-    
+    tUDWORD       mTable [32];
+
     uint mDepth;
     uint mIntensity;
     uint mMonitor;
 };
 
-#endif
+#endif // COLOURS_H

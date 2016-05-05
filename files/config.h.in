@@ -66,7 +66,11 @@
 #cmakedefine STDC_HEADERS 1
 
 /* DataDirectory */
-//#cmakedefine DATADIR "roland"
+#define DATADIR "@CMAKE_SOURCE_DIR@/files/app/"
+#define ROMDIR  "@CMAKE_SOURCE_DIR@/files/roms/"
+#define DISKDIR "@CMAKE_SOURCE_DIR@/files/disks/"
+#define AMSROM  "@CMAKE_SOURCE_DIR@/files/roms/amsdos.rom"
+#define CPCROM  "@CMAKE_SOURCE_DIR@/files/roms/cpc6128.rom"
 
 /* use mmx */
 /* #undef USE_MMX */
