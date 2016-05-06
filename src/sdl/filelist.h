@@ -17,50 +17,36 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef LIST_H
-#define LIST_H
+#ifndef FILELIST_H
+#define FILELIST_H
 
 #include "widget.h"
-#include "listitem.h"
-#include "point.h"
+#include "list.h"
 #include "gui.h"
-#include "clock.h"
 
-#include <list>
+#include "filename.h"
+#include "directory.h"
 
 namespace sdltk
 {
 
-    //! A list that can hold several ListItem s.
-    class List : public Widget, public std::list<ListItem*>
+    //! A filelist to select a file..
+    class FileList : public List
     {
     public:
         //! Some initialization
-        List(Gui * gui) : mGui(gui) {init();}
+        FileList(Gui * gui, const FileName & dirname, char letter=0);
         //! Deafault destructor
-        ~List();
+        ~FileList();
 
-        void init();
+        void init(const FileName & dirname, char letter=0);
+        bool onKeyboard(SDL_KeyboardEvent * event);
 
-        //! This member catches keyboard events
-        virtual bool onKeyboard(SDL_KeyboardEvent * event);
-
-        //! Adds a ListItem to the List
-        void add(ListItem * item);
-        //! Manages the scrolling
-        void reposition(Sint16 val);
-
-        //! Draw the List and visible elements
-        void draw();
-
-    protected:
-        Sint8  mSpeed;
-        Uint8  mMotion;
-        Uint16 mPosH;
-        Gui *  mGui;
-        Clock  mClock;
+    private:
+        Directory mDirectory;
+        FileName  mDirname;
     };
 
 } //namespace sdltk
 
-#endif //LIST_H
+#endif //FILELIST_H

@@ -17,6 +17,7 @@ canvas.cpp
 canvasgl.cpp
 canvasstd.cpp
 exception.cpp
+filelist.cpp
 fileselect.cpp
 glfuncs.cpp
 gui.cpp

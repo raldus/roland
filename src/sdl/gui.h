@@ -34,7 +34,7 @@ namespace sdltk
     using std::vector;
 
     /** @author Fred Klaus development@fkweb.de */
-    class Gui
+    class Gui : vector<Widget*>
     {
     public:
         Gui(Video * video);
@@ -52,9 +52,9 @@ namespace sdltk
 
         void setFocus(Widget * focus) {mHasFocus = focus;}
 
+        Video * video() {return mVideo;}
+
     protected:
-        vector<Widget*> mWidgets;
-        vector<Widget*>::iterator mIt;
         bool mEnabled;
         Widget * mHasFocus; // receives the incoming events
 

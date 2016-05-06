@@ -28,13 +28,13 @@
 
 using std::vector;
 
-Directory::Directory(const string &path, bool subdir, bool owndir)
+Directory::Directory(const string & path, bool subdir, bool owndir, char letter)
     : vector<FileName>()
 {
-    scan(path, subdir, owndir);
+    scan(path, subdir, owndir, letter);
 }
 
-void Directory::scan(const string &path, bool subdir, bool owndir)
+void Directory::scan(const string &path, bool subdir, bool owndir, char letter)
 {
     clear();
 
@@ -54,7 +54,8 @@ void Directory::scan(const string &path, bool subdir, bool owndir)
             continue;
         if ((!owndir) && (fi == "."))
             continue;
-        push_back(fi);
+        if (letter && tolower(fi.base()[0]) == tolower(letter)) push_back(fi);
+        else if (!letter) push_back(fi);
     }
     free(entry); /** @todo this is a static portion of memory, need change ?? */
 #else
@@ -75,14 +76,15 @@ void Directory::scan(const string &path, bool subdir, bool owndir)
             continue;
         if ((!owndir) && (fi == "."))
             continue;
-        push_back(fi);
+        if (letter && tolower(fi.base()[0]) == tolower(letter)) push_back(fi);
+        else if (!letter) push_back(fi);
     }
 #endif
 
     closedir(dir);
 }
 
-void Directory::sort() { std::sort(begin(), end()); }
+void Directory::sort() {std::sort(begin(), end());}
 
 void Directory::sort(bool casesensitive)
 {

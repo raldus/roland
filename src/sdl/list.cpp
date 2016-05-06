@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005 by Fred Klaus                                      *
- *   development@fkweb.de                                                  *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -22,95 +22,136 @@
 namespace sdltk
 {
 
-    List::List(Gui * gui)
-    {
-        mPosH = 0;
-        mGui  = gui;
-        mEnabled = true;
-        mWantEvents = true;
-        mMotion = 0;
-        mSpeed  = 5;
-    }
-
     List::~List()
     {
     }
-    
+
+    void List::init()
+    {
+        mPosH       = 0;
+        mEnabled    = true;
+        mWantEvents = true;
+        mMotion     = 0;
+        mSpeed      = 5;
+    }
+
     bool List::onKeyboard(SDL_KeyboardEvent * event)
     {
+        if (!mEnabled) return false;
+        bool ret = false;
+        mClock.init();
+
         if (event->type == SDL_KEYDOWN)
         {
-            if ((int) event->keysym.sym == SDLK_UP)
+            switch((int) event->keysym.sym)
             {
-                mMotion = 1;
-                return true;
-            }
-            if ((int) event->keysym.sym == SDLK_DOWN)
-            {
-                mMotion = 2;
-                return true;
+                case SDLK_UP:
+                    mSpeed  = 8;
+                    mMotion = 1;
+                    ret = true;
+                    break;
+
+                case SDLK_PAGEUP:
+                    mSpeed  = 32;
+                    mMotion = 1;
+                    ret = true;
+                    break;
+
+                case SDLK_DOWN:
+                    mSpeed  = 8;
+                    mMotion = 2;
+                    ret = true;
+                    break;
+
+                case SDLK_PAGEDOWN:
+                    mSpeed  = 32;
+                    mMotion = 2;
+                    ret = true;
+                    break;
+
+                case SDLK_HOME:
+                    init();
+                    ret = true;
+                    break;
             }
         }
         else if (event->type == SDL_KEYUP)
         {
-            if ((int) event->keysym.sym == SDLK_UP   && mMotion == 1) mMotion = 0;
-            if ((int) event->keysym.sym == SDLK_DOWN && mMotion == 2) mMotion = 0;
+            switch((int) event->keysym.sym)
+            {
+                case SDLK_UP:
+                case SDLK_DOWN:
+                case SDLK_PAGEUP:
+                case SDLK_PAGEDOWN:
+                    mMotion = 0;
+                    ret = true;
+                    break;
+            }
         }
-            
-        return false;
+        return ret;
     }
-    
-    void List::add(ListItem * item) 
+
+    void List::add(ListItem * item)
     {
         mGui->add(item);
+
         item->setParent(this);
-        item->setOrigin(mRect.x(), mRect.y() + mPosH);
-        item->setPos(mRect.x(), mRect.y() + mPosH);
+        item->setOrigin(x(), y() + mPosH);
+        item->setPos   (x(), y() + mPosH);
         item->setBorder(true);
-        mRect.setWidth(item->width());
-        mList.push_back(item);
+        push_back(item);
+
         mPosH += item->height() + 1;
+        mRect.setWidth(item->width() + 2); // autowidth
     }
-    
+
     void List::reposition(Sint16 val)
     {
+        mClock.init();
+
+        if (front()->y() >= y() && mMotion == 1) return;
+        if ( back()->y() - back()->height() <= height() && mMotion == 2) return;
+
+        val = val + mClock.elapsed() * (mMotion-2);
         Rect tmp = mRect;
-        for (mIt = mList.begin(); mIt != mList.end(); ++mIt)
+
+        for (auto item : *this)
         {
-            if (!(*mIt)->hasMouseGrab()) (*mIt)->reset();
-            tmp.setHeight(mRect.height()+(*mIt)->height());
-            tmp.setY(mRect.y()-(*mIt)->height());
-            (*mIt)->setPos((*mIt)->x(), (*mIt)->y() + val);
-            (*mIt)->setOrigin((*mIt)->x(), (*mIt)->y());
-            if (!tmp.inside((*mIt)->x(), (*mIt)->y())) (*mIt)->setEnabled(false);
-            else (*mIt)->setEnabled(true);
+            //if (!item->hasMouseGrab()) item->reset();
+
+            tmp.setHeight(height() + item->height()); //because one scrolls out
+            tmp.setY(y() - item->height());
+
+            item->setPos(item->x(), item->y() + val);
+            item->setOrigin(item->x(), item->y());
+            item->setEnabled(tmp.inside(item->x(), item->y()));
         }
     }
-    
+
     void List::draw()
     {
         if (!mEnabled) return;
-        
+
         mCanvas->setClipRect(&mRect);
         mCanvas->begin();
-        
+
         mCanvas->setColor(mColor);
         mCanvas->rect(mRect);
-        
-        if (mMotion == 1) reposition(-mSpeed);
-        else if (mMotion == 2) reposition(mSpeed);
 
-        for (mIt = mList.begin(); mIt != mList.end(); ++mIt)
+        if (mMotion == 1) reposition(mSpeed);
+        else if (mMotion == 2) reposition(-mSpeed);
+
+        for (auto item : *this)
         {
-            if ((*mIt)->enabled())
+            if (item->enabled())
             {
-                if (!(*mIt)->hasMouseGrab()) (*mIt)->reset();
-                (*mIt)->draw();
+                if (!item->hasMouseGrab()) item->reset();
+                item->draw();
             }
         }
-        
+
         mCanvas->end();
         mCanvas->clearClipRect();
     }
-    
+
 } //namespace sdltk

@@ -17,27 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef RGLISTITEM_H
-#define RGLISTITEM_H
+#ifndef LISTITEM_H
+#define LISTITEM_H
 
 #include "button.h"
 #include "point.h"
 
 namespace sdltk
 {
-    //using namespace sdltk;
-    
+
     /** @author Fred Klaus development@fkweb.de */
     class ListItem : public Button
     {
-        
+
     public:
         ListItem();
         ~ListItem();
-        
+
         void setOrigin(Sint16 x, Sint16 y) {mOrigin.set(x, y);}
         void reset() {mRect.setPos(mOrigin.x(), mOrigin.y());}
-        
+
     private:
         Point mOrigin;
 
@@ -45,4 +44,4 @@ namespace sdltk
 
 } //namespace sdltk
 
-#endif
+#endif //LISTITEM_H

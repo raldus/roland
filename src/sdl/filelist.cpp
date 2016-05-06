@@ -17,70 +17,67 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "button.h"
-
-#include "predef.h"
+#include "filelist.h"
 
 namespace sdltk
 {
 
-    Button::Button() : Label()
+    FileList::FileList(Gui * gui, const FileName & dirname, char letter) : List(gui)
     {
-        mDown = false;
-        mHighlightColor.set(mColor.r()+30, mColor.g()+30, mColor.b(), 225);
+        setPos(50, 50);
+        setSize(gui->video()->size().width() - 100, gui->video()->size().height() - 100);
+        setEnabled(true);
+
+//        Label * label = new Label(this);
+//        label->setColor(128, 128, 128, 144);
+//        label->setPos(50, 75);
+//        label->setText("Fileselect");
+//        label->setSize( 100, 55);
+//        label->setEnabled(true);
+//        gui->add(label);
+
+        init(dirname, letter);
     }
 
-    Button::~Button()
+    FileList::~FileList()
     {
-        if (mImage) delete mImage;
     }
 
-    void Button::onMouseMotion(SDL_MouseMotionEvent * event)
+    void FileList::init(const FileName & dirname, char letter)
     {
-        string tmp;
-        tmp  = "x:"  + std::to_string(event->x);
-        tmp += "/y:" + std::to_string(event->y);
-        //IOUT("[sdltk::Button]", "Info ", tmp);
+        mDirname = dirname;
+        mDirectory.clear();
+        mDirectory.scan(mDirname, false, false, letter);
+        mDirectory.sort();
 
-        move(event);
-    }
-
-    void Button::onMouseButton(SDL_MouseButtonEvent * event)
-    {
-        if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_LEFT))
+        clear();
+        List::init();
+        ListItem * item;
+        for  (auto file : mDirectory)
         {
-            Color tmp;
-            tmp = mBorderColor1;
-            mBorderColor1 = mBorderColor2;
-            mBorderColor2 = tmp;
-            mTextOffset.set(1, 1);
-            mDown = true;
+            item = new ListItem();
+            item->setSize(mGui->video()->size().width() - 102, 25);
+            item->setBorder(true);
+            item->setText(file.base(false));
+            add(item);
+        }
+    }
+
+    bool FileList::onKeyboard(SDL_KeyboardEvent * event)
+    {
+        if (!mEnabled) return false;
+        if (((int) event->keysym.sym >= SDLK_a) && ((int) event->keysym.sym <= SDLK_z))
+        {
+            init(mDirname, (int) event->keysym.sym);
+            return true;
+        }
+        else if (((int) event->keysym.sym >= SDLK_0) && ((int) event->keysym.sym <= SDLK_9))
+        {
+            init(mDirname, (int) event->keysym.sym);
+            return true;
         }
 
-        if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))
-        {
-            mDown = false;
-        }
-
-        moveInit(event);
-    }
-
-    void Button::draw()
-    {
-        mCanvas->begin();
-
-        if (!mDown || !mMouseOver)
-        {
-            mTextOffset.set(0, 0);
-            setBorder(mBorder);
-        }
-
-        drawBorder();
-        if (mMouseOver) drawBackground(mHighlightColor);
-        else drawBackground(mColor);
-        drawText();
-
-        mCanvas->end();
+        return List::onKeyboard(event);
     }
 
 } //namespace sdltk

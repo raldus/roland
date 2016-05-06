@@ -37,23 +37,23 @@ namespace sdltk
     class Widget
     {
     public:
-        Widget();
+        Widget(Widget * parent = nullptr);
         virtual ~Widget();
 
         virtual void draw() = 0;
         virtual void onMouseMotion (SDL_MouseMotionEvent * event) {}
         virtual void onMouseButton (SDL_MouseButtonEvent * event) {}
-        virtual bool onKeyboard    (SDL_KeyboardEvent * event)    {return false;}
+        virtual bool onKeyboard    (SDL_KeyboardEvent * event) {return false;}
 
-        virtual void setPos(int x, int y)            {mRect.setX(x), mRect.setY(y);}
-        virtual void setSize(int width, int height)  {mRect.setWidth(width), mRect.setHeight(height);}
-
+        virtual void setPos(int x, int y)
+            {mRect.setX(x), mRect.setY(y);}
+        virtual void setSize(int width, int height)
+            {mRect.setWidth(width), mRect.setHeight(height);}
 
         virtual void setCanvas(Canvas * draw);
 
-
-        void setParent (Widget * parent) {mParent  = parent;}
-        Widget * parent() {return mParent;}
+        void  setParent (Widget * parent) {mParent  = parent;}
+        Widget * parent()                 {return mParent;}
 
 
         void setColor(Color color)                    {mColor = color;}
@@ -75,11 +75,13 @@ namespace sdltk
         Uint16 height() {return mRect.height();}
         Size   size()   {return mRect.size();}
 
-        Point relativePos(Sint16 x, Sint16 y) {return Point(x - mRect.x(), y - mRect.y());}
-        void  relativePos(Sint16 x, Sint16 y, Point & target) {return target.set(x - mRect.x(), y - mRect.y());}
+        Point relativePos(Sint16 x, Sint16 y)
+                        {return Point(x - mRect.x(), y - mRect.y());}
+        void  relativePos(Sint16 x, Sint16 y, Point & target)
+                        {return target.set(x - mRect.x(), y - mRect.y());}
 
-        const Rect & rect()   {return mRect;}
-        const Rect & canvas() {return mCanvasRect;}
+        const Rect & rect()       {return mRect;}
+        const Rect & canvasrect() {return mCanvasRect;}
 
     protected:
         Canvas * mCanvas;

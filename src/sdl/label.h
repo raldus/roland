@@ -33,7 +33,7 @@ namespace sdltk
     class Label : public Widget
     {
     public:
-        Label();
+        Label(Widget * parent = nullptr);
         virtual ~Label();
 
         virtual void draw();
@@ -45,7 +45,7 @@ namespace sdltk
 
         void setImage(const string & fname, bool autosize=true, bool bg=false);
         void setBorder(bool val);
-        void setBackground(bool val) {mBackground=val;}
+        void setBackground(bool val)      {mBackground = val;}
         void setText(const string & text) {mText = text;}
 
     protected:

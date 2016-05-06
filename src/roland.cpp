@@ -41,6 +41,7 @@
 #include "button.h"
 #include "list.h"
 #include "listitem.h"
+#include "filelist.h"
 #include "size.h"
 #include "audio.h"
 #include "clock.h"
@@ -76,13 +77,15 @@ inline void display();
 
 sdltk::Video  * video    = nullptr;
 sdltk::Gui    * gui      = nullptr;
+Directory       dir;
 
 sdltk::Label  * lblFps   = nullptr;
 sdltk::Label  * lblJoy   = nullptr;
 sdltk::Label  * lblDisk  = nullptr;
 sdltk::Button * btnTest  = nullptr;
 sdltk::Button * btnTest2 = nullptr;
-sdltk::List   * lstTest  = nullptr;
+sdltk::List   * lstDirectory  = nullptr;
+sdltk::FileList * lstFile = nullptr;
 
 Prefs prefs;
 Cpc cpc(&prefs);
@@ -175,40 +178,40 @@ void initGui()
     btnTest2->setBorder(true);
     btnTest2->setWantEvents(true);
     btnTest2->setText("Knopf2");
-
-
-    lstTest = new List(gui);
-    lstTest->setPos(250, 100);
-    lstTest->setSize(50, 200);
-    lstTest->setEnabled(true);
-
-    ListItem * item;
-    item = new ListItem;
-    item->setSize(100, 25);
-    item->setBorder(true);
-    item->setText("Nummer 1");
-    lstTest->add(item);
-
-    item = new ListItem;
-    item->setSize(100, 25);
-    item->setBorder(true);
-    item->setText("Nummer 2");
-    lstTest->add(item);
-
-    item = new ListItem;
-    item->setSize(100, 25);
-    item->setBorder(true);
-    item->setText("Nummer 3");
-    lstTest->add(item);
 */
+/*
+    lstDirectory = new List(gui);
+    lstDirectory->setPos(100, 100);
+    lstDirectory->setSize(500, 300);
+    lstDirectory->setEnabled(true);
+
+    dir.scan(prefs.getPath("diskdir"), false, false, 'U');
+    dir.sort();
+    ListItem * item;
+    for (auto file : dir)
+    {
+        item = new ListItem;
+        item->setSize(500, 25);
+        item->setBorder(true);
+        item->setText(file.base(false));
+        lstDirectory->add(item);
+    }
+*/
+
+    lstFile = new FileList(gui, prefs.getPath("diskdir"), 'a');
+    lstFile->setEnabled(false);
+
     gui->add(lblFps);
     gui->add(lblDisk);
     gui->add(lblJoy);
     //gui->add(btnTest);
     //gui->add(btnTest2);
-    //gui->add(lstTest);
+    //gui->add(lstDirectory);
 
-    //gui->setFocus(lstTest);
+    gui->add(lstFile);
+    //gui->add(lstFile);
+
+    gui->setFocus(lstFile);
     gui->setEnabled(true);
 
 }
@@ -244,8 +247,8 @@ void mainloop()
         else
             while (SDL_PollEvent(&event) > 0)
             {
+                gui->setFocus(lstFile);
                 if (gui->checkEvent(&event)) continue;
-
                 switch (event.type)
                 {
                     case SDL_KEYDOWN:
@@ -305,6 +308,9 @@ void mainloop()
 
                                 case SDLK_F3:
                                 {
+                                    clearBuffer();
+                                    lstFile->setEnabled(!lstFile->enabled());
+                                    break;
                                     audio.pause(true);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
                                         video->screen(), prefs.getPath("diskdir"),

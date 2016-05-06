@@ -29,16 +29,13 @@ namespace sdltk
 
     Gui::~Gui()
     {
-        for (mIt = mWidgets.begin(); mIt < mWidgets.end(); mIt++)
-        {
-            delete (*mIt);
-        }
+        for (auto it : *this) delete it;
     }
 
     void Gui::add(Widget * widget)
     {
         widget->setCanvas(mVideo->getCanvas());
-        mWidgets.push_back(widget);
+        push_back(widget);
         mHasFocus = widget;
     }
 
@@ -57,33 +54,33 @@ namespace sdltk
             return mHasFocus->onKeyboard(&event->key);
         }
 
-        for (mIt = mWidgets.begin(); mIt < mWidgets.end(); mIt++)
+        for (auto it : *this)
         {
-            if ((*mIt)->wantEvents())
+            if (it->wantEvents())
             {
                 switch(event->type)
                 {
                     case SDL_MOUSEMOTION:
-                        if ((*mIt)->hasMouseGrab() || (*mIt)->rect().inside(event->motion.x, event->motion.y))
+                        if (it->hasMouseGrab() || it->rect().inside(event->motion.x, event->motion.y))
                         {
-                            (*mIt)->setMouseOver(true);
-                            (*mIt)->onMouseMotion(&event->motion);
+                            it->setMouseOver(true);
+                            it->onMouseMotion(&event->motion);
                             ret = true;
                         }
-                        else (*mIt)->setMouseOver(false);
+                        else it->setMouseOver(false);
                         break;
 
                     case SDL_MOUSEBUTTONUP:
                     case SDL_MOUSEBUTTONDOWN:
-                        if ((*mIt)->rect().inside(event->button.x, event->button.y))
+                        if (it->rect().inside(event->button.x, event->button.y))
                         {
-                            (*mIt)->onMouseButton(&event->button);
+                            it->onMouseButton(&event->button);
                             ret = true;
                         }
                         break;
 
                     default:
-                        (*mIt)->setMouseOver(false);
+                        it->setMouseOver(false);
                         break;
                 }
             }
@@ -95,9 +92,9 @@ namespace sdltk
     {
         if (!mEnabled) return;
 
-        for (mIt = mWidgets.begin(); mIt < mWidgets.end(); mIt++)
+        for (auto it : *this)
         {
-            if (((*mIt)->parent() == 0) && (*mIt)->enabled()) (*mIt)->draw();
+            if ((it->parent() == nullptr) && it->enabled()) it->draw();
         }
     }
 

@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef RGBUTTON_H
-#define RGBUTTON_H
+#ifndef BUTTON_H
+#define BUTTON_H
 
 #include "label.h"
 #include "rect.h"
@@ -28,7 +28,6 @@
 
 namespace sdltk
 {
-    using namespace sdltk;
     using std::string;
 
     /** @author Fred Klaus development@fkweb.de */
@@ -37,20 +36,20 @@ namespace sdltk
     public:
         Button();
         virtual ~Button();
-        
+
         virtual void draw();
-        
+
         virtual void onMouseMotion (SDL_MouseMotionEvent * event);
         virtual void onMouseButton (SDL_MouseButtonEvent * event);
-        
+
         void setHighliteColor(const Color & color) {mHighlightColor = color;}
-        
+
     private:
         Color mHighlightColor;
         bool  mDown;
-        
+
     };
 
 } //namespace sdltk
 
-#endif //RGBUTTON_H
+#endif //BUTTON_H

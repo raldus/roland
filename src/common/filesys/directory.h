@@ -26,7 +26,7 @@
 
 using std::vector;
 
-/// [std::vector] for directory entrys
+/// [std::vector] for directory entries
 /** This is a vector to retrieve, store and sort FileName types.
     No slicing can occure by passing pointers of Directorys, because no additional
     variables are added at all.
@@ -41,10 +41,12 @@ class Directory : public vector<FileName>
 
 public:
     Directory() : vector<FileName>() {}
-    Directory(const string & path, bool subdir=false, bool owndir=false);
+    Directory(const string & path, bool subdir=false, bool owndir=false,
+            char letter=0);
     ~Directory() {}
 
-    void scan(const string & path, bool subdir=false, bool owndir=false);
+    void scan(const string & path, bool subdir=false, bool owndir=false,
+            char letter=0);
 
     /** Sorts this vector by filename.
         If you dont need to change the default behaviour (case insensitive), use this.

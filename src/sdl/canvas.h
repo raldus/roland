@@ -69,11 +69,12 @@ namespace sdltk
 
         inline const Size &   textSize(const string & text);
         inline const Uint16   textHeight();
-        inline const string & numberToText(Sint32 num, Uint8 base=10);
 
         ImageFont * font() {return &mFont;}
 
         const Color & color() {return mColor;}
+
+        uint width() {return mSurface ? mSurface->w : 320;}
 
     protected:
         SDL_Surface * mSurface;
@@ -124,35 +125,6 @@ namespace sdltk
     {
         Rect rect = mFont.glyph(' ');
         return rect.height();
-    }
-
-    inline const string & Canvas::numberToText(Sint32 num, Uint8 base)
-    {
-        mNumber.clear();
-
-        const Uint8 kMaxDigits = 35;
-
-        mNumber.reserve(kMaxDigits); // Pre-allocate enough space.
-
-        // check that the base if valid
-        if (base < 2 || base > 16) return mNumber;
-
-        int quotient = num;
-
-        // Translating number to string with base:
-        do
-        {
-            mNumber += "0123456789abcdef"[std::abs(quotient % base)];
-            quotient /= base;
-        }
-        while (quotient);
-
-        // Append the negative sign for base 10
-        if ( num < 0 && base == 10) mNumber += '-';
-
-        std::reverse(mNumber.begin(), mNumber.end());
-
-        return mNumber;
     }
 
 } // sdltk

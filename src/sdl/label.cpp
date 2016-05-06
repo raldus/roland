@@ -22,9 +22,9 @@
 namespace sdltk
 {
 
-    Label::Label() : Widget()
+    Label::Label(Widget * parent) : Widget(parent)
     {
-        mImage = 0;
+        mImage = nullptr;
         mText.clear();
         mRect.set(0, 0, 0, 0);
         mRelativeMousePos.set(0, 0);
