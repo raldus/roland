@@ -27,6 +27,7 @@ namespace sdltk
         mOrigin.set(0, 0);
         mEnabled = true;
         //mWantEvents = false;
+        setColor(100, 100, 100, 128);
     }
 
 

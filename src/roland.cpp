@@ -75,9 +75,10 @@ void mainloop();
 inline void update();
 inline void display();
 
+Directory       dir;
+
 sdltk::Video  * video    = nullptr;
 sdltk::Gui    * gui      = nullptr;
-Directory       dir;
 
 sdltk::Label  * lblFps   = nullptr;
 sdltk::Label  * lblJoy   = nullptr;
@@ -99,12 +100,11 @@ void init()
     cpc.init();
     showfps = prefs.getBool("showfps");
 
-    cpc.fdc().dsk_eject(0);
-    cpc.fdc().dsk_load(prefs.getPath("diska").c_str(), 0);
-
     cpc.fdc().dsk_eject(1);
     cpc.fdc().dsk_load(prefs.getPath("diskb").c_str(), 0);
 
+    cpc.fdc().dsk_eject(0);
+    cpc.fdc().dsk_load(prefs.getPath("diska").c_str(), 0);
 
     //video->init(0, 0, 0, prefs.getBool("fullscreen"));
     if (!video)
@@ -139,7 +139,7 @@ void initGui()
 
 
     lblFps = new Label;
-    lblFps->setColor(128, 128, 128, 144);
+    lblFps->setColor(100, 100, 100, 128);
     lblFps->setPos(7, video->screen()->h - textsize.height() - 10);
     lblFps->setSize(textsize.width() + 7, textsize.height() + 3);
     lblFps->setBorder(true);
@@ -308,8 +308,8 @@ void mainloop()
 
                                 case SDLK_F3:
                                 {
-                                    clearBuffer();
                                     lstFile->setEnabled(!lstFile->enabled());
+                                    clearBuffer();
                                     break;
                                     audio.pause(true);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(

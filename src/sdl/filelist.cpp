@@ -27,7 +27,6 @@ namespace sdltk
         setPos(50, 50);
         setSize(gui->video()->size().width() - 100, gui->video()->size().height() - 100);
         setEnabled(true);
-
 //        Label * label = new Label(this);
 //        label->setColor(128, 128, 128, 144);
 //        label->setPos(50, 75);
