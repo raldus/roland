@@ -57,9 +57,8 @@ FileSelect::~FileSelect()
 
 void FileSelect::openDir(const std::string & dir)
 {
-    if (mDir)
-        closeDir();
-    mDir = new Directory(dir, true);
+    if (mDir) closeDir();
+    mDir = new Directory(dir);
     if (mDir->empty())
     {
         mDirIt = mDir->begin();

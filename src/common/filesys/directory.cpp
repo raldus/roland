@@ -28,13 +28,13 @@
 
 using std::vector;
 
-Directory::Directory(const FileName & path, bool subdir, bool owndir, char letter)
+Directory::Directory(const FileName & path, Options options, char letter)
     : vector<FileName>()
 {
-    scan(path, subdir, owndir, letter);
+    scan(path, options, letter);
 }
 
-void Directory::scan(const FileName &path, bool subdir, bool owndir, char letter)
+void Directory::scan(const FileName &path, Options options, char letter)
 {
     mDirName = path;
     clear();
@@ -51,10 +51,8 @@ void Directory::scan(const FileName &path, bool subdir, bool owndir, char letter
              dir))) /**  @todo not threadsafe but readdir_r not in MinGW !! */
     {
         FileName fi(entry->d_name);
-        if ((!subdir) && (fi == ".."))
-            continue;
-        if ((!owndir) && (fi == "."))
-            continue;
+        if ((options & Options::ParentDir) && (fi == "..")) continue;
+        if ((options & Options::OwnDir)    && (fi == "." )) continue;
         if (letter && tolower(fi.base()[0]) == tolower(letter)) push_back(fi);
         else if (!letter) push_back(fi);
     }
@@ -70,13 +68,10 @@ void Directory::scan(const FileName &path, bool subdir, bool owndir, char letter
 
     while (!readdir_r(dir, &u.d, &entry))
     {
-        if (!entry)
-            break;
+        if (!entry) break;
         FileName fi(u.d.d_name);
-        if ((!subdir) && (fi == ".."))
-            continue;
-        if ((!owndir) && (fi == "."))
-            continue;
+        if ((options & Options::ParentDir) && (fi == "..")) continue;
+        if ((options & Options::OwnDir)    && (fi == "." )) continue;
         if (letter && tolower(fi.base()[0]) == tolower(letter)) push_back(fi);
         else if (!letter) push_back(fi);
     }

@@ -19,7 +19,6 @@ canvasstd.cpp
 exception.cpp
 filelist.cpp
 filelistitem.cpp
-fileselect.cpp
 glfuncs.cpp
 gui.cpp
 image.cpp

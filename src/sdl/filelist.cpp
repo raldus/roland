@@ -46,7 +46,7 @@ namespace sdltk
 
     void FileList::init(const FileName & dirname, char letter)
     {
-        mDirectory.scan(dirname, false, false, letter);
+        mDirectory.scan(dirname, Directory::Options::None, letter);
         mDirectory.sort();
 
         clear();

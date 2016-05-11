@@ -40,13 +40,13 @@ class Directory : public vector<FileName>
 {
 
 public:
+    enum Options : char {None = 0, ParentDir = 1, OwnDir=2};
+
     Directory() : vector<FileName>() {}
-    Directory(const FileName & path, bool subdir=false, bool owndir=false,
-            char letter=0);
+    Directory(const FileName & path, Options options = Options::None, char letter = 0);
     ~Directory() {}
 
-    void scan(const FileName & path, bool subdir=false, bool owndir=false,
-            char letter=0);
+    void scan(const FileName & path, Options options = Options::None, char letter = 0);
 
     /** Sorts this vector by filename.
         If you dont need to change the default behaviour (case insensitive), use this.
