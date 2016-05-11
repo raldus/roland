@@ -109,8 +109,15 @@ namespace sdltk
     {
         mClock.init();
 
-        if (front()->y() >= y() && mMotion == 1) return;
-        if ( back()->y() - back()->height() <= height() && mMotion == 2) return;
+        if (front()->y() >= y() && mMotion == 1)
+        {
+            return;
+        }
+
+        if ( back()->y() - back()->height() <= height() && mMotion == 2)
+        {
+            return;
+        }
 
         val = val + mClock.elapsed() * (mMotion-2);
         Rect tmp = mRect;

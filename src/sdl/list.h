@@ -40,6 +40,7 @@ namespace sdltk
         //! Deafault destructor
         ~List();
 
+        //! Init the List
         void init();
 
         //! This member catches keyboard events

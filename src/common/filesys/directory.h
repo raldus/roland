@@ -41,11 +41,11 @@ class Directory : public vector<FileName>
 
 public:
     Directory() : vector<FileName>() {}
-    Directory(const string & path, bool subdir=false, bool owndir=false,
+    Directory(const FileName & path, bool subdir=false, bool owndir=false,
             char letter=0);
     ~Directory() {}
 
-    void scan(const string & path, bool subdir=false, bool owndir=false,
+    void scan(const FileName & path, bool subdir=false, bool owndir=false,
             char letter=0);
 
     /** Sorts this vector by filename.
@@ -57,6 +57,10 @@ public:
         @param casesensitive = Sets whether sorting is case sensitive or not.
         @see <B>static</B> stk::FileName::setCaseSensitiveCompare */
     void sort(bool casesensitive);
+
+    const FileName & path() {return mDirName;}
+private:
+    FileName mDirName;
 };
 
 #endif

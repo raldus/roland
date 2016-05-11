@@ -33,6 +33,7 @@ namespace sdltk
     //! A filelist to select a file..
     class FileList : public List
     {
+
     public:
         //! Some initialization
         FileList(Gui * gui, const FileName & dirname, char letter=0);
@@ -44,7 +45,6 @@ namespace sdltk
 
     private:
         Directory mDirectory;
-        FileName  mDirname;
     };
 
 } //namespace sdltk

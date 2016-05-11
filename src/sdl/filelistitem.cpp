@@ -17,13 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "listitem.h"
+#include "filelistitem.h"
 
 namespace sdltk
 {
 
-    ListItem::ListItem()
+    FileListItem::FileListItem(const FileName & filename) : mFileName(filename)
     {
+        mText = mFileName.base(false);
         mOrigin.set(0, 0);
         mEnabled = true;
         //mWantEvents = false;

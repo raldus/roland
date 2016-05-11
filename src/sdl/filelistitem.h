@@ -17,17 +17,31 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef FILELISTITEM_H
+#define FILELISTITEM_H
+
 #include "listitem.h"
+#include "point.h"
+#include "filename.h"
+#include "directory.h"
 
 namespace sdltk
 {
 
-    ListItem::ListItem()
+    /** @author Fred Klaus development@fkweb.de */
+    class FileListItem : public ListItem
     {
-        mOrigin.set(0, 0);
-        mEnabled = true;
-        //mWantEvents = false;
-        setColor(100, 100, 100, 128);
-    }
 
-}
+    public:
+        FileListItem(const FileName & filename);
+        virtual ~FileListItem() = default;
+
+        void setFileName(FileName filename) {mFileName = filename;}
+
+    private:
+        FileName mFileName;
+    };
+
+} //namespace sdltk
+
+#endif //FILELISTITEM_H

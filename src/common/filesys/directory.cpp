@@ -28,14 +28,15 @@
 
 using std::vector;
 
-Directory::Directory(const string & path, bool subdir, bool owndir, char letter)
+Directory::Directory(const FileName & path, bool subdir, bool owndir, char letter)
     : vector<FileName>()
 {
     scan(path, subdir, owndir, letter);
 }
 
-void Directory::scan(const string &path, bool subdir, bool owndir, char letter)
+void Directory::scan(const FileName &path, bool subdir, bool owndir, char letter)
 {
+    mDirName = path;
     clear();
 
     DIR *dir;

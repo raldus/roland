@@ -19,6 +19,8 @@
  ***************************************************************************/
 #include "filelist.h"
 
+#include "filelistitem.h"
+
 namespace sdltk
 {
 
@@ -44,20 +46,17 @@ namespace sdltk
 
     void FileList::init(const FileName & dirname, char letter)
     {
-        mDirname = dirname;
-        mDirectory.clear();
-        mDirectory.scan(mDirname, false, false, letter);
+        mDirectory.scan(dirname, false, false, letter);
         mDirectory.sort();
 
         clear();
         List::init();
-        ListItem * item;
+        FileListItem * item;
         for  (auto file : mDirectory)
         {
-            item = new ListItem();
-            item->setSize(mGui->video()->size().width() - 102, 25);
+            item = new FileListItem(file);
+            item->setSize(mGui->video()->size().width() - 100, 25);
             item->setBorder(true);
-            item->setText(file.base(false));
             add(item);
         }
     }
@@ -67,12 +66,12 @@ namespace sdltk
         if (!mEnabled) return false;
         if (((int) event->keysym.sym >= SDLK_a) && ((int) event->keysym.sym <= SDLK_z))
         {
-            init(mDirname, (int) event->keysym.sym);
+            init(mDirectory.path(), (int) event->keysym.sym);
             return true;
         }
         else if (((int) event->keysym.sym >= SDLK_0) && ((int) event->keysym.sym <= SDLK_9))
         {
-            init(mDirname, (int) event->keysym.sym);
+            init(mDirectory.path(), (int) event->keysym.sym);
             return true;
         }
 

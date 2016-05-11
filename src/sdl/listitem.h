@@ -32,12 +32,12 @@ namespace sdltk
 
     public:
         ListItem();
-        ~ListItem();
+        virtual ~ListItem() = default;
 
         void setOrigin(Sint16 x, Sint16 y) {mOrigin.set(x, y);}
         void reset() {mRect.setPos(mOrigin.x(), mOrigin.y());}
 
-    private:
+    protected:
         Point mOrigin;
 
     };
