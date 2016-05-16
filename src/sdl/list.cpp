@@ -53,7 +53,6 @@ namespace sdltk
                     (*mSelected)->setColor(mTmpColor);
                     mSelected--;
                     mTmpColor = (*mSelected)->color();
-                    (*mSelected)->setColor(164, 148, 128, 164);
                     break;
 
                 case SDLK_PAGEUP:
@@ -66,10 +65,10 @@ namespace sdltk
                     mSpeed  = 8;
                     mMotion = 2;
                     ret = true;
+                    if (mSelected == --end()) break;
                     (*mSelected)->setColor(mTmpColor);
                     mSelected++;
                     mTmpColor = (*mSelected)->color();
-                    (*mSelected)->setColor(164, 148, 128, 164);
                     break;
 
                 case SDLK_PAGEDOWN:
@@ -152,6 +151,7 @@ namespace sdltk
     {
         if (!mEnabled) return;
 
+        (*mSelected)->setColor(164, 148, 128, 164);
 
         mCanvas->setClipRect(&mRect);
         mCanvas->begin();
