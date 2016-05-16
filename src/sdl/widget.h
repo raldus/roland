@@ -36,6 +36,7 @@ namespace sdltk
     /** Baseclass for all Widgets @author Fred Klaus development@fkweb.de */
     class Widget
     {
+
     public:
         Widget(Widget * parent = nullptr);
         virtual ~Widget();
@@ -58,6 +59,7 @@ namespace sdltk
 
         void setColor(Color color)                    {mColor = color;}
         void setColor(int r, int g, int b, int a=255) {mColor.set(r,g,b,a);}
+        Color color() {return mColor;}
 
         void setEnabled   (bool val) {mEnabled    = val;}
         void setWantEvents(bool val) {mWantEvents = val;}

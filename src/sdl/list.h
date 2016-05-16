@@ -38,7 +38,7 @@ namespace sdltk
         //! Some initialization
         List(Gui * gui) : mGui(gui) {init();}
         //! Deafault destructor
-        ~List();
+        virtual ~List();
 
         //! Init the List
         void init();
@@ -60,6 +60,8 @@ namespace sdltk
         Uint16 mPosH;
         Gui *  mGui;
         Clock  mClock;
+        std::list<ListItem*>::iterator mSelected;
+        Color  mTmpColor;
     };
 
 } //namespace sdltk

@@ -49,6 +49,11 @@ namespace sdltk
                     mSpeed  = 8;
                     mMotion = 1;
                     ret = true;
+                    if (mSelected == begin()) break;
+                    (*mSelected)->setColor(mTmpColor);
+                    mSelected--;
+                    mTmpColor = (*mSelected)->color();
+                    (*mSelected)->setColor(164, 148, 128, 164);
                     break;
 
                 case SDLK_PAGEUP:
@@ -61,6 +66,10 @@ namespace sdltk
                     mSpeed  = 8;
                     mMotion = 2;
                     ret = true;
+                    (*mSelected)->setColor(mTmpColor);
+                    mSelected++;
+                    mTmpColor = (*mSelected)->color();
+                    (*mSelected)->setColor(164, 148, 128, 164);
                     break;
 
                 case SDLK_PAGEDOWN:
@@ -103,6 +112,10 @@ namespace sdltk
 
         mPosH += item->height() + 1;
         mRect.setWidth(item->width() + 2); // autowidth
+
+        mSelected = begin();
+        mTmpColor = (*mSelected)->color();
+
     }
 
     void List::reposition(Sint16 val)
@@ -138,6 +151,7 @@ namespace sdltk
     void List::draw()
     {
         if (!mEnabled) return;
+
 
         mCanvas->setClipRect(&mRect);
         mCanvas->begin();

@@ -34,12 +34,13 @@ namespace sdltk
 
     public:
         FileListItem(const FileName & filename);
-        virtual ~FileListItem() = default;
+        ~FileListItem() = default;
 
         void setFileName(FileName filename) {mFileName = filename;}
 
     private:
         FileName mFileName;
+
     };
 
 } //namespace sdltk

@@ -45,6 +45,7 @@ namespace sdltk
 
     private:
         Directory mDirectory;
+
     };
 
 } //namespace sdltk
