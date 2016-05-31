@@ -2008,7 +2008,7 @@ PERL_PATH = /usr/bin/perl
 # powerful graphs.
 # The default value is: YES.
 
-CLASS_DIAGRAMS = NO
+CLASS_DIAGRAMS = YES
 
 # You can define message sequence charts within doxygen comments using the \msc
 # command. Doxygen will then run the mscgen tool (see:
@@ -2042,7 +2042,7 @@ HAVE_DOT = YES
 # Minimum value: 0, maximum value: 32, default value: 0.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_NUM_THREADS = 0
+DOT_NUM_THREADS = 2
 
 # When you want a differently looking font n the dot files that doxygen
 # generates you can specify the font name using DOT_FONTNAME. You need to make
