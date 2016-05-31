@@ -43,6 +43,9 @@ namespace sdltk
         //! Init the List
         void init();
 
+        //! This member catches mousebutton events
+        virtual void onMouseButton(SDL_MouseButtonEvent * event);
+
         //! This member catches keyboard events
         virtual bool onKeyboard(SDL_KeyboardEvent * event);
 

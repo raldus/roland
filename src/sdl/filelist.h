@@ -30,7 +30,7 @@
 namespace sdltk
 {
 
-    //! A filelist to select a file..
+    //! A filelist to select a file.
     class FileList : public List
     {
 

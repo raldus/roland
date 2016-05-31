@@ -24,7 +24,7 @@ namespace sdltk
 
     FileListItem::FileListItem(const FileName & filename) : mFileName(filename)
     {
-        mText = mFileName.base(false);
+        mText = mFileName.base(); // BUG: false does not work
         mOrigin.set(0, 0);
         mEnabled = true;
         //mWantEvents = false;

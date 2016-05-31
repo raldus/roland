@@ -33,6 +33,28 @@ namespace sdltk
         mWantEvents = true;
         mMotion     = 0;
         mSpeed      = 5;
+        SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+    }
+
+    void List::onMouseButton(SDL_MouseButtonEvent * event)
+    {
+        if (!mEnabled) return;
+
+        if (event->type == SDL_MOUSEBUTTONDOWN)
+        {
+            switch((int) event->button)
+            {
+                case SDL_BUTTON_WHEELUP:
+                    mSpeed  = 24;
+                    mMotion = 1;
+                    break;
+
+                case SDL_BUTTON_WHEELDOWN:
+                    mSpeed  = 24;
+                    mMotion = 2;
+                    break;
+            }
+        }
     }
 
     bool List::onKeyboard(SDL_KeyboardEvent * event)
@@ -46,12 +68,11 @@ namespace sdltk
             switch((int) event->keysym.sym)
             {
                 case SDLK_UP:
-                    mSpeed  = 8;
+                    mSpeed  = 16;
                     mMotion = 1;
                     ret = true;
-                    if (mSelected == begin()) break;
                     (*mSelected)->setColor(mTmpColor);
-                    mSelected--;
+                    if (mSelected != begin()) mSelected--;
                     mTmpColor = (*mSelected)->color();
                     break;
 
@@ -62,12 +83,11 @@ namespace sdltk
                     break;
 
                 case SDLK_DOWN:
-                    mSpeed  = 8;
+                    mSpeed  = 16;
                     mMotion = 2;
                     ret = true;
-                    if (mSelected == --end()) break;
                     (*mSelected)->setColor(mTmpColor);
-                    mSelected++;
+                    if (mSelected != --end()) mSelected++;
                     mTmpColor = (*mSelected)->color();
                     break;
 
@@ -144,12 +164,41 @@ namespace sdltk
             item->setPos(item->x(), item->y() + val);
             item->setOrigin(item->x(), item->y());
             item->setEnabled(tmp.inside(item->x(), item->y()));
+
+            // move selection, keep inside
+            if (!item->enabled() && item == (*mSelected))
+            {
+                if (mMotion == 1 && mSelected != begin())
+                {
+                    (*mSelected)->setColor(mTmpColor);
+                    while (!(*mSelected)->enabled() && mSelected != begin())
+                    {
+                        mSelected--;
+                    }
+                    if (mSelected != begin()) mSelected--;
+                    mTmpColor = (*mSelected)->color();
+                }
+                else if (mMotion == 2 && mSelected != --end())
+                {
+                    (*mSelected)->setColor(mTmpColor);
+                    while (!(*mSelected)->enabled() && mSelected != --end())
+                    {
+                        mSelected++;
+                    }
+                    if (mSelected != --end()) mSelected++;
+                    mTmpColor = (*mSelected)->color();
+                }
+            }
         }
+        if (mSpeed > 0) mSpeed--;
     }
 
     void List::draw()
     {
         if (!mEnabled) return;
+
+        if (mMotion == 1) reposition(mSpeed);
+        else if (mMotion == 2) reposition(-mSpeed);
 
         (*mSelected)->setColor(164, 148, 128, 164);
 
@@ -159,9 +208,6 @@ namespace sdltk
         mCanvas->setColor(mColor);
         mCanvas->rect(mRect);
 
-        if (mMotion == 1) reposition(mSpeed);
-        else if (mMotion == 2) reposition(-mSpeed);
-
         for (auto item : *this)
         {
             if (item->enabled())
@@ -170,7 +216,6 @@ namespace sdltk
                 item->draw();
             }
         }
-
         mCanvas->end();
         mCanvas->clearClipRect();
     }
