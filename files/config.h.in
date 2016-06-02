@@ -1,79 +1,59 @@
-/* config.h.  Generated from config.h.in by configure.  */
-/* config.h.in.  Generated from configure.in by autoheader.  */
+/***************************************************************************
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
+ *                                                                         *
+ *   This program is free software; you can redistribute it and/or modify  *
+ *   it under the terms of the GNU General Public License as published by  *
+ *   the Free Software Foundation; either version 2 of the License, or     *
+ *   (at your option) any later version.                                   *
+ *                                                                         *
+ *   This program is distributed in the hope that it will be useful,       *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
+ *   GNU General Public License for more details.                          *
+ *                                                                         *
+ *   You should have received a copy of the GNU General Public License     *
+ *   along with this program; if not, write to the                         *
+ *   Free Software Foundation, Inc.,                                       *
+ *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
+ ***************************************************************************/
+//! config.h.  Generated from config.h.in by CMake.
+#ifndef ROLAND_CONFIG_H
+#define ROLAND_CONFIG_H
 
-/* normal Debug enabled */
+//! normal Debug enabled
 #cmakedefine DEBUG 1
 
-/* Define to 1 if you have the <dlfcn.h> header file. */
-#cmakedefine HAVE_DLFCN_H 1
+//! no Debug enabled, Assertion removing ...
+//! #undef NDEBUG */
 
-/* Define to 1 if you have the <inttypes.h> header file. */
-#cmakedefine HAVE_INTTYPES_H 1
+//! Define to the address where bug reports for this package should be sent.
+static constexpr auto PACKAGE_BUGREPORT = "development@fkweb.de";
 
-/* Defines if your system has the LIBSDL library */
-/* #undef HAVE_LIBSDL */
+//! Define to the full name of this package.
+static constexpr auto PACKAGE_NAME = "@PACKAGE_NAME@";
 
-/* Define to 1 if you have the <memory.h> header file. */
-#cmakedefine HAVE_MEMORY_H 1
+//! Define to the full name and version of this package.
+static constexpr auto PACKAGE_STRING =
+        "@PROJECT_NAME@ @PACKAGE_VERSION@ @CMAKE_BUILD_TYPE@";
 
-/* Define to 1 if you have the <stdint.h> header file. */
-#cmakedefine HAVE_STDINT_H 1
+//! Define to the one symbol short name of this package.
+static constexpr auto PACKAGE_TARNAME = "@PACKAGE_NAME@";
 
-/* Define to 1 if you have the <stdlib.h> header file. */
-#cmakedefine HAVE_STDLIB_H 1
+//! Define to the version of this package.
+static constexpr auto PACKAGE_VERSION = "@PACKAGE_VERSION@";
 
-/* Define to 1 if you have the <strings.h> header file. */
-#cmakedefine HAVE_STRINGS_H 1
+//! DataDirectory */
+static constexpr auto DATADIR = "@CMAKE_SOURCE_DIR@/files/app/";
+static constexpr auto ROMDIR  = "@CMAKE_SOURCE_DIR@/files/roms/";
+static constexpr auto DISKDIR = "@CMAKE_SOURCE_DIR@/files/disks/";
+static constexpr auto AMSROM  = "@CMAKE_SOURCE_DIR@/files/roms/amsdos.rom";
+static constexpr auto CPCROM  = "@CMAKE_SOURCE_DIR@/files/roms/cpc6128.rom";
 
-/* Define to 1 if you have the <string.h> header file. */
-#cmakedefine HAVE_STRING_H 1
+//! use mmx
+//! #undef USE_MMX
 
-/* Define to 1 if you have the <sys/stat.h> header file. */
-#cmakedefine HAVE_SYS_STAT_H 1
+//! enable Raze Z80
+//! #undef USE_RAZE
 
-/* Define to 1 if you have the <sys/types.h> header file. */
-#cmakedefine HAVE_SYS_TYPES_H 1
-
-/* Define to 1 if you have the <unistd.h> header file. */
-#cmakedefine HAVE_UNISTD_H 1
-
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
-#cmakedefine LT_OBJDIR ".libs/"
-
-/* no Debug enabled, Assertion removing ... */
-/* #undef NDEBUG */
-
-/* Define to the address where bug reports for this package should be sent. */
-#cmakedefine PACKAGE_BUGREPORT "development@fkweb.de"
-
-/* Define to the full name of this package. */
-#define PACKAGE_NAME "@PACKAGE_NAME@"
-
-/* Define to the full name and version of this package. */
-#define PACKAGE_STRING "@PROJECT_NAME@ @PACKAGE_VERSION@ @CMAKE_BUILD_TYPE@"
-
-/* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "@PACKAGE_NAME@"
-
-/* Define to the home page for this package. */
-#cmakedefine PACKAGE_URL ""
-
-/* Define to the version of this package. */
-#define PACKAGE_VERSION "@PACKAGE_VERSION@"
-
-/* Define to 1 if you have the ANSI C header files. */
-#cmakedefine STDC_HEADERS 1
-
-/* DataDirectory */
-#define DATADIR "@CMAKE_SOURCE_DIR@/files/app/"
-#define ROMDIR  "@CMAKE_SOURCE_DIR@/files/roms/"
-#define DISKDIR "@CMAKE_SOURCE_DIR@/files/disks/"
-#define AMSROM  "@CMAKE_SOURCE_DIR@/files/roms/amsdos.rom"
-#define CPCROM  "@CMAKE_SOURCE_DIR@/files/roms/cpc6128.rom"
-
-/* use mmx */
-/* #undef USE_MMX */
-
-/* enable Raze Z80 */
-/* #undef USE_RAZE */
+#endif // ROLAND_CONFIG_H

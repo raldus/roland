@@ -17,21 +17,20 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef RGLABEL_H
-#define RGLABEL_H
+#ifndef SDLTK_LABEL_H
+#define SDLTK_LABEL_H
 
 #include "widget.h"
 #include "rect.h"
 #include "point.h"
-#include <string>
 
 namespace sdltk
 {
-    using std::string;
 
-    /** @author Fred Klaus development@fkweb.de */
+    //! \author Fred Klaus development@fkweb.de
     class Label : public Widget
     {
+
     public:
         Label(Widget * parent = nullptr);
         virtual ~Label();
@@ -80,6 +79,6 @@ namespace sdltk
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //RGLABEL_H
+#endif // SDLTK_LABEL_H

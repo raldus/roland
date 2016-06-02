@@ -55,4 +55,4 @@ namespace sdltk
         SDL_WM_SetIcon(surface, 0);
     }
 
-} //sdltk
+} // sdltk

@@ -19,8 +19,6 @@
  ***************************************************************************/
 #include "widget.h"
 
-#include <iostream>
-
 namespace sdltk
 {
 
@@ -36,10 +34,6 @@ namespace sdltk
         mColor.set(128, 128, 128, 128);
 
         mRect.set(0, 0, 0, 0);
-    }
-
-    Widget::~Widget()
-    {
     }
 
     void Widget::setCanvas(Canvas * canvas)

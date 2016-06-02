@@ -17,22 +17,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUICOLOR_H
-#define SDLGUICOLOR_H
+#ifndef SDLTK_COLOR_H
+#define SDLTK_COLOR_H
 
 #include "SDL.h"
 
 namespace sdltk
 {
 
-    /** @author Fred Klaus development@fkweb.de @bug operators does not work correctly @todo operators*/
+    //! @author Fred Klaus development@fkweb.de @bug operators does not work correctly @todo operators*/
     class Color
     {
     public:
         Color();
         Color(Uint8 r, Uint8 g, Uint8 b, Uint8 a=255) {mR = r; mG = g; mB = b; mA = a;}
 
-        ~Color();
+        ~Color() = default;
 
         Color(const Color & c) {mR = c.r(); mG = c.g(); mB = c.b(); mA = c.a();}
 
@@ -71,4 +71,4 @@ namespace sdltk
 
 } // sdltk
 
-#endif // SDLGUICOLOR_H
+#endif // SDLTK_COLOR_H

@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef GUI_H
-#define GUI_H
+#ifndef SDLTK_GUI_H
+#define SDLTK_GUI_H
 
 #include "widget.h"
 #include "video.h"
@@ -27,14 +27,12 @@
 #include <vector>
 
 
-/** @brief the SDL based GUI */
+//! \brief the SDL based Stuff
 namespace sdltk
 {
 
-    using std::vector;
-
-    /** @author Fred Klaus development@fkweb.de */
-    class Gui : vector<Widget*>
+    //! author Fred Klaus development@fkweb.de
+    class Gui : std::vector<Widget*>
     {
     public:
         Gui(Video * video);
@@ -42,7 +40,7 @@ namespace sdltk
 
         void add(Widget * widget);
 
-        /** returns true if event is accepted */
+        //! returns true if event was accepted
         bool checkEvent(SDL_Event * event);
         void update();
 
@@ -63,4 +61,4 @@ namespace sdltk
 
 } // sdltk
 
-#endif // GUI_H
+#endif // SDLTK_GUI_H

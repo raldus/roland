@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef LIST_H
-#define LIST_H
+#ifndef SDLTK_LIST_H
+#define SDLTK_LIST_H
 
 #include "widget.h"
 #include "listitem.h"
@@ -38,7 +38,7 @@ namespace sdltk
         //! Some initialization
         List(Gui * gui) : mGui(gui) {init();}
         //! Deafault destructor
-        virtual ~List();
+        virtual ~List() = default;
 
         //! Init the List
         void init();
@@ -67,6 +67,6 @@ namespace sdltk
         Color  mTmpColor;
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //LIST_H
+#endif // SDLTK_LIST_H

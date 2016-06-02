@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "button.h"
 
-#include "predef.h"
+#include "def.h"
 
 namespace sdltk
 {
@@ -83,4 +83,4 @@ namespace sdltk
         mCanvas->end();
     }
 
-} //namespace sdltk
+} // sdltk

@@ -20,52 +20,45 @@
 #include "cpc.h"
 
 #include <iostream>
-//#include <memory>
 
-using namespace std;
-
-Cpc::Cpc(Prefs *prefs)
+Cpc::Cpc(const Prefs & prefs)
 {
     mSound.init(&mPsg); //@todo Change this:cannot init again.
-    init(prefs);
+    mPrefs = prefs;
 }
 
-int Cpc::init(Prefs *prefs)
+int Cpc::init() noexcept
 {
-    if (prefs)
-        mPrefs = prefs;
-    // if (!mPrefs->read()) cerr << "*** Could not find Preferences-File\n";
-
-    mCpcType = (CpcType)mPrefs->getNum("cpctype");
-    mSpeed = mPrefs->getNum("cpcspeed");
-    // mMonitor = (Monitor) mPrefs->getNum("monitor");
+    mCpcType = static_cast<CpcType>(mPrefs.getNum("cpctype"));
+    mSpeed   = mPrefs.getNum("cpcspeed");
+    // mMonitor = (Monitor) mPrefs.getNum("monitor");
 
     mGatearray.init();
     mPpi.init();
     // mPpi.setJumpers(Ppi::Schneider | Ppi::Refresh50Hz | Ppi::Expansion);
-    mPpi.setJumpers(mPrefs->getNum("jumpers"));
+    mPpi.setJumpers(mPrefs.getNum("jumpers"));
 
     mCrtc.init(&mPpi);
     mVdu.init(true, &mCrtc, &mGatearray, &mZ80);
-    mVdu.setBorder(mPrefs->getBool("border"));
-    //mVdu.setDoublescan(mPrefs->getBool("doublescan"));
+    mVdu.setBorder(mPrefs.getBool("border"));
+    //mVdu.setDoublescan(mPrefs.getBool("doublescan"));
 
-    mColours.setIntensity(mPrefs->getNum("intensity"));
-    mColours.setMonitor(mPrefs->getNum("monitor"));
+    mColours.setIntensity(mPrefs.getNum("intensity"));
+    mColours.setMonitor(mPrefs.getNum("monitor"));
 
     mMemman.init(&mZ80, &mGatearray);
-    int ret = mMemman.init(mPrefs->getNum("ramsize"), mPrefs->getPath("cpcrom"),
-                           mPrefs->getPath("amsdos"));
+    int ret = mMemman.init(mPrefs.getNum("ramsize"), mPrefs.getPath("cpcrom"),
+                           mPrefs.getPath("amsdos"));
     if (ret)
     {
         if (ret == MemMan::ErrRamSize)
-            cerr << "Incorrect RAM-size.\n";
+            std::cerr << "Incorrect RAM-size.\n";
         if (ret == MemMan::ErrMemory)
-            cerr << "Not enough Memory.\n";
+            std::cerr << "Not enough Memory.\n";
         if (ret & MemMan::ErrCpcRom)
-            cerr << "Could not read CPC-ROM file.\n";
+            std::cerr << "Could not read CPC-ROM file.\n";
         if (ret & MemMan::ErrAmsdos)
-            cerr << "Could not read AMSDOS-ROM file.\n";
+            std::cerr << "Could not read AMSDOS-ROM file.\n";
         return ret;
     }
 
@@ -103,7 +96,7 @@ int Cpc::init(Prefs *prefs)
     return 0;
 }
 
-tUBYTE Cpc::z80_in_handler(tREGPAIR port)
+tUBYTE Cpc::z80_in_handler(tREGPAIR port) noexcept
 {
     tUBYTE retval = 0xff;
 
@@ -243,7 +236,7 @@ tUBYTE Cpc::z80_in_handler(tREGPAIR port)
     return retval;
 }
 
-void Cpc::z80_out_handler(tREGPAIR port, tUBYTE value)
+void Cpc::z80_out_handler(tREGPAIR port, tUBYTE value) noexcept
 {
     // **********************************************************************
     // *** CRTC
@@ -416,7 +409,7 @@ void Cpc::z80_out_handler(tREGPAIR port, tUBYTE value)
     }
 }
 
-void Cpc::waitstates()
+void Cpc::waitstates() noexcept
 {
     mVdu.access_video_memory(mZ80.cycleCount() >> 2);
 

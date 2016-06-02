@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUIPIXEL_H
-#define SDLGUIPIXEL_H
+#ifndef SDLTK_PIXEL_H
+#define SDLTK_PIXEL_H
 
 #include "color.h"
 #include "SDL.h"
@@ -28,17 +28,14 @@ namespace sdltk
     class Pixel
     {
     public:
-        Pixel()  {}
-        ~Pixel() {}
-        
-        /**
-        * Checks a pixels color of an SDL_Surface.
-        *
-        * @param surface an SDL_Surface where to check for a pixel color.
-        * @param x the x coordinate on the surface.
-        * @param y the y coordinate on the surface.
-        * @return a color of a pixel.
-        */
+        Pixel()  = default;
+        ~Pixel() = default;
+
+        //! Checks a pixels color of an SDL_Surface.
+        //! @param surface an SDL_Surface where to check for a pixel color.
+        //! @param x the x coordinate on the surface.
+        //! @param y the y coordinate on the surface.
+        //! @return a color of a pixel.
         inline static const Color get(SDL_Surface* surface, Sint16  x, Sint16  y)
         {
             Sint32  bpp = surface->format->BytesPerPixel;
@@ -84,13 +81,11 @@ namespace sdltk
             return Color(r,g,b,a);
         }
 
-        /**
-         * Puts a pixel on an SDL_Surface.
-         *
-         * @param x the x coordinate on the surface.
-         * @param y the y coordinate on the surface.
-         * @param color the color the pixel should be in.
-         */
+         //! Puts a pixel on an SDL_Surface.
+         //!
+         //! @param x the x coordinate on the surface.
+         //! @param y the y coordinate on the surface.
+         //! @param color the color the pixel should be in.
         inline static void put(SDL_Surface* surface, Sint32  x, Sint32  y, const Color& color)
         {
             Sint32  bpp = surface->format->BytesPerPixel;
@@ -134,13 +129,10 @@ namespace sdltk
             SDL_UnlockSurface(surface);
         }
 
-        /**
-         * Blends two 32 bit colors together.
-         *
-         * @param src the source color.
-         * @param dst the destination color.
-         * @param a alpha.
-         */
+         //! Blends two 32 bit colors together.
+         //! @param src the source color.
+         //! @param dst the destination color.
+         //! @param a alpha.
         inline static Uint32 alpha32(Uint32  src, Uint32  dst, Uint8  a)
         {
             Uint32  b = ((src & 0xff) * a + (dst & 0xff) * (255 - a)) >> 8;
@@ -150,13 +142,10 @@ namespace sdltk
             return (b & 0xff) | (g & 0xff00) | (r & 0xff0000);
         }
 
-        /**
-         * Blends two 16 bit colors together.
-         *
-         * @param src the source color.
-         * @param dst the destination color.
-         * @param a alpha.
-         */
+         //! Blends two 16 bit colors together.
+         //! @param src the source color.
+         //! @param dst the destination color.
+         //! @param a alpha.
         inline static Uint16 alpha16(Uint16 src, Uint16 dst, Uint8  a, const SDL_PixelFormat *f)
         {
             Uint32  b = ((src & f->Rmask) * a + (dst & f->Rmask) * (255 - a)) >> 8;
@@ -179,13 +168,10 @@ namespace sdltk
         } SDL_PixelFormat;
         */
 
-        /**
-         * Puts a pixel on an SDL_Surface with alpha
-         *
-         * @param x the x coordinate on the surface.
-         * @param y the y coordinate on the surface.
-         * @param color the color the pixel should be in.
-         */
+         //! Puts a pixel on an SDL_Surface with alpha
+         //! @param x the x coordinate on the surface.
+         //! @param y the y coordinate on the surface.
+         //! @param color the color the pixel should be in.
         inline static void putAlpha(SDL_Surface* surface, Sint32  x, Sint32  y, const Color& color)
         {
             Uint32 bpp = surface->format->BytesPerPixel;
@@ -236,9 +222,9 @@ namespace sdltk
 
             SDL_UnlockSurface(surface);
         }
-        
-    };
-    
-} //namespace sdltk
 
-#endif //SDLGUIPIXEL_H
+    };
+
+} // sdltk
+
+#endif // SDLTK_PIXEL_H

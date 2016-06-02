@@ -17,30 +17,18 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLAUDIO_H
-#define SDLAUDIO_H
+#ifndef SDLTK_AUDIO_H
+#define SDLTK_AUDIO_H
 
-#include "predef.h"
-
-#ifdef USE_MMX
-    #include "mmx_memcpy.h"
-#else
-    #include <memory>
-#endif
-
-#include "types.h"
-
-#include "SDL.h"
+#include "def.h"
 #include "cpc.h"
-#include "types.h"
-
-using namespace std;
+#include "SDL.h"
 
 namespace sdltk
 {
 
-    /** @author Fred Klaus development@fkweb.de */
-    class Audio
+    //! Manages all Audio related stuff
+    class Audio final
     {
 
     public:
@@ -87,6 +75,6 @@ namespace sdltk
         }
     }
 
-} //sdl
+} // sdltk
 
-#endif
+#endif // SDLTK_AUDIO_H

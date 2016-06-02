@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BUTTON_H
-#define BUTTON_H
+#ifndef SDLTK_BUTTON_H
+#define SDLTK_BUTTON_H
 
 #include "label.h"
 #include "rect.h"
@@ -28,9 +28,7 @@
 
 namespace sdltk
 {
-    using std::string;
-
-    /** @author Fred Klaus development@fkweb.de */
+    //! @author Fred Klaus development@fkweb.de
     class Button : public Label
     {
     public:
@@ -50,6 +48,6 @@ namespace sdltk
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //BUTTON_H
+#endif // SDLTK_BUTTON_H

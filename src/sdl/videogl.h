@@ -17,14 +17,13 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLVIDEOGL_H
-#define SDLVIDEOGL_H
+#ifndef SDLTK_VIDEOGL_H
+#define SDLTK_VIDEOGL_H
 
-#include "predef.h"
+#include "def.h"
 
 #include "video.h"
 #include "cpc.h"
-#include "types.h"
 
 #include "canvasgl.h"
 #include "gui.h"
@@ -34,9 +33,10 @@
 namespace sdltk
 {
 
-    /** @author Fred Klaus development@fkweb.de*/
+    //! @author Fred Klaus development@fkweb.de
     class VideoGL : public Video
     {
+
     public:
         VideoGL(Cpc * cpc);
         virtual ~VideoGL();
@@ -66,6 +66,6 @@ namespace sdltk
         CanvasGL mCanvas;
     };
 
-} //sdltk
+} // sdltk
 
-#endif
+#endif // SDLTK_VIDEOGL_H

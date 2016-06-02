@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef FILELIST_H
-#define FILELIST_H
+#ifndef SDLTK_FILE_LIST_H
+#define SDLTK_FILE_LIST_H
 
 #include "widget.h"
 #include "list.h"
@@ -41,6 +41,7 @@ namespace sdltk
         ~FileList();
 
         void init(const FileName & dirname, char letter=0);
+
         bool onKeyboard(SDL_KeyboardEvent * event);
 
     private:
@@ -48,6 +49,6 @@ namespace sdltk
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //FILELIST_H
+#endif //SDLTK_FILE_LIST_H

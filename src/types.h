@@ -1,6 +1,6 @@
 /***************************************************************************
- *   Copyright (C) 2005-2013 by Fred Klaus <development@fkweb.de>          *
- *                                                                         *
+ *   Copyright (C) by Fred Klaus                                           *
+ *       development@fkweb.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
  *   it under the terms of the GNU General Public License as published by  *
@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef CPCMU_TYPES_H
-#define CPCMU_TYPES_H
+#ifndef ROLAND_TYPES_H
+#define ROLAND_TYPES_H
 
 #include <stdint.h>
 
@@ -118,11 +118,11 @@
 	typedef unsigned char uchar;
 #else
 	#warning "*** uchar is already defined and may not match requested size. ***"
-#endif				 
+#endif
 
 
 ///@todo Should this be here ??
-const static tUBYTE bit_values[8] =
+static constexpr tUBYTE bit_values[8] =
 {
 	0x01, 0x02, 0x04, 0x08, 0x10, 0x20, 0x40, 0x80
 };
@@ -267,5 +267,5 @@ private:
 };
 */
 
-#endif // CPCMU_TYPES_H
+#endif // ROLAND_TYPES_H
 

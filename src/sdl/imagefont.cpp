@@ -22,41 +22,32 @@
 namespace sdltk
 {
 
-    ImageFont::ImageFont()
-    {
-        mSpacing = 0;
-        //mImage.setAutoConvert(false);
-    }
-    
     ImageFont::ImageFont(const string & fname, const string & glyphs)
     {
         load(fname, glyphs);
     }
 
-    ImageFont::~ImageFont()
-    {}
-    
     void ImageFont::init() // @todo linearfont only !!!!
     {
         Point point(0, 0);
         Color sepcolor = mImage.pixel(point);
-        
+
         Uint8 numglyph=0;
         for (Uint16 x=0; x < mImage.width(); x++)
         {
             point.setX(x);
             if (mImage.pixel(point) == sepcolor) continue;
-            
+
             mGlyphRect[numglyph].setPos(point);
             while (mImage.pixel(point) != sepcolor) point.setX(++x);
             mGlyphRect[numglyph].setWidth(x-mGlyphRect[numglyph].x()-1);
-            
+
             mGlyphRect[numglyph].setHeight(mImage.height());
-            
+
             numglyph++;
         }
     }
-    
+
     void ImageFont::clear()
     {
         mImage.clear();
@@ -71,7 +62,7 @@ namespace sdltk
         mImage.convert(); // IMPORTANT: first init(), then convert()
     }
 
-} //namespace sdltk
+} // sdltk
 
 
 

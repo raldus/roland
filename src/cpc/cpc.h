@@ -20,10 +20,7 @@
 #ifndef CPC_H
 #define CPC_H
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
+#include "config.h"
 #include "types.h"
 #include "prefs.h"
 
@@ -43,14 +40,6 @@
 #include "sound.h"
 #include "vdu.h"
 
-
-#define MIN_SPEED_SETTING 2
-#define MAX_SPEED_SETTING 32
-#define DEF_SPEED_SETTING 4
-
-// number of CPU cycles per frame = 4MHz divided by 50Hz
-#define CYCLE_COUNT_INIT 80000
-
 #define mPsg_write \
 { \
    tUBYTE control = mPsg.control() & 0xc0; /* isolate PSG control bits */ \
@@ -63,31 +52,41 @@
 } \
 }
 
-
-
 /** @author Fred Klaus */
-class Cpc
+class Cpc final
 {
 
 public:
-    enum CpcType {cpc464=0, cpc664=1, cpc6128=2};
-    enum RamSize {ram64=64, ram128=128, ram256=256, ram512=512};
+    enum class CpcType : unsigned char
+    {
+        cpc464  = 0,
+        cpc664  = 1,
+        cpc6128 = 2
+    };
+    enum class RamSize : unsigned short int
+    {
+        ram64  =  64,
+        ram128 = 128,
+        ram256 = 256,
+        ram512 = 512
+    };
     //enum Monitor {colour=0, green=1, grey=2};
 
 
-    Cpc(Prefs* prefs);
-    ~Cpc() {}
+    Cpc() = delete;
+    Cpc(const Prefs & prefs);
+    ~Cpc() = default;
 
-    int init(Prefs* prefs=0);
+    int init() noexcept;
 
-    void setSpeed(uint value) {mSpeed=value;}
+    void setSpeed(uint value) {mSpeed = value;}
 
-    uint    speed()   {return mSpeed;}
+    uint speed() const {return mSpeed;}
     //Monitor monitor() {return mMonitor;}
 
-    tUBYTE z80_in_handler (tREGPAIR port); //@todo change This !!
-    void  z80_out_handler(tREGPAIR port, tUBYTE value);
-    void waitstates();
+    tUBYTE z80_in_handler (tREGPAIR port) noexcept; //@todo change This !!
+    void   z80_out_handler(tREGPAIR port, tUBYTE value) noexcept;
+    void   waitstates() noexcept;
 
 
     Z80       & z80()       {return mZ80;}
@@ -109,7 +108,7 @@ private:
     uint      mSpeed;
     uint      mBpp;
 
-    Prefs*    mPrefs;
+    Prefs     mPrefs;
 
     Z80       mZ80; //@todo change this !!!!!!!!!!!!!
     Crtc      mCrtc;

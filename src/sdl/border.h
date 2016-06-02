@@ -17,22 +17,21 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef BORDER_H
-#define BORDER_H
+#ifndef SDLTK_BORDER_H
+#define SDLTK_BORDER_H
 
-#include "predef.h"
-#include "types.h"
-
+#include "def.h"
 #include "SDL.h"
 
 namespace sdltk
 {
 
-/** @author Fred Klaus development@fkweb.de */
-class Border
+//! Represents a Border as 8 Rects
+class Border final
 {
+
 public:
-    enum BorderPos 
+    enum BorderPos
     {
         bpTop          = 0,
         bpBottom       = 1,
@@ -43,22 +42,21 @@ public:
         bpRightTop     = 6,
         bpRightBottom  = 7,
     };
-    
+
+    Border() : mColor(0xffffffff) {};
+    ~Border() = default;
+
     void setColor(uint color);
     void setUniSize(uint width, uint height, uint thickness);
     void paint(SDL_Surface * surf);
-    
-    Border();
-    ~Border();
-    
-    
+
 protected:
     SDL_Rect mBorder[8];
-    
+
     uint mColor;
 
 };
 
-} //sdltk
+} // sdltk
 
-#endif
+#endif //  SDLTK_BORDER_H

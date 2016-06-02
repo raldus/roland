@@ -17,30 +17,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUIPOINT_H
-#define SDLGUIPOINT_H
+#ifndef SDLTK_POINT_H
+#define SDLTK_POINT_H
 
 #include "SDL.h"
 
 namespace sdltk
 {
-    /// Defines a 2D point (x,y)
-    /** @author Fred Klaus */
+    //! Defines a 2D point (x,y)
+    //! \author Fred Klaus
     class Point
     {
 
     public:
-        /** Standard Constructor. Initializes x and y to 0. */
-        Point() {}
-        /** Constructor. @param x = Coordinate x @param y = Coordinate y */
+        //! Standard Constructor. Initializes x and y to 0.
+        Point() = default;
+        //! Constructor. \param x = Coordinate x /param y = Coordinate y
         Point(Sint16 x, Sint16 y)    {mX = x; mY = y;}
-        /** Copyconstructor. It is save to init Point with itself. */
+        //! Copyconstructor. It is save to init Point with itself.
         Point(const Point & p) {mX = p.x(); mY = p.y();}
 
-        /** Standard Destructor. Does nothing */
-        ~Point() {}
+        //! Standard Destructor. Does nothing
+        ~Point() = default;
 
-        /** Overloaded operator =. A deep copy will done, so it's save to assign Point to itself. */
+        //! Overloaded operator =. A deep copy will done, so it's save to assign Point to itself.
         Point & operator=(const Point & p)
         {if (this == &p) return *this; mX=p.x(); mY=p.y(); return *this;}
 
@@ -66,7 +66,7 @@ namespace sdltk
         Sint16 mY;
     };
 
-} //namespace sdltk
+} // sdltk
 
 
-#endif //SDLGUIPOINT_H
+#endif // SDLTK_POINT_H

@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUIDRAW_H
-#define SDLGUIDRAW_H
+#ifndef SDLTK_CANVAS_H
+#define SDLTK_CANVAS_H
 
 #include "color.h"
 #include "point.h"
@@ -39,8 +39,8 @@ namespace sdltk
     class Canvas
     {
     public:
-        Canvas();
-        virtual ~Canvas();
+        Canvas() = default;
+        virtual ~Canvas() {};
 
         virtual void begin() {}
         virtual void end()   {}
@@ -129,4 +129,4 @@ namespace sdltk
 
 } // sdltk
 
-#endif // SDLGUIDRAW_H
+#endif // SDLTK_CANVAS_H

@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef WIDGET_H
-#define WIDGET_H
+#ifndef SDLTK_WIDGET_H
+#define SDLTK_WIDGET_H
 
 #include "canvas.h"
 #include "color.h"
@@ -33,13 +33,13 @@ namespace sdltk
     class Size;
     class Point;
 
-    /** Baseclass for all Widgets @author Fred Klaus development@fkweb.de */
+    //! Baseclass for all Widgets @author Fred Klaus development@fkweb.de
     class Widget
     {
 
     public:
         Widget(Widget * parent = nullptr);
-        virtual ~Widget();
+        virtual ~Widget() = default;
 
         virtual void draw() = 0;
         virtual void onMouseMotion (SDL_MouseMotionEvent * event) {}
@@ -100,6 +100,9 @@ namespace sdltk
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif
+#endif // SDLTK_VIDEOGL_H
+
+
+

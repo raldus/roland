@@ -23,9 +23,7 @@ namespace sdltk
 {
 
     Cpc* Audio::mCpc=0;
-    volatile bool Audio::mBufferCopied=false;
-
-
+    volatile bool Audio::mBufferCopied = false;
 
     Audio::Audio(Cpc * cpc)
     {
@@ -85,7 +83,7 @@ namespace sdltk
 
         if (SDL_OpenAudio(desired, mSpec) < 0)
         {
-            cerr << "Audio Could not open audio: " << SDL_GetError() << "\n";
+            std::cerr << "Audio Could not open audio: " << SDL_GetError() << "\n";
             return 1;
         }
         else isInit=true;
@@ -141,4 +139,4 @@ namespace sdltk
         }
     }
 
-} //sdl
+} // sdltk

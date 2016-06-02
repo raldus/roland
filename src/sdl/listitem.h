@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef LISTITEM_H
-#define LISTITEM_H
+#ifndef SDLTK_LIST_ITEM_H
+#define SDLTK_LIST_ITEM_H
 
 #include "button.h"
 #include "point.h"
@@ -26,7 +26,7 @@
 namespace sdltk
 {
 
-    /** @author Fred Klaus development@fkweb.de */
+    //! @author Fred Klaus development@fkweb.de
     class ListItem : public Button
     {
 
@@ -42,6 +42,6 @@ namespace sdltk
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //LISTITEM_H
+#endif // SDLTK_LIST_ITEM_H

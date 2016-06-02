@@ -22,12 +22,6 @@
 namespace sdltk
 {
 
-    Canvas::Canvas()
-    {}
-
-    Canvas::~Canvas()
-    {}
-
     void Canvas::setFont(const string & fname, const string & glyphs)
     {
         mFont.load(fname, glyphs);

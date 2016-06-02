@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef FILELISTITEM_H
-#define FILELISTITEM_H
+#ifndef SDLTK_FILE_LIST_ITEM_H
+#define SDLTK_FILE_LIST_ITEM_H
 
 #include "listitem.h"
 #include "point.h"
@@ -43,6 +43,6 @@ namespace sdltk
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //FILELISTITEM_H
+#endif // SDLTK_FILE_LIST_ITEM_H

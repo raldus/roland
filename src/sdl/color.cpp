@@ -27,9 +27,6 @@ namespace sdltk
         set(0, 0, 0, 255);
     }
 
-
-    Color::~Color() {}
-
     void Color::set(Uint8 r, Uint8 g, Uint8 b, Uint8 a)
     {
         mR = r;

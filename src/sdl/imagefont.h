@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUIIMAGEFONT_H
-#define SDLGUIIMAGEFONT_H
+#ifndef SDLTK_IMAGE_FONT_H
+#define SDLTK_IMAGE_FONT_H
 
 #include <string>
 #include "rect.h"
@@ -29,26 +29,26 @@
 namespace sdltk
 {
 
-    /** @brief a font created from an Image
-        @author Fred Klaus development@fkweb.de */
+    //! \brief a font created from an Image
+    //! \author Fred Klaus development@fkweb.de
     class ImageFont
     {
     public:
-        /** Standardconstructor */
-        ImageFont();
-        /** Constructor, calls ImageFont::load to load an Image
-            @param fname = the filename of an Image @param glyphs = the available glyphs in the Image */
+        //! Standardconstructor
+        ImageFont() : mSpacing(0) {};
+        //! Constructor, calls ImageFont::load to load an Image
+        //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
         ImageFont(const string & fname, const string & glyphs);
-        /** Standarddestructor */
-        ~ImageFont();
+        //! Standarddestructor
+        ~ImageFont() = default;
 
-        /** Check whether the Image is valid and sets up the glyphs and their Rect class */
+        //! Check whether the Image is valid and sets up the glyphs and their Rect class
         void init();
-        /** Frees all used resources */
+        //! Frees all used resources
         void clear();
 
-        /** loads an Image and calls ImageFont::init to set up the glyphs
-            @param fname = the filename of an Image @param glyphs = the available glyphs in the Image */
+        //! loads an Image and calls ImageFont::init to set up the glyphs
+        //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
         void load(const string & fname, const string & glyphs);
 
         inline const Rect & glyph(Uint8 chr) const;
@@ -74,6 +74,6 @@ namespace sdltk
         return mGlyphRect[i];
     }
 
-} //namespace sdltk
+} // sdltk
 
-#endif // SDLGUIIMAGEFONT_H
+#endif // SDLTK_IMAGE_FONT_H

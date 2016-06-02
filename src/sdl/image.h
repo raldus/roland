@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUIIMAGE_H
-#define SDLGUIIMAGE_H
+#ifndef SDLTK_IMAGE_H
+#define SDLTK_IMAGE_H
 
 #include "exception.h"
 #include "pixel.h"
@@ -32,38 +32,37 @@
 
 namespace sdltk
 {
-    using std::string;
 
-    /** @brief to display either on an OpenGL- or plain SDL-Surface
-        @author Fred Klaus development@fkweb.de */
+    //! \brief to display either on an OpenGL- or plain SDL-Surface
+    //! \author Fred Klaus development@fkweb.de
     class Image
     {
     public:
-        /** Constructor. Does some init. */
+        //! Constructor. Does some init.
         Image(bool autoconvert=true);
         Image(const string & fname, bool autoconvert=true);
         ~Image();
 
-        /** clears the Image and frees all resources */
+        //! Clears the Image and frees all resources
         void clear();
-        /** loads an Image into a SDL_Surface @param fname the filename to load */
+        //! loads an Image into a SDL_Surface @param fname the filename to lo:ad
         void load(const string & fname, bool autoconvert);
         void load(const string & fname);
-        /** converts an Image to Screenformat */
+        //! converts an Image to Screenformat
         void convert();
-        /** has alphachannel? @return true if there is an alphachannel */
+        //! has alphachannel? \return true if there is an alphachannel
         bool hasAlpha()    const {return mHasAlpha;}
-        /** has colorkey? RGB(255, 0, 255) @return true if there is a colorkey */
+        //! has colorkey? RGB(255, 0, 255) @return true if there is a colorkey
         bool hasColorKey() const {return mHasColorKey;}
-        /** @return the width */
+        //! \return the width
         Uint16 width () const {return mSize.width();}
-        /** @return the height */
+        //! \return the height
         Uint16 height() const {return mSize.height();}
-        /** @return the Size */
+        //! \return the Size
         const Size & size()   const {return mSize;}
 
-        /** sets whether or not autoconvert to screenformat
-            @param autoconvert = should be converted automatically? */
+        //! sets whether or not autoconvert to screenformat
+        //! \param autoconvert = should be converted automatically?
         void setAutoConvert(bool autoconvert) {mAutoConvert=autoconvert;}
 
         void setColorKey(Color color) {mColorKey = color;}
@@ -79,9 +78,9 @@ namespace sdltk
         GLuint textureHeight() const {return mTextureHeight;}
 
     protected:
-        /** checks the surface for Alpha */
+        //! checks the surface for Alpha
         void checkAlpha();
-        /** checks the surface for ColorKey */
+        //! checks the surface for ColorKey
         void checkColorKey();
 
         void genTexture();
@@ -108,6 +107,6 @@ namespace sdltk
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //SDLGUIIMAGE_H
+#endif // SDLTK_IMAGE_H

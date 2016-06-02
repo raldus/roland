@@ -22,10 +22,6 @@
 namespace sdltk
 {
 
-    List::~List()
-    {
-    }
-
     void List::init()
     {
         mPosH       = 0;

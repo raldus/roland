@@ -53,7 +53,7 @@
 
 using namespace std;
 
-SDL_Surface *screen = 0;
+SDL_Surface * screen = 0;
 
 bool joystick = false;
 
@@ -89,7 +89,7 @@ sdltk::List   * lstDirectory  = nullptr;
 sdltk::FileList * lstFile = nullptr;
 
 Prefs prefs;
-Cpc cpc(&prefs);
+Cpc cpc(prefs);
 sdltk::Audio audio (&cpc);
 sdltk::KeyTrans keytrans;
 

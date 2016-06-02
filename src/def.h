@@ -17,53 +17,38 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PREDEF_H
-#define PREDEF_H
+#ifndef ROLAND_DEF_H
+#define ROLAND_DEF_H
 
-
-#include <config.h>
-
-
+#include "types.h"
+#include "config.h"
 
 #include <iostream>
 #include <iomanip>
-using std::cerr;
-using std::cout;
-using std::setw;
-using std::setfill;
-using std::left;
-using std::right;
+#include <stdint.h>
+
+//! Number of CPU cycles per frame = 4MHz divided by 50Hz
+static constexpr uint32_t CYCLE_COUNT_INIT  = 80000;
+static constexpr uint8_t  TAPE_VOLUME       = 32;
+static constexpr uint8_t  MIN_SPEED_SETTING = 2;
+static constexpr uint8_t  MAX_SPEED_SETTING = 32;
+static constexpr uint8_t  DEF_SPEED_SETTING = 4;
+static constexpr uint16_t CPC_SCR_WIDTH  = 1024;        //!< max width
+static constexpr uint16_t CPC_SCR_HEIGHT = 312;         //!< max height
+static constexpr uint16_t CPC_VISIBLE_SCR_WIDTH  = 384; //!< visible: 4+40+4 * 8
+static constexpr uint16_t CPC_VISIBLE_SCR_HEIGHT = 270; //!< visible: 5+25+4 * 8  \TODO original is 272
+
 using std::boolalpha;
-#define EOUT(a,b,c) cerr << setw(12) << setfill(' ') << left << a << "(E) " << setw(40) << setfill('.') << left << b << c << "\n";
+#define EOUT(a,b,c) std::cerr << std::setw(12) << std::setfill(' ') << std::left << a << "(E) " << std::setw(40) << std::setfill('.') << std::left << b << c << "\n";
 
 #ifdef DEBUG
-	//#if DEBUG == 1
-		#define IOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b  << c << "\n";
-		#define DOUT(a,b,c)
-	//#endif
-		/*
-	#if DEBUG == 2
-		#define IOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b << c << "\n";
-		#define DOUT(a,b,c) cout << setw(12) << setfill(' ') << left << a << setw(22) << setfill('.') << left << b << c << "\n";
-	#endif
-
-	#define PREOUT \
-		void preout() { \
-		cout << setw(12) << "Compiler" << __VERSION__<< "\n"; \
-		cout << setw(12) << "GnuC" << __GNUC__ << __GNUC_MINOR__ << __GNUC_PATCHLEVEL__ << "\n"; \
-		cout << setw(12) << "Buildtime" << __DATE__ << __TIME__ << "\n\n"; \
-		} \
-		preout(); */
+    #define IOUT(a,b,c) std::cout << std::setw(12) << std::setfill(' ') << std::left << a << std::setw(22) << std::setfill('.') << std::left << b  << c << "\n";
+    #define DOUT(a,b,c)
 #else
-	#define IOUT(a,b,c)
-	#define DOUT(a,b,c)
-	#define PREOUT
+    #define IOUT(a,b,c)
+    #define DOUT(a,b,c)
+    #define PREOUT
 #endif
 
-#define CPC_SCR_WIDTH 1024         // max width
-#define CPC_SCR_HEIGHT 312         // max height
-#define CPC_VISIBLE_SCR_WIDTH  384 // visible width : 4+40+4 * 8
-#define CPC_VISIBLE_SCR_HEIGHT 270 // visible height: 5+25+4 * 8  @todo original is 272
 
-
-#endif //PREDEF_H
+#endif // ROLAND_DEF_H

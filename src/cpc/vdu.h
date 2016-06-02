@@ -20,7 +20,7 @@
 #ifndef VDU_H
 #define VDU_H
 
-#include "predef.h"
+#include "def.h"
 
 #ifdef USE_MMX
     #include "mmx_memcpy.h"

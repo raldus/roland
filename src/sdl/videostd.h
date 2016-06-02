@@ -17,19 +17,15 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLVIDEOSTD_H
-#define SDLVIDEOSTD_H
+#ifndef SDLTK_VIDEOSTD_H
+#define SDLTK_VIDEOSTD_H
 
-#include "predef.h"
+#include "def.h"
 
 #include "video.h"
 #include "cpc.h"
-#include "types.h"
-
 #include "canvasstd.h"
 #include "SDL.h"
-
-using namespace sdltk;
 
 namespace sdltk
 {
@@ -43,7 +39,7 @@ namespace sdltk
 
         virtual int init();
         virtual int init(uint width, uint height, uint depth, bool fullscreen, unsigned char scale);
-        
+
         virtual Canvas * getCanvas() {return &mCanvas;}
 
         virtual void update();
@@ -58,6 +54,6 @@ namespace sdltk
         CanvasStd mCanvas;
     };
 
-} //sdltk
+} // sdltk
 
-#endif
+#endif // SDLTK_VIDEOSTD_H

@@ -17,13 +17,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUIDRAWSTD_H
-#define SDLGUIDRAWSTD_H
+#ifndef SDLTK_CANVAS_STD_H
+#define SDLTK_CANVAS_STD_H
 
 #include "canvas.h"
-#include <string>
-
-using std::string;
 
 namespace sdltk
 {
@@ -32,8 +29,8 @@ namespace sdltk
     class CanvasStd : public Canvas
     {
     public:
-        CanvasStd();
-        virtual ~CanvasStd();
+        CanvasStd() = default;
+        virtual ~CanvasStd() = default;
 
         virtual void point(const Point & pos);
         virtual void rect (const Rect  & rect);
@@ -41,17 +38,17 @@ namespace sdltk
         virtual void line (const Point & pos1, const Point & pos2);
         virtual void image(const Image & image, const Rect  & src,  const Rect  & dest);
         //virtual void write(Point & pos, string & text);
-        
+
         virtual void setClipRect(const Rect & rect);
         virtual void clearClipRect();
 
-    private:        
+    private:
         void hLine(Sint32 x, Sint32  y, Sint32  x2);
         void vLine(Sint32 x, Sint32  y, Sint32  y2);
-        
+
         inline void putglyph(char *p, int Bpp, int pitch, int which);
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //SDLGUIDRAWSTD_H
+#endif // SDLTK_CANVAS_STD_H

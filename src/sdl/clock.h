@@ -17,24 +17,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef CLOCK_H
-#define CLOCK_H
+#ifndef ROLAND_CLOCK_H
+#define ROLAND_CLOCK_H
 
 #include "SDL.h"
 
 namespace sdltk
 {
 
-/** @author Fred Klaus */
-class Clock
+//! Time measurement in ms
+class Clock final
 {
 
 public:
-    Clock() : mLast(SDL_GetTicks()) {}
-    ~Clock() {}
+    //! Standardconstructor
+    Clock() : mLast(SDL_GetTicks()) {};
+    //! Standarddestructor
+    ~Clock() = default;
 
-    uint elapsed() {return SDL_GetTicks()-mLast;}
-    void init()    {mLast = SDL_GetTicks();}
+    //! Initialize the clock. Like "Set to 0".
+    void init() {mLast = SDL_GetTicks();}
+    //! Returns the time ellapsed sinze init() in ms
+    uint elapsed() const {return SDL_GetTicks() - mLast;}
 
 private:
     uint mLast;
@@ -43,4 +47,4 @@ private:
 
 } // sdltk
 
-#endif // CLOCK_H
+#endif // ROLAND_CLOCK_H

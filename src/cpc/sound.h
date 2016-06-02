@@ -21,11 +21,8 @@
 #define SOUND_H
 
 #include "psg.h"
+#include "config.h"
 #include "types.h"
-
-const static unsigned char TAPE_VOLUME(32);
-// 4MHz divided by 50Hz = number of CPU cycles per frame
-const static uint32_t CYCLE_COUNT_INIT(80000);
 
 /** @author Fred Klaus */
 class Sound

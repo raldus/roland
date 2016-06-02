@@ -22,12 +22,6 @@
 namespace sdltk
 {
 
-    CanvasGL::CanvasGL() : Canvas()
-    {}
-
-    CanvasGL::~CanvasGL()
-    {}
-    
     void CanvasGL::clearClipRect()
     {
         mClipRect.set(0, 0, mSurface->w, mSurface->h);
@@ -88,13 +82,13 @@ namespace sdltk
 
         oglTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 
-        
+
         if (mColor.hasAlpha()) oglEnable(GL_BLEND);
         else oglDisable(GL_BLEND);
     }
 
     void CanvasGL::end()
-    {       
+    {
         oglMatrixMode(GL_MODELVIEW);
         oglPopMatrix();
 
@@ -148,13 +142,13 @@ namespace sdltk
         // switch only if necessary
         if (image.hasAlpha() && !mColor.hasAlpha()) oglEnable(GL_BLEND);
         if (!image.hasAlpha() && mColor.hasAlpha()) oglDisable(GL_BLEND);
-        
+
         // Find OpenGL texture coordinates
         float texX1 = src.x() / (float) image.textureWidth();
         float texY1 = src.y() / (float) image.textureHeight();
         float texX2 = (src.x() + src.width())  / (float) image.textureWidth();
         float texY2 = (src.y() + src.height()) / (float) image.textureHeight();
-        
+
         oglEnable(GL_TEXTURE_2D);
         oglBindTexture(GL_TEXTURE_2D, image.texNum());
 
@@ -172,7 +166,7 @@ namespace sdltk
         oglTexCoord2f(texX2, texY1);
         oglVertex2i(dest.x() + dest.width(), dest.y());
         oglEnd();
-        
+
         // switch only if necessary
         if (image.hasAlpha() && !mColor.hasAlpha()) oglDisable(GL_BLEND);
         else if (mColor.hasAlpha()) oglEnable(GL_BLEND);
@@ -186,11 +180,11 @@ namespace sdltk
         oglColor4ub(mColor.r(), mColor.g(), mColor.b(), mColor.a());
         if (mColor.hasAlpha()) oglEnable(GL_BLEND);
     }
-    
+
     /*
     void CanvasGL::write(Point & pos, string & text)
     {
     }*/
 
 
-} //namespace sdltk
+} // sdltk

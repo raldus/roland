@@ -17,18 +17,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLVIDEO_H
-#define SDLVIDEO_H
+#ifndef SDLTK_VIDEO_H
+#define SDLTK_VIDEO_H
 
-#include "predef.h"
+#include "def.h"
 
 #include "canvas.h"
 #include "cpc.h"
 #include "SDL.h"
 
-#include <string>
-
-//! @brief covers SDL-functions
+//! \brief covers all DL-functions
 namespace sdltk
 {
 
@@ -38,7 +36,7 @@ namespace sdltk
     public:
         //! Constructs the video interface for the \param Cpc
         Video(Cpc* cpc);
-        virtual ~Video() {};
+        virtual ~Video() = default;
 
         //! device dependant init for inheritance
         virtual int  init() = 0;
@@ -118,6 +116,7 @@ namespace sdltk
 
     };
 
-} //sdltk
+} // sdltk
 
-#endif
+#endif // SDLTK_VIDEO_H
+

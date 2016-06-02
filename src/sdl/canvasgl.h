@@ -17,21 +17,21 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SDLGUIDRAWGL_H
-#define SDLGUIDRAWGL_H
+#ifndef SDLTK_CANVAS_GL_H
+#define SDLTK_CANVAS_GL_H
 
-#include <canvas.h>
+#include "canvas.h"
 #include "glfuncs.h"
 
 namespace sdltk
 {
 
-    /** @author Fred Klaus development@fkweb.de */
+    //! @author Fred Klaus development@fkweb.de
     class CanvasGL : public Canvas
     {
     public:
-        CanvasGL();
-        virtual ~CanvasGL();
+        CanvasGL() = default;
+        virtual ~CanvasGL() = default;
 
         virtual void begin();
         virtual void end();
@@ -43,12 +43,12 @@ namespace sdltk
         virtual void image(const Image & image, const Rect &  src,  const Rect  & dest);
 
         virtual void setColor(const Color & color);
-        
+
         virtual void setClipRect(const Rect & rect);
         virtual void clearClipRect();
 
     };
 
-} //namespace sdltk
+} // sdltk
 
-#endif //SDLGUIDRAWGL_H
+#endif // SDLTK_CANVAS_GL_H

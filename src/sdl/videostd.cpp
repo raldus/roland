@@ -164,7 +164,7 @@ namespace sdltk
     }
 
 
-} //sdltk
+} // sdltk
 
 
 

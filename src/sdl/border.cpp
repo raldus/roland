@@ -22,58 +22,50 @@
 namespace sdltk
 {
 
-    Border::Border()
-    {
-        mColor=0xffffffff;
-    }
-    
-    Border::~Border()
-    {}
-    
     void Border::setUniSize(uint width, uint height, uint thickness)
     {
         mBorder[bpTop].x = thickness;
         mBorder[bpTop].y = 0;
         mBorder[bpTop].w = width - (2 * thickness);
         mBorder[bpTop].h = thickness;
-                
+
         mBorder[bpBottom].x = thickness;
         mBorder[bpBottom].y = height - thickness;
         mBorder[bpBottom].w = width - (2 * thickness);
         mBorder[bpBottom].h = thickness;
-                
+
         mBorder[bpLeft].x = 0;
         mBorder[bpLeft].y = thickness;
         mBorder[bpLeft].w = thickness;
         mBorder[bpLeft].h = height - (2 * thickness);
-                
+
         mBorder[bpRight].x  = width - thickness;
         mBorder[bpRight].y  = thickness;
         mBorder[bpRight].w  = thickness;
         mBorder[bpRight].h  = height - (2 * thickness);
-        
+
         mBorder[bpLeftTop].x  = 0;
         mBorder[bpLeftTop].y  = 0;
         mBorder[bpLeftTop].w  = thickness;
         mBorder[bpLeftTop].h  = thickness;
-        
+
         mBorder[bpLeftBottom].x  = 0;
         mBorder[bpLeftBottom].y  = height - thickness;
         mBorder[bpLeftBottom].w  = thickness;
         mBorder[bpLeftBottom].h  = thickness;
-        
+
         mBorder[bpRightTop].x  = width - thickness;
         mBorder[bpRightTop].y  = 0;
         mBorder[bpRightTop].w  = thickness;
         mBorder[bpRightTop].h  = thickness;
-        
+
         mBorder[bpRightBottom].x  = width - thickness;
         mBorder[bpRightBottom].y  = height - thickness;
         mBorder[bpRightBottom].w  = thickness;
         mBorder[bpRightBottom].h  = thickness;
-    
+
     }
-    
+
     void Border::paint(SDL_Surface * surface)
     {
         for (uchar i=0; i < 8; i++)
@@ -81,7 +73,7 @@ namespace sdltk
             SDL_FillRect(surface, &mBorder[i], mColor);
         }
     }
-    
+
     void Border::setColor(uint color)
     {
         mColor = color;

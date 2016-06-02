@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYTRANS_H
-#define KEYTRANS_H
+#ifndef SDLTK_KEYTRANS_H
+#define SDLTK_KEYTRANS_H
 
 #include "types.h"
 #include "SDL.h"
@@ -27,12 +27,12 @@ namespace sdltk
 {
 
     //! This class provides Keyboard translaation between CPC/EN/DE/SDL/WIN/LINUX
-    class KeyTrans
+    class KeyTrans final
     {
 
     public:
         KeyTrans();
-        ~KeyTrans() {}
+        ~KeyTrans() = default;
 
         struct JoyAlloc
         {
@@ -48,12 +48,12 @@ namespace sdltk
 
         enum Language {German, English};
 
-        void init(Language lang=German);
+        void init(Language lang = German);
 
         tUBYTE get(SDL_Event & event);
 
         bool toggleJoystick();
-        bool joystickEnabled() {return mJoyEnabled;}
+        bool joystickEnabled() const {return mJoyEnabled;}
 
         const SeqPair & sequenceVal();
         bool hasSequence();
@@ -72,4 +72,4 @@ namespace sdltk
 
 } // sdltk
 
-#endif // KEYTRANS_H
+#endif // SDLTK_KEYTRANS_H

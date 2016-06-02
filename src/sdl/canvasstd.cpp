@@ -29,19 +29,13 @@
 namespace sdltk
 {
 
-    CanvasStd::CanvasStd() : Canvas()
-    {}
-
-    CanvasStd::~CanvasStd()
-    {}
-    
     void CanvasStd::setClipRect(const Rect & rect)
     {
         mClipRect = rect;
         SDL_SetClipRect(mSurface, &rect);
     }
-    
-    void CanvasStd::clearClipRect() 
+
+    void CanvasStd::clearClipRect()
     {
         mClipRect.set(0, 0, mSurface->w, mSurface->h);
         SDL_SetClipRect(mSurface, 0);
@@ -100,7 +94,7 @@ namespace sdltk
     {
         Point p1(pos1);
         Point p2(pos2);
-        
+
         if (p1.x() == p2.x())
         {
             vLine(p1.x(), p1.y(), p2.y());
@@ -205,7 +199,7 @@ namespace sdltk
                 p1.qY(p2);
                 p2.qY(p1);
                 p1.qY(p2);
-                
+
                 // swap p1.x(), p2.x()
                 p1.qX(p2);
                 p2.qX(p1);
@@ -295,7 +289,7 @@ namespace sdltk
             x  ^= x2;
         }
 
-        
+
         if (mClipRect.x() > x)
         {
             if (mClipRect.x() > x2)
@@ -313,7 +307,7 @@ namespace sdltk
             }
             x2 = mClipRect.x() + mClipRect.width() -1;
         }
-        
+
 
         Uint32  bpp = mSurface->format->BytesPerPixel;
 
@@ -408,7 +402,7 @@ namespace sdltk
             y  ^= y2;
         }
 
-        
+
         if (mClipRect.y() > y)
         {
             if (mClipRect.y() > y2)
@@ -426,7 +420,7 @@ namespace sdltk
             }
             y2 = mClipRect.y() + mClipRect.height() - 1;
         }
-        
+
 
         Uint32  bpp = mSurface->format->BytesPerPixel;
 
@@ -503,7 +497,7 @@ namespace sdltk
 
         SDL_UnlockSurface(mSurface);
     }
-    
+
     /*
     void CanvasStd::write(Point & pos, string & text)
     {
