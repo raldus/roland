@@ -129,29 +129,29 @@ void init()
 void initGui()
 {
     if (gui) delete gui;
-    gui = new Gui(video);
+    gui = new sdltk::Gui(video);
 
     video->getCanvas()->setFont(
         datadir + "rpgfont.png",
         " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;");
 
-    Size textsize = video->getCanvas()->textSize("50/50");
+    sdltk::Size textsize = video->getCanvas()->textSize("50/50");
 
 
-    lblFps = new Label;
+    lblFps = new sdltk::Label;
     lblFps->setColor(100, 100, 100, 128);
     lblFps->setPos(7, video->screen()->h - textsize.height() - 10);
     lblFps->setSize(textsize.width() + 7, textsize.height() + 3);
     lblFps->setBorder(true);
 
-    lblJoy = new Label;
+    lblJoy = new sdltk::Label;
     lblJoy->setImage(datadir + "joykeyb.png");
     lblJoy->setPos(
             video->screen()->w - lblJoy->width()  - 5 - lblJoy->width(),
             video->screen()->h - lblJoy->height() - 5);
     lblJoy->setEnabled(joystick);
 
-    lblDisk = new Label;
+    lblDisk = new sdltk::Label;
     textsize = video->getCanvas()->textSize("disk");
     lblDisk->setSize(textsize.width() + 7, textsize.height() + 3);
     lblDisk->setText("disk");
@@ -198,7 +198,7 @@ void initGui()
     }
 */
 
-    lstFile = new FileList(gui, prefs.getPath("diskdir"), 'a');
+    lstFile = new sdltk::FileList(gui, prefs.getPath("diskdir"), 'a');
     lstFile->setEnabled(false);
 
     gui->add(lblFps);
@@ -356,7 +356,7 @@ void mainloop()
                                 case SDLK_F7:
                                     audio.pause(true);
                                     delete video;
-                                    video = new VideoStd(&cpc);
+                                    video = new sdltk::VideoStd(&cpc);
                                     if (video->init() != 0)
                                     {
                                         delete video;
@@ -369,11 +369,11 @@ void mainloop()
                                 case SDLK_F8:
                                     audio.pause(true);
                                     delete video;
-                                    video = new VideoGL(&cpc);
+                                    video = new sdltk::VideoGL(&cpc);
                                     if (video->init() != 0)
                                     {
                                         delete video;
-                                        video = new VideoStd(&cpc);
+                                        video = new sdltk::VideoStd(&cpc);
                                         if (video->init() != 0)
                                         {
                                             EOUT("[Core]", "could not init any video device", "quit");
@@ -556,8 +556,8 @@ int main(int argc, char *argv[])
     //bool fs = prefs.getBool("fullscreen");
 
     //SDL_WM_SetCaption(PACKAGE_STRING, 0);
-    Video::setCaption(PACKAGE_STRING);
-    Video::setIcon(datadir + "icon32x32-256.bmp");
+    sdltk::Video::setCaption(PACKAGE_STRING);
+    sdltk::Video::setIcon(datadir + "icon32x32-256.bmp");
     //SDL_WM_GrabInput (SDL_GRAB_ON);
     //SDL_ShowCursor (0);
     //SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
