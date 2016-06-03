@@ -23,7 +23,7 @@
 
 namespace sdltk
 {
-    
+
     Exception::Exception(const char* details, const char* file, int line)
             : mLine(line)
     {
@@ -35,51 +35,51 @@ namespace sdltk
         mMsg = message;
         init(eno, details, file, line);
     }
-    
+
     Exception::Exception(const char* section, const char* message, const char* details, const char* file, int line)
     {
         mSection = section;
         mMsg = message;
         init(false, details, file, line);
     }
-    
+
     Exception::Exception(const char* section, const char* message, GLenum glerr, const char* file, int line)
     {
         mSection = section;
         mMsg = message;
         mGLErr = glerr;
-        string details;
-        
+        String details;
+
         switch (glerr)
         {
             case GL_INVALID_ENUM:
                 details = "An unacceptable value is specified for an enumerated argument.";
                 break;
-            
+
             case GL_INVALID_VALUE:
                 details = "A numeric argument is out of range.";
                 break;
-                
+
             case GL_INVALID_OPERATION:
                 details = "The specified operation is not allowed in the current state.";
                 break;
-                
+
             case GL_STACK_OVERFLOW:
                 details = "This command would cause a stack overflow";
                 break;
-                
+
             case GL_STACK_UNDERFLOW:
                 details = "This command would cause a stack underflow";
                 break;
-                
+
             case GL_OUT_OF_MEMORY:
                 details = "There is not enough memory left to execute the command.";
                 break;
-                
+
             case GL_TABLE_TOO_LARGE:
                 details = "The specified table exceeds the implementation's maximum supported table size.";
                 break;
-                
+
             default:
                 details = "An unknown OpenGL error has occured.";
                 break;
@@ -92,7 +92,7 @@ namespace sdltk
     {
         if (details) mDetails=details;
         else mDetails="";
-        
+
         mLine=line;
 
         if (file) mFile=file;
@@ -115,7 +115,7 @@ namespace sdltk
         std::cerr << mSection << " " << mMsg << std::endl;
 
         if (!mDetails.empty()) std::cerr << mSection << " " << mDetails;
-        
+
         std::cerr << std::endl;
 
     }

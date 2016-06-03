@@ -45,10 +45,10 @@ namespace sdltk
         virtual void onMouseMotion (SDL_MouseMotionEvent * event);
         virtual void onMouseButton (SDL_MouseButtonEvent * event);
 
-        void setImage(const std::string & fname, bool autosize=true, bool bg=false);
+        void setImage(const String & fname, bool autosize=true, bool bg=false);
         void setBorder(bool val);
         void setBackground(bool val)      {mBackground = val;}
-        void setText(const std::string & text) {mText = text;}
+        void setText(const String & text) {mText = text;}
 
     protected:
         void drawBorder();
@@ -66,7 +66,7 @@ namespace sdltk
 
         Image * mImage;
 
-        std::string mText;
+        String mText;
         Point mTextPos;
         Point mTextOffset;
 

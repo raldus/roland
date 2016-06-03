@@ -20,7 +20,16 @@
 #ifndef ROLAND_TYPES_H
 #define ROLAND_TYPES_H
 
-#include <stdint.h>
+#include <cstdint>
+#include <string>
+
+//! Represents c++ std::string
+namespace sdltk
+{
+    using String = std::string;
+};
+using tString = std::string;
+
 
 //enum Bits {Bit0=1, Bit1=2, Bit2=4, Bit3=8, Bit4=16, Bit5=32, Bit6=64, Bit7=128};
 

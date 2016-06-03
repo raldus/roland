@@ -27,9 +27,9 @@ namespace sdltk
 
 FileSelect::FileSelect(
             SDL_Surface *scrn,
-            const std::string & dir,
-            const std::string & last,
-            const std::string & prefix)
+            const String & dir,
+            const String & last,
+            const String & prefix)
 {
     mDir     = 0;
     mScrn    = scrn;
@@ -55,7 +55,7 @@ FileSelect::~FileSelect()
     clear();
 }
 
-void FileSelect::openDir(const std::string & dir)
+void FileSelect::openDir(const String & dir)
 {
     if (mDir) closeDir();
     mDir = new Directory(dir);
@@ -87,7 +87,7 @@ void FileSelect::closeDir()
     }
 }
 
-const std::string &FileSelect::filename()
+const String &FileSelect::filename()
 {
     mFilename = *mDirIt;
     mFilename.setPath(mDirname);
@@ -139,7 +139,7 @@ void FileSelect::display()
         }
     }
 
-    std::string msg = mPrefix + *mDirIt;
+    String msg = mPrefix + *mDirIt;
 
     mFont.write(mScrn, rect.x + 2, rect.y + 2, msg.c_str());
 

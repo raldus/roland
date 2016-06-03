@@ -91,9 +91,9 @@ namespace sdltk
         SDL_Surface* screen() {return mScreen;}
 
         //! Sets an image as application icon
-        static void setIcon   (const string & icon);
+        static void setIcon   (const String & icon);
         //! Sets a caption for the application
-        static void setCaption(const string & caption) {SDL_WM_SetCaption(caption.c_str(), caption.c_str());}
+        static void setCaption(const String & caption) {SDL_WM_SetCaption(caption.c_str(), caption.c_str());}
 
 
     protected:

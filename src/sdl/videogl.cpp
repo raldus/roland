@@ -208,7 +208,7 @@ namespace sdltk
         char buf[16];
         memset(buf, 0, 16);
         SDL_VideoDriverName(buf, 15);
-        string driver=buf;
+        String driver=buf;
 
 
         if (mBuffer->format->BitsPerPixel == 16) mCpc->vdu().setBpp(Vdu::Bpp16);

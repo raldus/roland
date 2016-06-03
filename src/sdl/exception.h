@@ -20,9 +20,7 @@
 #ifndef SDLGUIEXCEPTION_H
 #define SDLGUIEXCEPTION_H
 
-#ifdef HAVE_CONFIG_H
-    #include <config.h>
-#endif
+#include "types.h"
 
 #include <string>
 #include <cerrno>
@@ -37,7 +35,6 @@
 
 namespace sdltk
 {
-    using std::string;
 
     /// Handles all Exceptions
     /** All Exceptions are collected in this class.
@@ -67,17 +64,17 @@ namespace sdltk
     protected:
         int    mError;
         int    mLine;
-        string mSection;
-        string mMsg;
-        string mFile;
-        string mDetails;
+        String mSection;
+        String mMsg;
+        String mFile;
+        String mDetails;
         GLenum mGLErr;
 
     private:
         void init(bool eno, const char* message, const char* details, const char* file, int line);
     };
-    
-    
+
+
     class ExcSDL : public Exception
     {
     public:
@@ -86,8 +83,8 @@ namespace sdltk
 
         ~ExcSDL() {}
     };
-    
-    
+
+
     class ExcGL : public Exception
     {
     public:
@@ -95,7 +92,7 @@ namespace sdltk
                 : Exception("[OpenGL]", message, glerr, file, line) {}
 
         ~ExcGL() {}
-        
+
         GLenum getEnum() const {return mGLErr;}
     };
 
@@ -109,7 +106,7 @@ namespace sdltk
         ~ExcMemory() {}
     };
 
-    
+
     class ExcIO : public Exception
     {
     public:

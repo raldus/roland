@@ -89,7 +89,7 @@ namespace sdltk
         char buf[16];
         memset(buf, 0, 16);
         SDL_VideoDriverName(buf, 15);
-        string driver=buf;
+        String driver=buf;
 
         uint hp = (width  - mCpcWidth)  / 2;
         uint vp = (height - mCpcHeight) / 2;

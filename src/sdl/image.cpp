@@ -33,7 +33,7 @@ namespace sdltk
         clear();
     }
 
-    Image::Image(const std::string & fname, bool autoconvert)
+    Image::Image(const String & fname, bool autoconvert)
     {
         mAutoConvert = autoconvert;
 
@@ -144,7 +144,7 @@ namespace sdltk
         }
     }
 
-    void Image::load(const std::string & fname, bool autoconvert)
+    void Image::load(const String & fname, bool autoconvert)
     {
         mAutoConvert = autoconvert;
         mSurface = IMG_Load(fname.c_str());
@@ -153,7 +153,7 @@ namespace sdltk
         if (mAutoConvert) convert();
     }
 
-    void Image::load(const std::string & fname)
+    void Image::load(const String & fname)
     {
         load(fname, mAutoConvert);
     }

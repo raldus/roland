@@ -22,7 +22,7 @@
 namespace sdltk
 {
 
-    ImageFont::ImageFont(const string & fname, const string & glyphs)
+    ImageFont::ImageFont(const String & fname, const String & glyphs)
     {
         load(fname, glyphs);
     }
@@ -53,7 +53,7 @@ namespace sdltk
         mImage.clear();
     }
 
-    void ImageFont::load(const string & fname, const string & glyphs)
+    void ImageFont::load(const String & fname, const String & glyphs)
     {
         clear();
         mImage.load(fname, false);

@@ -499,7 +499,7 @@ namespace sdltk
     }
 
     /*
-    void CanvasStd::write(Point & pos, string & text)
+    void CanvasStd::write(Point & pos, String & text)
     {
         Rect src, dest;
         for (Uint16 i=0; i < text.length(); i++)

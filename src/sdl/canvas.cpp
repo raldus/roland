@@ -22,7 +22,7 @@
 namespace sdltk
 {
 
-    void Canvas::setFont(const std::string & fname, const std::string & glyphs)
+    void Canvas::setFont(const String & fname, const String & glyphs)
     {
         mFont.load(fname, glyphs);
     }

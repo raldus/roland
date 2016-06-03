@@ -48,7 +48,7 @@ namespace sdltk
         IOUT("[Video]", "desktopheight", mDesktopHeight);
     }
 
-    void Video::setIcon(const string & icon)
+    void Video::setIcon(const String & icon)
     {
         SDL_Surface * surface = SDL_LoadBMP(icon.c_str());
         SDL_SetColorKey(surface, SDL_SRCCOLORKEY, SDL_MapRGB(surface->format, 255, 0 ,255));

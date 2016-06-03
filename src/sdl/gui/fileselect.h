@@ -20,7 +20,7 @@
 #ifndef FILESELECT_H
 #define FILESELECT_H
 
-#include <string>
+#include "types.h"
 
 #include "font.h"
 #include "directory.h"
@@ -35,13 +35,13 @@ class FileSelect
 
 public:
     FileSelect() = delete;
-    FileSelect(SDL_Surface* scrn, const std::string & dir, const std::string & last, const std::string & prefix="File: ");
+    FileSelect(SDL_Surface* scrn, const String & dir, const String & last, const String & prefix="File: ");
     ~FileSelect();
 
-    void openDir(const std::string &  dir);
+    void openDir(const String &  dir);
     void closeDir();
 
-    const std::string & filename();
+    const String & filename();
 
     bool loop();
 
@@ -54,8 +54,8 @@ private:
 
     Font mFont;
 
-    std::string mDirname;
-    std::string mPrefix;
+    String mDirname;
+    String mPrefix;
     FileName mFilename;
     FileName mLast;
 

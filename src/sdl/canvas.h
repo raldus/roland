@@ -20,10 +20,9 @@
 #ifndef SDLTK_CANVAS_H
 #define SDLTK_CANVAS_H
 
+#include "types.h"
 #include "image.h"
 #include "imagefont.h"
-
-#include <string>
 #include <cstdlib>
 #include <algorithm>
 
@@ -56,7 +55,7 @@ namespace sdltk
         virtual void setClipRect(const Rect & rect) {}
         virtual void clearClipRect() {}
 
-        void setFont(const std::string & fname, const std::string & glyphs);
+        void setFont(const String & fname, const String & glyphs);
         void setSurface(SDL_Surface * const surface) {mSurface = surface;}
 
         void point(Point * const pos)  {point(*pos);}
@@ -66,9 +65,9 @@ namespace sdltk
         void image(Image * const img, const Point & pos) {image(*img, pos);}
 
         void image(const Image & img, const Point & pos);
-        void write(const Point & pos, const std::string & text);
+        void write(const Point & pos, const String & text);
 
-        const Size & textSize(const std::string & text);
+        const Size & textSize(const String & text);
         const Uint16 textHeight() const;
 
         const ImageFont & font()  const {return mFont;}
@@ -81,7 +80,7 @@ namespace sdltk
         Size          mTextSize;
         Color         mColor;
         ImageFont     mFont;
-        std::string   mNumber;
+        String   mNumber;
         Rect          mClipRect;
     };
 
@@ -94,7 +93,7 @@ namespace sdltk
         image(img, src, dst);
     }
 
-    inline void Canvas::write(const Point & pos, const std::string & text)
+    inline void Canvas::write(const Point & pos, const String & text)
     {
         Rect src, dest;
         Point p(pos);
@@ -107,7 +106,7 @@ namespace sdltk
         }
     }
 
-    inline const Size & Canvas::textSize(const std::string & text)
+    inline const Size & Canvas::textSize(const String & text)
     {
         Rect rect;
         mTextSize.clear();

@@ -96,7 +96,7 @@ namespace sdltk
         else mCanvasRect = mRect;
     }
 
-    void Label::setImage(const string & fname, bool autosize, bool bg)
+    void Label::setImage(const String & fname, bool autosize, bool bg)
     {
         mBackground = bg;
 

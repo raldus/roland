@@ -38,7 +38,7 @@ namespace sdltk
         ImageFont() : mSpacing(0) {};
         //! Constructor, calls ImageFont::load to load an Image
         //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
-        ImageFont(const std::string & fname, const std::string & glyphs);
+        ImageFont(const String & fname, const String & glyphs);
         //! Standarddestructor
         ~ImageFont() = default;
 
@@ -49,7 +49,7 @@ namespace sdltk
 
         //! loads an Image and calls ImageFont::init to set up the glyphs
         //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
-        void load(const std::string & fname, const std::string & glyphs);
+        void load(const String & fname, const String & glyphs);
 
         inline const Rect & glyph(Uint8 chr) const;
 
@@ -60,7 +60,7 @@ namespace sdltk
 
     private:
         Image mImage;
-        std::string mGlyphs;
+        String mGlyphs;
         Rect mGlyphRect[256]; // @todo  maximum Glyphs !?!
         Uint16 mSpacing;
 
@@ -69,8 +69,8 @@ namespace sdltk
 
     inline const Rect & ImageFont::glyph(Uint8 chr) const
     {
-        std::string::size_type i = mGlyphs.find(chr);
-        if (i == std::string::npos) i = 0;
+        String::size_type i = mGlyphs.find(chr);
+        if (i == String::npos) i = 0;
         return mGlyphRect[i];
     }
 

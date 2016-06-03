@@ -182,7 +182,7 @@ namespace sdltk
     }
 
     /*
-    void CanvasGL::write(Point & pos, string & text)
+    void CanvasGL::write(Point & pos, String & text)
     {
     }*/
 

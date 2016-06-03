@@ -37,7 +37,7 @@ namespace sdltk
         virtual void fill (const Rect  & rect);
         virtual void line (const Point & pos1, const Point & pos2);
         virtual void image(const Image & image, const Rect  & src,  const Rect  & dest);
-        //virtual void write(Point & pos, string & text);
+        //virtual void write(Point & pos, String & text);
 
         virtual void setClipRect(const Rect & rect);
         virtual void clearClipRect();

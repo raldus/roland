@@ -43,14 +43,14 @@ namespace sdltk
     public:
         //! Constructor. Does some init.
         Image(bool autoconvert = true);
-        Image(const std::string & fname, bool autoconvert = true);
+        Image(const String & fname, bool autoconvert = true);
         ~Image();
 
         //! Clears the Image and frees all resources
         void clear();
         //! loads an Image into a SDL_Surface @param fname the filename to lo:ad
-        void load(const std::string & fname, bool autoconvert);
-        void load(const std::string & fname);
+        void load(const String & fname, bool autoconvert);
+        void load(const String & fname);
         //! converts an Image to Screenformat
         void convert();
         //! has alphachannel? \return true if there is an alphachannel

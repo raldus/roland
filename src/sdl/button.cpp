@@ -30,7 +30,7 @@ namespace sdltk
 
     void Button::onMouseMotion(SDL_MouseMotionEvent * event)
     {
-        //std::string tmp;
+        //String tmp;
         //tmp  = "x:"  + std::to_string(event->x);
         //tmp += "/y:" + std::to_string(event->y);
         //IOUT("[sdltk::Button]", "Info ", tmp);
