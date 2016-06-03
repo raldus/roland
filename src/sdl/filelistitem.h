@@ -21,14 +21,12 @@
 #define SDLTK_FILE_LIST_ITEM_H
 
 #include "listitem.h"
-#include "point.h"
 #include "filename.h"
-#include "directory.h"
 
 namespace sdltk
 {
 
-    /** @author Fred Klaus development@fkweb.de */
+    //! \author Fred Klaus development@fkweb.de
     class FileListItem : public ListItem
     {
 
@@ -36,7 +34,7 @@ namespace sdltk
         FileListItem(const FileName & filename);
         ~FileListItem() = default;
 
-        void setFileName(FileName filename) {mFileName = filename;}
+        void setFileName(const FileName & filename) {mFileName = filename;}
 
     private:
         FileName mFileName;

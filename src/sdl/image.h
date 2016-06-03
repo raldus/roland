@@ -23,8 +23,6 @@
 #include "exception.h"
 #include "pixel.h"
 #include "rect.h"
-#include "color.h"
-#include "point.h"
 #include "SDL.h"
 #include "SDL_image.h"
 #include "glfuncs.h"
@@ -33,21 +31,26 @@
 namespace sdltk
 {
 
+    class Color;
+    class Point;
+    class Size;
+
     //! \brief to display either on an OpenGL- or plain SDL-Surface
     //! \author Fred Klaus development@fkweb.de
     class Image
     {
+
     public:
         //! Constructor. Does some init.
-        Image(bool autoconvert=true);
-        Image(const string & fname, bool autoconvert=true);
+        Image(bool autoconvert = true);
+        Image(const std::string & fname, bool autoconvert = true);
         ~Image();
 
         //! Clears the Image and frees all resources
         void clear();
         //! loads an Image into a SDL_Surface @param fname the filename to lo:ad
-        void load(const string & fname, bool autoconvert);
-        void load(const string & fname);
+        void load(const std::string & fname, bool autoconvert);
+        void load(const std::string & fname);
         //! converts an Image to Screenformat
         void convert();
         //! has alphachannel? \return true if there is an alphachannel

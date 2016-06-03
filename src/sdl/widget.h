@@ -21,15 +21,15 @@
 #define SDLTK_WIDGET_H
 
 #include "canvas.h"
-#include "color.h"
-#include "rect.h"
 #include "SDL.h"
 
 
 namespace sdltk
 {
 
+    class Color;
     class Gui;
+    class Rect;
     class Size;
     class Point;
 

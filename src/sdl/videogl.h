@@ -21,12 +21,9 @@
 #define SDLTK_VIDEOGL_H
 
 #include "def.h"
-
 #include "video.h"
-#include "cpc.h"
-
 #include "canvasgl.h"
-#include "gui.h"
+#include "cpc.h"
 #include "SDL.h"
 #include "glfuncs.h"
 

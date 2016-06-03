@@ -21,10 +21,11 @@
 #define SDLTK_LIST_ITEM_H
 
 #include "button.h"
-#include "point.h"
 
 namespace sdltk
 {
+
+    class Point;
 
     //! @author Fred Klaus development@fkweb.de
     class ListItem : public Button

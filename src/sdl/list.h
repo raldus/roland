@@ -20,20 +20,22 @@
 #ifndef SDLTK_LIST_H
 #define SDLTK_LIST_H
 
-#include "widget.h"
 #include "listitem.h"
-#include "point.h"
 #include "gui.h"
 #include "clock.h"
-
 #include <list>
 
 namespace sdltk
 {
 
+    class Clock;
+    class Color;
+    class Point;
+
     //! A list that can hold several ListItem s.
     class List : public Widget, public std::list<ListItem*>
     {
+
     public:
         //! Some initialization
         List(Gui * gui) : mGui(gui) {init();}

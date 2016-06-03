@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "image.h"
+#include <string>
 
 namespace sdltk
 {
@@ -32,7 +33,7 @@ namespace sdltk
         clear();
     }
 
-    Image::Image(const string & fname, bool autoconvert)
+    Image::Image(const std::string & fname, bool autoconvert)
     {
         mAutoConvert = autoconvert;
 
@@ -143,7 +144,7 @@ namespace sdltk
         }
     }
 
-    void Image::load(const string & fname, bool autoconvert)
+    void Image::load(const std::string & fname, bool autoconvert)
     {
         mAutoConvert = autoconvert;
         mSurface = IMG_Load(fname.c_str());
@@ -152,7 +153,7 @@ namespace sdltk
         if (mAutoConvert) convert();
     }
 
-    void Image::load(const string & fname)
+    void Image::load(const std::string & fname)
     {
         load(fname, mAutoConvert);
     }

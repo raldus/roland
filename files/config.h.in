@@ -34,8 +34,7 @@ static constexpr auto PACKAGE_BUGREPORT = "development@fkweb.de";
 static constexpr auto PACKAGE_NAME = "@PACKAGE_NAME@";
 
 //! Define to the full name and version of this package.
-static constexpr auto PACKAGE_STRING =
-        "@PROJECT_NAME@ @PACKAGE_VERSION@ @CMAKE_BUILD_TYPE@";
+static constexpr auto PACKAGE_STRING = "@PROJECT_NAME@ @PACKAGE_VERSION@ @CMAKE_BUILD_TYPE@";
 
 //! Define to the one symbol short name of this package.
 static constexpr auto PACKAGE_TARNAME = "@PACKAGE_NAME@";

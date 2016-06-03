@@ -20,15 +20,14 @@
 #ifndef SDLTK_FILE_LIST_H
 #define SDLTK_FILE_LIST_H
 
-#include "widget.h"
 #include "list.h"
-#include "gui.h"
-
 #include "filename.h"
 #include "directory.h"
 
 namespace sdltk
 {
+
+    class Gui;
 
     //! A filelist to select a file.
     class FileList : public List
@@ -36,7 +35,7 @@ namespace sdltk
 
     public:
         //! Some initialization
-        FileList(Gui * gui, const FileName & dirname, char letter=0);
+        FileList(Gui * gui, const FileName & dirname, char letter = 0);
         //! Deafault destructor
         ~FileList();
 

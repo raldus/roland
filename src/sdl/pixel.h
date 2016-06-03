@@ -27,6 +27,7 @@ namespace sdltk
 {
     class Pixel
     {
+
     public:
         Pixel()  = default;
         ~Pixel() = default;

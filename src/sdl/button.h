@@ -20,17 +20,19 @@
 #ifndef SDLTK_BUTTON_H
 #define SDLTK_BUTTON_H
 
+#include "def.h"
 #include "label.h"
-#include "rect.h"
-#include "point.h"
-#include "color.h"
-#include <string>
+#include "SDL.h"
 
 namespace sdltk
 {
+
+    class Color;
+
     //! @author Fred Klaus development@fkweb.de
     class Button : public Label
     {
+
     public:
         Button();
         virtual ~Button();
@@ -40,7 +42,7 @@ namespace sdltk
         virtual void onMouseMotion (SDL_MouseMotionEvent * event);
         virtual void onMouseButton (SDL_MouseButtonEvent * event);
 
-        void setHighliteColor(const Color & color) {mHighlightColor = color;}
+        void setHighlightColor(const Color & color) {mHighlightColor = color;}
 
     private:
         Color mHighlightColor;

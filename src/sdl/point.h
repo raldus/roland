@@ -42,7 +42,7 @@ namespace sdltk
 
         //! Overloaded operator =. A deep copy will done, so it's save to assign Point to itself.
         Point & operator=(const Point & p)
-        {if (this == &p) return *this; mX=p.x(); mY=p.y(); return *this;}
+            {if (this == &p) return *this; mX=p.x(); mY=p.y(); return *this;}
 
         bool operator==(const Point & p) const
             {return (mX == p.x() && mY == p.y()) ? true : false;}

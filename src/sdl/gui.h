@@ -34,6 +34,7 @@ namespace sdltk
     //! author Fred Klaus development@fkweb.de
     class Gui : std::vector<Widget*>
     {
+
     public:
         Gui(Video * video);
         ~Gui();
@@ -44,13 +45,13 @@ namespace sdltk
         bool checkEvent(SDL_Event * event);
         void update();
 
-        bool enabled()                {return mEnabled;}
+        bool enabled() const          {return mEnabled;}
         void setEnabled(bool enabled) {mEnabled = enabled;}
         void toggleEnabled()          {mEnabled = !mEnabled;}
 
         void setFocus(Widget * focus) {mHasFocus = focus;}
 
-        Video * video() {return mVideo;}
+        Video * video() const {return mVideo;}
 
     protected:
         bool mEnabled;

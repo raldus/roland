@@ -21,10 +21,9 @@
 #define SDLTK_VIDEOSTD_H
 
 #include "def.h"
-
 #include "video.h"
-#include "cpc.h"
 #include "canvasstd.h"
+#include "cpc.h"
 #include "SDL.h"
 
 namespace sdltk

@@ -45,6 +45,6 @@ private:
 
 };
 
-} // sdltk
+}; // sdltk
 
 #endif // ROLAND_CLOCK_H

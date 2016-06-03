@@ -35,23 +35,23 @@ namespace sdltk
         Audio(Cpc * cpc);
         ~Audio();
 
-        int init();
+        int  init();
         void quit();
 
-        inline uint dist();
-        uint mindist()           {return mMinSafeDist;}
-        uint maxdist()           {return mMaxSafeDist;}
+        uint    dist() const;
+        uint mindist() const  {return mMinSafeDist;}
+        uint maxdist() const  {return mMaxSafeDist;}
 
-        bool copied()            {return mBufferCopied;}
-        void setCopied(bool val) {mBufferCopied=val;}
-        void waitCopied()        {while (!mBufferCopied) {SDL_Delay(1);} mBufferCopied=false;}
+        bool copied() const      {return mBufferCopied;}
+        void setCopied(bool val) {mBufferCopied = val;}
+        void waitCopied() {while (!mBufferCopied) {SDL_Delay(1);} mBufferCopied = false;}
 
         void pause(bool value);
 
         static void update(void *userdata, Uint8 *stream, int len);
 
     private:
-        static Cpc* mCpc;
+        static Cpc * mCpc;
         static volatile bool mBufferCopied; ///@todo not threadsafe
         SDL_AudioSpec* mSpec;
 
@@ -63,7 +63,7 @@ namespace sdltk
         uint alignSamples(uint given);
     };
 
-    inline uint Audio::dist() // determine distance between play and write cursors
+    inline uint Audio::dist() const // determine distance between play and write cursors
     {
         if (mCpc->sound().stream() < mCpc->sound().bufferPtr())
         {
@@ -71,7 +71,9 @@ namespace sdltk
         }
         else
         {
-            return (mCpc->sound().bufferEnd()-mCpc->sound().stream())+(mCpc->sound().bufferPtr()-mCpc->sound().buffer());
+            return (mCpc->sound().bufferEnd() -  mCpc->sound().stream())
+                    +
+                   (mCpc->sound().bufferPtr() -  mCpc->sound().buffer());
         }
     }
 

@@ -18,8 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "button.h"
-
-#include "def.h"
+#include <string>
 
 namespace sdltk
 {
@@ -37,7 +36,7 @@ namespace sdltk
 
     void Button::onMouseMotion(SDL_MouseMotionEvent * event)
     {
-        string tmp;
+        std::string tmp;
         tmp  = "x:"  + std::to_string(event->x);
         tmp += "/y:" + std::to_string(event->y);
         //IOUT("[sdltk::Button]", "Info ", tmp);

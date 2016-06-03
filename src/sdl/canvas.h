@@ -20,10 +20,6 @@
 #ifndef SDLTK_CANVAS_H
 #define SDLTK_CANVAS_H
 
-#include "color.h"
-#include "point.h"
-#include "rect.h"
-#include "size.h"
 #include "image.h"
 #include "imagefont.h"
 
@@ -35,12 +31,18 @@
 namespace sdltk
 {
 
-    /** @author Fred Klaus development@fkweb.de */
+    class Color;
+    class Point;
+    class Rect;
+    class Size;
+
+    //! \author Fred Klaus development@fkweb.de */
     class Canvas
     {
+
     public:
         Canvas() = default;
-        virtual ~Canvas() {};
+        virtual ~Canvas() = default;
 
         virtual void begin() {}
         virtual void end()   {}
@@ -55,7 +57,7 @@ namespace sdltk
         virtual void clearClipRect() {}
 
 
-        void setFont(const string & fname, const string & glyphs);
+        void setFont(const std::string & fname, const std::string & glyphs);
         void setSurface(SDL_Surface* surface) {mSurface = surface;}
 
         void point(const Point * pos)  {point(*pos);}
@@ -64,11 +66,11 @@ namespace sdltk
         void fill (const Rect  * rec)  {fill(*rec);}
         void image(const Image * img, const Point & pos) {image(*img, pos);}
 
-        inline void image(const Image & img, const Point & pos);
-        inline void write(const Point & pos, const string & text);
+        void image(const Image & img, const Point & pos);
+        void write(const Point & pos, const std::string & text);
 
-        inline const Size &   textSize(const string & text);
-        inline const Uint16   textHeight();
+        const Size &   textSize(const std::string & text);
+        const Uint16   textHeight();
 
         ImageFont * font() {return &mFont;}
 
@@ -81,7 +83,7 @@ namespace sdltk
         Size          mTextSize;
         Color         mColor;
         ImageFont     mFont;
-        string        mNumber;
+        std::string        mNumber;
         Rect          mClipRect;
     };
 
@@ -94,7 +96,7 @@ namespace sdltk
         image(img, src, dst);
     }
 
-    inline void Canvas::write(const Point & pos, const string & text)
+    inline void Canvas::write(const Point & pos, const std::string & text)
     {
         Rect src, dest;
         Point p(pos);
@@ -107,7 +109,7 @@ namespace sdltk
         }
     }
 
-    inline const Size & Canvas::textSize(const string & text)
+    inline const Size & Canvas::textSize(const std::string & text)
     {
         Rect rect;
         mTextSize.clear();

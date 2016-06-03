@@ -20,25 +20,25 @@
 #ifndef SDLTK_IMAGE_FONT_H
 #define SDLTK_IMAGE_FONT_H
 
-#include <string>
-#include "rect.h"
 #include "image.h"
-#include "color.h"
-#include "point.h"
+#include <string>
 
 namespace sdltk
 {
+
+    class Rect;
 
     //! \brief a font created from an Image
     //! \author Fred Klaus development@fkweb.de
     class ImageFont
     {
+
     public:
         //! Standardconstructor
         ImageFont() : mSpacing(0) {};
         //! Constructor, calls ImageFont::load to load an Image
         //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
-        ImageFont(const string & fname, const string & glyphs);
+        ImageFont(const std::string & fname, const std::string & glyphs);
         //! Standarddestructor
         ~ImageFont() = default;
 
@@ -49,7 +49,7 @@ namespace sdltk
 
         //! loads an Image and calls ImageFont::init to set up the glyphs
         //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
-        void load(const string & fname, const string & glyphs);
+        void load(const std::string & fname, const std::string & glyphs);
 
         inline const Rect & glyph(Uint8 chr) const;
 
@@ -60,7 +60,7 @@ namespace sdltk
 
     private:
         Image mImage;
-        string mGlyphs;
+        std::string mGlyphs;
         Rect mGlyphRect[256]; // @todo  maximum Glyphs !?!
         Uint16 mSpacing;
 
@@ -69,8 +69,8 @@ namespace sdltk
 
     inline const Rect & ImageFont::glyph(Uint8 chr) const
     {
-        string::size_type i = mGlyphs.find(chr);
-        if (i == string::npos) i = 0;
+        std::string::size_type i = mGlyphs.find(chr);
+        if (i == std::string::npos) i = 0;
         return mGlyphRect[i];
     }
 

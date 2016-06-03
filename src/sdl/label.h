@@ -21,11 +21,13 @@
 #define SDLTK_LABEL_H
 
 #include "widget.h"
-#include "rect.h"
-#include "point.h"
+#include <string>
 
 namespace sdltk
 {
+
+    class Point;
+    class Rect;
 
     //! \author Fred Klaus development@fkweb.de
     class Label : public Widget
@@ -42,10 +44,10 @@ namespace sdltk
         virtual void onMouseMotion (SDL_MouseMotionEvent * event);
         virtual void onMouseButton (SDL_MouseButtonEvent * event);
 
-        void setImage(const string & fname, bool autosize=true, bool bg=false);
+        void setImage(const std::string & fname, bool autosize=true, bool bg=false);
         void setBorder(bool val);
         void setBackground(bool val)      {mBackground = val;}
-        void setText(const string & text) {mText = text;}
+        void setText(const std::string & text) {mText = text;}
 
     protected:
         void drawBorder();
@@ -63,7 +65,7 @@ namespace sdltk
 
         Image * mImage;
 
-        string mText;
+        std::string mText;
         Point mTextPos;
         Point mTextOffset;
 

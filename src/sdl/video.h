@@ -21,8 +21,7 @@
 #define SDLTK_VIDEO_H
 
 #include "def.h"
-
-#include "canvas.h"
+#include "size.h"
 #include "cpc.h"
 #include "SDL.h"
 
@@ -30,18 +29,22 @@
 namespace sdltk
 {
 
+    class Canvas;
+
     //! Baseclass for all SDL Video drivers @author Fred Klaus development@fkweb.de
     class Video
     {
+
     public:
         //! Constructs the video interface for the \param Cpc
-        Video(Cpc* cpc);
+        Video(Cpc * cpc);
         virtual ~Video() = default;
 
         //! device dependant init for inheritance
         virtual int  init() = 0;
         //! inits all @param width = width @param: height = height
-        virtual int  init(uint width, uint height, uint depth, bool fullscreen, unsigned char scale) = 0;
+        virtual int  init(uint width, uint height, uint depth,
+                            bool fullscreen, unsigned char scale) = 0;
 
         virtual Canvas * getCanvas()  = 0;
 
