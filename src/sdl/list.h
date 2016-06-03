@@ -28,7 +28,6 @@
 namespace sdltk
 {
 
-    class Clock;
     class Color;
     class Point;
 

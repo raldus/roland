@@ -56,25 +56,23 @@ namespace sdltk
         virtual void setClipRect(const Rect & rect) {}
         virtual void clearClipRect() {}
 
-
         void setFont(const std::string & fname, const std::string & glyphs);
-        void setSurface(SDL_Surface* surface) {mSurface = surface;}
+        void setSurface(SDL_Surface * const surface) {mSurface = surface;}
 
-        void point(const Point * pos)  {point(*pos);}
-        void line (const Point * pos1, Point * pos2) {line(*pos1, *pos2);}
-        void rect (const Rect  * rec)  {rect(*rec);}
-        void fill (const Rect  * rec)  {fill(*rec);}
-        void image(const Image * img, const Point & pos) {image(*img, pos);}
+        void point(Point * const pos)  {point(*pos);}
+        void line (Point * const pos1, Point * const pos2) {line(*pos1, *pos2);}
+        void rect (Rect  * const rec)  {rect(*rec);}
+        void fill (Rect  * const rec)  {fill(*rec);}
+        void image(Image * const img, const Point & pos) {image(*img, pos);}
 
         void image(const Image & img, const Point & pos);
         void write(const Point & pos, const std::string & text);
 
-        const Size &   textSize(const std::string & text);
-        const Uint16   textHeight();
+        const Size & textSize(const std::string & text);
+        const Uint16 textHeight() const;
 
-        ImageFont * font() {return &mFont;}
-
-        const Color & color() {return mColor;}
+        const ImageFont & font()  const {return mFont;}
+        const Color     & color() const {return mColor;}
 
         uint width() {return mSurface ? mSurface->w : 320;}
 
@@ -83,7 +81,7 @@ namespace sdltk
         Size          mTextSize;
         Color         mColor;
         ImageFont     mFont;
-        std::string        mNumber;
+        std::string   mNumber;
         Rect          mClipRect;
     };
 
@@ -123,12 +121,12 @@ namespace sdltk
         return mTextSize;
     }
 
-    inline const Uint16 Canvas::textHeight()
+    inline const Uint16 Canvas::textHeight() const
     {
         Rect rect = mFont.glyph(' ');
         return rect.height();
     }
 
-} // sdltk
+}; // sdltk
 
 #endif // SDLTK_CANVAS_H

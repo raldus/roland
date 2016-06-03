@@ -23,7 +23,6 @@
 #include "widget.h"
 #include "video.h"
 #include "SDL.h"
-
 #include <vector>
 
 

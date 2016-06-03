@@ -36,7 +36,6 @@
 #include <cstdlib>
 #include <cstring>
 
-#include "font.h"
 
 namespace sdltk
 {

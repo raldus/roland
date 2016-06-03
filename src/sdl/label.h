@@ -26,6 +26,7 @@
 namespace sdltk
 {
 
+    class Image;
     class Point;
     class Rect;
 

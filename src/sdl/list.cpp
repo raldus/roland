@@ -216,4 +216,4 @@ namespace sdltk
         mCanvas->clearClipRect();
     }
 
-} //namespace sdltk
+} // sdltk

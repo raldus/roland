@@ -35,7 +35,7 @@ namespace sdltk
 
     public:
         Button();
-        virtual ~Button();
+        virtual ~Button() = default;
 
         virtual void draw();
 
@@ -44,12 +44,12 @@ namespace sdltk
 
         void setHighlightColor(const Color & color) {mHighlightColor = color;}
 
-    private:
+    protected:
         Color mHighlightColor;
         bool  mDown;
 
     };
 
-} // sdltk
+}; // sdltk
 
 #endif // SDLTK_BUTTON_H

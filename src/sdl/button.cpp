@@ -18,7 +18,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "button.h"
-#include <string>
 
 namespace sdltk
 {
@@ -26,19 +25,14 @@ namespace sdltk
     Button::Button() : Label()
     {
         mDown = false;
-        mHighlightColor.set(mColor.r()+30, mColor.g()+30, mColor.b(), 225);
-    }
-
-    Button::~Button()
-    {
-        if (mImage) delete mImage;
+        mHighlightColor.set(mColor.r() + 30, mColor.g() + 30, mColor.b(), 225);
     }
 
     void Button::onMouseMotion(SDL_MouseMotionEvent * event)
     {
-        std::string tmp;
-        tmp  = "x:"  + std::to_string(event->x);
-        tmp += "/y:" + std::to_string(event->y);
+        //std::string tmp;
+        //tmp  = "x:"  + std::to_string(event->x);
+        //tmp += "/y:" + std::to_string(event->y);
         //IOUT("[sdltk::Button]", "Info ", tmp);
 
         move(event);

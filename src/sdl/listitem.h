@@ -38,6 +38,8 @@ namespace sdltk
         void setOrigin(Sint16 x, Sint16 y) {mOrigin.set(x, y);}
         void reset() {mRect.setPos(mOrigin.x(), mOrigin.y());}
 
+        virtual void onMouseButton (SDL_MouseButtonEvent * event);
+
     protected:
         Point mOrigin;
 

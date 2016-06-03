@@ -30,4 +30,23 @@ namespace sdltk
         setColor(100, 100, 100, 128);
     }
 
+    void ListItem::onMouseButton(SDL_MouseButtonEvent * event)
+    {
+        if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_LEFT))
+        {
+            setColor(50, 50, 50, 128);
+            mTextOffset.set(1, 1);
+            mDown = true;
+        }
+
+        if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))
+        {
+
+            setColor(100, 100, 100, 128);
+            mDown = false;
+        }
+
+        moveInit(event);
+    }
+
 }
