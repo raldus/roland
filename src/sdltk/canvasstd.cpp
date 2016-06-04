@@ -20,7 +20,6 @@
 #include "canvasstd.h"
 
 #include "sdlpixel.h"
-#include "bitglyph.h"
 
 #ifndef ABS
     #define ABS(x) ((x)<0?-(x):(x))

@@ -1,7 +1,7 @@
 
 add_subdirectory(common)
 add_subdirectory(cpc)
-add_subdirectory(sdl)
+add_subdirectory(sdltk)
 
 add_executable(roland "${PROJECT_SOURCE_DIR}/src/roland.cpp")
 

@@ -107,9 +107,7 @@ include_directories("${PROJECT_SOURCE_DIR}/src/common/filesys")
 include_directories("${PROJECT_SOURCE_DIR}/src/cpc")
 include_directories("${PROJECT_SOURCE_DIR}/src/cpc/z80")
 include_directories("${PROJECT_SOURCE_DIR}/src/cpc/floppy")
-include_directories("${PROJECT_SOURCE_DIR}/src/sdl")
-include_directories("${PROJECT_SOURCE_DIR}/src/sdl/gui")
-include_directories("${PROJECT_SOURCE_DIR}/src/sdl/gui/font")
+include_directories("${PROJECT_SOURCE_DIR}/src/sdltk")
 
 add_subdirectory(src)
 

@@ -50,7 +50,6 @@
 
 #include "cpc.h"
 #include "prefs.h"
-#include "fileselect.h"
 
 using namespace std;
 
@@ -322,7 +321,7 @@ void mainloop()
                                     else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
                                                              SDL_DEFAULT_REPEAT_INTERVAL);
                                     break;
-                                    audio.pause(true);
+                                    /* audio.pause(true);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
                                         video->screen(), prefs.getPath("diskdir"),
                                         prefs.getPath("diskb"), "B: ");
@@ -343,8 +342,8 @@ void mainloop()
                                     clearBuffer();
                                     audio.pause(false);
                                     delete f;
+                                    break;*/
                                 }
-                                break;
 
                                 case SDLK_F4:
                                     joystick=keytrans.toggleJoystick();
