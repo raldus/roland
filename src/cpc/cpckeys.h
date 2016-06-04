@@ -17,14 +17,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-
-#ifndef CPCKEYS_H
-#define CPCKEYS_H
+#ifndef CPC_CPCKEYS_H
+#define CPC_CPCKEYS_H
 
 #include "types.h"
 
-
-static const tUBYTE cpckey[256][4] =
+static constexpr tUBYTE cpckey[256][4] =
 {
     { 0x00, 0x00, 0x00, 0x00 }, //   ? - Row - Key - ?
     { 0x00, 0x00, 0x00, 0x00 },
@@ -284,4 +282,4 @@ static const tUBYTE cpckey[256][4] =
     { 0x00, 0x00, 0x00, 0x00 },
 };
 
-#endif // CPCKEYS_H
+#endif // CPC_CPCKEYS_H

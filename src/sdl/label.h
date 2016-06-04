@@ -20,8 +20,8 @@
 #ifndef SDLTK_LABEL_H
 #define SDLTK_LABEL_H
 
+#include "def.h"
 #include "widget.h"
-#include <string>
 
 namespace sdltk
 {

@@ -21,7 +21,6 @@
 #define PREFS_H
 
 #include "config.h"
-
 #include <string>
 
 #define PREFCOUNT 23
@@ -31,9 +30,9 @@ class Prefs
 {
 
   public:
-    enum PrefsArray {paKey=0, paValue=1};
+    enum PrefsArray {paKey = 0, paValue = 1};
 
-    Prefs(bool autowrite=true, bool writealways=true);
+    Prefs(bool autowrite = true, bool writealways = true);
     ~Prefs();
 
     bool read();
@@ -48,12 +47,13 @@ class Prefs
     int         getNum (const std::string & key) const;
     bool        getBool(const std::string & key) const;
 
-  private:
 #ifdef _WIN32
-    static const char delim() {return '\\';}
+    static constexpr char delim() {return '\\';}
 #else
-    static const char delim() {return '/';}
+    static constexpr char delim() {return '/';}
 #endif
+
+  private:
 
     bool mAutoWrite;
     bool mWriteAlways;

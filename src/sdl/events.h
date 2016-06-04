@@ -17,18 +17,14 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "filelistitem.h"
+#ifndef SDLTK_EVENTS_H
+#define SDLTK_EVENTS_H
 
 namespace sdltk
 {
 
-    FileListItem::FileListItem(const FileName & filename) : FileName(filename)
-    {
-        mText = base(); // BUG: ...(false) does not work
-        mOrigin.set(0, 0);
-        mEnabled = true;
-        //mWantEvents = false;
-        setColor(100, 100, 100, 128);
-    }
+    enum UserEvent : int {Unknown, ListItemClicked};
 
-}
+}; // sdltk
+
+#endif // SDLTK_EVENTS_H

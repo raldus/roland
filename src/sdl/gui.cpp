@@ -79,6 +79,11 @@ namespace sdltk
                         }
                         break;
 
+                    case SDL_USEREVENT:
+                        it->onUser(&event->user);
+                        ret = true;
+                        break;
+
                     default:
                         it->setMouseOver(false);
                         break;

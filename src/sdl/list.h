@@ -50,6 +50,12 @@ namespace sdltk
         //! This member catches keyboard events
         virtual bool onKeyboard(SDL_KeyboardEvent * event);
 
+        //! Tis member catches user events
+        virtual bool onUser(SDL_UserEvent * event);
+
+        //! Returns a pointer to the selected Item
+        ListItem * selected() const {return (*mSelected);}
+
         //! Adds a ListItem to the List
         void add(ListItem * item);
         //! Manages the scrolling
@@ -64,8 +70,8 @@ namespace sdltk
         Uint16 mPosH;
         Gui *  mGui;
         Clock  mClock;
-        std::list<ListItem*>::iterator mSelected;
         Color  mTmpColor;
+        std::list<ListItem*>::iterator mSelected;
     };
 
 } // sdltk

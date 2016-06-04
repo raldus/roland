@@ -18,6 +18,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "listitem.h"
+#include "events.h"
+#include "SDL.h"
 
 namespace sdltk
 {
@@ -28,21 +30,27 @@ namespace sdltk
         mEnabled = true;
         //mWantEvents = false;
         setColor(100, 100, 100, 128);
+        setHighlightColor(Color(100, 100, 100, 160));
     }
 
     void ListItem::onMouseButton(SDL_MouseButtonEvent * event)
     {
         if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_LEFT))
         {
-            setColor(50, 50, 50, 128);
-            mTextOffset.set(1, 1);
+            SDL_Event event;
+            event.type = SDL_USEREVENT;
+            event.user.code  =  UserEvent::ListItemClicked;
+            event.user.data1 = this;
+            event.user.data2 = 0;
+            SDL_PushEvent(&event);
+
+            IOUT("[ListItem]", "UserEvent::ListItemClicked", "sent");
             mDown = true;
         }
 
         if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))
         {
 
-            setColor(100, 100, 100, 128);
             mDown = false;
         }
 

@@ -12,6 +12,8 @@ set(CMAKE_BINARY_DIR      "${CMAKE_SOURCE_DIR}/bin")
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH    ${CMAKE_BINARY_DIR})
 
+set(VERBOSE "Verbose" CACHE BOOL "Verbose")
+
 
 # C++ version
 include(CheckCXXCompilerFlag)
@@ -37,9 +39,11 @@ include_directories(${SDL_INCLUDE_DIR})
 
 # roland
 set(DEBUG 1)
-configure_file("${PROJECT_SOURCE_DIR}/files/config.h.in" "${PROJECT_SOURCE_DIR}/src/config.h")
 add_definitions("-DHAVE_CONFIG_H")
-configure_file("${PROJECT_SOURCE_DIR}/files/roland.spec.in" "${PROJECT_SOURCE_DIR}/roland.spec")
+configure_file("${PROJECT_SOURCE_DIR}/files/config.h.in"    
+        "${PROJECT_SOURCE_DIR}/src/config.h")
+configure_file("${PROJECT_SOURCE_DIR}/files/roland.spec.in" 
+        "${PROJECT_SOURCE_DIR}/roland.spec")
 
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/roms"  DESTINATION share/roland)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/disks" DESTINATION share/roland)
@@ -47,7 +51,8 @@ install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/disks" DESTINATION share/roland)
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
-    configure_file("${CMAKE_SOURCE_DIR}/files/doxyfile.in" "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
+    configure_file("${CMAKE_SOURCE_DIR}/files/doxyfile.in" 
+            "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_SOURCE_DIR}/build/doxyfile"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}

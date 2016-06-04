@@ -18,18 +18,29 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "list.h"
+#include "events.h"
 
 namespace sdltk
 {
 
     void List::init()
     {
-        mPosH       = 0;
+        mSelected   = begin();
         mEnabled    = true;
         mWantEvents = true;
         mMotion     = 0;
         mSpeed      = 5;
-        SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
+
+/*      Label * label = new Label(this);
+        label->setColor(128, 128, 128, 144);
+        label->setPos(100, 100);
+        label->setText("Fileselect");
+        label->setSize(mGui->video()->size().width(), 55);
+        label->setEnabled(true);
+        label->setBackground(true);
+        mGui->add(label);
+*/
+        mPosH       = 0;
     }
 
     void List::onMouseButton(SDL_MouseButtonEvent * event)
@@ -115,6 +126,24 @@ namespace sdltk
         return ret;
     }
 
+    bool List::onUser(SDL_UserEvent * event) // Selection ...
+    {
+        if (event->code == UserEvent::ListItemClicked)
+        {
+            auto selected = find(begin(), end(), (ListItem*) event->data1);
+            if (selected != end())
+            {
+                (*mSelected)->setColor(mTmpColor);
+                mSelected = selected;
+                mTmpColor = (*mSelected)->color();
+            }
+
+            IOUT("[List]", "UserEvent::ListItemClicked", "received");
+            return true;
+        }
+        return false;
+    }
+
     void List::add(ListItem * item)
     {
         mGui->add(item);
@@ -194,7 +223,8 @@ namespace sdltk
         if (!mEnabled) return;
 
         if (mMotion == 1) reposition(mSpeed);
-        else if (mMotion == 2) reposition(-mSpeed);
+        else
+        if (mMotion == 2) reposition(-mSpeed);
 
         (*mSelected)->setColor(164, 148, 128, 164);
 

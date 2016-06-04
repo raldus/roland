@@ -39,13 +39,22 @@ static constexpr uint16_t CPC_VISIBLE_SCR_WIDTH  = 384; //!< visible: 4+40+4 * 8
 static constexpr uint16_t CPC_VISIBLE_SCR_HEIGHT = 270; //!< visible: 5+25+4 * 8  \TODO original is 272
 
 using std::boolalpha;
-#define EOUT(a,b,c) std::cerr << std::setw(12) << std::setfill(' ') << std::left << a << "(E) " << std::setw(40) << std::setfill('.') << std::left << b << c << "\n";
 
-#ifdef DEBUG
-    #define IOUT(a,b,c) std::cout << std::setw(12) << std::setfill(' ') << std::left << a << std::setw(22) << std::setfill('.') << std::left << b  << c << "\n";
-    #define DOUT(a,b,c)
+#define EOUT(a,b,c) std::cerr << std::setw(12) << std::setfill(' ') \
+    << std::left << a << "(E) " << std::setw(40) << std::setfill('.') \
+    << std::left << b << c << "\n";
+
+#ifdef VERBOSE
+    #define IOUT(a,b,c) std::cout << std::setw(12) << std::setfill(' ') \
+        << std::left << a << std::setw(40) << std::setfill('.') \
+        << std::left << b  << c << "\n";
 #else
     #define IOUT(a,b,c)
+#endif
+
+#ifdef DEBUG
+    #define DOUT(a,b,c)
+#else
     #define DOUT(a,b,c)
     #define PREOUT
 #endif

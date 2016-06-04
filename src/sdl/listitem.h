@@ -27,7 +27,7 @@ namespace sdltk
 
     class Point;
 
-    //! @author Fred Klaus development@fkweb.de
+    //! Represents an item which can be hold by a List
     class ListItem : public Button
     {
 

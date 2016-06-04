@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef CPC_H
-#define CPC_H
+#ifndef CPC_CPC_H
+#define CPC_CPC_H
 
 #include "config.h"
 #include "types.h"
@@ -124,4 +124,4 @@ private:
 
 };
 
-#endif // CPC_H
+#endif // CPC_CPC_H

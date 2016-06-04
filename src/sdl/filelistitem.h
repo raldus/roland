@@ -26,18 +26,20 @@
 namespace sdltk
 {
 
-    //! \author Fred Klaus development@fkweb.de
-    class FileListItem : public ListItem
+    //! Represents a file list entry
+    class FileListItem : public ListItem, public FileName
     {
 
     public:
+        FileListItem() = delete;
+        //! Constructs an Item based on FileName
         FileListItem(const FileName & filename);
-        ~FileListItem() = default;
+        //! Standarddestructor
+        virtual ~FileListItem() = default;
 
-        void setFileName(const FileName & filename) {mFileName = filename;}
+        void setFileName(const FileName & filename) {*this = filename;}
 
-    private:
-        FileName mFileName;
+        const FileName & filename() {return *this;}
 
     };
 

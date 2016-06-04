@@ -53,6 +53,8 @@ namespace sdltk
         virtual void onMouseButton (SDL_MouseButtonEvent * event) {}
         //! Catch Keyboard
         virtual bool onKeyboard    (SDL_KeyboardEvent * event) {return false;}
+        //! Catch UserEvents
+        virtual bool onUser        (SDL_UserEvent * event)     {return false;}
 
         //! Sets the Position
         virtual void setPos(int x, int y)

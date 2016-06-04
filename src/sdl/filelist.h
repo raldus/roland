@@ -21,6 +21,7 @@
 #define SDLTK_FILE_LIST_H
 
 #include "list.h"
+#include "filelistitem.h"
 #include "filename.h"
 #include "directory.h"
 
@@ -37,11 +38,14 @@ namespace sdltk
         //! Some initialization
         FileList(Gui * gui, const FileName & dirname, char letter = 0);
         //! Deafault destructor
-        ~FileList();
+        ~FileList() = default;
 
-        void init(const FileName & dirname, char letter=0);
+        void init(const FileName & dirname, char letter = 0);
 
         bool onKeyboard(SDL_KeyboardEvent * event);
+
+        //! Returns a pointer to the selected Item
+        FileListItem * selected() const {return (FileListItem*) (*mSelected);}
 
     private:
         Directory mDirectory;

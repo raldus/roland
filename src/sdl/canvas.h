@@ -23,6 +23,7 @@
 #include "types.h"
 #include "image.h"
 #include "imagefont.h"
+#include "SDL.h"
 #include <cstdlib>
 #include <algorithm>
 

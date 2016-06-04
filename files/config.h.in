@@ -22,10 +22,10 @@
 #define ROLAND_CONFIG_H
 
 //! normal Debug enabled
-#cmakedefine DEBUG 1
+#cmakedefine DEBUG   1
+#cmakedefine NDEBUG  1
+#cmakedefine VERBOSE 1
 
-//! no Debug enabled, Assertion removing ...
-//! #undef NDEBUG */
 
 //! Define to the address where bug reports for this package should be sent.
 static constexpr auto PACKAGE_BUGREPORT = "development@fkweb.de";

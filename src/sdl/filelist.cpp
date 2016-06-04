@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "filelistitem.h"
 #include "filelist.h"
+#include "filelistitem.h"
 
 namespace sdltk
 {
@@ -28,19 +28,7 @@ namespace sdltk
         setPos(50, 50);
         setSize(gui->video()->size().width() - 100, gui->video()->size().height() - 100);
         setEnabled(true);
-//        Label * label = new Label(this);
-//        label->setColor(128, 128, 128, 144);
-//        label->setPos(50, 75);
-//        label->setText("Fileselect");
-//        label->setSize( 100, 55);
-//        label->setEnabled(true);
-//        gui->add(label);
-
         init(dirname, letter);
-    }
-
-    FileList::~FileList()
-    {
     }
 
     void FileList::init(const FileName & dirname, char letter)
@@ -77,4 +65,4 @@ namespace sdltk
         return List::onKeyboard(event);
     }
 
-} //namespace sdltk
+} // sdltk

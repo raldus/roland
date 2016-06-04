@@ -42,6 +42,7 @@
 #include "list.h"
 #include "listitem.h"
 #include "filelist.h"
+#include "filelistitem.h"
 #include "size.h"
 #include "audio.h"
 #include "clock.h"
@@ -53,7 +54,7 @@
 
 using namespace std;
 
-SDL_Surface * screen = 0;
+SDL_Surface * screen = nullptr;
 
 bool joystick = false;
 
@@ -101,7 +102,7 @@ void init()
     showfps = prefs.getBool("showfps");
 
     cpc.fdc().dsk_eject(1);
-    cpc.fdc().dsk_load(prefs.getPath("diskb").c_str(), 0);
+    cpc.fdc().dsk_load(prefs.getPath("diskb").c_str(), 1);
 
     cpc.fdc().dsk_eject(0);
     cpc.fdc().dsk_load(prefs.getPath("diska").c_str(), 0);
@@ -282,34 +283,44 @@ void mainloop()
 
                                 case SDLK_F2:
                                 {
-                                    audio.pause(true);
-                                    sdltk::FileSelect *f = new sdltk::FileSelect(
-                                        video->screen(), prefs.getPath("diskdir"),
-                                        prefs.getPath("diska"), "A: ");
-                                    SDL_EnableKeyRepeat(
-                                        SDL_DEFAULT_REPEAT_DELAY,
-                                        SDL_DEFAULT_REPEAT_INTERVAL);
-                                    int ret = f->loop();
-                                    SDL_EnableKeyRepeat(0, 0);
-                                    if (!ret)
+                                    lstFile->setEnabled(!lstFile->enabled());
+                                    if (!lstFile->enabled())
                                     {
-                                        std::cout << "A: " << f->filename()
-                                                  << "\n";
+                                        tString str =
+                                                prefs.getPath("diskdir")
+                                                + Prefs::delim()
+                                                + *lstFile->selected();
+                                        IOUT("[Roland]", "Disk Drive A: ", str);
                                         cpc.fdc().dsk_eject(0);
-                                        cpc.fdc().dsk_load(
-                                            f->filename().c_str(), 0);
-                                        prefs.set("diska", f->filename());
+                                        cpc.fdc().dsk_load(str.c_str(), 0);
+                                        prefs.set("diska", str);
+                                        SDL_EnableKeyRepeat(0, 0);
+                                        clearBuffer();
                                     }
-                                    clearBuffer();
-                                    audio.pause(false);
-                                    delete f;
+                                    else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
+                                                             SDL_DEFAULT_REPEAT_INTERVAL);
+                                    break;
                                 }
                                 break;
 
                                 case SDLK_F3:
                                 {
                                     lstFile->setEnabled(!lstFile->enabled());
-                                    clearBuffer();
+                                    if (!lstFile->enabled())
+                                    {
+                                        tString str =
+                                                prefs.getPath("diskdir")
+                                                + Prefs::delim()
+                                                + *lstFile->selected();
+                                        IOUT("[Roland]", "Disk Drive B: ", str);
+                                        cpc.fdc().dsk_eject(1);
+                                        cpc.fdc().dsk_load(str.c_str(), 1);
+                                        prefs.set("diskb", str);
+                                        SDL_EnableKeyRepeat(0, 0);
+                                        clearBuffer();
+                                    }
+                                    else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
+                                                             SDL_DEFAULT_REPEAT_INTERVAL);
                                     break;
                                     audio.pause(true);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
