@@ -31,7 +31,7 @@ namespace sdltk
 {
 
     //! author Fred Klaus development@fkweb.de
-    class Gui : std::vector<Widget*>
+    class Gui : public std::vector<Widget*>
     {
 
     public:

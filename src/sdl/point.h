@@ -24,8 +24,7 @@
 
 namespace sdltk
 {
-    //! Defines a 2D point (x,y)
-    //! \author Fred Klaus
+    //! Defines a 2D point (x, y)
     class Point
     {
 
@@ -33,9 +32,9 @@ namespace sdltk
         //! Standard Constructor. Initializes x and y to 0.
         Point() = default;
         //! Constructor. \param x = Coordinate x /param y = Coordinate y
-        Point(Sint16 x, Sint16 y)    {mX = x; mY = y;}
+        Point(Sint16 x, Sint16 y) {mX = x;     mY = y;}
         //! Copyconstructor. It is save to init Point with itself.
-        Point(const Point & p) {mX = p.x(); mY = p.y();}
+        Point(const Point & p)    {mX = p.x(); mY = p.y();}
 
         //! Standard Destructor. Does nothing
         ~Point() = default;
@@ -53,17 +52,17 @@ namespace sdltk
         Sint16 x() const {return mX;}
         Sint16 y() const {return mY;}
 
-        void setX(Sint16 x)       {mX = x;}
-        void setY(Sint16 y)       {mY = y;}
-        void set(const Point & p) {mX = p.x(); mY = p.y();}
-        void set (Sint16 x, Sint16 y) {mX = x; mY = y;}
+        void setX(Sint16 x)          {mX = x;}
+        void setY(Sint16 y)          {mY = y;}
+        void set(const Point & p)    {mX = p.x(); mY = p.y();}
+        void set(Sint16 x, Sint16 y) {mX = x; mY = y;}
 
         void qX(const Point & p) {mX ^= p.x();}
         void qY(const Point & p) {mY ^= p.y();}
 
     private:
-        Sint16 mX;
-        Sint16 mY;
+        Sint16 mX = 0;
+        Sint16 mY = 0;
     };
 
 } // sdltk

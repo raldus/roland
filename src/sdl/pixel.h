@@ -29,8 +29,8 @@ namespace sdltk
     {
 
     public:
-        Pixel()  = default;
-        ~Pixel() = default;
+        Pixel()  = delete;
+        ~Pixel() = delete;
 
         //! Checks a pixels color of an SDL_Surface.
         //! @param surface an SDL_Surface where to check for a pixel color.
@@ -71,7 +71,6 @@ namespace sdltk
             case 4:
                 color = *(Uint32 *)p;
                 break;
-
             }
 
             Uint8  r,g,b,a;

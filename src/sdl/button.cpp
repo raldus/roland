@@ -25,7 +25,7 @@ namespace sdltk
     Button::Button() : Label()
     {
         mDown = false;
-        mHighlightColor.set(mColor.r() + 30, mColor.g() + 30, mColor.b(), 225);
+        mHighlightColor.set(mColor.r() + 10, mColor.g() + 10, mColor.b(), 200);
     }
 
     void Button::onMouseMotion(SDL_MouseMotionEvent * event)
@@ -48,6 +48,7 @@ namespace sdltk
             mBorderColor2 = tmp;
             mTextOffset.set(1, 1);
             mDown = true;
+            setColor(60, 60, 60);
         }
 
         if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))
@@ -65,7 +66,6 @@ namespace sdltk
         if (!mDown || !mMouseOver)
         {
             mTextOffset.set(0, 0);
-            setBorder(mBorder);
         }
 
         drawBorder();

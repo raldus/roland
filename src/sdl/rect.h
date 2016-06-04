@@ -34,42 +34,61 @@ namespace sdltk
 
     public:
         //! Standard Constructor.
-        Rect() {}
+        Rect() = default;
         Rect(const Point & origin, const Size & size)
         {   SDL_Rect::x = origin.x();
             SDL_Rect::y = origin.y();
             SDL_Rect::w = size.width();
             SDL_Rect::h = size.height();
         }
-        //Rect(const Point & origin, Sint16 width, Sint16 height) {mOrigin=origin; mSize.set(width, height);}
-        //Rect(Sint16 x, Sint16 y, const Size & size)             {mOrigin.set(x, y); mSize=size;}
-        Rect(Sint16 x, Sint16 y, Uint16 w, Uint16 h)  {SDL_Rect::x = x; SDL_Rect::y = y; SDL_Rect::w = w; SDL_Rect::h = h;}
+        //Rect(const Point & origin, Sint16 width, Sint16 height)
+        //    {mOrigin=origin; mSize.set(width, height);}
+        //Rect(Sint16 x, Sint16 y, const Size & size)
+        //    {mOrigin.set(x, y); mSize=size;}
+        Rect(Sint16 x, Sint16 y, Uint16 w, Uint16 h)
+            {   SDL_Rect::x = x; SDL_Rect::y = y;
+                SDL_Rect::w = w; SDL_Rect::h = h;}
 
-        Rect(Sint16 x, Sint16 y, const Size & size)  {SDL_Rect::x = x; SDL_Rect::y = y; SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
+        Rect(Sint16 x, Sint16 y, const Size & size)
+            {   SDL_Rect::x = x; SDL_Rect::y = y;
+                SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
 
-        Rect(SDL_Rect* rect) {SDL_Rect::x = rect->x; SDL_Rect::y = rect->y; SDL_Rect::w = rect->w; SDL_Rect::h = rect->h;}
+        Rect(SDL_Rect* rect)
+            {   SDL_Rect::x = rect->x; SDL_Rect::y = rect->y;
+                SDL_Rect::w = rect->w; SDL_Rect::h = rect->h;}
 
-        //! Copyconstructor. A deep copy will done, so it's save to init Rect with itself.
-        Rect(const Rect & rect) {SDL_Rect::x = rect.x(); SDL_Rect::y = rect.y(); SDL_Rect::w = rect.width(); SDL_Rect::h = rect.height();}
-
+        //! Copyconstructor. A deep copy will done, so it's save
+        //! to init Rect with itself.
+        Rect(const Rect & rect)
+            {   SDL_Rect::x = rect.x();     SDL_Rect::y = rect.y();
+                SDL_Rect::w = rect.width(); SDL_Rect::h = rect.height();}
 
         //! Standard Destructor. Does nothing
-        ~Rect() {}
+        ~Rect() = default;
 
-        void set(Sint16 x, Sint16 y, Uint16 w, Uint16 h) {SDL_Rect::x = x; SDL_Rect::y = y; SDL_Rect::w = w; SDL_Rect::h = h;}
-        //void set(const Rect  & rect)  {mOrigin = rect.origin(); mSize=rect.size();}
-        void set(const Point & pos)  {SDL_Rect::x = pos.x(); SDL_Rect::y = pos.y();}
-        void set(const Size  & size) {SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
-        void set(const Point & pos, const Size  & size)  {SDL_Rect::x = pos.x(); SDL_Rect::y = pos.y(); SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
+        void set(Sint16 x, Sint16 y, Uint16 w, Uint16 h)
+            {SDL_Rect::x = x; SDL_Rect::y = y; SDL_Rect::w = w; SDL_Rect::h = h;}
+        //void set(const Rect  & rect)
+        //    {mOrigin = rect.origin(); mSize=rect.size();}
+        void set(const Point & pos)
+            {SDL_Rect::x = pos.x(); SDL_Rect::y = pos.y();}
+        void set(const Size  & size)
+            {SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
+        void set(const Point & pos, const Size  & size)
+            {SDL_Rect::x = pos.x(); SDL_Rect::y = pos.y();
+                SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
 
         void setOrigin(Sint16 x, Sint16 y)   {SDL_Rect::x = x; SDL_Rect::y = y;}
-        void setOrigin(const Point & origin) {SDL_Rect::x = origin.x(); SDL_Rect::y = origin.y();}
+        void setOrigin(const Point & origin)
+            {SDL_Rect::x = origin.x(); SDL_Rect::y = origin.y();}
 
-        void setPos(Sint16 x, Sint16 y)      {SDL_Rect::x = x; SDL_Rect::y = y;}
-        void setPos(const Point & pos)       {SDL_Rect::x = pos.x(), SDL_Rect::y = pos.y();}
+        void setPos(Sint16 x, Sint16 y) {SDL_Rect::x = x; SDL_Rect::y = y;}
+        void setPos(const Point & pos)
+            {SDL_Rect::x = pos.x(), SDL_Rect::y = pos.y();}
 
-        void setSize(Uint16 w, Uint16 h)     {SDL_Rect::w = w; SDL_Rect::h = h;}
-        void setSize(const Size & size)      {SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
+        void setSize(Uint16 w, Uint16 h) {SDL_Rect::w = w; SDL_Rect::h = h;}
+        void setSize(const Size & size)
+            {SDL_Rect::w = size.width(); SDL_Rect::h = size.height();}
 
         void setX(Sint16 x)      {SDL_Rect::x = x;}
         void setY(Sint16 y)      {SDL_Rect::y = y;}
@@ -91,9 +110,11 @@ namespace sdltk
         inline bool inside(Uint16 x, Uint16 y) const;
 
 
-        // Overloaded operator =. A deep copy will done, so it's save to assign Rect to itself.
+        // Overloaded operator =. A deep copy will done, so it's save to
+        // assign Rect to itself.
         //Rect & operator=(const Rect & r)
-        //  {if (this == &r) return *this; mOrigin=r.origin(); mSize=r.size(); return *this;}
+        //  {if (this == &r) return *this; mOrigin=r.origin(); mSize=r.size();
+        //  return *this;}
         // Overloaded operator ==. Comparsion between Rects are save.
         //bool operator==(const Rect & r) const
         //  {return (mSize == r.size() && mOrigin == r.pos() ) ? true : false;}
