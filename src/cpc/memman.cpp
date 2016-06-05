@@ -50,7 +50,7 @@ int MemMan::init(Z80 *z80, GateArray *gatearray)
     return init();
 }
 
-int MemMan::init(int ramsize, const string &cpcrom, const string &amsdos)
+int MemMan::init(tUWORD ramsize, const string & cpcrom, const string & amsdos)
 {
     int ret = 0;
     mRamSize = ramsize;

@@ -23,11 +23,11 @@
 #include "types.h"
 
 /** @author Fred Klaus */
-class Sector
+class Sector final
 {
 public:
     Sector();
-    ~Sector() {}
+    ~Sector() = default;
 
     tUBYTE* CHRN()       {return mCHRN;}
     tUBYTE CHRN(int num) {return mCHRN[num];}

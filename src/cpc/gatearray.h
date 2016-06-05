@@ -25,30 +25,30 @@
 /// Gate Array
 /** Gate Array\n\n @htmlinclude gatearray.html
     @author Fred Klaus */
-class GateArray
+class GateArray final
 {
 
 public:
     GateArray()  {init();}
-    ~GateArray() {}           ///< does nothing
+    ~GateArray() = default;  ///< does nothing
 
     void init();
 
-    tUBYTE  pen()              {return mPen;}
-    tUBYTE* ink()              {return mInk;}
-    tUBYTE  ink(tUBYTE num)     {return mInk[num];}
-    tUDWORD palette(tUBYTE num) {return mPalette[num];}
+    tUBYTE  pen()               const {return mPen;}
+    tUBYTE* ink()                     {return mInk;}
+    tUBYTE  ink(tUBYTE num)     const {return mInk[num];}
+    tUDWORD palette(tUBYTE num) const {return mPalette[num];}
 
-    tUBYTE romConfig()         {return mRomConfig;}
-    tUBYTE ramConfig()         {return mRamConfig;}
-    tUBYTE ramBank()           {return mRamBank;}
-    tUBYTE upperRom()          {return mUpperRom;}
-    tUBYTE counter()           {return mCounter;}
-    tUBYTE mode()              {return mMode;}
-    tUBYTE requestedMode()     {return mRequestedMode;}
-    bool  interrupt()         {return mInterrupt;}
-    tUBYTE intDelay()          {return mIntDelay;}
-    tUBYTE slCount()           {return mSlCount;}
+    tUBYTE romConfig()         const {return mRomConfig;}
+    tUBYTE ramConfig()         const {return mRamConfig;}
+    tUBYTE ramBank()           const {return mRamBank;}
+    tUBYTE upperRom()          const {return mUpperRom;}
+    tUBYTE counter()           const {return mCounter;}
+    tUBYTE mode()              const {return mMode;}
+    tUBYTE requestedMode()     const {return mRequestedMode;}
+    bool  interrupt()          const {return mInterrupt;}
+    tUBYTE intDelay()          const {return mIntDelay;}
+    tUBYTE slCount()           const {return mSlCount;}
 
     void setPen(tUBYTE pen)               {mPen = pen;}
     //void setInk(tUBYTE* ink) {for (int i=0; i<17; i++) mInk[i] = ink[i];}
@@ -79,7 +79,7 @@ private:
     tUBYTE mMode;
     tUBYTE mRequestedMode;
     tUBYTE mSlCount;
-    
+
     tUBYTE   mPen;
     tUBYTE   mInk[17];
     tUDWORD  mPalette[17];

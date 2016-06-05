@@ -19,7 +19,7 @@
  ***************************************************************************/
 #include "keyboard.h"
 
-Keyboard::Keyboard() { init(); }
+Keyboard::Keyboard() {init();}
 
 void Keyboard::init()
 {
@@ -30,4 +30,3 @@ void Keyboard::init()
     }
 }
 
-Keyboard::~Keyboard() {}

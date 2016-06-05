@@ -20,29 +20,26 @@
 #ifndef MEMMAN_H
 #define MEMMAN_H
 
-#include "types.h"
+#include "def.h"
 #include "gatearray.h"
 #include "z80.h"
 
-#include <string>
-
-using std::string;
-
 /** @author Fred Klaus */
-class MemMan
+class MemMan final
 {
 
 public:
-    MemMan(Z80* z80=0, GateArray* gatearray=0, const string & cpcrom="", const string & amsdos="");
-    ~MemMan() {}
+    MemMan(Z80* z80 = nullptr, GateArray* gatearray = nullptr,
+            const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
+    ~MemMan() = default;
 
-    enum RamSize {ram64=64, ram128=128, ram256=256, ram512=512};
+    enum RamSize : tUWORD {ram64=64, ram128=128, ram256=256, ram512=512};
 
-    enum Error {ErrRamSize=1, ErrMemory=2, ErrCpcRom=4, ErrAmsdos=8};
+    enum Error   : tUBYTE {ErrRamSize=1, ErrMemory=2, ErrCpcRom=4, ErrAmsdos=8};
 
-    int init(int ramsize=128, const string & cpcrom="", const string & amsdos="");
+    int init(tUWORD ramsize = 128, const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
     int init(Z80* z80, GateArray* gatearray);
-    
+
     inline void initBanking();
     void memoryManager();
 
@@ -57,8 +54,8 @@ public:
 
     tUBYTE* base() {return mMemBankConfig[0][0];}
 
-    bool openRom(int idx, const string & filename);
-    bool openCpcRom(const string & filename);
+    bool openRom(int idx, const tSTRING & filename);
+    bool openCpcRom(const tSTRING & filename);
 
 private:
     GateArray* mGateArray;

@@ -17,32 +17,33 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef KEYBOARD_H
-#define KEYBOARD_H
+#ifndef CPC_KEYBOARD_H
+#define CPC_KEYBOARD_H
 
 #include "types.h"
 #include "cpckeys.h"
 
 /** @author Fred Klaus */
-class Keyboard
+class Keyboard final
 {
+
 public:
     Keyboard();
-    ~Keyboard();
+    ~Keyboard() = default;
 
     void init();
 
-    tUBYTE value() {return mLine[mRow];}
-    tUBYTE value(tUBYTE row) {return mLine[row];}
-    tUBYTE row() {return mRow;}
+    tUBYTE value()           const {return mLine[mRow];}
+    tUBYTE value(tUBYTE row) const {return mLine[row];}
+    tUBYTE row()             const {return mRow;}
 
-    void setRow(tUBYTE row) {mRow=row;}
-    void setValue(tUBYTE val) {mLine[mRow]=val;}
-    void setValue(tUBYTE row, tUBYTE val) {mLine[row]=val;}
+    void setRow(tUBYTE row)   {mRow = row;}
+    void setValue(tUBYTE val) {mLine[mRow] = val;}
+    void setValue(tUBYTE row, tUBYTE val) {mLine[row] = val;}
 
 private:
     tUBYTE mRow;
     tUBYTE mLine[16];
 };
 
-#endif
+#endif // CPC_KEYBOARD_H

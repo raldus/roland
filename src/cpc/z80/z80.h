@@ -36,15 +36,15 @@ extern Cpc cpc;
 
 
 /** @author Fred Klaus */
-class Z80
+class Z80 final
 {
     typedef tUBYTE (Cpc::*Z80_IN_Handler) (tREGPAIR port);
-    typedef void  (Cpc::*Z80_OUT_Handler)(tREGPAIR port, tUBYTE value);
-    typedef void  (Cpc::*Z80_WS_Handler) (void);
+    typedef void   (Cpc::*Z80_OUT_Handler)(tREGPAIR port, tUBYTE value);
+    typedef void   (Cpc::*Z80_WS_Handler) (void);
 
 public:
     Z80();
-    ~Z80() {}
+    ~Z80() = default;
 
     //typedef void (*CB_WaitStates)(void);
 

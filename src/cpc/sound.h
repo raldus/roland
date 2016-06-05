@@ -25,12 +25,12 @@
 #include "types.h"
 
 /** @author Fred Klaus */
-class Sound
+class Sound final
 {
 
 public:
     Sound(Psg* psg=0);
-    ~Sound() {}
+    ~Sound() = default;
 
     typedef void (Sound::*Synthesizer)(void);
     typedef void (Sound::*CaseEnvType)(void);
@@ -66,15 +66,15 @@ public:
     void initAYCounterVars();
     void initAY();
 
-    tUBYTE* buffer()    {return mSndBuffer;}
-    tUBYTE* bufferEnd() {return mSndBufferEnd;}
-    tUBYTE* stream()    {return mSndStream;}
+    tUBYTE* buffer()    const {return mSndBuffer;}
+    tUBYTE* bufferEnd() const {return mSndBufferEnd;}
+    tUBYTE* stream()    const {return mSndStream;}
 
     void setBuffer   (tUBYTE* ptr) {mSndBuffer=ptr;}
     void setBufferEnd(tUBYTE* ptr) {mSndBufferEnd=ptr;}
     void setStream   (tUBYTE* ptr) {mSndStream=ptr;}
 
-    tDWORD freqTable(int num) {return mFreqTable[num];}
+    tDWORD freqTable(int num) const {return mFreqTable[num];}
 
     void setEnabled(bool value)      {mSndEnabled=value;}
     void setPlaybackRate(uint value) {mSndPlaybackRate=value;}
@@ -89,30 +89,30 @@ public:
     void setBufferPtrU(tUBYTE ptr)    {*(tUBYTE*)mSndBufferPtr=ptr;}
 
     void setBufferFull(bool bf)      {mBufferFull=bf;}
-    bool bufferFull()   {return mBufferFull;}
+    bool bufferFull()          const {return mBufferFull;}
 
-    bool enabled()      {return mSndEnabled;}
-    uint playbackRate() {return mSndPlaybackRate;}
-    uint bits()         {return mSndBits;}
-    uint stereo()       {return mSndStereo;}
-    uint volume()       {return mSndVolume;}
-    uint device()       {return mSndDevice;}
-    uint bufferSize()   {return mSndBufferSize;}
-    tUBYTE* bufferPtr()  {return mSndBufferPtr;}
+    bool enabled()      const {return mSndEnabled;}
+    uint playbackRate() const {return mSndPlaybackRate;}
+    uint bits()         const {return mSndBits;}
+    uint stereo()       const {return mSndStereo;}
+    uint volume()       const {return mSndVolume;}
+    uint device()       const {return mSndDevice;}
+    uint bufferSize()   const {return mSndBufferSize;}
+    tUBYTE* bufferPtr() const {return mSndBufferPtr;}
 
 
     const tINT64 & cycleCountInitBoth() const {return mCycleCountInit.both;}
-    uint  cycleCountInitLow()          const {return mCycleCountInit.low;}
-    uint  cycleCountInitHigh()         const {return mCycleCountInit.high;}
+    uint  cycleCountInitLow()           const {return mCycleCountInit.low;}
+    uint  cycleCountInitHigh()          const {return mCycleCountInit.high;}
 
-    const tINT64 & cycleCountBoth()     const {return mCycleCount.both;}
-    uint  cycleCountLow()              const {return mCycleCount.low;}
-    uint  cycleCountHigh()             const {return mCycleCount.high;}
+    const tINT64 & cycleCountBoth()  const {return mCycleCount.both;}
+    uint  cycleCountLow()            const {return mCycleCount.low;}
+    uint  cycleCountHigh()           const {return mCycleCount.high;}
 
     void setCycleCountInitBoth(const tINT64 & value) {mCycleCountInit.both=value;}
     void setCycleCountBoth(const tINT64 & value)     {mCycleCount.both=value;}
-    void setCycleCountLow (uint value)              {mCycleCount.low =value;}
-    void setCycleCountHigh(uint value)              {mCycleCount.high=value;}
+    void setCycleCountLow (uint value)               {mCycleCount.low =value;}
+    void setCycleCountHigh(uint value)               {mCycleCount.high=value;}
 
 private:
     Psg* mPsg;
@@ -131,7 +131,6 @@ private:
     // **############################***********
     // TODO change and init this !!!!!
     // **############################***********
-    static tDWORD mFreqTable[];
     tUBYTE* mSndBuffer;
     tUBYTE* mSndBufferEnd;
     tUBYTE* mSndStream;
@@ -212,7 +211,13 @@ private:
 
     int mLevelPP[256];
 
-    static tUWORD mAmplitudesAY[16];
+    static constexpr tUWORD mAmplitudesAY[16] =
+        {0,     836,   1212,  1773,  2619,  3875,
+            5397,  8823,  10392, 16706, 23339, 29292,
+            36969, 46421, 55195, 65535};
+
+    static constexpr tDWORD mFreqTable[5] =
+        {11025, 22050, 44100, 48000, 96000};
 
     bool mTonEnA;
     bool mTonEnB;

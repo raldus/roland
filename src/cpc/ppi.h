@@ -24,19 +24,19 @@
 
 //! The 8255 Parallel Peripheral Interface
 //! Parallel Peripheral Interface\n\n @htmlinclude  8255.html
-class Ppi
+class Ppi final
 {
 
 public:
-    enum FlagB
+    enum FlagB //!< (DIP-switch, do not combine manufacturer)
     {
-        Triumph        = 2,      ///< Manufacturer Triumph   (DIP-switch, do not combine with other Man.)
-        Saisho         = 4 ,     ///< Manufacturer Saisho    (DIP-switch, do not combine with other Man.)
-        Solavox        = 6 ,     ///< Manufacturer Solavox   (DIP-switch, do not combine with other Man.)
-        Awa            = 8 ,     ///< Manufacturer Awa       (DIP-switch, do not combine with other Man.)
-        Schneider      = 10 ,    ///< Manufacturer Schneider (DIP-switch, do not combine with other Man.)
-        Orion          = 12 ,    ///< Manufacturer Orion     (DIP-switch, do not combine with other Man.)
-        Amstrad        = 14,     ///< Manufacturer Amstrad   (DIP-switch, do not combine with other Man.)
+        Triumph        = 2,      ///< Manufacturer Triumph
+        Saisho         = 4 ,     ///< Manufacturer Saisho
+        Solavox        = 6 ,     ///< Manufacturer Solavox
+        Awa            = 8 ,     ///< Manufacturer Awa
+        Schneider      = 10 ,    ///< Manufacturer Schneider
+        Orion          = 12 ,    ///< Manufacturer Orion
+        Amstrad        = 14,     ///< Manufacturer Amstrad
         VSyncOccured   = 1,      ///< VSync (internal)
         Refresh50Hz    = 16,     ///< 50Hz instead of 60Hz refresh rate (DIP-switch)
         Expansion      = 32,     ///< No expansion Peripherals available (internal)
@@ -45,15 +45,15 @@ public:
     };
 
     Ppi()  {init();}
-    ~Ppi() {}
+    ~Ppi() = default;
 
     void init();                                   ///< set initial values
 
-    tUBYTE portA()   {return mPortA;}               ///< get Port A
-    tUBYTE portB()   {return mPortB;}               ///< get Port B
-    tUBYTE portC()   {return mPortC;}               ///< get Port C
-    tUBYTE control() {return mControl;}             ///< get control bits
-    tUBYTE jumpers() {return mJumpers;}             ///< get jumpers
+    tUBYTE portA()   const {return mPortA;}               ///< get Port A
+    tUBYTE portB()   const {return mPortB;}               ///< get Port B
+    tUBYTE portC()   const {return mPortC;}               ///< get Port C
+    tUBYTE control() const {return mControl;}             ///< get control bits
+    tUBYTE jumpers() const {return mJumpers;}             ///< get jumpers
 
     void setA(tUBYTE val)       {mPortA   = val;}   ///< set Port A
     void setB(tUBYTE val)       {mPortB   = val;}   ///< set Port B

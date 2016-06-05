@@ -27,13 +27,13 @@
 class Z80;
 
 /** @author Fred Klaus */
-class Register
+class Register final
 {
     friend class Z80;
 
 public:
     Register() {init();}
-    ~Register(){}
+    ~Register() = default;
 
     void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
 

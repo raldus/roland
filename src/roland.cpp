@@ -285,7 +285,7 @@ void mainloop()
                                     lstFile->setEnabled(!lstFile->enabled());
                                     if (!lstFile->enabled())
                                     {
-                                        tString str =
+                                        tSTRING str =
                                                 prefs.getPath("diskdir")
                                                 + Prefs::delim()
                                                 + *lstFile->selected();
@@ -307,7 +307,7 @@ void mainloop()
                                     lstFile->setEnabled(!lstFile->enabled());
                                     if (!lstFile->enabled())
                                     {
-                                        tString str =
+                                        tSTRING str =
                                                 prefs.getPath("diskdir")
                                                 + Prefs::delim()
                                                 + *lstFile->selected();

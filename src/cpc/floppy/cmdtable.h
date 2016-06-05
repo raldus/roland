@@ -24,11 +24,11 @@
 #include "fdcconst.h"
 
 /** @author Fred Klaus */
-class CmdTable
+class CmdTable final
 {
 public:
-    CmdTable() {}
-    ~CmdTable() {}
+    CmdTable()  = default;
+    ~CmdTable() = default;
 
     CmdTableDef & get(int num) {return entry[num];}
 

@@ -27,15 +27,15 @@
 #include <cstring>
 
 /** @author Fred Klaus */
-class Track
+class Track final
 {
 public:
     Track() {std::memset(this, 0, sizeof(*this));}
-    ~Track() {}
+    ~Track() = default;
 
-    tUBYTE* data()    {return mData;}
-    uint sectors()   {return mSectors;}
-    uint size()      {return mSize;}
+    tUBYTE* data() const {return mData;}
+    uint sectors() const {return mSectors;}
+    uint size()    const {return mSize;}
     Sector & sector(int num) {return mSector[num];}
 
     void setSectors(uint sectors) {mSectors=sectors;}

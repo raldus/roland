@@ -25,17 +25,17 @@
 class Sound;
 
 /** @author Fred Klaus */
-class Psg
+class Psg final
 {
 
 public:
-    Psg();
-    ~Psg() {}
+    Psg() {init();}
+    ~Psg() = default;
 
     void init();
 
-    tUBYTE control()  {return mControl;}
-    tUBYTE selected() {return mSelected;}
+    tUBYTE control()           const {return mControl;}
+    tUBYTE selected()          const {return mSelected;}
     tUBYTE registerAY(int num) const {return mRegisterAY[num];}
     tUBYTE registerAY()        const {return mRegisterAY[mSelected];}
 

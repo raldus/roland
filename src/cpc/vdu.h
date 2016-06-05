@@ -28,14 +28,12 @@
     #include <memory>
 #endif
 
-#include "types.h"
-
 class GateArray;
 class Crtc;
 class Z80;
 
 /** @author Fred Klaus */
-class Vdu
+class Vdu final
 {
 
 public:
@@ -91,24 +89,24 @@ public:
 
 
     //uint hsw()            {return mHsw;}
-    uint hswActive()      {return mHswActive;}
-    uint hswCount()       {return mHswCount;}
-    uint vswCount()       {return mVswCount;}
-    uint hDelay()         {return mHDelay;}
-    uint vDelay()         {return mVDelay;}
-    uint scanline()       {return mScanline;}
-    uint scanlineMin()    {return mScanlineMin;}
-    bool frameCompleted() {return mFrameCompleted;}
-    uint charCount()      {return mCharCount;}
-    uint hCount()         {return mHCount;}
-    uint hStart()         {return mHStart;}
-    uint hWidth()         {return mHWidth;}
-    uint vCount()         {return mVCount;}
-    uint vStart()         {return mVStart;}
-    uint vHeight()        {return mVHeight;}
+    uint hswActive()      const {return mHswActive;}
+    uint hswCount()       const {return mHswCount;}
+    uint vswCount()       const {return mVswCount;}
+    uint hDelay()         const {return mHDelay;}
+    uint vDelay()         const {return mVDelay;}
+    uint scanline()       const {return mScanline;}
+    uint scanlineMin()    const {return mScanlineMin;}
+    bool frameCompleted() const {return mFrameCompleted;}
+    uint charCount()      const {return mCharCount;}
+    uint hCount()         const {return mHCount;}
+    uint hStart()         const {return mHStart;}
+    uint hWidth()         const {return mHWidth;}
+    uint vCount()         const {return mVCount;}
+    uint vStart()         const {return mVStart;}
+    uint vHeight()        const {return mVHeight;}
 
-    void setBpp       (Bpp bpp);
-    void setBorder    (bool border     = true);
+    void setBpp         (Bpp bpp);
+    void setBorder      (bool border   = true);
     void setLineDoubling(bool doubling = true);
 
     //void setHsw            (uint value) {mHsw            = value;}
@@ -128,11 +126,11 @@ public:
     void setVStart        (uint value) {mVStart         = value;}
     void setVHeight       (uint value) {mVHeight        = value;}
 
-    void setScrBase      (uint*  value) {mScrBase       = value;}
-    void setScrEnd       (uint*  value) {mScrEnd        = value;}
-    void setScrLineOffset(uint   value) {mScrLineOffset = value;}
-    void setScrOffset    (uint   value) {mScrOffset     = value;}
-    void setScrLine      (uint   value) {mScrLine       = value;}
+    void setScrBase      (uint*  value)  {mScrBase       = value;}
+    void setScrEnd       (uint*  value)  {mScrEnd        = value;}
+    void setScrLineOffset(uint   value)  {mScrLineOffset = value;}
+    void setScrOffset    (uint   value)  {mScrOffset     = value;}
+    void setScrLine      (uint   value)  {mScrLine       = value;}
     void setCpcRamBase   (tUBYTE* value) {mCpcRamBase    = value;}
 
     void setScale(uchar scale);

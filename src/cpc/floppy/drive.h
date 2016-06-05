@@ -24,11 +24,11 @@
 #include "fdcconst.h"
 
 /** @author Fred Klaus */
-class Drive
+class Drive final
 {
 public:
     Drive();
-    ~Drive() {}
+    ~Drive() = default;
 
     void init();
 

@@ -26,12 +26,8 @@
 
 extern Cpc cpc;
 
-tUWORD Sound::mAmplitudesAY[16] = {0,     836,   1212,  1773,  2619,  3875,
-                                  5397,  8823,  10392, 16706, 23339, 29292,
-                                  36969, 46421, 55195, 65535};
-
-static const char MAX_FREQ_ENTRIES(5);
-tDWORD Sound::mFreqTable[MAX_FREQ_ENTRIES] = {11025, 22050, 44100, 48000, 96000};
+constexpr tUWORD Sound::mAmplitudesAY[16];
+constexpr tDWORD Sound::mFreqTable[5];
 
 Sound::Sound(Psg *psg) : mPsg(psg)
 {

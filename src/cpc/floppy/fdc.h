@@ -29,12 +29,12 @@
 
 
 /** @author Fred Klaus */
-class Fdc
+class Fdc final
 {
 
 public:
     Fdc();
-    ~Fdc() {}
+    ~Fdc() = default;
 
     typedef void (Fdc::*CmdHandler)(void);
 

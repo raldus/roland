@@ -27,11 +27,11 @@
 /// The CRTC6845
 /** CRTC6845\n\n @htmlinclude crtc.html
 	@author Fred Klaus */
-class Crtc
+class Crtc final
 {
 
 public:
-	enum Register
+	enum Register : tUBYTE
 	{                                 ///<  PAL   SECAM   NTSC
 	    HorizontalTotal         =  0, ///<   63    63      63
 	    HorizontalDisplayed     =  1, ///<   40    40      40
@@ -53,7 +53,7 @@ public:
 	    LightPenLow             = 17  ///<    X     X       X
 	};
 
-	enum Flags
+	enum Flags : tUWORD
 	{
 	    VS     = 1,   ///< VSync
 	    HS     = 2,   ///< HSync
@@ -69,14 +69,14 @@ public:
 	Crtc();
 	~Crtc();
 
-	void init(Ppi* ppi=0);
+	void init(Ppi* ppi = nullptr);
 
-	tUBYTE selected() {return mSelected;}
+	tUBYTE selected() const {return mSelected;}
 
-	tUBYTE read()                         {return mRegister[mSelected];}
-	tUBYTE read  (tUBYTE num)              {return (num < 18) ? mRegister[num] : 0;}
-	void  select(tUBYTE reg)              {if (reg < 18) mSelected=reg;}
-	void  write (tUBYTE reg, tUBYTE value) {mRegister[reg]=value;}
+	tUBYTE read()                    const {return mRegister[mSelected];}
+	tUBYTE read (tUBYTE num)         const {return (num < 18) ? mRegister[num] : 0;}
+	void  select(tUBYTE reg)               {if (reg < 18) mSelected = reg;}
+	void  write (tUBYTE reg, tUBYTE value) {mRegister[reg] = value;}
 	void  write (tUBYTE value);
 
 	uint  flags()           {return mFlags;}
@@ -96,8 +96,8 @@ public:
 	tUBYTE charCount()      {return mCharCount;}
 	uint requestedAddr()   {return mRequestedAddr;}
 	uint addr()            {return mAddr;}
-	
-	
+
+
 
 	void setFlags         (uint flags)  {mFlags = flags;}
 	void addFlags         (uint flags)  {mFlags |= flags;}
@@ -123,12 +123,12 @@ public:
 
 private:
 	Ppi*  mPpi;
-	
+
 	tUBYTE mRegister[18];
 	tUBYTE mSelected;
 
 	uint  mFlags;
-	tUBYTE mHsw;  
+	tUBYTE mHsw;
 	tBYTE  mHswVdu; // formerly known as Vdu::mHsw
 	tUBYTE mHswCount;
 	tUBYTE mHswActive;

@@ -23,22 +23,22 @@
 class Fdc;
 
 /** @author Fred Klaus */
-class CmdTableDef
+class CmdTableDef final
 {
 public:
-    CmdTableDef()  {}
-    ~CmdTableDef() {}
+    CmdTableDef()  = default;
+    ~CmdTableDef() = default;
 
     typedef void (Fdc::*CmdHandler)(void);
 
     void set(int cmd, int cmdlen, int reslen, int cmddir, CmdHandler cmdhandler)
         {mCmd=cmd; mCmdLength=cmdlen; mResLength=reslen; mCmdDirection=cmddir; mCmdHandler=cmdhandler;}
 
-    int cmd()          {return mCmd;}
-    int cmdLength()    {return mCmdLength;}
-    int resLength()    {return mResLength;}
-    int cmdDirection() {return mCmdDirection;}
-    CmdHandler cmdHandler() {return mCmdHandler;}
+    int cmd()          const {return mCmd;}
+    int cmdLength()    const {return mCmdLength;}
+    int resLength()    const {return mResLength;}
+    int cmdDirection() const {return mCmdDirection;}
+    CmdHandler cmdHandler() const {return mCmdHandler;}
 
 private:
     int mCmd;
