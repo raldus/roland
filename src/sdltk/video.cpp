@@ -28,7 +28,7 @@ namespace sdltk
     uint  Video::mDesktopWidth  = 0;
     uint  Video::mDesktopHeight = 0;
 
-    Video::Video(Cpc* cpc)
+    Video::Video(cpcx::Cpc* cpc)
     {
         const SDL_VideoInfo* vinfo = SDL_GetVideoInfo();
 

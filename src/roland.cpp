@@ -52,6 +52,7 @@
 #include "prefs.h"
 
 using namespace std;
+using namespace cpcx;
 
 SDL_Surface * screen = nullptr;
 
@@ -77,21 +78,20 @@ inline void display();
 
 Directory       dir;
 
-sdltk::Video  * video    = nullptr;
-sdltk::Gui    * gui      = nullptr;
-
-sdltk::Label  * lblFps   = nullptr;
-sdltk::Label  * lblJoy   = nullptr;
-sdltk::Label  * lblDisk  = nullptr;
-sdltk::Button * btnTest  = nullptr;
-sdltk::Button * btnTest2 = nullptr;
-sdltk::List   * lstDirectory  = nullptr;
-sdltk::FileList * lstFile = nullptr;
-
 Prefs prefs;
-Cpc cpc(prefs);
-sdltk::Audio audio (&cpc);
+Cpc cpcx::cpc(prefs);
+sdltk::Audio    audio (&cpc);
 sdltk::KeyTrans keytrans;
+sdltk::Video    * video         = nullptr;
+sdltk::Gui      * gui           = nullptr;
+sdltk::Label    * lblFps        = nullptr;
+sdltk::Label    * lblJoy        = nullptr;
+sdltk::Label    * lblDisk       = nullptr;
+sdltk::Button   * btnTest       = nullptr;
+sdltk::Button   * btnTest2      = nullptr;
+sdltk::List     * lstDirectory  = nullptr;
+sdltk::FileList * lstFile       = nullptr;
+
 
 static const string datadir(prefs.getPath("datadir"));
 

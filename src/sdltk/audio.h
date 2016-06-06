@@ -24,6 +24,7 @@
 #include "cpc.h"
 #include "SDL.h"
 
+
 namespace sdltk
 {
 
@@ -32,7 +33,7 @@ namespace sdltk
     {
 
     public:
-        Audio(Cpc * cpc);
+        Audio(cpcx::Cpc * cpc);
         ~Audio();
 
         int  init();
@@ -51,7 +52,7 @@ namespace sdltk
         static void update(void *userdata, Uint8 *stream, int len);
 
     private:
-        static Cpc * mCpc;
+        static cpcx::Cpc * mCpc;
         static volatile bool mBufferCopied; ///@todo not threadsafe
         SDL_AudioSpec* mSpec;
 

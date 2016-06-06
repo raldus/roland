@@ -17,76 +17,80 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef GATEARRAY_H
-#define GATEARRAY_H
+#ifndef CPC_GATEARRAY_H
+#define CPC_GATEARRAY_H
 
 #include "types.h"
 
-/// Gate Array
-/** Gate Array\n\n @htmlinclude gatearray.html
-    @author Fred Klaus */
+namespace cpcx
+{
+
+//! Gate Array\n\n @htmlinclude gatearray.html
+//! \author Fred Klaus
 class GateArray final
 {
 
-public:
-    GateArray()  {init();}
-    ~GateArray() = default;  ///< does nothing
+    public:
+        GateArray()  {init();}
+        ~GateArray() = default;  ///< does nothing
 
-    void init();
+        void init();
 
-    tUBYTE  pen()               const {return mPen;}
-    tUBYTE* ink()                     {return mInk;}
-    tUBYTE  ink(tUBYTE num)     const {return mInk[num];}
-    tUDWORD palette(tUBYTE num) const {return mPalette[num];}
+        tUBYTE  pen()               const {return mPen;}
+        tUBYTE* ink()                     {return mInk;}
+        tUBYTE  ink(tUBYTE num)     const {return mInk[num];}
+        tUDWORD palette(tUBYTE num) const {return mPalette[num];}
 
-    tUBYTE romConfig()         const {return mRomConfig;}
-    tUBYTE ramConfig()         const {return mRamConfig;}
-    tUBYTE ramBank()           const {return mRamBank;}
-    tUBYTE upperRom()          const {return mUpperRom;}
-    tUBYTE counter()           const {return mCounter;}
-    tUBYTE mode()              const {return mMode;}
-    tUBYTE requestedMode()     const {return mRequestedMode;}
-    bool  interrupt()          const {return mInterrupt;}
-    tUBYTE intDelay()          const {return mIntDelay;}
-    tUBYTE slCount()           const {return mSlCount;}
+        tUBYTE romConfig()         const {return mRomConfig;}
+        tUBYTE ramConfig()         const {return mRamConfig;}
+        tUBYTE ramBank()           const {return mRamBank;}
+        tUBYTE upperRom()          const {return mUpperRom;}
+        tUBYTE counter()           const {return mCounter;}
+        tUBYTE mode()              const {return mMode;}
+        tUBYTE requestedMode()     const {return mRequestedMode;}
+        bool  interrupt()          const {return mInterrupt;}
+        tUBYTE intDelay()          const {return mIntDelay;}
+        tUBYTE slCount()           const {return mSlCount;}
 
-    void setPen(tUBYTE pen)               {mPen = pen;}
-    //void setInk(tUBYTE* ink) {for (int i=0; i<17; i++) mInk[i] = ink[i];}
-    void setInk(tUBYTE ink)               {mInk[mPen] = ink;}
-    void setInk(tUBYTE num, tUBYTE ink)    {mInk[num]  = ink;}
+        void setPen(tUBYTE pen)               {mPen = pen;}
+        //void setInk(tUBYTE* ink) {for (int i=0; i<17; i++) mInk[i] = ink[i];}
+        void setInk(tUBYTE ink)               {mInk[mPen] = ink;}
+        void setInk(tUBYTE num, tUBYTE ink)    {mInk[num]  = ink;}
 
-    void setPalette(tUBYTE num, uint col) {mPalette[num]  = col;}
-    void setPalette(uint col)            {mPalette[mPen] = col;}
+        void setPalette(tUBYTE num, uint col) {mPalette[num]  = col;}
+        void setPalette(uint col)            {mPalette[mPen] = col;}
 
-    void setRomConfig(tUBYTE romcfg)      {mRomConfig = romcfg;}
-    void setRamConfig(tUBYTE ramcfg)      {mRamConfig = ramcfg;}
-    void setRamBank  (tUBYTE ramcfg)      {mRamBank   = ramcfg;}
-    void setUpperRom (tUBYTE ramcfg)      {mUpperRom  = ramcfg;}
+        void setRomConfig(tUBYTE romcfg)      {mRomConfig = romcfg;}
+        void setRamConfig(tUBYTE ramcfg)      {mRamConfig = ramcfg;}
+        void setRamBank  (tUBYTE ramcfg)      {mRamBank   = ramcfg;}
+        void setUpperRom (tUBYTE ramcfg)      {mUpperRom  = ramcfg;}
 
-    void setMode(tUBYTE mode)             {mMode = mode;}
-    void setRequestedMode(tUBYTE mode)    {mRequestedMode = mode;}
+        void setMode(tUBYTE mode)             {mMode = mode;}
+        void setRequestedMode(tUBYTE mode)    {mRequestedMode = mode;}
 
-    void setInterrupt(bool enabled)      {mInterrupt = enabled;}
-    void setIntDelay (tUBYTE value)       {mIntDelay  = value;}
-    void setSlCount  (tUBYTE value)       {mSlCount   = value;}
+        void setInterrupt(bool enabled)      {mInterrupt = enabled;}
+        void setIntDelay (tUBYTE value)       {mIntDelay  = value;}
+        void setSlCount  (tUBYTE value)       {mSlCount   = value;}
 
-private:
-    tUBYTE mRomConfig;
-    tUBYTE mRamConfig;
-    tUBYTE mRamBank;
-    tUBYTE mUpperRom;
-    tUBYTE mCounter;
-    tUBYTE mMode;
-    tUBYTE mRequestedMode;
-    tUBYTE mSlCount;
+    private:
+        tUBYTE mRomConfig;
+        tUBYTE mRamConfig;
+        tUBYTE mRamBank;
+        tUBYTE mUpperRom;
+        tUBYTE mCounter;
+        tUBYTE mMode;
+        tUBYTE mRequestedMode;
+        tUBYTE mSlCount;
 
-    tUBYTE   mPen;
-    tUBYTE   mInk[17];
-    tUDWORD  mPalette[17];
+        tUBYTE   mPen;
+        tUBYTE   mInk[17];
+        tUDWORD  mPalette[17];
 
-    bool  mInterrupt;
-    tUBYTE mIntDelay;
+        bool  mInterrupt;
+        tUBYTE mIntDelay;
 
-};
+    };
 
-#endif
+}; // cpc
+
+#endif // CPC_GATEARRAY_H

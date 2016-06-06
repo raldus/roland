@@ -19,11 +19,16 @@
  ***************************************************************************/
 #include "ppi.h"
 
-void Ppi::init()
+namespace cpcx
 {
-    mPortA   = 0;
-    mPortB   = 0;
-    mPortC   = 0;
-    mControl = 0;
-    mJumpers = 0;
-}
+
+    void Ppi::init()
+    {
+        mPortA   = 0;
+        mPortB   = 0;
+        mPortC   = 0;
+        mControl = 0;
+        mJumpers = 0;
+    }
+
+} // cpc

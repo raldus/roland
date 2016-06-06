@@ -35,7 +35,7 @@ namespace sdltk
     {
 
     public:
-        VideoGL(Cpc * cpc);
+        VideoGL(cpcx::Cpc * cpc);
         virtual ~VideoGL();
 
         virtual int init();

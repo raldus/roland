@@ -37,7 +37,7 @@ namespace sdltk
 
     public:
         //! Constructs the video interface for the \param Cpc
-        Video(Cpc * cpc);
+        Video(cpcx::Cpc * cpc);
         virtual ~Video() = default;
 
         //! device dependant init for inheritance
@@ -97,7 +97,7 @@ namespace sdltk
 
 
     protected:
-        Cpc* mCpc;
+        cpcx::Cpc* mCpc;
 
         static unsigned int mDesktopWidth;
         static unsigned int mDesktopHeight;

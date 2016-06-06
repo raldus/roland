@@ -17,84 +17,89 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MEMMAN_H
-#define MEMMAN_H
+#ifndef CPC_MEMMAN_H
+#define CPC_MEMMAN_H
 
 #include "def.h"
 #include "gatearray.h"
 #include "z80.h"
 
-/** @author Fred Klaus */
-class MemMan final
+namespace cpcx
 {
 
-public:
-    MemMan(Z80* z80 = nullptr, GateArray* gatearray = nullptr,
-            const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
-    ~MemMan() = default;
-
-    enum RamSize : tUWORD {ram64=64, ram128=128, ram256=256, ram512=512};
-
-    enum Error   : tUBYTE {ErrRamSize=1, ErrMemory=2, ErrCpcRom=4, ErrAmsdos=8};
-
-    int init(tUWORD ramsize = 128, const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
-    int init(Z80* z80, GateArray* gatearray);
-
-    inline void initBanking();
-    void memoryManager();
-
-    inline void toggleLowerRom();
-    inline void toggleUpperRom();
-
-    tUBYTE* memBankConfig(tUBYTE bank, tUBYTE seg) {return mMemBankConfig[bank][seg];}
-    tUBYTE* rom(int bank) {return mRom[bank];}
-
-    tUBYTE* upperRom() {return mUpperRom;}
-    tUBYTE* lowerRom() {return mLowerRom;}
-
-    tUBYTE* base() {return mMemBankConfig[0][0];}
-
-    bool openRom(int idx, const tSTRING & filename);
-    bool openCpcRom(const tSTRING & filename);
-
-private:
-    GateArray* mGateArray;
-    Z80* mZ80;
-
-    tUBYTE* mRam;
-    tUBYTE* mRom[256];
-    tUBYTE  mCpcRom[2*16384];
-    tUBYTE* mMemBankConfig[8][4];
-
-    tUBYTE* mUpperRom;
-    tUBYTE* mLowerRom;
-
-    int mRamSize;
-
-};
-
-inline void MemMan::toggleUpperRom()
-{
-
-    if (!(mGateArray->romConfig() & 0x08))
+    //! @author Fred Klaus
+    class MemMan final
     {
-        if ((mGateArray->upperRom() == 0) || (mRom[mGateArray->upperRom()] == 0))
+
+    public:
+        MemMan(Z80* z80 = nullptr, GateArray* gatearray = nullptr,
+                const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
+        ~MemMan() = default;
+
+        enum RamSize : tUWORD {ram64=64, ram128=128, ram256=256, ram512=512};
+
+        enum Error   : tUBYTE {ErrRamSize=1, ErrMemory=2, ErrCpcRom=4, ErrAmsdos=8};
+
+        int init(tUWORD ramsize = 128, const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
+        int init(Z80* z80, GateArray* gatearray);
+
+        inline void initBanking();
+        void memoryManager();
+
+        inline void toggleLowerRom();
+        inline void toggleUpperRom();
+
+        tUBYTE* memBankConfig(tUBYTE bank, tUBYTE seg) {return mMemBankConfig[bank][seg];}
+        tUBYTE* rom(int bank) {return mRom[bank];}
+
+        tUBYTE* upperRom() {return mUpperRom;}
+        tUBYTE* lowerRom() {return mLowerRom;}
+
+        tUBYTE* base() {return mMemBankConfig[0][0];}
+
+        bool openRom(int idx, const tSTRING & filename);
+        bool openCpcRom(const tSTRING & filename);
+
+    private:
+        GateArray* mGateArray;
+        Z80* mZ80;
+
+        tUBYTE* mRam;
+        tUBYTE* mRom[256];
+        tUBYTE  mCpcRom[2*16384];
+        tUBYTE* mMemBankConfig[8][4];
+
+        tUBYTE* mUpperRom;
+        tUBYTE* mLowerRom;
+
+        int mRamSize;
+
+    };
+
+    inline void MemMan::toggleUpperRom()
+    {
+
+        if (!(mGateArray->romConfig() & 0x08))
         {
-            mZ80->setMembank_read(3, mUpperRom);
-        }
-        else
-        {
-            mZ80->setMembank_read(3, mRom[mGateArray->upperRom()]);
+            if ((mGateArray->upperRom() == 0) || (mRom[mGateArray->upperRom()] == 0))
+            {
+                mZ80->setMembank_read(3, mUpperRom);
+            }
+            else
+            {
+                mZ80->setMembank_read(3, mRom[mGateArray->upperRom()]);
+            }
         }
     }
-}
 
-inline void MemMan::toggleLowerRom()
-{
-    if (!(mGateArray->romConfig() & 0x04))
+    inline void MemMan::toggleLowerRom()
     {
-        mZ80->setMembank_read(0, mLowerRom);
+        if (!(mGateArray->romConfig() & 0x04))
+        {
+            mZ80->setMembank_read(0, mLowerRom);
+        }
     }
-}
 
-#endif
+}; // cpc
+
+#endif // CPC_MEMMAN_H

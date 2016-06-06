@@ -22,10 +22,10 @@
 namespace sdltk
 {
 
-    Cpc* Audio::mCpc=0;
+    cpcx::Cpc* Audio::mCpc=0;
     volatile bool Audio::mBufferCopied = false;
 
-    Audio::Audio(Cpc * cpc)
+    Audio::Audio(cpcx::Cpc * cpc)
     {
         mCpc          = cpc;
         isInit        = false;

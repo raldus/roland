@@ -33,7 +33,7 @@ namespace sdltk
     class VideoStd : public Video
     {
     public:
-        VideoStd(Cpc * cpc);
+        VideoStd(cpcx::Cpc * cpc);
         virtual ~VideoStd();
 
         virtual int init();

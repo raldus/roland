@@ -19,121 +19,126 @@
  ***************************************************************************/
 #include "colours.h"
 
-constexpr float  Colours::mColour[32][3];
-constexpr double Colours::mGreen[32];
-
-void Colours::init()
+namespace cpcx
 {
-    if (mMonitor == 0)
+
+    constexpr float  Colours::mColour[32][3];
+    constexpr double Colours::mGreen[32];
+
+    void Colours::init()
     {
-        switch (mDepth)
+        if (mMonitor == 0)
         {
-            case 32:
-            case 24:
-                for (int i = 0; i < 32; i++)
-                {
-                    tUDWORD red =
-                        (tUDWORD)(mColour[i][0] * (mIntensity / 10.0) * 255);
-                    if (red > 255)
-                    { // limit to the maximum
-                        red = 255;
-                    }
-                    tUDWORD green =
-                        (tUDWORD)(mColour[i][1] * (mIntensity / 10.0) * 255);
-                    if (green > 255)
+            switch (mDepth)
+            {
+                case 32:
+                case 24:
+                    for (int i = 0; i < 32; i++)
                     {
-                        green = 255;
+                        tUDWORD red =
+                            (tUDWORD)(mColour[i][0] * (mIntensity / 10.0) * 255);
+                        if (red > 255)
+                        { // limit to the maximum
+                            red = 255;
+                        }
+                        tUDWORD green =
+                            (tUDWORD)(mColour[i][1] * (mIntensity / 10.0) * 255);
+                        if (green > 255)
+                        {
+                            green = 255;
+                        }
+                        tUDWORD blue =
+                            (tUDWORD)(mColour[i][2] * (mIntensity / 10.0) * 255);
+                        if (blue > 255)
+                        {
+                            blue = 255;
+                        }
+                        mTable[i] = blue | (green << 8) | (red << 16);
                     }
-                    tUDWORD blue =
-                        (tUDWORD)(mColour[i][2] * (mIntensity / 10.0) * 255);
-                    if (blue > 255)
+                    break;
+
+                case 16:
+                    for (int i = 0; i < 32; i++)
                     {
-                        blue = 255;
+                        tUDWORD red =
+                            (tUDWORD)(mColour[i][0] * (mIntensity / 10.0) * 31);
+                        if (red > 31)
+                            red = 31; // limit to the maximum
+
+                        tUDWORD green =
+                            (tUDWORD)(mColour[i][1] * (mIntensity / 10.0) * 63);
+                        if (green > 63)
+                            green = 63;
+
+                        tUDWORD blue =
+                            (tUDWORD)(mColour[i][2] * (mIntensity / 10.0) * 31);
+                        if (blue > 31)
+                            blue = 31;
+
+                        tUDWORD colour = blue | (green << 5) | (red << 11);
+
+                        mTable[i] = colour | (colour << 16);
                     }
-                    mTable[i] = blue | (green << 8) | (red << 16);
-                }
-                break;
+                    break;
 
-            case 16:
-                for (int i = 0; i < 32; i++)
-                {
-                    tUDWORD red =
-                        (tUDWORD)(mColour[i][0] * (mIntensity / 10.0) * 31);
-                    if (red > 31)
-                        red = 31; // limit to the maximum
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            switch (mDepth)
+            {
+                case 32:
+                case 24:
+                    for (int i = 0; i < 32; i++)
+                    {
+                        tUDWORD red = (tUDWORD)(0 * (mIntensity / 10.0) * 255);
+                        if (red > 255)
+                        { // limit to the maximum
+                            red = 255;
+                        }
+                        tUDWORD green =
+                            (tUDWORD)(mGreen[i] * (mIntensity / 10.0) * 255);
+                        if (green > 255)
+                        {
+                            green = 255;
+                        }
+                        tUDWORD blue = (tUDWORD)(0 * (mIntensity / 10.0) * 255);
+                        if (blue > 255)
+                        {
+                            blue = 255;
+                        }
+                        mTable[i] = blue | (green << 8) | (red << 16);
+                    }
+                    break;
 
-                    tUDWORD green =
-                        (tUDWORD)(mColour[i][1] * (mIntensity / 10.0) * 63);
-                    if (green > 63)
-                        green = 63;
+                case 16:
+                    for (int i = 0; i < 32; i++)
+                    {
+                        tUDWORD red = (tUDWORD)(0 * (mIntensity / 10.0) * 31);
+                        if (red > 31)
+                            red = 31; // limit to the maximum
 
-                    tUDWORD blue =
-                        (tUDWORD)(mColour[i][2] * (mIntensity / 10.0) * 31);
-                    if (blue > 31)
-                        blue = 31;
+                        tUDWORD green =
+                            (tUDWORD)(mGreen[i] * (mIntensity / 10.0) * 63);
+                        if (green > 63)
+                            green = 63;
 
-                    tUDWORD colour = blue | (green << 5) | (red << 11);
+                        tUDWORD blue = (tUDWORD)(0 * (mIntensity / 10.0) * 31);
+                        if (blue > 31)
+                            blue = 31;
 
-                    mTable[i] = colour | (colour << 16);
-                }
-                break;
+                        tUDWORD colour = blue | (green << 5) | (red << 11);
 
-            default:
-                break;
+                        mTable[i] = colour | (colour << 16);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
-    else
-    {
-        switch (mDepth)
-        {
-            case 32:
-            case 24:
-                for (int i = 0; i < 32; i++)
-                {
-                    tUDWORD red = (tUDWORD)(0 * (mIntensity / 10.0) * 255);
-                    if (red > 255)
-                    { // limit to the maximum
-                        red = 255;
-                    }
-                    tUDWORD green =
-                        (tUDWORD)(mGreen[i] * (mIntensity / 10.0) * 255);
-                    if (green > 255)
-                    {
-                        green = 255;
-                    }
-                    tUDWORD blue = (tUDWORD)(0 * (mIntensity / 10.0) * 255);
-                    if (blue > 255)
-                    {
-                        blue = 255;
-                    }
-                    mTable[i] = blue | (green << 8) | (red << 16);
-                }
-                break;
 
-            case 16:
-                for (int i = 0; i < 32; i++)
-                {
-                    tUDWORD red = (tUDWORD)(0 * (mIntensity / 10.0) * 31);
-                    if (red > 31)
-                        red = 31; // limit to the maximum
-
-                    tUDWORD green =
-                        (tUDWORD)(mGreen[i] * (mIntensity / 10.0) * 63);
-                    if (green > 63)
-                        green = 63;
-
-                    tUDWORD blue = (tUDWORD)(0 * (mIntensity / 10.0) * 31);
-                    if (blue > 31)
-                        blue = 31;
-
-                    tUDWORD colour = blue | (green << 5) | (red << 11);
-
-                    mTable[i] = colour | (colour << 16);
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-}
+} // cpc

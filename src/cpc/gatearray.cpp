@@ -19,23 +19,29 @@
  ***************************************************************************/
 #include "gatearray.h"
 
-void GateArray::init()
+namespace cpcx
 {
-    mPen = 0;
-    mRomConfig = 0;
-    mRamConfig = 0;
-    mRamBank = 0;
-    mUpperRom = 0;
-    mCounter = 0;
-    mSlCount = 0;
-    mIntDelay = 0;
-    mInterrupt = true;
 
-    mMode = 1;
-    mRequestedMode = 1;
+    void GateArray::init()
+    {
+        mPen = 0;
+        mRomConfig = 0;
+        mRamConfig = 0;
+        mRamBank = 0;
+        mUpperRom = 0;
+        mCounter = 0;
+        mSlCount = 0;
+        mIntDelay = 0;
+        mInterrupt = true;
 
-    for (tUBYTE i = 0; i < 17; i++)
-        mInk[i] = 0;
-    for (tUBYTE i = 0; i < 17; i++)
-        mPalette[i] = 0;
-}
+        mMode = 1;
+        mRequestedMode = 1;
+
+        for (tUBYTE i = 0; i < 17; i++)
+            mInk[i] = 0;
+        for (tUBYTE i = 0; i < 17; i++)
+            mPalette[i] = 0;
+    }
+
+} // cpc
+

@@ -23,27 +23,32 @@
 #include "types.h"
 #include "cpckeys.h"
 
-/** @author Fred Klaus */
-class Keyboard final
+namespace cpcx
 {
 
-public:
-    Keyboard();
-    ~Keyboard() = default;
+    /** @author Fred Klaus */
+    class Keyboard final
+    {
 
-    void init();
+    public:
+        Keyboard();
+        ~Keyboard() = default;
 
-    tUBYTE value()           const {return mLine[mRow];}
-    tUBYTE value(tUBYTE row) const {return mLine[row];}
-    tUBYTE row()             const {return mRow;}
+        void init();
 
-    void setRow(tUBYTE row)   {mRow = row;}
-    void setValue(tUBYTE val) {mLine[mRow] = val;}
-    void setValue(tUBYTE row, tUBYTE val) {mLine[row] = val;}
+        tUBYTE value()           const {return mLine[mRow];}
+        tUBYTE value(tUBYTE row) const {return mLine[row];}
+        tUBYTE row()             const {return mRow;}
 
-private:
-    tUBYTE mRow;
-    tUBYTE mLine[16];
-};
+        void setRow(tUBYTE row)   {mRow = row;}
+        void setValue(tUBYTE val) {mLine[mRow] = val;}
+        void setValue(tUBYTE row, tUBYTE val) {mLine[row] = val;}
+
+    private:
+        tUBYTE mRow;
+        tUBYTE mLine[16];
+    };
+
+}; // cpc
 
 #endif // CPC_KEYBOARD_H

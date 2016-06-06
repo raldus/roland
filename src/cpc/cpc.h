@@ -40,6 +40,9 @@
 #include "sound.h"
 #include "vdu.h"
 
+namespace cpcx
+{
+
 #define mPsg_write \
 { \
    tUBYTE control = mPsg.control() & 0xc0; /* isolate PSG control bits */ \
@@ -52,76 +55,78 @@
 } \
 }
 
-/** @author Fred Klaus */
-class Cpc final
-{
-
-public:
-    enum class CpcType : unsigned char
+    //! @author Fred Klaus
+    class Cpc final
     {
-        cpc464  = 0,
-        cpc664  = 1,
-        cpc6128 = 2
+
+    public:
+        enum class CpcType : unsigned char
+        {
+            cpc464  = 0,
+            cpc664  = 1,
+            cpc6128 = 2
+        };
+        enum class RamSize : unsigned short int
+        {
+            ram64  =  64,
+            ram128 = 128,
+            ram256 = 256,
+            ram512 = 512
+        };
+        //enum Monitor {colour=0, green=1, grey=2};
+
+
+        Cpc() = delete;
+        Cpc(const Prefs & prefs);
+        ~Cpc() = default;
+
+        int init() noexcept;
+
+        void setSpeed(uint value) {mSpeed = value;}
+
+        uint speed() const {return mSpeed;}
+        //Monitor monitor() {return mMonitor;}
+
+        tUBYTE z80_in_handler (tREGPAIR port) noexcept; //@todo change This !!
+        void   z80_out_handler(tREGPAIR port, tUBYTE value) noexcept;
+        void   waitstates() noexcept;
+
+
+        Z80       & z80()       {return mZ80;}
+        Ppi       & ppi()       {return mPpi;}
+        Fdc       & fdc()       {return mFdc;}
+        Psg       & psg()       {return mPsg;}
+        Vdu       & vdu()       {return mVdu;}
+        Crtc      & crtc()      {return mCrtc;}
+        Sound     & sound()     {return mSound;}
+        MemMan    & memman()    {return mMemman;}
+        Colours   & colours()   {return mColours;}
+        Keyboard  & keyboard()  {return mKeyboard;}
+        GateArray & gatearray() {return mGatearray;}
+
+    private:
+        CpcType   mCpcType;
+        //Monitor  mMonitor;
+
+        uint      mSpeed;
+        uint      mBpp;
+
+        Prefs     mPrefs;
+
+        Z80       mZ80; //@todo change this !!!!!!!!!!!!!
+        Crtc      mCrtc;
+        Ppi       mPpi;
+        Fdc       mFdc;
+        Psg       mPsg;
+        GateArray mGatearray;
+        Keyboard  mKeyboard;
+        Colours   mColours;
+        MemMan    mMemman;
+        Sound     mSound;
+        Vdu       mVdu;
+
     };
-    enum class RamSize : unsigned short int
-    {
-        ram64  =  64,
-        ram128 = 128,
-        ram256 = 256,
-        ram512 = 512
-    };
-    //enum Monitor {colour=0, green=1, grey=2};
 
-
-    Cpc() = delete;
-    Cpc(const Prefs & prefs);
-    ~Cpc() = default;
-
-    int init() noexcept;
-
-    void setSpeed(uint value) {mSpeed = value;}
-
-    uint speed() const {return mSpeed;}
-    //Monitor monitor() {return mMonitor;}
-
-    tUBYTE z80_in_handler (tREGPAIR port) noexcept; //@todo change This !!
-    void   z80_out_handler(tREGPAIR port, tUBYTE value) noexcept;
-    void   waitstates() noexcept;
-
-
-    Z80       & z80()       {return mZ80;}
-    Ppi       & ppi()       {return mPpi;}
-    Fdc       & fdc()       {return mFdc;}
-    Psg       & psg()       {return mPsg;}
-    Vdu       & vdu()       {return mVdu;}
-    Crtc      & crtc()      {return mCrtc;}
-    Sound     & sound()     {return mSound;}
-    MemMan    & memman()    {return mMemman;}
-    Colours   & colours()   {return mColours;}
-    Keyboard  & keyboard()  {return mKeyboard;}
-    GateArray & gatearray() {return mGatearray;}
-
-private:
-    CpcType   mCpcType;
-    //Monitor  mMonitor;
-
-    uint      mSpeed;
-    uint      mBpp;
-
-    Prefs     mPrefs;
-
-    Z80       mZ80; //@todo change this !!!!!!!!!!!!!
-    Crtc      mCrtc;
-    Ppi       mPpi;
-    Fdc       mFdc;
-    Psg       mPsg;
-    GateArray mGatearray;
-    Keyboard  mKeyboard;
-    Colours   mColours;
-    MemMan    mMemman;
-    Sound     mSound;
-    Vdu       mVdu;
-
-};
+}; // cpc
 
 #endif // CPC_CPC_H

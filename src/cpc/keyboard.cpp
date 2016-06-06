@@ -19,14 +19,18 @@
  ***************************************************************************/
 #include "keyboard.h"
 
-Keyboard::Keyboard() {init();}
-
-void Keyboard::init()
+namespace cpcx
 {
-    mRow = 0x00;
-    for (int i = 0; i < 16; i++)
-    {
-        mLine[i] = 0xFF;
-    }
-}
 
+    Keyboard::Keyboard() {init();}
+
+    void Keyboard::init()
+    {
+        mRow = 0x00;
+        for (int i = 0; i < 16; i++)
+        {
+            mLine[i] = 0xFF;
+        }
+    }
+
+} // cpc

@@ -22,55 +22,60 @@
 
 #include "types.h"
 
-//! The 8255 Parallel Peripheral Interface
-//! Parallel Peripheral Interface\n\n @htmlinclude  8255.html
-class Ppi final
+namespace cpcx
 {
 
-public:
-    enum FlagB //!< (DIP-switch, do not combine manufacturer)
+    //! The 8255 Parallel Peripheral Interface
+    //! Parallel Peripheral Interface\n\n @htmlinclude  8255.html
+    class Ppi final
     {
-        Triumph        = 2,      ///< Manufacturer Triumph
-        Saisho         = 4 ,     ///< Manufacturer Saisho
-        Solavox        = 6 ,     ///< Manufacturer Solavox
-        Awa            = 8 ,     ///< Manufacturer Awa
-        Schneider      = 10 ,    ///< Manufacturer Schneider
-        Orion          = 12 ,    ///< Manufacturer Orion
-        Amstrad        = 14,     ///< Manufacturer Amstrad
-        VSyncOccured   = 1,      ///< VSync (internal)
-        Refresh50Hz    = 16,     ///< 50Hz instead of 60Hz refresh rate (DIP-switch)
-        Expansion      = 32,     ///< No expansion Peripherals available (internal)
-        PrnterNotReady = 64,     ///< Printer is not ready (internal)
-        TapeRead       = 128     ///< Tape will be read (internal)
+
+    public:
+        enum FlagB //!< (DIP-switch, do not combine manufacturer)
+        {
+            Triumph        = 2,      ///< Manufacturer Triumph
+            Saisho         = 4 ,     ///< Manufacturer Saisho
+            Solavox        = 6 ,     ///< Manufacturer Solavox
+            Awa            = 8 ,     ///< Manufacturer Awa
+            Schneider      = 10 ,    ///< Manufacturer Schneider
+            Orion          = 12 ,    ///< Manufacturer Orion
+            Amstrad        = 14,     ///< Manufacturer Amstrad
+            VSyncOccured   = 1,      ///< VSync (internal)
+            Refresh50Hz    = 16,     ///< 50Hz instead of 60Hz refresh rate (DIP-switch)
+            Expansion      = 32,     ///< No expansion Peripherals available (internal)
+            PrnterNotReady = 64,     ///< Printer is not ready (internal)
+            TapeRead       = 128     ///< Tape will be read (internal)
+        };
+
+        Ppi()  {init();}
+        ~Ppi() = default;
+
+        void init();                                   ///< set initial values
+
+        tUBYTE portA()   const {return mPortA;}               ///< get Port A
+        tUBYTE portB()   const {return mPortB;}               ///< get Port B
+        tUBYTE portC()   const {return mPortC;}               ///< get Port C
+        tUBYTE control() const {return mControl;}             ///< get control bits
+        tUBYTE jumpers() const {return mJumpers;}             ///< get jumpers
+
+        void setA(tUBYTE val)       {mPortA   = val;}   ///< set Port A
+        void setB(tUBYTE val)       {mPortB   = val;}   ///< set Port B
+        void setC(tUBYTE val)       {mPortC   = val;}   ///< set Port C
+        void setControl(tUBYTE val) {mControl = val;}   ///< set control bits
+        void setJumpers(tUBYTE val) {mJumpers = val;}   ///< set jumpers
+
+        void addB(tUBYTE flags)     {mPortB |= flags;}  ///< add a flag to Port B
+        void removeB(tUBYTE flags)  {mPortB &= ~flags;} ///< remove a flag from Port B
+
+    private:
+        tUBYTE mPortA;
+        tUBYTE mPortB;
+        tUBYTE mPortC;
+        tUBYTE mControl;
+
+        tUBYTE mJumpers;
     };
 
-    Ppi()  {init();}
-    ~Ppi() = default;
+}; // cpc
 
-    void init();                                   ///< set initial values
-
-    tUBYTE portA()   const {return mPortA;}               ///< get Port A
-    tUBYTE portB()   const {return mPortB;}               ///< get Port B
-    tUBYTE portC()   const {return mPortC;}               ///< get Port C
-    tUBYTE control() const {return mControl;}             ///< get control bits
-    tUBYTE jumpers() const {return mJumpers;}             ///< get jumpers
-
-    void setA(tUBYTE val)       {mPortA   = val;}   ///< set Port A
-    void setB(tUBYTE val)       {mPortB   = val;}   ///< set Port B
-    void setC(tUBYTE val)       {mPortC   = val;}   ///< set Port C
-    void setControl(tUBYTE val) {mControl = val;}   ///< set control bits
-    void setJumpers(tUBYTE val) {mJumpers = val;}   ///< set jumpers
-
-    void addB(tUBYTE flags)     {mPortB |= flags;}  ///< add a flag to Port B
-    void removeB(tUBYTE flags)  {mPortB &= ~flags;} ///< remove a flag from Port B
-
-private:
-    tUBYTE mPortA;
-    tUBYTE mPortB;
-    tUBYTE mPortC;
-    tUBYTE mControl;
-
-    tUBYTE mJumpers;
-};
-
-#endif //PPI_H
+#endif // CPC_PPI_H

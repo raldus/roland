@@ -26,7 +26,7 @@ namespace sdltk
 
     volatile bool VideoGL::mIsLoaded=false;
 
-    VideoGL::VideoGL(Cpc * cpc) : Video(cpc)
+    VideoGL::VideoGL(cpcx::Cpc * cpc) : Video(cpc)
     {
         mCpcScale  = 1;
         mCpcWidth  = CPC_VISIBLE_SCR_WIDTH  * mCpcScale;
@@ -211,9 +211,9 @@ namespace sdltk
         String driver=buf;
 
 
-        if (mBuffer->format->BitsPerPixel == 16) mCpc->vdu().setBpp(Vdu::Bpp16);
-        if (mBuffer->format->BitsPerPixel == 24) mCpc->vdu().setBpp(Vdu::Bpp24);
-        if (mBuffer->format->BitsPerPixel == 32) mCpc->vdu().setBpp(Vdu::Bpp32);
+        if (mBuffer->format->BitsPerPixel == 16) mCpc->vdu().setBpp(cpcx::Vdu::Bpp16);
+        if (mBuffer->format->BitsPerPixel == 24) mCpc->vdu().setBpp(cpcx::Vdu::Bpp24);
+        if (mBuffer->format->BitsPerPixel == 32) mCpc->vdu().setBpp(cpcx::Vdu::Bpp32);
 
         mBufferStart = calcScreenStart(); // @todo maybe better to calculate everytime -> flipping ???
         mBufferEnd   = calcScreenEnd();
