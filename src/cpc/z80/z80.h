@@ -41,6 +41,8 @@ namespace cpcx
     /** @author Fred Klaus */
     class Z80 final
     {
+
+        // using Z80_IN_Handler = tUBYTE (*) (tREGPAIR port);
         typedef tUBYTE (Cpc::*Z80_IN_Handler) (tREGPAIR port);
         typedef void   (Cpc::*Z80_OUT_Handler)(tREGPAIR port, tUBYTE value);
         typedef void   (Cpc::*Z80_WS_Handler) (void);
@@ -52,7 +54,7 @@ namespace cpcx
         //typedef void (*CB_WaitStates)(void);
 
 
-        enum Flags
+        enum Flags : tUBYTE
         {
             Sflag  = 0x80, // sign flag
             Zflag  = 0x40, // zero flag
@@ -64,7 +66,7 @@ namespace cpcx
             Xflags = 0x28  // bit 5 & 3 flags
         };
 
-        enum Flags2
+        enum Flags2 : tUBYTE
         {
             CF = 0x01,
             NF = 0x02,
@@ -78,7 +80,7 @@ namespace cpcx
         };
 
 
-        enum ExitCode
+        enum ExitCode : tUBYTE
         {
             EC_BREAKPOINT     = 10,
             EC_TRACE          = 20,
@@ -88,7 +90,7 @@ namespace cpcx
         };
 
 
-        enum opcodes
+        enum opcodes : tUBYTE
         {
             nop, ld_bc_word, ld_mbc_a, inc_bc, inc_b, dec_b, ld_b_byte, rlca,
             ex_af_af, add_hl_bc, ld_a_mbc, dec_bc, inc_c, dec_c, ld_c_byte, rrca,
@@ -124,7 +126,7 @@ namespace cpcx
             ret_m, ld_sp_hl, jp_m, ei, call_m, pfx_fd, cp_byte, rst38
         };
 
-        enum CBcodes
+        enum CBcodes : tUBYTE
         {
             rlc_b, rlc_c, rlc_d, rlc_e, rlc_h, rlc_l, rlc_mhl, rlc_a,
             rrc_b, rrc_c, rrc_d, rrc_e, rrc_h, rrc_l, rrc_mhl, rrc_a,
@@ -160,7 +162,7 @@ namespace cpcx
             set7_b, set7_c, set7_d, set7_e, set7_h, set7_l, set7_mhl, set7_a
         };
 
-        enum EDcodes
+        enum EDcodes : tUBYTE
         {
             ed_00, ed_01, ed_02, ed_03, ed_04, ed_05, ed_06, ed_07,
             ed_08, ed_09, ed_0a, ed_0b, ed_0c, ed_0d, ed_0e, ed_0f,

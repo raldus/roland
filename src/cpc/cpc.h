@@ -40,6 +40,7 @@
 #include "sound.h"
 #include "vdu.h"
 
+//! Namespace for all CPC components
 namespace cpcx
 {
 
@@ -55,7 +56,7 @@ namespace cpcx
 } \
 }
 
-    //! @author Fred Klaus
+    //! Represents the CPC and all of its components and functions.
     class Cpc final
     {
 
