@@ -16,7 +16,7 @@ addons:
     - g++-4.8
     - clang
     - libsdl
-    - libsdl_image
+    - libsdl-image
 
 before_script:  
     - mkdir build
