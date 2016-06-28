@@ -18,10 +18,9 @@ addons:
     - libsdl-image1.2-dev
     before_script:  
     - mkdir build
-    - cd build
-    - cmake -H.. -B. -DCMAKE_BUILD_TYPE=Release 
+    - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release 
 
-script: cd build && make 
+script: cmake --build build 
 
 os:
   - linux
