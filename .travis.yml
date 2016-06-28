@@ -21,7 +21,7 @@ addons:
     - cd build
     - cmake -H.. -B. -DCMAKE_BUILD_TYPE=Release 
 
-script: make 
+script: cd build && make 
 
 os:
   - linux
