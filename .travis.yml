@@ -4,7 +4,7 @@ compiler:
     - gcc
     - clang
 
-install: libsdl libsdl-image
+install: apt-get install libsdl libsdl-image
 
 
 before_script:  
