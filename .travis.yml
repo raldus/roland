@@ -4,6 +4,9 @@ compiler:
     - gcc
     - clang
 
+install: libsdl libsdl-image
+
+
 before_script:  
     - mkdir build
     - cd build
