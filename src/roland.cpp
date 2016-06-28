@@ -32,8 +32,6 @@
 #include <fstream>
 #include <string>
 
-#include "SDL.h"
-
 #include "videogl.h"
 #include "videostd.h"
 #include "gui.h"
@@ -54,29 +52,21 @@
 using namespace std;
 using namespace cpcx;
 
-SDL_Surface * screen = nullptr;
-
-bool joystick = false;
-
-sdltk::Clock mainClock;
-sdltk::Clock displayClock;
-
-uint framecount = 0;
+uint framecount    = 0;
 uint framecountsum = 0;
-bool showfps = false;
-bool running = true;
+bool showfps  = false;
+bool running  = true;
+bool joystick = false;
 
 void init();
 void initGui();
 void quit();
-void clearBuffer();
+void clearKeyBuffer();
 void waitstates();
 void mainloop();
 
 inline void update();
 inline void display();
-
-Directory       dir;
 
 Prefs prefs;
 Cpc cpcx::cpc(prefs);
@@ -91,7 +81,8 @@ sdltk::Button   * btnTest       = nullptr;
 sdltk::Button   * btnTest2      = nullptr;
 sdltk::List     * lstDirectory  = nullptr;
 sdltk::FileList * lstFile       = nullptr;
-
+sdltk::Clock mainClock;
+sdltk::Clock displayClock;
 
 static const string datadir(prefs.getPath("datadir"));
 
@@ -123,7 +114,7 @@ void init()
     mainClock.init();
     displayClock.init();
 
-    clearBuffer();
+    clearKeyBuffer();
 }
 
 void initGui()
@@ -178,24 +169,6 @@ void initGui()
     btnTest2->setBorder(true);
     btnTest2->setWantEvents(true);
     btnTest2->setText("Knopf2");
-*/
-/*
-    lstDirectory = new List(gui);
-    lstDirectory->setPos(100, 100);
-    lstDirectory->setSize(500, 300);
-    lstDirectory->setEnabled(true);
-
-    dir.scan(prefs.getPath("diskdir"), false, false, 'U');
-    dir.sort();
-    ListItem * item;
-    for (auto file : dir)
-    {
-        item = new ListItem;
-        item->setSize(500, 25);
-        item->setBorder(true);
-        item->setText(file.base(false));
-        lstDirectory->add(item);
-    }
 */
 
     lstFile = new sdltk::FileList(gui, prefs.getPath("diskdir"), 'a');
@@ -294,7 +267,7 @@ void mainloop()
                                         cpc.fdc().dsk_load(str.c_str(), 0);
                                         prefs.set("diska", str);
                                         SDL_EnableKeyRepeat(0, 0);
-                                        clearBuffer();
+                                        clearKeyBuffer();
                                     }
                                     else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
                                                              SDL_DEFAULT_REPEAT_INTERVAL);
@@ -316,7 +289,7 @@ void mainloop()
                                         cpc.fdc().dsk_load(str.c_str(), 1);
                                         prefs.set("diskb", str);
                                         SDL_EnableKeyRepeat(0, 0);
-                                        clearBuffer();
+                                        clearKeyBuffer();
                                     }
                                     else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
                                                              SDL_DEFAULT_REPEAT_INTERVAL);
@@ -339,7 +312,7 @@ void mainloop()
                                             f->filename().c_str(), 1);
                                         prefs.set("diskb", f->filename());
                                     }
-                                    clearBuffer();
+                                    clearKeyBuffer();
                                     audio.pause(false);
                                     delete f;
                                     break;*/
@@ -533,7 +506,7 @@ inline void display()
     video->update();
 }
 
-void clearBuffer()
+void clearKeyBuffer()
 {
     SDL_Event event;
     cpc.keyboard().init();
