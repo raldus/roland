@@ -1,4 +1,4 @@
- Notes:
+# Notes:
 #   - Minimal appveyor.yml file is an empty file. All sections are optional.
 #   - Indent each level of configuration with 2 spaces. Do not use tabs!
 #   - All section names are case-sensitive.
@@ -9,7 +9,7 @@
 #---------------------------------#
 
 # version format
-version: 1.0.{build}
+version: build{build}
 
 # you can use {branch} name in version format too
 # version: 1.0.{build}-{branch}
