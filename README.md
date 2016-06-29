@@ -1,7 +1,5 @@
 # Roland CPC Emulator
-Travis CI
 [![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland) 
-Appvenyor
 [![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland)
 
 Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
