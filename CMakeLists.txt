@@ -1,10 +1,10 @@
-cmake_minimum_required(VERSION 2.6)
+cmake_minimum_required(VERSION 2.8)
 
 project(ROLAND C CXX)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME "roland" CACHE STRING "Package Name")
-exec_program(git ARGS describe --abbrev=0 --tags OUTPUT_VARIABLE PACKAGE_VERSION)
+exec_program(git ARGS describe "--abbrev=0 --tags --always" OUTPUT_VARIABLE PACKAGE_VERSION)
 set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
 
 
