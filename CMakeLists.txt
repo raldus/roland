@@ -20,7 +20,7 @@ endif (WIN32)
 
 if (MSVC)
 	set(_WIN32 CACHE BOOLEAN true)
-    include_directories("${CMAKE_SOURCE_DIR}/files/sdl-vc/include")
+    set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/files/sdl-vc/include")
     if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
       set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/files/sdl-vc/lib/x64/SDL.lib")
     else()
@@ -53,12 +53,14 @@ if (UNIX)
     ENDIF()
 #set(LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (32/64)")
 
-endif (UNIX)
+
 
 # SDL
 find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
 include_directories("${SDL_INCLUDE_DIR}")
+
+endif (UNIX)
 
 # roland
 set(DEBUG 1)
