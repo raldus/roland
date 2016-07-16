@@ -14,28 +14,46 @@ set(LIBRARY_OUTPUT_PATH    ${CMAKE_BINARY_DIR})
 
 set(VERBOSE "Verbose" CACHE BOOL "Verbose")
 
+if (WIN32)
+    set(_WIN32 CACHE BOOLEAN true)
+endif (WIN32)
 
-# C++ version
-include(CheckCXXCompilerFlag)
-CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
-CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
-if(COMPILER_SUPPORTS_CXX11)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-elseif(COMPILER_SUPPORTS_CXX0X)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-else()
-    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. \
-                    Please use a different C++ compiler.")
-endif()
+if (MSVC)
+	set(_WIN32 CACHE BOOLEAN true)
+    include_directories("${CMAKE_SOURCE_DIR}/files/sdl-vc/include")
+endif (MSVC)
 
-# C++ flags
-set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+if (UNIX)
+	# C++ version
+	include(CheckCXXCompilerFlag)
+	CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
+	CHECK_CXX_COMPILER_FLAG("-std=c++0x" COMPILER_SUPPORTS_CXX0X)
+	if(COMPILER_SUPPORTS_CXX11)
+	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+	elseif(COMPILER_SUPPORTS_CXX0X)
+	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+	else()
+	    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. \
+	                    Please use a different C++ compiler.")
+	endif()
+
+    # C++ flags
+    set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG} -Wall")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
+
+
+    IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND
+        ${CMAKE_SIZEOF_VOID_P} EQUAL "8")
+      SET(LIB_SUFFIX "64")
+    ENDIF()
+#set(LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (32/64)")
+
+endif (UNIX)
 
 # SDL
 find_package(SDL REQUIRED)
 find_package(SDL_image REQUIRED)
-include_directories(${SDL_INCLUDE_DIR})
+include_directories("${SDL_INCLUDE_DIR}")
 
 # roland
 set(DEBUG 1)
@@ -109,12 +127,16 @@ include_directories("${PROJECT_SOURCE_DIR}/src/cpc/z80")
 include_directories("${PROJECT_SOURCE_DIR}/src/cpc/floppy")
 include_directories("${PROJECT_SOURCE_DIR}/src/sdltk")
 
+
 add_subdirectory(src)
 
 
+
+math(EXPR CMAKE_BITS ${CMAKE_SIZEOF_VOID_P}*8)
+
 # output
 message("")
-message("  * ${PACKAGE_TITLE} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
+message("  * ${PACKAGE_TITLE} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE} ${CMAKE_BITS}bit")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     message("  * CXX_FLAGS_DEBUG..: ${CMAKE_CXX_FLAGS} ${CMAKE_CXX_FLAGS_DEBUG}")
 endif()
