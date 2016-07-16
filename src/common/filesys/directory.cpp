@@ -49,7 +49,7 @@ void Directory::scan(const FileName &path, Options options, char letter)
         return; /** @todo errorhandling !! */
 
     struct dirent *entry;
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
     while (
         (entry = readdir(
              dir))) /**  @todo not threadsafe but readdir_r not in MinGW !! */

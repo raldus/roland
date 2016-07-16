@@ -23,7 +23,7 @@ FileInfo::FileInfo(const string &filename) { mValid = read(filename, false); }
 
 bool FileInfo::read(const string &fname, bool followlink)
 {
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
     return mValid = stat(fname.c_str(), &mStat) ? false : true;
 #else
     if (followlink)

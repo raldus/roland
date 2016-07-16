@@ -74,7 +74,7 @@ public:
     static void setCaseSensitiveCompare(bool csc) {mCaseSensitive = csc;}
 
 private:
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
     static const char delim() {return '\\';}
 #else
     static const char delim() {return '/';}

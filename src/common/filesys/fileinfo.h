@@ -77,7 +77,7 @@ public:
     mode_t  mode()   const {return mStat.st_mode;}
     ino_t   inode()  const {return mStat.st_ino;}
     dev_t   device() const {return mStat.st_dev;}
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
     nlink_t nlinks() const {return 0;}
     uid_t   uid()    const {return 0;}
     gid_t   gid()    const {return 0;}
