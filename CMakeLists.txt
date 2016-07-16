@@ -21,6 +21,8 @@ endif (WIN32)
 if (MSVC)
 	set(_WIN32 CACHE BOOLEAN true)
     set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/files/sdl-vc/include")
+    message(SDL_INCLUDE_DIR: "${SDL_INCLUDE_DIR}")
+
     if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
       set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/files/sdl-vc/lib/x64/SDL.lib")
     else()
