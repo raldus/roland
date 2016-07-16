@@ -30,6 +30,7 @@ if (MSVC)
       set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/files/sdl-vc/lib/x86/SDL.lib")
     endif()
     message("SDL_LIBRARY: ${SDL_LIBRARY}")
+    set(_WIN32 CACHE BOOLEAN true)
 endif (MSVC)
 
 if (UNIX)
