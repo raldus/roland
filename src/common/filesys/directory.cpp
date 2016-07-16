@@ -20,7 +20,11 @@
 #include "directory.h"
 
 #include <sys/types.h>
-#include <dirent.h>
+#if defined(_WIN32) || defined(_WIN64)
+    #include "windirent.h"
+#else
+	#include <dirent.h>
+#endif
 #include <cstddef>
 
 #include <algorithm>
