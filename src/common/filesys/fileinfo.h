@@ -23,7 +23,7 @@
 #include <sys/stat.h>
 #include <string>
 
-#ifdef _WIN32
+#if defined(_WIN32) || defined(_WIN64)
     #ifndef nlink_t
         typedef unsigned short int nlink_t;
     #endif
