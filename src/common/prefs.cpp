@@ -28,6 +28,7 @@
 #include <cstdlib>
 
 #ifdef _WIN32
+#include <direct.h>
 #include <io.h>
 #else
 #include <unistd.h>
@@ -48,9 +49,9 @@ Prefs::Prefs(bool autowrite, bool writealways)
     mAutoWrite   = autowrite;
     mWriteAlways = writealways;
 
-#ifdef _WIN32
+#ifdef _WIN32 || _WIN64
     char buf[NAME_MAX + 1];
-    mFilename  = getcwd(buf, NAME_MAX);
+    mFilename  = _getcwd(buf, NAME_MAX);
     mFilename += delim();
     mFilename += PACKAGE_NAME;
     mFilename += ".cfg";
@@ -187,8 +188,12 @@ std::string Prefs::getPath(const std::string & key) const
     if ((text.find_first_of('.') == 0) && (text.find_first_of(delim()) == 1))
     {
         std::string tmp;
-        char buf[NAME_MAX + 1];
-        tmp  = getcwd(buf, NAME_MAX);
+#ifdef _WIN32 || _WIN64
+    	char buf[NAME_MAX + 1];
+    	tmp = _getcwd(buf, NAME_MAX);
+#else
+    	tmp = getenv("HOME");	
+#endif
         tmp += delim();
         tmp += text.substr(2);
         return tmp;

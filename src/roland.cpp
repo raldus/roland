@@ -553,4 +553,6 @@ int main(int argc, char *argv[])
     mainloop();
 
     quit();
+
+    return 0;
 }

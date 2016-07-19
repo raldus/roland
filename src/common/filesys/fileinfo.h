@@ -74,10 +74,13 @@ public:
     time_t  atime()  const {return mStat.st_atime;}
     time_t  mtime()  const {return mStat.st_mtime;}
     time_t  ctime()  const {return mStat.st_ctime;}
-    mode_t  mode()   const {return mStat.st_mode;}
     ino_t   inode()  const {return mStat.st_ino;}
     dev_t   device() const {return mStat.st_dev;}
 #if defined(_WIN32) || defined(_WIN64)
+    	#ifndef S_ISDIR
+		#define S_ISDIR(mode)  (((mode) & S_IFMT) == S_IFDIR)
+	#endif
+    //mode_t  mode()   const {return mStat.st_mode;}    
     nlink_t nlinks() const {return 0;}
     uid_t   uid()    const {return 0;}
     gid_t   gid()    const {return 0;}
@@ -89,6 +92,7 @@ public:
 
     bool isLink() const {return false;}
 #else
+    mode_t  mode()   const {return mStat.st_mode;}    
     nlink_t nlinks() const {return mStat.st_nlink;}
     uid_t   uid()    const {return mStat.st_uid;}
     gid_t   gid()    const {return mStat.st_gid;}
