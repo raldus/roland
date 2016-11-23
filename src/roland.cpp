@@ -62,10 +62,10 @@ void init();
 void initGui();
 void quit();
 void clearKeyBuffer();
-void waitstates();
+//void waitstates();
 void mainloop();
 
-inline void update();
+//inline void update();
 inline void display();
 
 Prefs prefs;

@@ -15,7 +15,7 @@ set(LIBRARY_OUTPUT_PATH    ${CMAKE_BINARY_DIR})
 set(VERBOSE "Verbose" CACHE BOOL "Verbose")
 
 if (WIN32)
-    set(_WIN32 CACHE BOOLEAN true)
+    set(_WIN32 CACHE BOOL TRUE)
 endif (WIN32)
 
 if (MSVC)
@@ -63,13 +63,16 @@ if (UNIX)
       SET(LIB_SUFFIX "64")
     ENDIF()
 #set(LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (32/64)")
+    # eclipse stop on error
+    ADD_DEFINITIONS(-Wfatal-errors)
+    # be verbose
+    ADD_DEFINITIONS(-Wall -Wextra -pedantic) # -Weffc++
 
 
-
-# SDL
-find_package(SDL REQUIRED)
-find_package(SDL_image REQUIRED)
-include_directories("${SDL_INCLUDE_DIR}")
+    # SDL
+    find_package(SDL REQUIRED)
+    find_package(SDL_image REQUIRED)
+    include_directories("${SDL_INCLUDE_DIR}")
 
 endif (UNIX)
 

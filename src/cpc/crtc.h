@@ -149,6 +149,6 @@ namespace cpcx
 
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_CRTC_H

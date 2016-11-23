@@ -291,7 +291,7 @@ namespace cpcx
 
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_Z80_H
 

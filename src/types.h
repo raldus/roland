@@ -27,7 +27,7 @@
 namespace sdltk
 {
     using String = std::string;
-};
+}
 using tSTRING = std::string;
 
 
