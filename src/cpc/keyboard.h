@@ -49,6 +49,6 @@ namespace cpcx
         tUBYTE mLine[16];
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_KEYBOARD_H

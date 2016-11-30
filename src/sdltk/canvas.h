@@ -69,7 +69,7 @@ namespace sdltk
         void write(const Point & pos, const String & text);
 
         const Size & textSize(const String & text);
-        const Uint16 textHeight() const;
+              Uint16 textHeight() const;
 
         const ImageFont & font()  const {return mFont;}
         const Color     & color() const {return mColor;}
@@ -121,12 +121,12 @@ namespace sdltk
         return mTextSize;
     }
 
-    inline const Uint16 Canvas::textHeight() const
+    inline Uint16 Canvas::textHeight() const
     {
         Rect rect = mFont.glyph(' ');
         return rect.height();
     }
 
-}; // sdltk
+} // sdltk
 
 #endif // SDLTK_CANVAS_H

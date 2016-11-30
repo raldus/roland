@@ -106,6 +106,6 @@ namespace cpcx
 
     };
 
-}; // cpc
+} // cpc
 
 #endif

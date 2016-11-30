@@ -91,6 +91,6 @@ class GateArray final
 
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_GATEARRAY_H

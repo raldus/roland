@@ -55,7 +55,7 @@ namespace sdltk
 
         uint mColor;
 
-};
+    };
 
 } // sdltk
 

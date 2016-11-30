@@ -207,6 +207,6 @@ namespace cpcx
 
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_VDU_H

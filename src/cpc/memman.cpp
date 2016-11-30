@@ -234,7 +234,7 @@ namespace cpcx
         toggleLowerRom();
     };
 
-}; // cpc
+} // cpc
 
 
     /*

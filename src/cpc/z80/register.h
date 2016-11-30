@@ -46,6 +46,6 @@ namespace cpcx
 
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_REGISTER_H

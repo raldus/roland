@@ -50,6 +50,6 @@ namespace sdltk
 
     };
 
-}; // sdltk
+} // sdltk
 
 #endif // SDLTK_BUTTON_H

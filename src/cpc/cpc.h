@@ -128,6 +128,6 @@ namespace cpcx
 
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_CPC_H

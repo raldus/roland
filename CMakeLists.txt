@@ -12,7 +12,7 @@ set(CMAKE_BINARY_DIR      "${CMAKE_SOURCE_DIR}/bin")
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH    ${CMAKE_BINARY_DIR})
 
-set(VERBOSE "Verbose" CACHE BOOL "Verbose")
+option(VERBOSE "Verbose" FALSE)
 
 if (WIN32)
     set(_WIN32 CACHE BOOL TRUE)
@@ -66,7 +66,9 @@ if (UNIX)
     # eclipse stop on error
     ADD_DEFINITIONS(-Wfatal-errors)
     # be verbose
-    ADD_DEFINITIONS(-Wall -Wextra -pedantic) # -Weffc++
+    if (${VERBOSE})
+        ADD_DEFINITIONS(-Wall -Wextra -pedantic) # -Weffc++
+    endif()
 
 
     # SDL

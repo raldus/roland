@@ -76,6 +76,6 @@ namespace cpcx
         tUBYTE mJumpers;
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_PPI_H

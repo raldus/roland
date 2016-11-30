@@ -70,7 +70,7 @@ namespace cpcx
 
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_COLOURS_H
 

@@ -381,6 +381,6 @@ namespace cpcx
         mEnvelopeEnC = value & 16 ? false : true;
     }
 
-}; // cpc
+} // cpc
 
 #endif // CPC_SOUND_H

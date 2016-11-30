@@ -285,6 +285,6 @@ namespace cpcx
         { 0x00, 0x00, 0x00, 0x00 },
     };
 
-}; // cpc
+} // cpc
 
 #endif // CPC_CPCKEYS_H

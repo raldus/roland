@@ -100,6 +100,6 @@ namespace cpcx
         }
     }
 
-}; // cpc
+} // cpc
 
 #endif // CPC_MEMMAN_H

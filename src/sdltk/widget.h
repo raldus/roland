@@ -69,7 +69,7 @@ namespace sdltk
         //! Sets the parent Widget
         void  setParent (Widget * const parent) {mParent  = parent;}
         //! Returns the parent
-        Widget * const parent() const {return mParent;}
+        const Widget * parent() {return mParent;}
 
         //! Sets the Color of the Widget by Color
         void setColor(const Color & color)  {mColor = color;}

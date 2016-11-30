@@ -25,6 +25,6 @@ namespace sdltk
 
     enum UserEvent : int {Unknown, ListItemClicked};
 
-}; // sdltk
+} // sdltk
 
 #endif // SDLTK_EVENTS_H
