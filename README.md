@@ -1,7 +1,7 @@
-# Roland CPC Emulator
-[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland) 
-[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland)
+# Roland CPC Emulator 
+[![Roland CPC Emulator](https://github.com/raldus/roland/blob/master/files/img/ready.png)](https://www.rolandemu.de/index.html)
 
+## Overview
 Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
 for Linux und Windows.
 
@@ -9,7 +9,41 @@ Roland needs SDL > 1.2 and SDL-Image.
 
 [:de: german readme](https://github.com/raldus/roland/blob/master/README-DE.md)
 
-## Usage of the Roland CPC Emulator
+## Build
+
+### Status
+[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland) Ubuntu32/64 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland) Windows 32bit
+
+### General
+You will need cmake and git installed.
+
+### Linux
+Folowing an Example of a unix release build.
+```bash
+git clone https://github.com/raldus/roland.git
+cd roland
+cmake -H. -Bbuild -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+cmake --build build
+```
+
+### Windows 
+At the Moment Visual Studio 2015 32bit and MinGW are the only valid build environments.
+Following an Example with Visual Studio release build:
+```cmd
+git clone https://github.com/raldus/roland.git
+cd roland
+cmake -H. -Bbuild -G"Visual Studio 14 2015" -DCMAKE_BUILD_TYPE=Release
+cmake --build build --config Release
+```
+
+### Documentation
+You will need Doxygen installed.
+```bash
+cmake --build --target doc
+```
+
+## Usage
 Taste|Funktion
 -----|--------
 F2|insert disk in drive A:
