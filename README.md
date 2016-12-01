@@ -1,19 +1,18 @@
-# Roland CPC Emulator 
-[![Roland CPC Emulator](https://github.com/raldus/roland/blob/master/files/img/ready.png)](https://www.rolandemu.de/index.html)
+# Roland CPC Emulator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Roland CPC Emulator](https://github.com/raldus/roland/blob/master/files/img/ready.png)](https://www.rolandemu.de/index.html)
 
 ## Overview
 Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
 for Linux und Windows.
-
-Roland needs SDL > 1.2 and SDL-Image.
+Roland depends on SDL > 1.2 and SDL-Image.
 
 [:de: german readme](https://github.com/raldus/roland/blob/master/README-DE.md)
 
 ## Build
+The source is C++11 code and needs at leat a c+11 enabled Compiler. Supported are GCC native or CygWin/MinGw. The build system
 
 ### Status
 [![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland) Ubuntu32/64 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland) Windows 32bit
+[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland) Windows32
 
 ### General
 You will need cmake and git installed.
