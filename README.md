@@ -1,4 +1,5 @@
-# Roland CPC Emulator &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[![Roland CPC Emulator](https://github.com/raldus/roland/blob/master/files/img/ready.png)](https://www.rolandemu.de/index.html)
+# Roland CPC Emulator
+[![Roland CPC Emulator](https://github.com/raldus/roland/blob/master/files/img/ready.png)](https://www.rolandemu.de/index.html)
 
 ## Overview
 Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
