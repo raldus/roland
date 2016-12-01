@@ -54,7 +54,7 @@ F9|reset
 F10|exit
 F12|switch to fullscreen (does not work in Windows; instead set fullscreen=1 in roland.cfg)
 
-## Usage of the CPC 464/664/6128
+### Usage of the CPC 464/664/6128
 Insert a disk, enter **cat**  **Enter** and
 you can see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
 
@@ -91,7 +91,7 @@ working settings:
 * doublescan (true/false) the real cpc had scanlines ...
 * jumpers    (DIP-switch of the CPC - for experts)
 
-## Linux
+### Linux
 Before you can start the Linux version, you have to adjust some pathes in
 **roland-linux.cfg**.
 ```text
