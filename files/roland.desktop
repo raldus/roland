@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=0.61
+Name=Roland
+Comment=Roland CPC EmulatorExec=/opt/ddm/bin/ddm %U
+Icon=roland
+Terminal=false
+Type=Application
+Categories=Games
+#MimeType=application/x-ddm-item;
+GenericName=roland 
