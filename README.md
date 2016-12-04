@@ -25,10 +25,10 @@ cmake -H. -Bbuild -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
 
-### Windows 
+### Windows
 At the Moment Visual Studio 2015 32bit and MinGW are the only valid build environments.
 Following an Example with Visual Studio release build:
-```cmd
+```bash
 git clone https://github.com/raldus/roland.git
 cd roland
 cmake -H. -Bbuild -G"Visual Studio 14 2015" -DCMAKE_BUILD_TYPE=Release

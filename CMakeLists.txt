@@ -3,8 +3,9 @@ cmake_minimum_required(VERSION 2.8)
 project(ROLAND CXX)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
-set(PACKAGE_NAME "roland" CACHE STRING "Package Name")
+set(PACKAGE_NAME  "roland" CACHE STRING "Package Name")
 exec_program(git ARGS describe "--abbrev=0 --tags --always" OUTPUT_VARIABLE PACKAGE_VERSION)
+execute_process(COMMAND git show --tags --quiet --reverse "--pretty=format:'%ad %n[view tag](https://github.com/raldus/roland/commit/%H) %n%n***%n'" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
 set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
 
 
