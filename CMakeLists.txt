@@ -100,18 +100,18 @@ endif (UNIX)
 # roland
 set(DEBUG 1)
 add_definitions("-DHAVE_CONFIG_H")
-configure_file("${PROJECT_SOURCE_DIR}/files/config.h.in"    
+configure_file("${PROJECT_SOURCE_DIR}/assets/config.h.in"    
         "${PROJECT_SOURCE_DIR}/src/config.h")
-configure_file("${PROJECT_SOURCE_DIR}/files/roland.spec.in" 
+configure_file("${PROJECT_SOURCE_DIR}/assets/roland.spec.in" 
         "${PROJECT_SOURCE_DIR}/roland.spec")
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/roms"  DESTINATION share/roland)
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/files/disks" DESTINATION share/roland)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/roms"  DESTINATION share/roland)
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/disks" DESTINATION share/roland)
 
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
-    configure_file("${CMAKE_SOURCE_DIR}/files/doxyfile.in" 
+    configure_file("${CMAKE_SOURCE_DIR}/assets/doxyfile.in" 
             "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_SOURCE_DIR}/build/doxyfile"
@@ -122,14 +122,14 @@ endif(DOXYGEN_FOUND)
 # uninstall target
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/build/CMakeModules)
 configure_file(
-    "${CMAKE_SOURCE_DIR}/files/uninstall.in"
+    "${CMAKE_SOURCE_DIR}/assets/uninstall.in"
     "${CMAKE_SOURCE_DIR}/build/uninstall"
     IMMEDIATE @ONLY)
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/build/uninstall)
 
-SET(ROLAND_DESKTOP_DIR  "${PROJECT_SOURCE_DIR}/files/app")
-SET(ROLAND_PIXMAPS_DIR  "${PROJECT_SOURCE_DIR}/files/app")
+SET(ROLAND_DESKTOP_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
+SET(ROLAND_PIXMAPS_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
 
 set(CPACK_CMAKE_GENERATOR "Unix Makefiles")
 set(CPACK_GENERATOR "STGZ;TGZ;TZ")
