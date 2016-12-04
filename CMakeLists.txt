@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(ROLAND C CXX)
+project(ROLAND CXX)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME "roland" CACHE STRING "Package Name")
@@ -156,10 +156,12 @@ set(CPACK_SOURCE_STRIP_FILES "")
 set(CPACK_STRIP_FILES "${EXECUTABLE_OUTPUT_PATH}/roland")
 set(CPACK_SYSTEM_NAME "x86_64")
 set(CPACK_TOPLEVEL_TAG "Linux-x86_64")
-set(CPACK_SOURCE_IGNORE_FILES ".directory;.git/;bin/;build/;doc/")
+set(CPACK_SOURCE_IGNORE_FILES ".directory;.git/;3rdParty/;build/;doc/")
 
-SET(CPACK_GENERATOR "RPM")
-SET(CPACK_RPM_PACKAGE_MAINTAINER "Fred Klaus") #required
+set(CPACK_GENERATOR "RPM")
+set(CPACK_RPM_PACKAGE_MAINTAINER "Fred Klaus") #required
+set(CPACK_RPM_PACKAGE_REQUIRES "SDL >= 1.2")
+set(CPACK_RPM_PACKAGE_GROUP "System/Emulators/PC")
 include(CPack)
 
 
