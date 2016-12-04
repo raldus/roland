@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-
+list(APPEND CMAKE_CXX_SOURCE_FILE_EXTENSIONS c)
 project(ROLAND CXX)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
@@ -74,7 +74,7 @@ if (UNIX)
 	endif()
 
     # C++ flags
-    set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG}  -Wall")
+    set(CMAKE_CXX_FLAGS_DEBUG   "${CMAKE_CXX_FLAGS_DEBUG}   -Wall")
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 
@@ -82,7 +82,7 @@ if (UNIX)
         ${CMAKE_SIZEOF_VOID_P} EQUAL "8")
       SET(LIB_SUFFIX "64")
     ENDIF()
-#set(LIB_SUFFIX "" CACHE STRING "Define suffix of library directory name (32/64)")
+    
     # eclipse stop on error
     ADD_DEFINITIONS(-Wfatal-errors)
     # be verbose
