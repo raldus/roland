@@ -1,5 +1,4 @@
-# Roland CPC Emulator
-[![Roland CPC Emulator](https://github.com/raldus/roland/blob/master/files/img/ready.png)](https://www.rolandemu.de/index.html)
+# [![Roland CPC Emulator](https://github.com/raldus/roland/blob/master/files/img/ready.png)](https://www.rolandemu.de/index.html)
 
 ## Overview
 Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
@@ -15,22 +14,26 @@ The source is C++11 code and needs at leat a c+11 enabled Compiler. Supported ar
 
 ### General
 You will need cmake and git installed.
+```bash
+git clone https://github.com/raldus/roland.git
+cd roland
+```
 
 ### Linux
 Folowing an Example of a unix release build.
 ```bash
-git clone https://github.com/raldus/roland.git
-cd roland
 cmake -H. -Bbuild -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 cmake --build build
+```
+### Linux rpm package
+```bash
+cmake --build build --target package
 ```
 
 ### Windows
 At the Moment Visual Studio 2015 32bit and MinGW are the only valid build environments.
 Following an Example with Visual Studio release build:
 ```bash
-git clone https://github.com/raldus/roland.git
-cd roland
 cmake -H. -Bbuild -G"Visual Studio 14 2015" -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
 ```
@@ -38,7 +41,7 @@ cmake --build build --config Release
 ### Documentation
 You will need Doxygen installed.
 ```bash
-cmake --build --target doc
+cmake --build build --target doc
 ```
 
 ## Usage
