@@ -23,27 +23,20 @@ if (MSVC)
     #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /verbose:lib")
     set(_WIN32 TRUE BOOL)
+
     if (${CMAKE_GENERATOR} MATCHES "Visual Studio 14 2015")
         set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/include")
-    else()
-        set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc/include")
-    endif()
-
-    include_directories("${SDL_INCLUDE_DIR}")
-    message("SDL_INCLUDE_DIR: ${SDL_INCLUDE_DIR}")
-
-    if (${CMAKE_GENERATOR} MATCHES "Visual Studio 14 2015")
         if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
             message(STATUS "SDL Prebuild libs for 64bit not available")
             set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x64/SDL.lib")
             set(SDL_LIBRARY "${SDL_LIBRARY};${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x64/SDLmain.lib")
             set(SDLIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x64/SDL_image.lib")
         else()
+            set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc/include")
             set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x86/SDL.lib")
             set(SDL_LIBRARY "${SDL_LIBRARY};${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x86/SDLmain.lib")
             set(SDLIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x86/SDL_image.lib")
         endif()
-
     else()
         if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
             set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc/lib/x64/SDL.lib")
@@ -55,7 +48,9 @@ if (MSVC)
             set(SDLIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc/lib/x86/SDL_image.lib")
         endif()
     endif()
-    message("SDL_LIBRARY: ${SDL_LIBRARY}")
+    include_directories("${SDL_INCLUDE_DIR}")
+    message("SDL_INCLUDE_DIR:  ${SDL_INCLUDE_DIR}")
+    message("SDL_LIBRARY:      ${SDL_LIBRARY}")
     message("SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
 endif (MSVC)
 
@@ -82,7 +77,7 @@ if (UNIX)
         ${CMAKE_SIZEOF_VOID_P} EQUAL "8")
       SET(LIB_SUFFIX "64")
     ENDIF()
-    
+
     # eclipse stop on error
     ADD_DEFINITIONS(-Wfatal-errors)
     # be verbose
@@ -101,10 +96,10 @@ endif (UNIX)
 # roland
 set(DEBUG 1)
 add_definitions("-DHAVE_CONFIG_H")
-configure_file("${PROJECT_SOURCE_DIR}/assets/config.h.in"    
-        "${PROJECT_SOURCE_DIR}/src/config.h")
-configure_file("${PROJECT_SOURCE_DIR}/assets/roland.spec.in" 
-        "${PROJECT_SOURCE_DIR}/roland.spec")
+configure_file("${PROJECT_SOURCE_DIR}/assets/config.h.in"
+               "${PROJECT_SOURCE_DIR}/src/config.h")
+configure_file("${PROJECT_SOURCE_DIR}/assets/roland.spec.in"
+               "${CMAKE_BINARY_DIR}/roland.spec")
 
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/roms"  DESTINATION share/roland)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/disks" DESTINATION share/roland)
@@ -112,31 +107,30 @@ install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/disks" DESTINATION share/roland)
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
-    configure_file("${CMAKE_SOURCE_DIR}/assets/doxyfile.in" 
-            "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
+    configure_file("${CMAKE_SOURCE_DIR}/assets/doxyfile.in"
+            "${CMAKE_BINARY_DIR}/doxyfile" @ONLY)
     add_custom_target(doc
-        ${DOXYGEN_EXECUTABLE} "${CMAKE_SOURCE_DIR}/build/doxyfile"
+        ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/doxyfile"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Generating API documentation with Doxygen" VERBATIM)
 endif(DOXYGEN_FOUND)
 
 # uninstall target
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/build/CMakeModules)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR}/CMakeModules)
 configure_file(
     "${CMAKE_SOURCE_DIR}/assets/uninstall.in"
-    "${CMAKE_SOURCE_DIR}/build/uninstall"
+    "${CMAKE_BINARY_DIR}/uninstall"
     IMMEDIATE @ONLY)
-add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/build/uninstall)
+add_custom_target(uninstall COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/uninstall)
 
 SET(ROLAND_DESKTOP_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
 SET(ROLAND_PIXMAPS_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
 
 set(CPACK_CMAKE_GENERATOR "Unix Makefiles")
 set(CPACK_GENERATOR "STGZ;TGZ;TZ")
-set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_SOURCE_DIR}/build;${PACKAGE_NAME};ALL;/")
+set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${PACKAGE_NAME};ALL;/")
 set(CPACK_NSIS_DISPLAY_NAME "${PROJECT_NAME} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
-set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/build/CPackConfig.cmake")
+set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/CPackConfig.cmake")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Amstrad Emulator based on Caprice Source rewritten in C++")
 set(CPACK_PACKAGE_EXECUTABLES "${PACKAGE_NAME};${PACKAGE_TITLE}")
@@ -151,7 +145,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README  "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_SOURCE_GENERATOR "TBZ2;RPM")
-set(CPACK_SOURCE_OUTPUT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/build/CPackSourceConfig.cmake")
+set(CPACK_SOURCE_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/CPackSourceConfig.cmake")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PACKAGE_NAME}-${PACKAGE_VERSION}.src")
 set(CPACK_SOURCE_STRIP_FILES "")
 set(CPACK_STRIP_FILES "${EXECUTABLE_OUTPUT_PATH}/roland")
