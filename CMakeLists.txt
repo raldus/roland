@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
-list(APPEND CMAKE_CXX_SOURCE_FILE_EXTENSIONS c)
-project(ROLAND CXX)
+
+project(ROLAND CXX C)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME  "roland" CACHE STRING "Package Name")
