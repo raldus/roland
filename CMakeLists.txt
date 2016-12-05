@@ -13,8 +13,6 @@ set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin" CACHE STRING "Executable Output Path")
 set(LIBRARY_OUTPUT_PATH    "${CMAKE_BINARY_DIR}/bin" CACHE STRING "Library Output Path")
 
-option(VERBOSE "Verbose" FALSE)
-
 if (WIN32)
     set(_WIN32 TRUE CACHE BOOL "Win32")
 endif (WIN32)
@@ -23,14 +21,6 @@ if (MSVC)
     #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /verbose:lib")
     set(_WIN32 TRUE BOOL)
-    if (${CMAKE_GENERATOR} MATCHES "Visual Studio 14 2015")
-        set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/include")
-    else()
-        set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc/include")
-    endif()
-
-    include_directories("${SDL_INCLUDE_DIR}")
-    message("SDL_INCLUDE_DIR: ${SDL_INCLUDE_DIR}")
 
     if (${CMAKE_GENERATOR} MATCHES "Visual Studio 14 2015")
         if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
@@ -44,7 +34,6 @@ if (MSVC)
             set(SDLIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x86/SDL_image.lib")
         endif()
         set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/include")
-
     else()
         if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
             set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc/lib/x64/SDL.lib")
@@ -57,13 +46,9 @@ if (MSVC)
         endif()
         set(SDL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc/include")
     endif()
-    include_directories("${SDL_INCLUDE_DIR}")
-    message("SDL_INCLUDE_DIR:  ${SDL_INCLUDE_DIR}")
-    message("SDL_LIBRARY:      ${SDL_LIBRARY}")
-    message("SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
 endif (MSVC)
 
-if (UNIX)
+if(UNIX)
 	# C++ version
 	include(CheckCXXCompilerFlag)
 	CHECK_CXX_COMPILER_FLAG("-std=c++11" COMPILER_SUPPORTS_CXX11)
@@ -100,15 +85,22 @@ if (UNIX)
     find_package(SDL_image REQUIRED)
     include_directories("${SDL_INCLUDE_DIR}")
 
-endif (UNIX)
+endif(UNIX)
+
+# sdl
+include_directories("${SDL_INCLUDE_DIR}")
+message("SDL_INCLUDE_DIR:  ${SDL_INCLUDE_DIR}")
+message("SDL_LIBRARY:      ${SDL_LIBRARY}")
+message("SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
 
 # roland
+option(VERBOSE "Verbose" FALSE)
 set(DEBUG 1)
 add_definitions("-DHAVE_CONFIG_H")
-configure_file("${PROJECT_SOURCE_DIR}/assets/config.h.in"    
+configure_file("${PROJECT_SOURCE_DIR}/assets/config.h.in" 
                "${PROJECT_SOURCE_DIR}/src/config.h")
 configure_file("${PROJECT_SOURCE_DIR}/assets/roland.spec.in" 
-               "${PROJECT_SOURCE_DIR}/assets/roland.spec")
+               "${CMAKE_BINARY_DIR}/roland.spec")
 
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/roms"  DESTINATION share/roland)
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/disks" DESTINATION share/roland)
@@ -117,7 +109,7 @@ install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/disks" DESTINATION share/roland)
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     configure_file("${CMAKE_SOURCE_DIR}/assets/doxyfile.in" 
-            "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
+                   "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_SOURCE_DIR}/build/doxyfile"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
