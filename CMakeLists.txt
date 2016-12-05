@@ -67,16 +67,15 @@ if(UNIX)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 
-    IF (${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND
-        ${CMAKE_SIZEOF_VOID_P} EQUAL "8")
-      SET(LIB_SUFFIX "64")
-    ENDIF()
+    if(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND ${CMAKE_SIZEOF_VOID_P} EQUAL "8")
+        set(LIB_SUFFIX "64")
+    endif()
     
     # eclipse stop on error
-    ADD_DEFINITIONS(-Wfatal-errors)
+    add_definitions(-Wfatal-errors)
     # be verbose
     if (${VERBOSE})
-        ADD_DEFINITIONS(-Wall -Wextra -pedantic) # -Weffc++
+        add_definitions(-Wall -Wextra -pedantic) # -Weffc++
     endif()
 
 
@@ -110,30 +109,30 @@ install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/app"   DESTINATION share/roland)
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     configure_file("${CMAKE_SOURCE_DIR}/assets/doxyfile.in" 
-                   "${CMAKE_SOURCE_DIR}/build/doxyfile" @ONLY)
+                   "${CMAKE_BINARY_DIR}/doxyfile" @ONLY)
     add_custom_target(doc
-        ${DOXYGEN_EXECUTABLE} "${CMAKE_SOURCE_DIR}/build/doxyfile"
+        ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/doxyfile"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMENT "Generating API documentation with Doxygen" VERBATIM)
 endif(DOXYGEN_FOUND)
 
 # uninstall target
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/build/CMakeModules)
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_BINARY_DIR}/CMakeModules)
 configure_file(
     "${CMAKE_SOURCE_DIR}/assets/uninstall.in"
-    "${CMAKE_SOURCE_DIR}/build/uninstall"
+    "${CMAKE_BINARY_DIR}/uninstall"
     IMMEDIATE @ONLY)
 add_custom_target(uninstall
-    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/build/uninstall)
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/uninstall)
 
 SET(ROLAND_DESKTOP_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
 SET(ROLAND_PIXMAPS_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
 
 set(CPACK_CMAKE_GENERATOR "Unix Makefiles")
 set(CPACK_GENERATOR "STGZ;TGZ;TZ")
-set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_SOURCE_DIR}/build;${PACKAGE_NAME};ALL;/")
+set(CPACK_INSTALL_CMAKE_PROJECTS "${CMAKE_BINARY_DIR};${PACKAGE_NAME};ALL;/")
 set(CPACK_NSIS_DISPLAY_NAME "${PROJECT_NAME} ${PACKAGE_VERSION} ${CMAKE_BUILD_TYPE}")
-set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/build/CPackConfig.cmake")
+set(CPACK_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/CPackConfig.cmake")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Amstrad Emulator based on Caprice Source rewritten in C++")
 set(CPACK_PACKAGE_EXECUTABLES "${PACKAGE_NAME};${PACKAGE_TITLE}")
@@ -148,7 +147,7 @@ set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 set(CPACK_RESOURCE_FILE_README  "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_WELCOME "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_SOURCE_GENERATOR "TBZ2;RPM")
-set(CPACK_SOURCE_OUTPUT_CONFIG_FILE "${CMAKE_SOURCE_DIR}/build/CPackSourceConfig.cmake")
+set(CPACK_SOURCE_OUTPUT_CONFIG_FILE "${CMAKE_BINARY_DIR}/CPackSourceConfig.cmake")
 set(CPACK_SOURCE_PACKAGE_FILE_NAME "${PACKAGE_NAME}-${PACKAGE_VERSION}.src")
 set(CPACK_SOURCE_STRIP_FILES "")
 set(CPACK_STRIP_FILES "${EXECUTABLE_OUTPUT_PATH}/roland")
