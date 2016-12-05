@@ -49,7 +49,7 @@ Prefs::Prefs(bool autowrite, bool writealways)
     mAutoWrite   = autowrite;
     mWriteAlways = writealways;
 
-#ifdef _WIN32 || _WIN64
+#if defined(_WIN32) || defined(_WIN64)
     char buf[NAME_MAX + 1];
     mFilename  = _getcwd(buf, NAME_MAX);
     mFilename += delim();
@@ -188,11 +188,11 @@ std::string Prefs::getPath(const std::string & key) const
     if ((text.find_first_of('.') == 0) && (text.find_first_of(delim()) == 1))
     {
         std::string tmp;
-#ifdef _WIN32 || _WIN64
+#if defined(_WIN32) || defined(_WIN64)
     	char buf[NAME_MAX + 1];
     	tmp = _getcwd(buf, NAME_MAX);
 #else
-    	tmp = getenv("HOME");	
+    	tmp = getenv("HOME");
 #endif
         tmp += delim();
         tmp += text.substr(2);
