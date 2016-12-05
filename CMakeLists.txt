@@ -24,7 +24,7 @@ if (MSVC)
 
     if (${CMAKE_GENERATOR} MATCHES "Visual Studio 14 2015")
         if (${CMAKE_SIZEOF_VOID_P} EQUAL "8")
-            message(STATUS "SDL Prebuild libs for 64bit not available")
+            message(FATAL_ERROR "SDL Prebuild libs for 64bit not available")
             set(SDL_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x64/SDL.lib")
             set(SDL_LIBRARY "${SDL_LIBRARY};${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x64/SDLmain.lib")
             set(SDLIMAGE_LIBRARY "${CMAKE_SOURCE_DIR}/3rdparty/sdl-vc2015/lib/x64/SDL_image.lib")
@@ -58,7 +58,7 @@ if(UNIX)
 	elseif(COMPILER_SUPPORTS_CXX0X)
 	    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 	else()
-	    message(STATUS "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. \
+	    message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. \
 	                    Please use a different C++ compiler.")
 	endif()
 
@@ -89,9 +89,9 @@ endif(UNIX)
 
 # sdl
 include_directories("${SDL_INCLUDE_DIR}")
-message("SDL_INCLUDE_DIR:  ${SDL_INCLUDE_DIR}")
-message("SDL_LIBRARY:      ${SDL_LIBRARY}")
-message("SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
+message(STATUS "SDL_INCLUDE_DIR:  ${SDL_INCLUDE_DIR}")
+message(STATUS "SDL_LIBRARY:      ${SDL_LIBRARY}")
+message(STATUS "SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
 
 # roland
 option(VERBOSE "Verbose" FALSE)
