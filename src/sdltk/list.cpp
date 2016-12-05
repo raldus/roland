@@ -126,7 +126,7 @@ namespace sdltk
         return ret;
     }
 
-    bool List::onUser(SDL_UserEvent * event) // Selection ...
+    bool List::onUser(SDL_UserEvent * event) // Selection ... TODO Change to infinite list
     {
         if (event->code == UserEvent::ListItemClicked)
         {
