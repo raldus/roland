@@ -59,9 +59,9 @@ F12|switch to fullscreen (does not work in Windows; instead set fullscreen=1 in 
 
 ### Usage of the CPC 464/664/6128
 Insert a disk, enter **cat**  **Enter** and
-you can see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
+you will see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
 
-### Example
+#### Example
 >
 1. press **F2**
 2. search a disk with **arrowkeys** (HarveyH.dsk) **Enter**
@@ -70,7 +70,7 @@ you can see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
 5. type **run "harvey"**  **Enter**
 6. press **F5** to emulate a joystick with **arrowkeys** and **ALT**
 
-### Example 2 (Bjack1.dsk)
+#### Example 2 (Bjack1.dsk)
 >
 1. ...
 2. ...
@@ -106,5 +106,5 @@ Afterwards, put **roland-linux.cfg** renamed to **.roland** into your homedir.
 
 ## Misc
 [Changelog](https://github.com/raldus/roland/blob/master/CHANGELOG.md)
-<br><br><br><br>
+<br><br><br>
 [ ![Ready](https://github.com/raldus/roland/blob/master/assets/img/ready.png)](https://www.rolandemu.de/index.html)
