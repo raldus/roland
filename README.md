@@ -1,17 +1,19 @@
-# [Roland CPC Emulator&nbsp;&nbsp;<br><br>![](https://github.com/raldus/roland/blob/master/assets/img/ready.png)](https://www.rolandemu.de/index.html)
+# [ ![Roland](https://www.rolandemu.de/files/images/rolandemu.de/css/roland.png) <br>CPC Emulator](https://www.rolandemu.de/index.html) [ ![Ready](https://github.com/raldus/roland/blob/master/assets/img/ready.png)](https://www.rolandemu.de/index.html)
 
 ## Overview
-Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
+Roland is an emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
 for Linux und Windows.
 Roland depends on SDL > 1.2 and SDL-Image.
-For further information visit [rolandemu.de](https://www.rolandemu.de/index.html)
+For further information visit https://www.rolandemu.de/index.html
 
 ## Build
-The source is C++11 code and needs at leat a c+11 enabled Compiler. Supported are GCC native or CygWin/MinGw. The build system
+The source is C++11 code and needs at leat a c+11 enabled Compiler. Supported are GCC native, Visual Studio 2015 or CygWin/MinGw. 
 
 ### Status
-[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland) Ubuntu32/64 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland) Windows32
+|   |   |
+|---|--:|
+|Ubuntu 32/64|[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland)|
+|Windows 32|[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland)|
 
 ### General
 You will need cmake and git installed.
@@ -33,7 +35,7 @@ cmake --build build --target package
 
 ### Windows
 At the Moment Visual Studio 2015 32bit and MinGW are the only valid build environments.
-Following an Example with Visual Studio release build:
+Following an example of a Visual Studio release build:
 ```bash
 cmake -H. -Bbuild -G"Visual Studio 14 2015" -DCMAKE_BUILD_TYPE=Release
 cmake --build build --config Release
