@@ -1,4 +1,4 @@
-# [ ![Roland](https://www.rolandemu.de/files/images/rolandemu.de/css/roland.png) <br>CPC Emulator](https://www.rolandemu.de/index.html) [ ![Ready](https://github.com/raldus/roland/blob/master/assets/img/ready.png)](https://www.rolandemu.de/index.html)
+# [ ![Roland](https://www.rolandemu.de/files/images/rolandemu.de/css/roland.png) <br>CPC Emulator](https://www.rolandemu.de/index.html) 
 
 ## Overview
 Roland is an emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
@@ -10,10 +10,9 @@ For further information visit https://www.rolandemu.de/index.html
 The source is C++11 code and needs at leat a c+11 enabled Compiler. Supported are GCC native, Visual Studio 2015 or CygWin/MinGw. 
 
 ### Status
-|   |   |
-|---|--:|
 |Ubuntu 32/64|[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland)|
-|Windows 32|[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland)|
+|---|--:|
+|**Windows 32**|[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland)|
 
 ### General
 You will need cmake and git installed.
@@ -107,3 +106,5 @@ Afterwards, put **roland-linux.cfg** renamed to **.roland** into your homedir.
 
 ## Misc
 [Changelog](https://github.com/raldus/roland/blob/master/CHANGELOG.md)
+<br><br>
+[ ![Ready](https://github.com/raldus/roland/blob/master/assets/img/ready.png)](https://www.rolandemu.de/index.html)
