@@ -67,9 +67,8 @@ if(UNIX)
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -Wall")
 
 
-    if(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND
-        ${CMAKE_SIZEOF_VOID_P} EQUAL "8")
-      set(LIB_SUFFIX "64")
+    if(${CMAKE_SYSTEM_NAME} MATCHES "Linux" AND ${CMAKE_SIZEOF_VOID_P} EQUAL "8")
+        set(LIB_SUFFIX "64")
     endif()
     
     # eclipse stop on error
