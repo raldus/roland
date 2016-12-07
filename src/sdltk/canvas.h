@@ -81,7 +81,7 @@ namespace sdltk
         Size          mTextSize;
         Color         mColor;
         ImageFont     mFont;
-        String   mNumber;
+        String        mNumber;
         Rect          mClipRect;
     };
 
