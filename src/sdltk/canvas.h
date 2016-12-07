@@ -59,11 +59,11 @@ namespace sdltk
         void setFont(const String & fname, const String & glyphs);
         void setSurface(SDL_Surface * const surface) {mSurface = surface;}
 
-        void point(Point * const pos)  {point(*pos);}
+        void point(Point * const pos)                      {point(*pos);}
         void line (Point * const pos1, Point * const pos2) {line(*pos1, *pos2);}
-        void rect (Rect  * const rec)  {rect(*rec);}
-        void fill (Rect  * const rec)  {fill(*rec);}
-        void image(Image * const img, const Point & pos) {image(*img, pos);}
+        void rect (Rect  * const rec)                      {rect(*rec);}
+        void fill (Rect  * const rec)                      {fill(*rec);}
+        void image(Image * const img, const Point & pos)   {image(*img, pos);}
 
         void image(const Image & img, const Point & pos);
         void write(const Point & pos, const String & text);
@@ -75,6 +75,8 @@ namespace sdltk
         const Color     & color() const {return mColor;}
 
         uint width() {return mSurface ? mSurface->w : 320;}
+
+        const Rect & clipRect() const {return mClipRect;}
 
     protected:
         SDL_Surface * mSurface;

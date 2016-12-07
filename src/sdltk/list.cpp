@@ -146,6 +146,7 @@ namespace sdltk
 
     void List::add(ListItem * item)
     {
+        if (std::list<ListItem*>::size() > 1000) return;
         mGui->add(item);
 
         item->setParent(this);
@@ -159,7 +160,6 @@ namespace sdltk
 
         mSelected = begin();
         mTmpColor = (*mSelected)->color();
-
     }
 
     void List::reposition(Sint16 val)
@@ -236,6 +236,7 @@ namespace sdltk
 
         for (auto item : *this)
         {
+            if ((item->pos().y() < 0) || (item->pos().y() > height())) item->setEnabled(false);
             if (item->enabled())
             {
                 if (!item->hasMouseGrab()) item->reset();

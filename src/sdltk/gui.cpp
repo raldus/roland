@@ -39,6 +39,13 @@ namespace sdltk
         mHasFocus = widget;
     }
 
+    void Gui::del(Widget * widget)
+    {
+        remove(widget);
+        delete widget;
+        //mHasFocus = widget;
+    }
+
     bool Gui::checkEvent(SDL_Event * event)
     {
         if (!mEnabled) return false;

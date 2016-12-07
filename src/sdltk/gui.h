@@ -23,7 +23,7 @@
 #include "widget.h"
 #include "video.h"
 #include "SDL.h"
-#include <vector>
+#include <list>
 
 
 //! \brief the SDL based Stuff
@@ -31,7 +31,7 @@ namespace sdltk
 {
 
     //! author Fred Klaus development@fkweb.de
-    class Gui : public std::vector<Widget*>
+    class Gui : public std::list<Widget*>
     {
 
     public:
@@ -39,6 +39,7 @@ namespace sdltk
         ~Gui();
 
         void add(Widget * widget);
+        void del(Widget * widget);
 
         //! returns true if event was accepted
         bool checkEvent(SDL_Event * event);
