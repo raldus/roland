@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "list.h"
 #include "events.h"
+#include "def.h"
 
 namespace sdltk
 {
@@ -45,7 +46,7 @@ namespace sdltk
 
     void List::onMouseButton(SDL_MouseButtonEvent * event)
     {
-        if (!mEnabled) return;
+        if (!mEnabled || empty()) return;
 
         if (event->type == SDL_MOUSEBUTTONDOWN)
         {
@@ -66,7 +67,7 @@ namespace sdltk
 
     bool List::onKeyboard(SDL_KeyboardEvent * event)
     {
-        if (!mEnabled) return false;
+        if (!mEnabled || empty()) return false;
         bool ret = false;
         mClock.init();
 
@@ -128,6 +129,7 @@ namespace sdltk
 
     bool List::onUser(SDL_UserEvent * event) // Selection ... TODO Change to infinite list
     {
+        if (!mEnabled || empty()) return false;
         if (event->code == UserEvent::ListItemClicked)
         {
             auto selected = find(begin(), end(), (ListItem*) event->data1);
@@ -146,7 +148,7 @@ namespace sdltk
 
     void List::add(ListItem * item)
     {
-        if (std::list<ListItem*>::size() > 1000) return;
+        if (std::list<ListItem*>::size() > 3200) return; // TODO implement infinite list
         mGui->add(item);
 
         item->setParent(this);
@@ -164,6 +166,7 @@ namespace sdltk
 
     void List::reposition(Sint16 val)
     {
+        if (!mEnabled || empty()) return;
         mClock.init();
 
         if (front()->y() >= y() && mMotion == 1)
@@ -220,7 +223,7 @@ namespace sdltk
 
     void List::draw()
     {
-        if (!mEnabled) return;
+        if (!mEnabled || empty()) return;
 
         if (mMotion == 1) reposition(mSpeed);
         else
@@ -236,7 +239,11 @@ namespace sdltk
 
         for (auto item : *this)
         {
-            if ((item->pos().y() < 0) || (item->pos().y() > height())) item->setEnabled(false);
+            //EOUT("[sdltk::List]", "Item.pos.y", item->pos().y());
+            //EOUT("[sdltk::List]", "List.height", height());
+            //if ((item->pos().y() < 0) || (item->pos().y() > height())) item->setEnabled(false);
+            //if (item->pos().y() < 0) continue;
+            if (item->pos().y() > height() + (item->height()*2)) break;
             if (item->enabled())
             {
                 if (!item->hasMouseGrab()) item->reset();

@@ -171,8 +171,9 @@ void initGui()
     btnTest2->setText("Knopf2");
 */
 
-    lstFile = new sdltk::FileList(gui, prefs.getPath("diskdir"), 'a');
+    lstFile = new sdltk::FileList(gui, prefs.getPath("diskdir"));
     lstFile->setEnabled(false);
+    //lstFile->clear();
 
     gui->add(lblFps);
     gui->add(lblDisk);
@@ -256,7 +257,7 @@ void mainloop()
                                 case SDLK_F2:
                                 {
                                     lstFile->setEnabled(!lstFile->enabled());
-                                    if (!lstFile->enabled())
+                                    if (!lstFile->enabled() && !lstFile->empty())
                                     {
                                         tSTRING str =
                                                 prefs.getPath("diskdir")
@@ -273,12 +274,11 @@ void mainloop()
                                                              SDL_DEFAULT_REPEAT_INTERVAL);
                                     break;
                                 }
-                                break;
 
                                 case SDLK_F3:
                                 {
                                     lstFile->setEnabled(!lstFile->enabled());
-                                    if (!lstFile->enabled())
+                                    if (!lstFile->enabled() && !lstFile->empty())
                                     {
                                         tSTRING str =
                                                 prefs.getPath("diskdir")
