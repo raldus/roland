@@ -34,6 +34,7 @@ namespace sdltk
     void FileList::init(const FileName & dirname, char letter)
     {
         mDirectory.scan(dirname, Directory::Options::None, letter);
+        if (mDirectory.empty()) return;
         mDirectory.sort();
 
         clear();
@@ -50,7 +51,8 @@ namespace sdltk
 
     bool FileList::onKeyboard(SDL_KeyboardEvent * event)
     {
-        if (!mEnabled) return false;
+        if (!mEnabled || empty()) return List::onKeyboard(event);
+
         if (((int) event->keysym.sym >= SDLK_a) && ((int) event->keysym.sym <= SDLK_z))
         {
             init(mDirectory.path(), (int) event->keysym.sym);
@@ -61,7 +63,12 @@ namespace sdltk
             init(mDirectory.path(), (int) event->keysym.sym);
             return true;
         }
-
+        else if((int) event->keysym.sym == SDLK_SPACE)
+        {
+            init(mDirectory.path(), 0);
+            return true;
+        }
+        //return true; // blocks event reusing but arrow keys too :(
         return List::onKeyboard(event);
     }
 

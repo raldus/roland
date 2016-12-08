@@ -132,7 +132,7 @@ namespace sdltk
 
 } // sdltk
 
-#endif // SDLTK_VIDEOGL_H
+#endif // SDLTK_WIDGET_H
 
 
 

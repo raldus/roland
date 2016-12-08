@@ -17,3 +17,23 @@ Wed Nov 30 21:24:04 2016 +0100
 [view tag](https://github.com/raldus/roland/commit/8dc859b4838b1a4339a0a6c5af0e039ad11d83c6) 
 
 ***
+
+tag 0.62
+Tagger: Fred Klaus <development@fkweb.de>
+
+Clean build of roland
+
+Mon Dec 5 19:42:33 2016 +0100 
+[view tag](https://github.com/raldus/roland/commit/bae93065f81f1ce7e155f2d1bfeb04237c047e9d) 
+
+***
+
+tag 0.63
+Tagger: Fred Klaus <development@fkweb.de>
+
+GUI improvement
+
+Thu Dec 8 23:30:18 2016 +0100 
+[view tag](https://github.com/raldus/roland/commit/e9f157b312ec4a0e72c5885c630720c6963340f4) 
+
+***

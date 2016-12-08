@@ -77,7 +77,7 @@ void Directory::scan(const FileName &path, Options options, char letter)
         if ((options & Options::ParentDir) && (fi == "..")) continue;
         if ((options & Options::OwnDir)    && (fi == "." )) continue;
         if (letter && tolower(fi.base()[0]) == tolower(letter)) push_back(fi);
-        else if (!letter) push_back(fi);
+        if (!letter) push_back(fi);
     }
 #endif
 
