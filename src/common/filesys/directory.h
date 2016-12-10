@@ -40,7 +40,7 @@ class Directory : public vector<FileName>
 {
 
 public:
-    enum Options : char {None = 0, ParentDir = 1, OwnDir = 2};
+    enum Options : char {None = 0, ParentDir = 1, OwnDir = 2, BothDir = 3};
 
     //! Standardconstructor
     Directory() : vector<FileName>() {};
