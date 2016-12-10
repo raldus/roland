@@ -44,7 +44,7 @@ PROJECT_NUMBER = @PACKAGE_VERSION@
 # for a project that appears at the top of each page and should give viewer a
 # quick idea about the purpose of the project. Keep the description short.
 
-PROJECT_BRIEF = "Amstrad Emulator based on Caprice Source rewritten in C++."
+PROJECT_BRIEF = "Amstrad/Schneider CPC 464/664/6128 Emulator based on Caprice Source rewritten in C++"
 
 # With the PROJECT_LOGO tag one can specify an logo or icon that is included in
 # the documentation. The maximum height of the logo should not exceed 55 pixels
@@ -58,7 +58,7 @@ PROJECT_LOGO = @CMAKE_SOURCE_DIR@/files/img/ready.png
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY = @CMAKE_SOURCE_DIR@/doc
+OUTPUT_DIRECTORY = @CMAKE_BINARY_DIR@/doc
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 4096 sub-
 # directories (in 2 levels) under the output directory of each output format and
@@ -142,7 +142,7 @@ FULL_PATH_NAMES = NO
 # will be relative from the directory where doxygen is started.
 # This tag requires that the tag FULL_PATH_NAMES is set to YES.
 
-STRIP_FROM_PATH =
+STRIP_FROM_PATH = @CMAKE_SOURCE_DIR@/src
 
 # The STRIP_FROM_INC_PATH tag can be used to strip a user-defined part of the
 # path mentioned in the documentation of a class, which tells the reader which
@@ -151,7 +151,7 @@ STRIP_FROM_PATH =
 # specify the list of include paths that are normally passed to the compiler
 # using the -I flag.
 
-STRIP_FROM_INC_PATH =
+STRIP_FROM_INC_PATH = @CMAKE_SOURCE_DIR@/src 
 
 # If the SHORT_NAMES tag is set to YES, doxygen will generate much shorter (but
 # less readable) file names. This can be useful is your file systems doesn't
@@ -296,7 +296,7 @@ AUTOLINK_SUPPORT = YES
 # diagrams that involve STL classes more complete and accurate.
 # The default value is: NO.
 
-BUILTIN_STL_SUPPORT = NO
+BUILTIN_STL_SUPPORT = YES
 
 # If you use Microsoft's C++/CLI language, you should set this option to YES to
 # enable parsing support.
@@ -1732,7 +1732,7 @@ RTF_EXTENSIONS_FILE =
 # classes and files.
 # The default value is: NO.
 
-GENERATE_MAN = NO
+GENERATE_MAN = YES
 
 # The MAN_OUTPUT tag is used to specify where the man pages will be put. If a
 # relative path is entered the value of OUTPUT_DIRECTORY will be put in front of
@@ -1907,7 +1907,7 @@ SEARCH_INCLUDES = YES
 # preprocessor.
 # This tag requires that the tag SEARCH_INCLUDES is set to YES.
 
-INCLUDE_PATH =
+INCLUDE_PATH = 
 
 # You can use the INCLUDE_FILE_PATTERNS tag to specify one or more wildcard
 # patterns (like *.h and *.hpp) to filter out the header-files in the
@@ -2148,7 +2148,7 @@ INCLUDED_BY_GRAPH = YES
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-CALL_GRAPH = NO
+CALL_GRAPH = YES
 
 # If the CALLER_GRAPH tag is set to YES then doxygen will generate a caller
 # dependency graph for every global function or class method.
@@ -2159,7 +2159,7 @@ CALL_GRAPH = NO
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-CALLER_GRAPH = NO
+CALLER_GRAPH = YES
 
 # If the GRAPHICAL_HIERARCHY tag is set to YES then doxygen will graphical
 # hierarchy of all classes instead of a textual one.
