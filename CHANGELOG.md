@@ -47,3 +47,13 @@ Sat Mar 25 19:18:53 2017 +0100
 [view tag](https://github.com/raldus/roland/commit/1402c13da0e33776228a89cb9e5b43b93478aa6f) 
 
 ***
+
+tag 0.65
+Tagger: Fred Klaus <development@fkweb.de>
+
+bufix release
+
+Sat Mar 25 19:48:56 2017 +0100 
+[view tag](https://github.com/raldus/roland/commit/498342a43c7a0251b6c3456a685c93b0c5a3e4e8) 
+
+***
