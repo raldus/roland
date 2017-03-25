@@ -2,12 +2,24 @@ cmake_minimum_required(VERSION 2.8)
 
 project(ROLAND CXX C)
 
+math(EXPR CMAKE_BITS ${CMAKE_SIZEOF_VOID_P}*8)
+
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME  "roland" CACHE STRING "Package Name")
 set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
 execute_process(COMMAND git show --tags --quiet --reverse "--pretty=format:%ad %n[view tag](https://github.com/raldus/roland/commit/%H) %n%n***%n" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
 execute_process(COMMAND git describe --abbrev=0 --tags --always OUTPUT_VARIABLE PACKAGE_VERSION)
 string(REGEX REPLACE "\n$" "" PACKAGE_VERSION "${PACKAGE_VERSION}")
+
+
+
+set(ROLAND_ROOTDIR "${CMAKE_SOURCE_DIR}/assets")
+
+set(ROLAND_DATADIR "${ROLAND_ROOTDIR}/app")
+set(ROLAND_ROMDIR  "${ROLAND_ROOTDIR}/roms")
+set(ROLAND_DISKDIR "${ROLAND_ROOTDIR}/disks")
+set(ROLAND_AMSROM  "${ROLAND_ROOTDIR}/roms/amsdos.rom")
+set(ROLAND_CPCROM  "${ROLAND_ROOTDIR}/roms/cpc6128.rom")
 
 #set(CMAKE_BINARY_DIR       "${CMAKE_SOURCE_DIR}/bin" CACHE STRING "Build Dir")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin" CACHE STRING "Executable Output Path")
@@ -101,9 +113,9 @@ configure_file("${PROJECT_SOURCE_DIR}/assets/config.h.in"
 configure_file("${PROJECT_SOURCE_DIR}/assets/roland.spec.in" 
                "${CMAKE_BINARY_DIR}/roland.spec")
 
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/roms"  DESTINATION share/roland)
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/disks" DESTINATION share/roland)
-install(DIRECTORY "${CMAKE_SOURCE_DIR}/assets/app"   DESTINATION share/roland)
+install(DIRECTORY "${ROLAND_ROMDIR}"  DESTINATION share/roland)
+install(DIRECTORY "${ROLAND_DISKDIR}" DESTINATION share/roland)
+install(DIRECTORY "${ROLAND_DATADIR}" DESTINATION share/roland)
 
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
@@ -175,7 +187,6 @@ add_subdirectory(src)
 
 
 
-math(EXPR CMAKE_BITS ${CMAKE_SIZEOF_VOID_P}*8)
 
 # output
 message("")
