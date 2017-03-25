@@ -1,9 +1,6 @@
 
-
-include_directories(${PROJECT_SOURCE_DIR}/src)
-include_directories(${PROJECT_SOURCE_DIR}/src/cpc)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/cpc)
 include_directories(${SDL_INCLUDE_DIR})
-
 
 add_library(sdltk STATIC 
 audio.cpp
@@ -28,6 +25,5 @@ video.cpp
 videogl.cpp
 videostd.cpp
 widget.cpp)
-
 
 target_link_libraries(sdltk ${SDL_LIBRARY} ${SDLIMAGE_LIBRARY})
