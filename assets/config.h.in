@@ -43,11 +43,11 @@ static constexpr auto PACKAGE_TARNAME = "@PACKAGE_NAME@";
 static constexpr auto PACKAGE_VERSION = "@PACKAGE_VERSION@";
 
 //! DataDirectory */
-static constexpr auto DATADIR = "@CMAKE_SOURCE_DIR@/files/app/";
-static constexpr auto ROMDIR  = "@CMAKE_SOURCE_DIR@/files/roms/";
-static constexpr auto DISKDIR = "@CMAKE_SOURCE_DIR@/files/disks/";
-static constexpr auto AMSROM  = "@CMAKE_SOURCE_DIR@/files/roms/amsdos.rom";
-static constexpr auto CPCROM  = "@CMAKE_SOURCE_DIR@/files/roms/cpc6128.rom";
+static constexpr auto DATADIR = "@CMAKE_SOURCE_DIR@/assets/app/";
+static constexpr auto ROMDIR  = "@CMAKE_SOURCE_DIR@/assets/roms/";
+static constexpr auto DISKDIR = "@CMAKE_SOURCE_DIR@/assets/disks/";
+static constexpr auto AMSROM  = "@CMAKE_SOURCE_DIR@/assets/roms/amsdos.rom";
+static constexpr auto CPCROM  = "@CMAKE_SOURCE_DIR@/assets/roms/cpc6128.rom";
 
 //! use mmx
 //! #undef USE_MMX
