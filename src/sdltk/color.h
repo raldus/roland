@@ -25,7 +25,8 @@
 namespace sdltk
 {
 
-    //! \author Fred Klaus development@fkweb.de @bug operators does not work correctly @todo operators*/
+    //! \brief Represents a 32bit (RGBA) Color.
+    //! Fred Klaus development@fkweb.de @bug operators does not work correctly @todo operators*/
     class Color
     {
 
