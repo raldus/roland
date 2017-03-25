@@ -48,7 +48,7 @@
 
 #include "cpc.h"
 #include "prefs.h"
-#include "icon.h"
+//#include "icon.h"
 
 using namespace std;
 using namespace cpcx;
