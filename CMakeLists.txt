@@ -122,9 +122,9 @@ configure_file("${ROLAND_ASSETS}/config.h.in"
 configure_file("${ROLAND_ASSETS}/roland.spec.in" 
                "${CMAKE_BINARY_DIR}/roland.spec")
 
-install(DIRECTORY "${ROLAND_ROMDIR}"  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
-install(DIRECTORY "${ROLAND_DISKDIR}" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
-install(DIRECTORY "${ROLAND_DATADIR}" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
+install(DIRECTORY "${ROLAND_ASSETS}/roms"  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
+install(DIRECTORY "${ROLAND_ASSETS}/disks" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
+install(DIRECTORY "${ROLAND_ASSETS}/app/" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
 
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
