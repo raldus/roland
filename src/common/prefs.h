@@ -48,9 +48,9 @@ class Prefs
     bool        getBool(const std::string & key) const;
 
 #ifdef _WIN32
-    static constexpr char delim() {return '\\';}
+    static const char delim() {return '\\';}
 #else
-    static constexpr char delim() {return '/';}
+    static const char delim() {return '/';}
 #endif
 
   private:
