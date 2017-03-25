@@ -28,26 +28,26 @@
 
 
 //! Define to the address where bug reports for this package should be sent.
-static constexpr auto PACKAGE_BUGREPORT = "development@fkweb.de";
+static const auto PACKAGE_BUGREPORT = "development@fkweb.de";
 
 //! Define to the full name of this package.
-static constexpr auto PACKAGE_NAME = "@PACKAGE_NAME@";
+static const auto PACKAGE_NAME = "@PACKAGE_NAME@";
 
 //! Define to the full name and version of this package.
-static constexpr auto PACKAGE_STRING = "@PROJECT_NAME@ @PACKAGE_VERSION@ @CMAKE_BUILD_TYPE@";
+static const auto PACKAGE_STRING = "@PROJECT_NAME@ @PACKAGE_VERSION@ @CMAKE_BUILD_TYPE@";
 
 //! Define to the one symbol short name of this package.
-static constexpr auto PACKAGE_TARNAME = "@PACKAGE_NAME@";
+static const auto PACKAGE_TARNAME = "@PACKAGE_NAME@";
 
 //! Define to the version of this package.
-static constexpr auto PACKAGE_VERSION = "@PACKAGE_VERSION@";
+static const auto PACKAGE_VERSION = "@PACKAGE_VERSION@";
 
-//! DataDirectory */
-static constexpr auto DATADIR = "@CMAKE_SOURCE_DIR@/files/app/";
-static constexpr auto ROMDIR  = "@CMAKE_SOURCE_DIR@/files/roms/";
-static constexpr auto DISKDIR = "@CMAKE_SOURCE_DIR@/files/disks/";
-static constexpr auto AMSROM  = "@CMAKE_SOURCE_DIR@/files/roms/amsdos.rom";
-static constexpr auto CPCROM  = "@CMAKE_SOURCE_DIR@/files/roms/cpc6128.rom";
+//! Data directories */
+static const auto DATADIR = "@ROLAND_DATADIR@/";
+static const auto ROMDIR  = "@ROLAND_ROMDIR@/";
+static const auto DISKDIR = "@ROLAND_DISKDIR@/";
+static const auto AMSROM  = "@ROLAND_ROMDIR@/amsdos.rom";
+static const auto CPCROM  = "@ROLAND_ROMDIR@/cpc6128.rom";
 
 //! use mmx
 //! #undef USE_MMX
