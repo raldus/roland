@@ -51,6 +51,11 @@ namespace sdltk
     void Video::setIcon(const String & icon)
     {
         SDL_Surface * surface = SDL_LoadBMP(icon.c_str());
+        if (surface == nullptr)
+        {
+            EOUT("[Video]", "setIcon:", SDL_GetError());
+            return;
+        }
         SDL_SetColorKey(surface, SDL_SRCCOLORKEY, SDL_MapRGB(surface->format, 255, 0 ,255));
         SDL_WM_SetIcon(surface, 0);
     }
