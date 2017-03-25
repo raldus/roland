@@ -48,6 +48,7 @@
 
 #include "cpc.h"
 #include "prefs.h"
+#include "icon.h"
 
 using namespace std;
 using namespace cpcx;
@@ -540,6 +541,12 @@ int main(int argc, char *argv[])
 
     //SDL_WM_SetCaption(PACKAGE_STRING, 0);
     sdltk::Video::setCaption(PACKAGE_STRING);
+
+    /*SDL_Surface* surf = SDL_CreateRGBSurfaceFrom((void*) ICON_DATA, 32, 32, 8, 32,
+                                                 0xff0000, 0xff0000, 0xff0000, 0x000000);
+
+    SDL_WM_SetIcon(surf, 0);
+    */
     sdltk::Video::setIcon(datadir + "icon32x32-256.bmp");
     //SDL_WM_GrabInput (SDL_GRAB_ON);
     //SDL_ShowCursor (0);

@@ -6,17 +6,23 @@ math(EXPR CMAKE_BITS ${CMAKE_SIZEOF_VOID_P}*8)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME  "roland" CACHE STRING "Package Name")
-set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
+
 execute_process(COMMAND git show --tags --quiet --reverse "--pretty=format:%ad %n[view tag](https://github.com/raldus/roland/commit/%H) %n%n***%n" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
 execute_process(COMMAND git describe --abbrev=0 --tags --always OUTPUT_VARIABLE PACKAGE_VERSION)
 string(REGEX REPLACE "\n$" "" PACKAGE_VERSION "${PACKAGE_VERSION}")
+set(PACKAGE_VERSION "${PACKAGE_VERSION}" CACHE STRING "Package Version")
+
+set(ROLAND_ASSETS  "${CMAKE_SOURCE_DIR}/assets")
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(ROLAND_ROOTDIR "${ROLAND_ASSETS}")
+    set(ROLAND_DATADIR "${ROLAND_ROOTDIR}/app")
+elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+    set(ROLAND_ROOTDIR "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
+    set(ROLAND_DATADIR "${ROLAND_ROOTDIR}")
+endif()
 
 
-
-set(ROLAND_ROOTDIR "${CMAKE_SOURCE_DIR}/assets")
-#set(ROLAND_ROOTDIR "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
-
-set(ROLAND_DATADIR "${ROLAND_ROOTDIR}/app")
+#set(ROLAND_DATADIR "${ROLAND_ROOTDIR}/app")
 set(ROLAND_ROMDIR  "${ROLAND_ROOTDIR}/roms")
 set(ROLAND_DISKDIR "${ROLAND_ROOTDIR}/disks")
 set(ROLAND_AMSROM  "${ROLAND_ROOTDIR}/roms/amsdos.rom")
@@ -107,21 +113,23 @@ message(STATUS "SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
 
 # roland
 option(BUILD_VERBOSE_FLAGS "BUILD_VERBOSE_FLAGS" FALSE)
-set(DEBUG 1)
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(DEBUG 1)
+endif()
 add_definitions("-DHAVE_CONFIG_H")
-configure_file("${PROJECT_SOURCE_DIR}/assets/config.h.in" 
+configure_file("${ROLAND_ASSETS}/config.h.in" 
                "${PROJECT_SOURCE_DIR}/src/config.h")
-configure_file("${PROJECT_SOURCE_DIR}/assets/roland.spec.in" 
+configure_file("${ROLAND_ASSETS}/roland.spec.in" 
                "${CMAKE_BINARY_DIR}/roland.spec")
 
-install(DIRECTORY "${ROLAND_ROMDIR}"  DESTINATION share/roland)
-install(DIRECTORY "${ROLAND_DISKDIR}" DESTINATION share/roland)
-install(DIRECTORY "${ROLAND_DATADIR}" DESTINATION share/roland)
+install(DIRECTORY "${ROLAND_ROMDIR}"  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
+install(DIRECTORY "${ROLAND_DISKDIR}" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
+install(DIRECTORY "${ROLAND_DATADIR}" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
 
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
-    configure_file("${CMAKE_SOURCE_DIR}/assets/doxyfile.in" 
+    configure_file("${ROLAND_ASSETS}/doxyfile.in" 
                    "${CMAKE_BINARY_DIR}/doxyfile" @ONLY)
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/doxyfile"
@@ -138,8 +146,8 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/uninstall)
 
-SET(ROLAND_DESKTOP_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
-SET(ROLAND_PIXMAPS_DIR  "${PROJECT_SOURCE_DIR}/assets/app")
+SET(ROLAND_DESKTOP_DIR  "${ROLAND_DATADIR}")
+SET(ROLAND_PIXMAPS_DIR  "${ROLAND_DATADIR}")
 
 set(CPACK_CMAKE_GENERATOR "Unix Makefiles")
 set(CPACK_GENERATOR "STGZ;TGZ;TZ")
@@ -167,6 +175,7 @@ set(CPACK_STRIP_FILES "${EXECUTABLE_OUTPUT_PATH}/roland")
 set(CPACK_SYSTEM_NAME "x86_64")
 set(CPACK_TOPLEVEL_TAG "Linux-x86_64")
 set(CPACK_SOURCE_IGNORE_FILES ".directory;.git/;3rdparty/;build/;doc/")
+set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 
 set(CPACK_GENERATOR "RPM")
 set(CPACK_RPM_PACKAGE_MAINTAINER "Fred Klaus") #required
