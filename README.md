@@ -27,9 +27,18 @@ Folowing an example of an unix release build:
 cmake -H. -Bbuild -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ```
-### Linux rpm package
+If you plan to build an RPM package or to install with make,"-DCMAKE_BUILD_TYPE=" **must be** "Release".
+If you plan to build an run from source directory,"-DCMAKE_BUILD_TYPE=" **must be** "Debug".
+
+
+### RPM package
 ```bash
 cmake --build build --target package
+```
+
+### Installation
+```bash
+cmake --build build --target install
 ```
 
 ### Windows
