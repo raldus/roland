@@ -151,6 +151,7 @@ configure_file(
 add_custom_target(uninstall
     COMMAND ${CMAKE_COMMAND} -P ${CMAKE_BINARY_DIR}/uninstall)
 
+
 set(ROLAND_DESKTOP_DIR  "${ROLAND_DATADIR}")
 set(ROLAND_PIXMAPS_DIR  "${ROLAND_DATADIR}")
 
