@@ -4,6 +4,7 @@ build/*
 doc/*
 src/config.h
 *.spec
+version
 
 ### Backup ###
 *~

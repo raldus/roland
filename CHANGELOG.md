@@ -57,3 +57,13 @@ Sat Mar 25 19:48:56 2017 +0100
 [view tag](https://github.com/raldus/roland/commit/498342a43c7a0251b6c3456a685c93b0c5a3e4e8) 
 
 ***
+
+tag 0.66
+Tagger: Fred Klaus <development@fkweb.de>
+
+New bugfix release. Handles deb packages
+
+Sun Mar 26 20:13:53 2017 +0200 
+[view tag](https://github.com/raldus/roland/commit/540e49668daed539ee0a2ab013b0a126919cd259) 
+
+***
