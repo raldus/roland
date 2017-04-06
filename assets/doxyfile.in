@@ -58,7 +58,7 @@ PROJECT_LOGO = @CMAKE_SOURCE_DIR@/files/img/ready.png
 # entered, it will be relative to the location where doxygen was started. If
 # left blank the current directory will be used.
 
-OUTPUT_DIRECTORY = @CMAKE_SOURCE_DIR@/doc
+OUTPUT_DIRECTORY = @CMAKE_BINARY_DIR@/doc
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 4096 sub-
 # directories (in 2 levels) under the output directory of each output format and
@@ -733,7 +733,7 @@ WARN_LOGFILE =
 # spaces.
 # Note: If this tag is empty the current directory is searched.
 
-INPUT =  @CMAKE_SOURCE_DIR@/files/dox @CMAKE_SOURCE_DIR@/README.md @CMAKE_SOURCE_DIR@/src
+INPUT =  @CMAKE_SOURCE_DIR@/assets/dox @CMAKE_SOURCE_DIR@/README.md @CMAKE_SOURCE_DIR@/src
 
 # This tag can be used to specify the character encoding of the source files
 # that doxygen parses. Internally doxygen uses the UTF-8 encoding. Doxygen uses
@@ -1025,7 +1025,7 @@ HTML_FILE_EXTENSION = .html
 # of the possible markers and block names see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_HEADER =
+HTML_HEADER = @CMAKE_SOURCE_DIR@/assets/dox/roland_header.html
 
 # The HTML_FOOTER tag can be used to specify a user-defined HTML footer for each
 # generated HTML page. If the tag is left blank doxygen will generate a standard
@@ -1047,7 +1047,7 @@ HTML_FOOTER =
 # obsolete.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_STYLESHEET =
+HTML_STYLESHEET = 
 
 # The HTML_EXTRA_STYLESHEET tag can be used to specify an additional user-
 # defined cascading style sheet that is included after the standard style sheets
@@ -1058,7 +1058,7 @@ HTML_STYLESHEET =
 # see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET =
+HTML_EXTRA_STYLESHEET = @CMAKE_SOURCE_DIR@/assets/dox/roland.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
@@ -1456,7 +1456,7 @@ MATHJAX_CODEFILE =
 # The default value is: YES.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-SEARCHENGINE = NO
+SEARCHENGINE = yes
 
 # When the SERVER_BASED_SEARCH tag is enabled the search engine will be
 # implemented using a web server instead of a web client using Javascript. There
@@ -2032,7 +2032,7 @@ HIDE_UNDOC_RELATIONS = YES
 # set to NO
 # The default value is: NO.
 
-HAVE_DOT = YES
+HAVE_DOT = NO
 
 # The DOT_NUM_THREADS specifies the number of dot invocations doxygen is allowed
 # to run in parallel. When set to 0 doxygen will base this on the number of
@@ -2052,21 +2052,21 @@ DOT_NUM_THREADS = 2
 # The default value is: Helvetica.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_FONTNAME = Helvetica
+DOT_FONTNAME = Arial  
 
 # The DOT_FONTSIZE tag can be used to set the size (in points) of the font of
 # dot graphs.
 # Minimum value: 4, maximum value: 24, default value: 10.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_FONTSIZE = 10
+DOT_FONTSIZE = 12
 
 # By default doxygen will tell dot to use the default font as specified with
 # DOT_FONTNAME. If you specify a different font using DOT_FONTNAME you can set
 # the path where dot can find it using this tag.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_FONTPATH =
+DOT_FONTPATH = dox/
 
 # If the CLASS_GRAPH tag is set to YES then doxygen will generate a graph for
 # each documented class showing the direct and indirect inheritance relations.
@@ -2148,7 +2148,7 @@ INCLUDED_BY_GRAPH = YES
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-CALL_GRAPH = NO
+CALL_GRAPH = YES
 
 # If the CALLER_GRAPH tag is set to YES then doxygen will generate a caller
 # dependency graph for every global function or class method.
@@ -2159,7 +2159,7 @@ CALL_GRAPH = NO
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-CALLER_GRAPH = NO
+CALLER_GRAPH = YES
 
 # If the GRAPHICAL_HIERARCHY tag is set to YES then doxygen will graphical
 # hierarchy of all classes instead of a textual one.
@@ -2186,7 +2186,7 @@ DIRECTORY_GRAPH = YES
 # The default value is: png.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_IMAGE_FORMAT = png
+DOT_IMAGE_FORMAT = svg
 
 # If DOT_IMAGE_FORMAT is set to svg, then this option can be set to YES to
 # enable generation of interactive SVG images that allow zooming and panning.
@@ -2198,7 +2198,7 @@ DOT_IMAGE_FORMAT = png
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-INTERACTIVE_SVG = NO
+INTERACTIVE_SVG = YES
 
 # The DOT_PATH tag can be used to specify the path where the dot tool can be
 # found. If left blank, it is assumed the dot tool can be found in the path.
@@ -2211,7 +2211,7 @@ DOT_PATH =
 # command).
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOTFILE_DIRS =
+DOTFILE_DIRS = dox
 
 # The MSCFILE_DIRS tag can be used to specify one or more directories that
 # contain msc files that are included in the documentation (see the \mscfile
@@ -2253,7 +2253,7 @@ MAX_DOT_GRAPH_DEPTH = 0
 # The default value is: NO.
 # This tag requires that the tag HAVE_DOT is set to YES.
 
-DOT_TRANSPARENT = NO
+DOT_TRANSPARENT = YES
 
 # Set the DOT_MULTI_TARGETS tag to YES allow dot to generate multiple output
 # files in one run (i.e. multiple -o and -T options on the command line). This

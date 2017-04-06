@@ -136,6 +136,10 @@ find_package(Doxygen)
 if(DOXYGEN_FOUND)
     configure_file("${ROLAND_ASSETS}/doxyfile.in" 
                    "${CMAKE_BINARY_DIR}/doxyfile" @ONLY)
+    
+    file(GLOB ROLAND_FONTS "${ROLAND_ASSETS}/dox/Amstrad-CPC*")
+    file(COPY ${ROLAND_FONTS} DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
+                                       
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/doxyfile"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -186,14 +190,14 @@ set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(CPACK_RPM_PACKAGE_NAME "${PROJECT_NAME}")
 set(CPACK_RPM_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_RPM_PACKAGE_MAINTAINER "Fred Klaus") #required
-set(CPACK_RPM_PACKAGE_REQUIRES "SDL >= 1.2, SDL_image >= 1.2")
+set(CPACK_RPM_PACKAGE_REQUIRES "libSDL-1_2-0 >= 1.2, libSDL_image-1_2-0 >= 1.2")
 set(CPACK_RPM_PACKAGE_GROUP "System/Emulators/PC")
 set(CPACK_RPM_PACKAGE_URL "https://www.rolandemu.de")
 
 set(CPACK_DEBIAN_PACKAGE_NAME "${PROJECT_NAME}")
 set(CPACK_DEBIAN_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Fred Klaus") #required
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "SDL (>= 1.2), SDL_image (>= 1.2)")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsdl-image1.2 (>= 1.2), libsdl1.2debian (>= 1.2)")
 set(CPACK_DEBIAN_PACKAGE_GROUP "System/Emulators/PC")
 
 set(CPACK_GENERATOR "RPM;DEB")
