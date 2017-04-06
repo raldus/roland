@@ -139,6 +139,11 @@ if(DOXYGEN_FOUND)
     
     file(GLOB ROLAND_FONTS "${ROLAND_ASSETS}/dox/Amstrad-CPC*")
     file(COPY ${ROLAND_FONTS} DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
+    
+    file(GLOB ROLAND_HTML "${ROLAND_ASSETS}/dox/*.html")
+    file(COPY ${ROLAND_HTML} DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
+    
+    file(COPY "${ROLAND_ASSETS}/dox/cpc6128g.jpg" DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
                                        
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/doxyfile"

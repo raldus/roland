@@ -1,94 +1,24 @@
-/** @mainpage Roland - The Amstrad CPC Emulator
+/*! \page mainpage Overview
 
-	@image html cpc6128g.jpg
-
-
-
-# Roland CPC Emulator
-Roland is an Emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
-for Linux und Windows.
-
-Roland needs SDL > 1.2 and SDL-Image.
-
-## Usage of the Roland CPC Emulator
-Taste|Funktion
------|--------
-F2|insert disk in drive A:
-F3|insert disk in drive B:
-F4|execute cat/run (buggy)
-F5|enable/disable joystickemulation (cursorkeys + alt)
-F9|reset
-F10|exit
-F12|switch to fullscreen (does not work in Windows; instead set fullscreen=1 in roland.cfg)
-
-## Usage of the CPC 464/664/6128
-Insert a disk, enter **cat**  **Enter** and
-you can see the directory. Enter **run "filename"**  **Enter** (mostly *.bas).
-
-### Example
-
-1. press **F2**
-2. search a disk with **arrowkeys** (HarveyH.dsk) **Enter**
-3. type **cat**  **Enter**
-4. in this case the file is named **Harvey**
-5. type **run "harvey"**  **Enter**
-6. press **F5** to emulate a joystick with **arrowkeys** and  **alt**
-
-### Example 2 (Bjack1.dsk)
-
-1. ...
-2. ...
-3. ...
-4. in this case the file is named **Bomb.bin**
-5. enter **run "bomb**  **Enter**
-
-In most cases, there is a *.bas file on the disk
-to start the appropriate software. e.g.: disc.bas
-
-## Configuration
-Change settings in file roland.cfg inside the installation directory
-(Windows) or in file ~/.roland (Linux).
-
-working settings:
-* showfps    (true/false) framerate
-* fullscreen (true/false) window/fullscreen
-* monitor    (0=color, 1=green) color-/greenscreen
-* border     (true/false) border on/off, does not change display size (for now)
-* intensity  (1-20) brightness
-* doublescan (true/false) the real cpc had scanlines ...
-* jumpers    (DIP-switch of the CPC - for experts)
-
-## Linux
-Before you can start the Linux version, you have to adjust some pathes in
-**roland-linux.cfg**.
-```text
-cpcrom=/mnt/shared/emu/cpc/roms/cpc6128.rom -> /../dieserOrdner/roms/cpc6128.rom
-amsdos=/mnt/shared/emu/cpc/roms/amsdos.rom  -> /../dieserOrdner/roms/amsdos.rom
-diskdir=/mnt/shared/emu/cpc/dsk             -> /../dieserOrdner/disks
-```
-After that, put **roland-linux.cfg** renamed to **.roland** in your homedir.
+	\image html cpc6128g.jpg
 
 
+    \section overview Overview
+    
+	\ref crtc "The 6845 Cathode Ray Tube Controller (CRTC)" \n
+	\ref cpcx::Crtc "Class Crtc" \n
 
+	\ref ppi8255 "The 8255 Programmable Peripheral Interface (PPI)" \n
+	\ref cpcx::Ppi "Class Ppi" \n
 
+	\ref gatearray "The Gate Array" \n
+	\ref cpcx::GateArray "Class Gate Array" \n
 
-
-
-	@section General Overview
-	@ref crtc-doc "The 6845 Cathode Ray Tube Controller (CRTC)" \n
-	@ref Crtc "  ...Crtc Class" \n
-
-	@ref ppi8255-doc "The 8255 Parallel Peripheral Interface" \n
-	@ref Ppi "  ...Ppi Class" \n
-
-	@ref gatearray-doc "The Gate Array" \n
-	@ref GateArray "  ...Gatearray Class" \n
-
-	@ref todo "Todo (Inline)" \n
-	@ref Bugs "Bugs" \n
-	@ref ReadMe "ReadMe" \n
-	@ref ChangeLog "ChangeLog" \n
-	@ref Licence "Licence" \n
+	\ref todo "Todo" \n
+	\ref bug "Bugs" \n
+	\ref README.md "README" \n
+	\ref CHANGELOG.md "CHANGELOG" \n
+	\ref LICENSE "LICENSE" \n
 
 */
 

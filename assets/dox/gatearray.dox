@@ -1,9 +1,11 @@
-/** \page gatearray-doc
+/*! 
 
-	\image html cpc6128g.jpg
-	\htmlinclude gatearray.html
+\page gatearray The Gatearray
 
-	\author Fred Klaus
-**/
+\image html cpc6128g.jpg
+\htmlinclude gatearray.html
 
-// \version 0.1
+\author Fred Klaus
+
+*/
+

@@ -49,6 +49,7 @@ body, html, table, div, p, dl, *
 body {
         overflow-y: scroll;
         padding-top: 1em;
+        margin: .5em !important;
 }
 
 .dyncontent img {
@@ -79,6 +80,15 @@ body {
     repeat !important;
     text-indent: -9999px;
     z-index: 999;
+}
+
+.textblock table {
+    border-collapse: collapse;
+}
+
+.textblock table, .textblock th, .textblock td {
+    border: 2px solid #808080 !important;
+    padding: .25em;
 }
 
 .tablist {
@@ -123,6 +133,13 @@ h1.groupheader {
     padding: .25em;
 }
 
+h1 {
+       font: 1em 'Amstrad CPC Mode0', Inconsolata, Consolas, 'Courier New',
+    Courier, Monospace !important;
+    padding: 0;
+    color: #00FF00;
+}
+
 .title, #projectname {
    font: 1em 'Amstrad CPC Mode0', Inconsolata, Consolas, 'Courier New',
     Courier, Monospace !important;
@@ -132,6 +149,12 @@ h1.groupheader {
     vertical-align: middle !important;
     background: #ffff00 !important;
     color: #000080
+}
+
+div.title {
+    display: block !important;
+    padding: .25em !important;
+    margin: .5em !important;
 }
 
 #projectname, #projectnumber, h2 {
@@ -313,7 +336,7 @@ div.ah, span.ah {
 	margin-bottom: 3px;
 	margin-top: 3px;
 	padding: 0.2em;
-	border: solid thin #333;
+	border: 2px solid #808080;
 	border-radius: 0.5em;
 	-webkit-border-radius: .5em;
 	-moz-border-radius: .5em;
@@ -763,6 +786,14 @@ div.directory {
     height: 22px;
 }
 
+div.ah {
+    border: 2px solid #808080 !important;
+    border-radius: 0;
+    box-shadow: none !important;
+    color: #00FF00;
+    padding: 2px  !important;
+}
+
 .icon {
     height: 14px;
     width: 16px;
@@ -1011,14 +1042,16 @@ div.ingroups a
 	white-space: nowrap;
 }
 
-div.header
+div.header, div.tabs
 {
 	margin:  0;
+	border: 0 !important;
 }
 
 div.headertitle
 {
-	padding: 5px 5px 5px 10px;
+	padding: 0;
+	margin: 0;
 }
 
 dl
@@ -1134,7 +1167,7 @@ dl.section dd {
 	padding: 0px;
 	margin: 0px;
 	width: 100%;
-	border-bottom: 1px solid #5373B4;
+	border: 0 !important;
 }
 
 .image
