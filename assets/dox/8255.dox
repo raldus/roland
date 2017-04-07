@@ -1,6 +1,6 @@
 /*! 
     
-\page ppi8255 The 8255 PPI (Programmable Peripheral Interface)
+\page ppi8255 The 8255 Programmable Peripheral Interface (PPI)
 
 \image html cpc6128g.jpg
 \htmlinclude 8255.html

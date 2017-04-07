@@ -2,9 +2,8 @@
 
 	\image html cpc6128g.jpg
 
-
-    \section overview Overview
-    
+    <hr>
+    <center> 
 	\ref crtc "The 6845 Cathode Ray Tube Controller (CRTC)" \n
 	\ref cpcx::Crtc "Class Crtc" \n
 
@@ -19,6 +18,7 @@
 	\ref README.md "README" \n
 	\ref CHANGELOG.md "CHANGELOG" \n
 	\ref LICENSE "LICENSE" \n
+	</center>
 
 */
 
