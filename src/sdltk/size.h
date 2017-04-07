@@ -32,7 +32,7 @@ namespace sdltk
         public:
             //! Standard Constructor. Initializes everything to 0.
             Size() {}
-            //! Constructor. Initializes everything to 0. @param width = width @param height = height
+            //! Constructor. Initializes everything to 0. @param w = width @param h = height
             Size(Uint16 w, Uint16 h) {mWidth = w; mHeight = h;}
             //! Copyconstructor. A deep copy will done, so it's save to init Size with itself.
             Size(const Size & s)     {mWidth = s.width(); mHeight = s.height();}
