@@ -51,7 +51,7 @@ PROJECT_BRIEF = "Amstrad Emulator based on Caprice Source rewritten in C++."
 # and the maximum width should not exceed 200 pixels. Doxygen will copy the logo
 # to the output directory.
 
-PROJECT_LOGO = @CMAKE_SOURCE_DIR@/files/img/ready.png
+PROJECT_LOGO = @CMAKE_SOURCE_DIR@/asstes/img/ready.png
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is
@@ -821,7 +821,7 @@ EXAMPLE_RECURSIVE = NO
 # that contain images that are to be included in the documentation (see the
 # \image command).
 
-IMAGE_PATH = @CMAKE_SOURCE_DIR@/files/dox
+IMAGE_PATH = @CMAKE_SOURCE_DIR@/assets/dox
 
 # The INPUT_FILTER tag can be used to specify a program that doxygen should
 # invoke to filter for each input file. Doxygen will invoke the filter program
@@ -1025,7 +1025,7 @@ HTML_FILE_EXTENSION = .html
 # of the possible markers and block names see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_HEADER = @CMAKE_SOURCE_DIR@/assets/dox/roland_header.html
+HTML_HEADER = @CMAKE_SOURCE_DIR@/assets/dox/roland_header_naked.html
 
 # The HTML_FOOTER tag can be used to specify a user-defined HTML footer for each
 # generated HTML page. If the tag is left blank doxygen will generate a standard
@@ -1058,7 +1058,7 @@ HTML_STYLESHEET =
 # see the documentation.
 # This tag requires that the tag GENERATE_HTML is set to YES.
 
-HTML_EXTRA_STYLESHEET = @CMAKE_SOURCE_DIR@/assets/dox/roland.css
+HTML_EXTRA_STYLESHEET = @CMAKE_SOURCE_DIR@/assets/dox/roland_naked.css
 
 # The HTML_EXTRA_FILES tag can be used to specify one or more extra images or
 # other source files which should be copied to the HTML output directory. Note
