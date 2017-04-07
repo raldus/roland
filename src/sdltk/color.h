@@ -20,6 +20,7 @@
 #ifndef SDLTK_COLOR_H
 #define SDLTK_COLOR_H
 
+#include "compspec.h"
 #include "SDL.h"
 
 namespace sdltk
@@ -32,7 +33,7 @@ namespace sdltk
     public:
         Color();
         Color(Uint8 r, Uint8 g, Uint8 b, Uint8 a=255) {mR = r; mG = g; mB = b; mA = a;}
-        ~Color() = default;
+        ~Color() ROLAND_DEFAULT
 
         Color(const Color & c) {mR = c.r(); mG = c.g(); mB = c.b(); mA = c.a();}
 

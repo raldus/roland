@@ -43,7 +43,7 @@ namespace sdltk
         //! Constructor with parent Widget
         Widget(Widget * const parent = nullptr);
         //! Standarddestructor
-        virtual ~Widget() = default;
+        virtual ~Widget() ROLAND_DEFAULT
 
         //! Draw thes widget
         virtual void draw() = 0;

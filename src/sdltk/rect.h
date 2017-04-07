@@ -34,7 +34,7 @@ namespace sdltk
 
     public:
         //! Standard Constructor.
-        Rect() = default;
+        Rect() ROLAND_DEFAULT
         Rect(const Point & origin, const Size & size)
         {   SDL_Rect::x = origin.x();
             SDL_Rect::y = origin.y();
@@ -64,7 +64,7 @@ namespace sdltk
                 SDL_Rect::w = rect.width(); SDL_Rect::h = rect.height();}
 
         //! Standard Destructor. Does nothing
-        ~Rect() = default;
+        ~Rect() ROLAND_DEFAULT
 
         void set(Sint16 x, Sint16 y, Uint16 w, Uint16 h)
             {SDL_Rect::x = x; SDL_Rect::y = y; SDL_Rect::w = w; SDL_Rect::h = h;}

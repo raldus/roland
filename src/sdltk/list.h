@@ -39,7 +39,7 @@ namespace sdltk
         //! Some initialization
         List(Gui * gui) : mGui(gui) {init();}
         //! Deafault destructor
-        virtual ~List() = default;
+        virtual ~List() ROLAND_DEFAULT
 
         //! Init the List
         void init();

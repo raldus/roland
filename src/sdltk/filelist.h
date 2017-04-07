@@ -38,7 +38,7 @@ namespace sdltk
         //! Some initialization
         FileList(Gui * gui, const FileName & dirname, char letter = 0);
         //! Deafault destructor
-        ~FileList() = default;
+        ~FileList() ROLAND_DEFAULT
 
         void init(const FileName & dirname, char letter = 0);
 

@@ -20,6 +20,7 @@
 #ifndef DISKSECTOR_H
 #define DISKSECTOR_H
 
+#include "compspec.h"
 #include "types.h"
 
 /** @author Fred Klaus */
@@ -27,7 +28,7 @@ class Sector final
 {
 public:
     Sector();
-    ~Sector() = default;
+    ~Sector() ROLAND_DEFAULT
 
     tUBYTE* CHRN()       {return mCHRN;}
     tUBYTE CHRN(int num) {return mCHRN[num];}

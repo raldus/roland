@@ -56,7 +56,8 @@ namespace cpcx
 } \
 }
 
-    //! Represents the CPC and all of its components and functions.
+    //! Represents the CPC and all of its components and functions. What we
+    //! need is a Monitor and a Keyboard. Roland will take yours. ;)
     class Cpc final
     {
 
@@ -77,20 +78,20 @@ namespace cpcx
         //enum Monitor {colour=0, green=1, grey=2};
 
 
-        Cpc() = delete;
+        Cpc() ROLAND_DELETE
         Cpc(const Prefs & prefs);
-        ~Cpc() = default;
+        ~Cpc() ROLAND_DEFAULT
 
-        int init() noexcept;
+        int init() ROLAND_NOEXCEPT;
 
         void setSpeed(uint value) {mSpeed = value;}
 
         uint speed() const {return mSpeed;}
         //Monitor monitor() {return mMonitor;}
 
-        tUBYTE z80_in_handler (tREGPAIR port) noexcept; //@todo change This !!
-        void   z80_out_handler(tREGPAIR port, tUBYTE value) noexcept;
-        void   waitstates() noexcept;
+        tUBYTE z80_in_handler (tREGPAIR port) ROLAND_NOEXCEPT; //@todo change This !!
+        void   z80_out_handler(tREGPAIR port, tUBYTE value) ROLAND_NOEXCEPT;
+        void   waitstates() ROLAND_NOEXCEPT;
 
 
         Z80       & z80()       {return mZ80;}

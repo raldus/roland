@@ -20,14 +20,16 @@
 #ifndef CMDTABLEDEF_H
 #define CMDTABLEDEF_H
 
+#include "compspec.h"
+
 class Fdc;
 
 /** @author Fred Klaus */
 class CmdTableDef final
 {
 public:
-    CmdTableDef()  = default;
-    ~CmdTableDef() = default;
+    CmdTableDef()  ROLAND_DEFAULT
+    ~CmdTableDef() ROLAND_DEFAULT
 
     typedef void (Fdc::*CmdHandler)(void);
 

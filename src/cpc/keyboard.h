@@ -20,6 +20,7 @@
 #ifndef CPC_KEYBOARD_H
 #define CPC_KEYBOARD_H
 
+#include "compspec.h"
 #include "types.h"
 #include "cpckeys.h"
 
@@ -32,7 +33,7 @@ namespace cpcx
 
     public:
         Keyboard();
-        ~Keyboard() = default;
+        ~Keyboard() ROLAND_DEFAULT
 
         void init();
 

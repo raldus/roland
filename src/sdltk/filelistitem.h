@@ -31,11 +31,11 @@ namespace sdltk
     {
 
     public:
-        FileListItem() = delete;
+        FileListItem() ROLAND_DELETE
         //! Constructs an Item based on FileName
         FileListItem(const FileName & filename);
         //! Standarddestructor
-        virtual ~FileListItem() = default;
+        virtual ~FileListItem() ROLAND_DEFAULT
 
         void setFileName(const FileName & filename) {*this = filename;}
 

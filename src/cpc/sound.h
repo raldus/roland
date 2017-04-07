@@ -33,7 +33,7 @@ namespace cpcx
 
     public:
         Sound(Psg* psg=0);
-        ~Sound() = default;
+        ~Sound() ROLAND_DEFAULT
 
         typedef void (Sound::*Synthesizer)(void);
         typedef void (Sound::*CaseEnvType)(void);
@@ -105,17 +105,17 @@ namespace cpcx
 
 
         const tINT64 & cycleCountInitBoth() const {return mCycleCountInit.both;}
-        uint  cycleCountInitLow()           const {return mCycleCountInit.low;}
-        uint  cycleCountInitHigh()          const {return mCycleCountInit.high;}
+        uint  cycleCountInitLow()           const {return mCycleCountInit.s.low;}
+        uint  cycleCountInitHigh()          const {return mCycleCountInit.s.high;}
 
         const tINT64 & cycleCountBoth()  const {return mCycleCount.both;}
-        uint  cycleCountLow()            const {return mCycleCount.low;}
-        uint  cycleCountHigh()           const {return mCycleCount.high;}
+        uint  cycleCountLow()            const {return mCycleCount.s.low;}
+        uint  cycleCountHigh()           const {return mCycleCount.s.high;}
 
         void setCycleCountInitBoth(const tINT64 & value) {mCycleCountInit.both=value;}
         void setCycleCountBoth(const tINT64 & value)     {mCycleCount.both=value;}
-        void setCycleCountLow (uint value)               {mCycleCount.low =value;}
-        void setCycleCountHigh(uint value)               {mCycleCount.high=value;}
+        void setCycleCountLow (uint value)               {mCycleCount.s.low =value;}
+        void setCycleCountHigh(uint value)               {mCycleCount.s.high=value;}
 
     private:
         Psg* mPsg;
@@ -146,21 +146,21 @@ namespace cpcx
 
         union
         {
-            struct
+            struct S
             {
                 uint  low;
                 uint  high;
-            };
+            } s;
             tINT64 both;
         } mCycleCount;
 
         union
         {
-          struct
+          struct S
           {
              uint low;
              uint high;
-          };
+          } s;
           tINT64 both;
        } mCycleCountInit;
 
@@ -169,44 +169,44 @@ namespace cpcx
 
         tINT64 mLoopCountInit;
 
-        union
+        union LoopCount
         {
-            struct
+            struct S
             {
                 tDWORD low;
                 tDWORD high;
-            };
+            } s;
             tINT64 both;
         } mLoopCount;
 
         union TCounter
         {
-            struct
+            struct S
             {
                 tWORD low;
                 tWORD high;
-            };
+            } s;
             tDWORD both;
         };
         TCounter mTonCounterA, mTonCounterB, mTonCounterC, mNoiseCounter;
 
         union
         {
-            struct
+            struct S
             {
                 tWORD low;
                 tWORD val;
-            };
+            } s;
             tDWORD seed;
         } mNoise;
 
         union
         {
-            struct
+            struct S
             {
                 tDWORD low;
                 tDWORD high;
-            };
+            } s;
             tINT64 both;
         } mEnvelopeCounter;
 
@@ -298,7 +298,7 @@ namespace cpcx
 
     inline void Sound::setEnvelopeRegister(tUBYTE value)
     {
-        mEnvelopeCounter.high = 0;
+        mEnvelopeCounter.s.high = 0;
         mPsg->setFirstPeriod(true);
         if (!(value & 4))
         {

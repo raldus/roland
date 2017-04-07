@@ -30,7 +30,7 @@ namespace cpcx
         mPrefs = prefs;
     }
 
-    int Cpc::init() noexcept
+    int Cpc::init() ROLAND_NOEXCEPT
     {
         mCpcType = static_cast<CpcType>(mPrefs.getNum("cpctype"));
         mSpeed   = mPrefs.getNum("cpcspeed");
@@ -99,7 +99,7 @@ namespace cpcx
         return 0;
     }
 
-    tUBYTE Cpc::z80_in_handler(tREGPAIR port) noexcept
+    tUBYTE Cpc::z80_in_handler(tREGPAIR port) ROLAND_NOEXCEPT
     {
         tUBYTE retval = 0xff;
 
@@ -239,7 +239,7 @@ namespace cpcx
         return retval;
     }
 
-    void Cpc::z80_out_handler(tREGPAIR port, tUBYTE value) noexcept
+    void Cpc::z80_out_handler(tREGPAIR port, tUBYTE value) ROLAND_NOEXCEPT
     {
         // **********************************************************************
         // *** CRTC
@@ -412,7 +412,7 @@ namespace cpcx
         }
     }
 
-    void Cpc::waitstates() noexcept
+    void Cpc::waitstates() ROLAND_NOEXCEPT
     {
         mVdu.access_video_memory(mZ80.cycleCount() >> 2);
 

@@ -49,7 +49,7 @@ namespace cpcx
 
     public:
         Z80();
-        ~Z80() = default;
+        ~Z80() ROLAND_DEFAULT
 
         //typedef void (*CB_WaitStates)(void);
 

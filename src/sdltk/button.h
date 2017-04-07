@@ -35,7 +35,7 @@ namespace sdltk
 
     public:
         Button();
-        virtual ~Button() = default;
+        virtual ~Button() ROLAND_DEFAULT
 
         virtual void draw();
 

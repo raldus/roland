@@ -20,6 +20,7 @@
 #ifndef SDLTK_KEYTRANS_H
 #define SDLTK_KEYTRANS_H
 
+#include "compspec.h"
 #include "types.h"
 #include "SDL.h"
 
@@ -32,7 +33,7 @@ namespace sdltk
 
     public:
         KeyTrans();
-        ~KeyTrans() = default;
+        ~KeyTrans() ROLAND_DEFAULT
 
         struct JoyAlloc
         {

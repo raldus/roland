@@ -20,6 +20,7 @@
 #ifndef CPC_GATEARRAY_H
 #define CPC_GATEARRAY_H
 
+#include "compspec.h"
 #include "types.h"
 
 namespace cpcx
@@ -32,7 +33,7 @@ class GateArray final
 
     public:
         GateArray()  {init();}
-        ~GateArray() = default;  ///< does nothing
+        ~GateArray() ROLAND_DEFAULT  ///< does nothing
 
         void init();
 

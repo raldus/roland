@@ -20,6 +20,7 @@
 #ifndef CPC_REGISTER_H
 #define CPC_REGISTER_H
 
+#include "compspec.h"
 #include "types.h"
 #include "z80.h"
 
@@ -35,7 +36,7 @@ namespace cpcx
 
     public:
         Register() {init();}
-        ~Register() = default;
+        ~Register() ROLAND_DEFAULT
 
         void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
 

@@ -38,7 +38,7 @@ namespace sdltk
     public:
         //! Constructs the video interface for the \param Cpc
         Video(cpcx::Cpc * cpc);
-        virtual ~Video() = default;
+        virtual ~Video() ROLAND_DEFAULT
 
         //! device dependant init for inheritance
         virtual int  init() = 0;

@@ -34,7 +34,7 @@ class Fdc final
 
 public:
     Fdc();
-    ~Fdc() = default;
+    ~Fdc() ROLAND_DEFAULT
 
     typedef void (Fdc::*CmdHandler)(void);
 

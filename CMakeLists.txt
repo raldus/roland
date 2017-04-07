@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(ROLAND CXX C)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/assets/cmake")
 math(EXPR CMAKE_BITS ${CMAKE_SIZEOF_VOID_P}*8)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
@@ -99,7 +100,7 @@ if(UNIX)
     add_definitions(-Wfatal-errors)
     # be BUILD_VERBOSE_FLAGS
     if(${BUILD_VERBOSE_FLAGS})
-        add_definitions(-Wall -Wextra -pedantic) # -Weffc++
+        add_definitions(-Wall -Wextra -pedantic -Wno-unused-parameter)
     endif()
 
 
@@ -131,6 +132,11 @@ install(DIRECTORY "${ROLAND_ASSETS}/roms"  DESTINATION "${CMAKE_INSTALL_PREFIX}/
 install(DIRECTORY "${ROLAND_ASSETS}/disks" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
 install(DIRECTORY "${ROLAND_ASSETS}/app/"  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
 
+
+# Compiler Specifications
+include(CompilerSpec)
+
+
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
@@ -143,8 +149,6 @@ if(DOXYGEN_FOUND)
     file(GLOB ROLAND_HTML "${ROLAND_ASSETS}/dox/*.html")
     file(COPY ${ROLAND_HTML} DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
     
-    file(COPY "${ROLAND_ASSETS}/dox/cpc6128g.jpg" DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
-                                       
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/doxyfile"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}

@@ -20,6 +20,7 @@
 #ifndef PPI_H
 #define PPI_H
 
+#include "compspec.h"
 #include "types.h"
 
 namespace cpcx
@@ -48,7 +49,7 @@ namespace cpcx
         };
 
         Ppi()  {init();}
-        ~Ppi() = default;
+        ~Ppi() ROLAND_DEFAULT
 
         void init();                                   ///< set initial values
 

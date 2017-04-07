@@ -20,6 +20,7 @@
 #ifndef SDLTK_BORDER_H
 #define SDLTK_BORDER_H
 
+#include "compspec.h"
 #include "def.h"
 #include "SDL.h"
 
@@ -44,7 +45,7 @@ namespace sdltk
         };
 
         Border() : mColor(0xffffffff) {};
-        ~Border() = default;
+        ~Border() ROLAND_DEFAULT
 
         void setColor(uint color);
         void setUniSize(uint width, uint height, uint thickness);

@@ -28,7 +28,7 @@ class Drive final
 {
 public:
     Drive();
-    ~Drive() = default;
+    ~Drive() ROLAND_DEFAULT
 
     void init();
 

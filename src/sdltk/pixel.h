@@ -29,8 +29,8 @@ namespace sdltk
     {
 
     public:
-        Pixel()  = delete;
-        ~Pixel() = delete;
+        Pixel()  ROLAND_DELETE
+        ~Pixel() ROLAND_DELETE
 
         //! Checks a pixels color of an SDL_Surface.
         //! @param surface an SDL_Surface where to check for a pixel color.

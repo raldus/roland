@@ -34,7 +34,7 @@ namespace cpcx
     public:
         MemMan(Z80* z80 = nullptr, GateArray* gatearray = nullptr,
                 const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
-        ~MemMan() = default;
+        ~MemMan() ROLAND_DEFAULT
 
         enum RamSize : tUWORD {ram64=64, ram128=128, ram256=256, ram512=512};
 

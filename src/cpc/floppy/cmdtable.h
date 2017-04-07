@@ -27,8 +27,8 @@
 class CmdTable final
 {
 public:
-    CmdTable()  = default;
-    ~CmdTable() = default;
+    CmdTable()  ROLAND_DEFAULT
+    ~CmdTable() ROLAND_DEFAULT
 
     CmdTableDef & get(int num) {return entry[num];}
 

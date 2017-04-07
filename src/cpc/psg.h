@@ -20,6 +20,7 @@
 #ifndef PSG_H
 #define PSG_H
 
+#include "compspec.h"
 #include "types.h"
 
 namespace cpcx
@@ -33,7 +34,7 @@ namespace cpcx
 
     public:
         Psg() {init();}
-        ~Psg() = default;
+        ~Psg() ROLAND_DEFAULT
 
         void init();
 

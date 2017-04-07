@@ -31,7 +31,7 @@ class Track final
 {
 public:
     Track() {std::memset(this, 0, sizeof(*this));}
-    ~Track() = default;
+    ~Track() ROLAND_DEFAULT
 
     tUBYTE* data() const {return mData;}
     uint sectors() const {return mSectors;}
