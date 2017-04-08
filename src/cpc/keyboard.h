@@ -32,7 +32,7 @@ namespace cpcx
     {
 
     public:
-        Keyboard();
+        Keyboard() {init();}
         ~Keyboard() ROLAND_DEFAULT
 
         void init();

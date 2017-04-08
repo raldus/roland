@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef FDCCONST_H
-#define FDCCONST_H
+#ifndef CPC_FDCCONST_H
+#define CPC_FDCCONST_H
 
 // FDC constants
 #define DSK_BPTMAX      8192

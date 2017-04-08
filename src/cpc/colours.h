@@ -31,7 +31,7 @@ namespace cpcx
     {
 
     public:
-        Colours() : mDepth(16), mIntensity(10), mMonitor(0) {};
+        Colours() : mDepth(16), mIntensity(10), mMonitor(0) {}
         ~Colours() ROLAND_DEFAULT
 
         void init();

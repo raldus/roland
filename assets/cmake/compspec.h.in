@@ -13,6 +13,9 @@ namespace roland
     const char* const ROLAND_SIZEOF_VOIDP       = "@CMAKE_SIZEOF_VOID_P@";
 }
 
+
+#cmakedefine HAS_CONSTEXPR_SPECIFIER
+#cmakedefine HAS_FINAL_SPECIFIER
 #cmakedefine HAS_NOEXCEPT_SPECIFIER
 #cmakedefine HAS_MAKE_UNIQUE
 #cmakedefine HAS_DEFAULT_TEMPLATE_ARGS_FOR_FUNCTIONS
@@ -49,7 +52,7 @@ namespace roland
 #endif  
 
 
- #ifdef ROLAND_EXPLICIT
+#ifdef ROLAND_EXPLICIT
     #error "*** ROLAND_EXPLICIT is already defined and may not match requested behaviour. ***"
 #else   
     #ifdef HAS_EXPLICIT_SPECIFIER
@@ -57,6 +60,26 @@ namespace roland
     #else
         #define ROLAND_EXPLICIT
     #endif
-#endif  
+#endif
+
+#ifdef ROLAND_FINAL
+    #error "*** ROLAND_FINAL is already defined and may not match requested behaviour. ***"
+#else   
+    #ifdef HAS_FINAL_SPECIFIER
+        #define ROLAND_FINAL final
+    #else
+        #define ROLAND_FINAL
+    #endif
+#endif
+
+#ifdef ROLAND_CONSTEXPR
+    #error "*** ROLAND_CONSTEXPR is already defined and may not match requested behaviour. ***"
+#else   
+    #ifdef HAS_CONSTEXPR_SPECIFIER
+        #define ROLAND_CONSTEXPR constexpr
+    #else
+        #define ROLAND_CONSTEXPR const
+    #endif
+#endif
 
 #endif // ROLAND_COMPILERSPEC_H

@@ -25,10 +25,8 @@
 
 namespace cpcx
 {
-
-    /// The CRTC6845
-    /** CRTC6845\n\n @htmlinclude crtc.html
-        @author Fred Klaus */
+    //! The CRTC6845
+    //! CRTC6845\n\n @htmlinclude crtc.html
     class Crtc final
     {
 
@@ -68,8 +66,8 @@ namespace cpcx
             VSf    = 256  ///< VerticalSyncPosition
         };
 
-        Crtc();
-        ~Crtc();
+        Crtc() : mPpi(0), mSelected(0) {init();}
+        ~Crtc() ROLAND_DEFAULT
 
         void init(Ppi* ppi = nullptr);
 

@@ -17,8 +17,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef DISKTRACK_H
-#define DISKTRACK_H
+#ifndef CPC_DISKTRACK_H
+#define CPC_DISKTRACK_H
 
 #include "types.h"
 #include "sector.h"
@@ -26,31 +26,33 @@
 
 #include <cstring>
 
-/** @author Fred Klaus */
-class Track final
+namespace cpcx
 {
-public:
-    Track() {std::memset(this, 0, sizeof(*this));}
-    ~Track() ROLAND_DEFAULT
+    //! A track of a disk
+    class Track final
+    {
+    public:
+        Track() {std::memset(this, 0, sizeof(*this));}
+        ~Track() ROLAND_DEFAULT
 
-    tUBYTE* data() const {return mData;}
-    uint sectors() const {return mSectors;}
-    uint size()    const {return mSize;}
-    Sector & sector(int num) {return mSector[num];}
+        tUBYTE*  data()    const {return mData;}
+        uint     sectors() const {return mSectors;}
+        uint     size()    const {return mSize;}
+        Sector & sector(int num) {return mSector[num];}
 
-    void setSectors(uint sectors) {mSectors=sectors;}
-    void setSize(uint size)       {mSize=size;}
-    void setData(tUBYTE* data)             {mData=data;}
+        void setSectors(uint sectors)  {mSectors = sectors;}
+        void setSize(uint size)        {mSize = size;}
+        void setData(tUBYTE* data)     {mData = data;}
+        void set(tUBYTE num, int size) {memset(mData, num, size);}
 
-    void clear()             {delete [] mData; mData=0;}
-    void set(tUBYTE num, int size)      {memset(mData, num, size);}
+        void clear() {delete [] mData; mData = nullptr;}
 
-private:
-    uint mSectors;         // sector count for this track
-    uint mSize;            // track size in bytes
-    tUBYTE* mData;                  // pointer to track data
-    Sector mSector[DSK_SECTORMAX]; // array of sector information structures
+    private:
+        uint    mSectors;               //! sector count for this track
+        uint    mSize;                  //! track size in bytes
+        tUBYTE* mData;                  //! pointer to track data
+        Sector  mSector[DSK_SECTORMAX]; //! array of sector information structures
+    };
+} // namespace cpcx
 
-};
-
-#endif
+#endif // CPC_DISKTRACK_H

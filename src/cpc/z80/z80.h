@@ -38,7 +38,9 @@ namespace cpcx
 #define z80_wait_states (cpc.*WS_handler)(); iCycleCountSum += iCycleCount;
 
 
-    /** @author Fred Klaus */
+    //! The CPU of the CPC. With the Power of 4 Mhz and 8bit registers.
+    //! The Z80 was later used in Sega Mega Drive as sound processor.
+    //! @author Fred Klaus */
     class Z80 final
     {
 
@@ -272,16 +274,16 @@ namespace cpcx
 
         bool mStop;
 
-        static tUBYTE irep_tmp1[4][4];
-        static tUBYTE drep_tmp1[4][4];
-        static tUBYTE breg_tmp2[256];
-        static tUBYTE cc_op[256];
-        static tUBYTE cc_cb[256];
-        static tUBYTE cc_ed[256];
-        static tUBYTE cc_xy[256];
-        static tUBYTE cc_ex[256];
-        static tUBYTE cc_xycb[256];
-        static tUWORD DAATable[2048];
+        static const tUBYTE irep_tmp1[4][4];
+        static const tUBYTE drep_tmp1[4][4];
+        static const tUBYTE breg_tmp2[256];
+        static const tUBYTE cc_op[256];
+        static const tUBYTE cc_cb[256];
+        static const tUBYTE cc_ed[256];
+        static const tUBYTE cc_xy[256];
+        static const tUBYTE cc_ex[256];
+        static const tUBYTE cc_xycb[256];
+        static const tUWORD DAATable[2048];
 
         tUBYTE SZ[256];       // zero and sign flags
         tUBYTE SZ_BIT[256];   // zero, sign and parity/overflow (=zero) flags for BIT opcode

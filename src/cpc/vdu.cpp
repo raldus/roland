@@ -28,10 +28,10 @@ namespace cpcx
 
     Vdu::Vdu(Crtc* crtc, GateArray* gatearray, Z80* z80)
     {
-        mBpp       = Bpp32;
-        mBorder    = true;
-        mLineDoubling= false;
-        mScale     = 2;
+        mBpp          = Bpp32;
+        mBorder       = true;
+        mLineDoubling = true;
+        mScale        = 2;
         init(true, crtc, gatearray, z80);
     }
 

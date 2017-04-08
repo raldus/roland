@@ -20,6 +20,7 @@
 #ifndef CPC_VDU_H
 #define CPC_VDU_H
 
+#include "compspec.h"
 #include "def.h"
 
 #ifdef USE_MMX
@@ -40,10 +41,10 @@ namespace cpcx
     {
 
     public:
-        enum Bpp {Bpp16=0, Bpp24=1, Bpp32=2};
+        enum Bpp : unsigned char {Bpp16=0, Bpp24=1, Bpp32=2};
 
-        Vdu(Crtc* crtc=0, GateArray* gatearray=0, Z80* z80=0);
-        ~Vdu() {}
+        Vdu(Crtc* crtc=nullptr, GateArray* gatearray=nullptr, Z80* z80=nullptr);
+        ~Vdu() ROLAND_DEFAULT
 
         /** Pointer on function to handle drawing one line for different CPC-Modes (0-2) and bits per Pixel (16,24,32)*/
         typedef void (Vdu::*ModeHandler)();

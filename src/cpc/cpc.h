@@ -115,7 +115,7 @@ namespace cpcx
 
         Prefs     mPrefs;
 
-        Z80       mZ80; //@todo change this !!!!!!!!!!!!!
+        Z80       mZ80; //! \todo change this !!!!!!!!!!!!!
         Crtc      mCrtc;
         Ppi       mPpi;
         Fdc       mFdc;

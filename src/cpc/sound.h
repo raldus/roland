@@ -27,7 +27,7 @@
 namespace cpcx
 {
 
-    /** @author Fred Klaus */
+    //! The sound chip of the CPC.
     class Sound final
     {
 
@@ -214,13 +214,8 @@ namespace cpcx
 
         int mLevelPP[256];
 
-        static constexpr tUWORD mAmplitudesAY[16] =
-            {0,     836,   1212,  1773,  2619,  3875,
-                5397,  8823,  10392, 16706, 23339, 29292,
-                36969, 46421, 55195, 65535};
-
-        static constexpr tDWORD mFreqTable[5] =
-            {11025, 22050, 44100, 48000, 96000};
+        static const tUWORD mAmplitudesAY[16];
+        static const tDWORD mFreqTable[5];
 
         bool mTonEnA;
         bool mTonEnB;
@@ -381,6 +376,6 @@ namespace cpcx
         mEnvelopeEnC = value & 16 ? false : true;
     }
 
-} // cpc
+} // namespace cpcx
 
 #endif // CPC_SOUND_H

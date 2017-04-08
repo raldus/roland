@@ -17,36 +17,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef DISKSECTOR_H
-#define DISKSECTOR_H
+#ifndef CPC_DISKSECTOR_H
+#define CPC_DISKSECTOR_H
 
 #include "compspec.h"
 #include "types.h"
 
-/** @author Fred Klaus */
-class Sector final
+namespace cpcx
 {
-public:
-    Sector();
-    ~Sector() ROLAND_DEFAULT
+    //! A sector of a disk.
+    class Sector final
+    {
+    public:
+        Sector();
+        ~Sector() ROLAND_DEFAULT
 
-    tUBYTE* CHRN()       {return mCHRN;}
-    tUBYTE CHRN(int num) {return mCHRN[num];}
-    tUBYTE* flags()      {return mFlags;}
-    tUBYTE flag(int num) {return mFlags[num];}
-    uint size() {return mSize;}
-    tUBYTE* data()       {return mData;}
+        tUBYTE* CHRN()        {return mCHRN;}
+        tUBYTE  CHRN(int num) {return mCHRN[num];}
+        tUBYTE* flags()       {return mFlags;}
+        tUBYTE  flag(int num) {return mFlags[num];}
+        tUBYTE* data()        {return mData;}
+        uint    size()        {return mSize;}
 
-    void setData(tUBYTE* data)      {mData=data;}
-    void setFlag(int idx, int val) {mFlags[idx]=val;}
-    void setSize(uint num) {mSize=num;}
+        void setData(tUBYTE* data)     {mData = data;}
+        void setFlag(int idx, int val) {mFlags[idx] = val;}
+        void setSize(uint num)         {mSize = num;}
 
-private:
-    tUBYTE mCHRN[4];     // the CHRN for this sector
-    tUBYTE mFlags[4];    // ST1 and ST2 - reflects any possible error conditions
-    uint mSize; // sector size in bytes
-    tUBYTE* mData;       // pointer to sector data
-
-};
-
+    private:
+        tUBYTE  mCHRN[4];  //! the CHRN for this sector
+        tUBYTE  mFlags[4]; //! ST1 and ST2 - reflects any possible error conditions
+        tUBYTE* mData;     //! pointer to sector data
+        uint    mSize;     //! sector size in bytes
+    };
+} // namespace cpcx
 #endif

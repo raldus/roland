@@ -1,6 +1,17 @@
 # Feature test macros
 include(CheckCXXSourceCompiles)
 
+# Test support for final specifier - negative: VS 2013
+CHECK_CXX_SOURCE_COMPILES("
+int main() { constexpr int fu = 88; }
+" HAS_CONSTEXPR_SPECIFIER)
+
+# Test support for final specifier - negative: VS 2013
+CHECK_CXX_SOURCE_COMPILES("
+class Fu final { };
+int main() { }
+" HAS_FINAL_SPECIFIER)
+
 # Test support for noexcept specifier - negative: VS 2013
 CHECK_CXX_SOURCE_COMPILES("
 void func() noexcept { }

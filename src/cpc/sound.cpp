@@ -27,8 +27,12 @@ namespace cpcx
 
     extern Cpc cpc;
 
-    constexpr tUWORD Sound::mAmplitudesAY[16];
-    constexpr tDWORD Sound::mFreqTable[5];
+    const tUWORD Sound::mAmplitudesAY[16] =
+        { 0, 836, 1212, 1773, 2619, 3875, 5397, 8823, 10392, 16706, 23339,
+                29292, 36969, 46421, 55195, 65535 };
+
+    const tDWORD Sound::mFreqTable[5] =
+        { 11025, 22050, 44100, 48000, 96000 };
 
     Sound::Sound(Psg *psg) : mPsg(psg)
     {
