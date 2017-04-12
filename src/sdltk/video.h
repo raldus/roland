@@ -38,11 +38,11 @@ namespace sdltk
     public:
         //! Constructs the video interface for the \param Cpc
         Video(cpcx::Cpc * cpc);
-        virtual ~Video() = default;
+        virtual ~Video() ROLAND_DEFAULT
 
         //! device dependant init for inheritance
         virtual int  init() = 0;
-        //! inits all @param width = width @param: height = height
+        //! inits all \param width = width \param height = height
         virtual int  init(uint width, uint height, uint depth,
                             bool fullscreen, unsigned char scale) = 0;
 

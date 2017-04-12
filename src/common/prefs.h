@@ -50,7 +50,7 @@ class Prefs
 #ifdef _WIN32
     static const char delim() {return '\\';}
 #else
-    static const char delim() {return '/';}
+    static char delim() {return '/';}
 #endif
 
   private:

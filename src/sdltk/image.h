@@ -35,8 +35,7 @@ namespace sdltk
     class Point;
     class Size;
 
-    //! \brief to display either on an OpenGL- or plain SDL-Surface
-    //! \author Fred Klaus development@fkweb.de
+    //! \brief Image to display either on an OpenGL- or plain SDL-Surface
     class Image
     {
 
@@ -107,7 +106,6 @@ namespace sdltk
         GLuint mTextureWidth;
         GLuint mTextureHeight;
         GLuint mTexNum;
-
     };
 
 } // sdltk

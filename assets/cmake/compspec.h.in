@@ -1,0 +1,85 @@
+#ifndef ROLAND_COMPILERSPEC_H
+#define ROLAND_COMPILERSPEC_H
+
+namespace roland
+{
+    const char* const ROLAND_SYSTEM             = "@CMAKE_SYSTEM@";
+    const char* const ROLAND_SYSTEM_NAME        = "@CMAKE_SYSTEM_NAME@";
+
+    const char* const ROLAND_COMPILER_ID        = "@CMAKE_CXX_COMPILER_ID@";
+    const char* const ROLAND_COMPILER_VERSION   = "@CMAKE_CXX_COMPILER_VERSION@";
+    const char* const ROLAND_COMPILER_CXX_FLAGS = "@CMAKE_CXX_FLAGS@";
+    
+    const char* const ROLAND_SIZEOF_VOIDP       = "@CMAKE_SIZEOF_VOID_P@";
+}
+
+
+#cmakedefine HAS_CONSTEXPR_SPECIFIER
+#cmakedefine HAS_FINAL_SPECIFIER
+#cmakedefine HAS_NOEXCEPT_SPECIFIER
+#cmakedefine HAS_MAKE_UNIQUE
+#cmakedefine HAS_DEFAULT_TEMPLATE_ARGS_FOR_FUNCTIONS
+#cmakedefine HAS_THREAD_LOCAL_STORAGE
+#cmakedefine HAS_DEFAULT_AND_DELETE
+#cmakedefine HAS_VARIADIC_TEMPLATES
+#cmakedefine HAS_NON_BUGGY_TYPE_TRAITS
+#cmakedefine HAS_ROBUST_NONMODIFYING_SEQ_OPS
+#cmakedefine HAS_INITIALIZER_LISTS
+#cmakedefine HAS_EXPLICIT_SPECIFIER
+
+
+
+#ifdef ROLAND_NOEXCEPT
+    #error "*** ROLAND_NOEXCEPT is already defined and may not match requested behaviour. ***"
+#else
+    #ifdef HAS_NOEXCEPT_SPECIFIER   
+        #define ROLAND_NOEXCEPT noexcept
+    #else
+        #define ROLAND_NOEXCEPT
+    #endif
+#endif  
+
+    #if defined(ROLAND_DEFAULT) || defined(ROLAND_DELETE)
+    #error "*** ROLAND_DEFAULT & ROLAND_DELETE are already defined and may not match requested behaviour. ***"
+#else
+    #ifdef HAS_DEFAULT_AND_DELETE
+        #define ROLAND_DEFAULT = default;
+        #define ROLAND_DELETE = delete;
+    #else
+        #define ROLAND_DEFAULT {}
+        #define ROLAND_DELETE {}
+    #endif
+#endif  
+
+
+#ifdef ROLAND_EXPLICIT
+    #error "*** ROLAND_EXPLICIT is already defined and may not match requested behaviour. ***"
+#else   
+    #ifdef HAS_EXPLICIT_SPECIFIER
+        #define ROLAND_EXPLICIT explicit
+    #else
+        #define ROLAND_EXPLICIT
+    #endif
+#endif
+
+#ifdef ROLAND_FINAL
+    #error "*** ROLAND_FINAL is already defined and may not match requested behaviour. ***"
+#else   
+    #ifdef HAS_FINAL_SPECIFIER
+        #define ROLAND_FINAL final
+    #else
+        #define ROLAND_FINAL
+    #endif
+#endif
+
+#ifdef ROLAND_CONSTEXPR
+    #error "*** ROLAND_CONSTEXPR is already defined and may not match requested behaviour. ***"
+#else   
+    #ifdef HAS_CONSTEXPR_SPECIFIER
+        #define ROLAND_CONSTEXPR constexpr
+    #else
+        #define ROLAND_CONSTEXPR const
+    #endif
+#endif
+
+#endif // ROLAND_COMPILERSPEC_H

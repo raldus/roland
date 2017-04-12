@@ -17,24 +17,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef CMDTABLE_H
-#define CMDTABLE_H
+#ifndef CPC_CMDTABLE_H
+#define CPC_CMDTABLE_H
 
 #include "cmdtabledef.h"
 #include "fdcconst.h"
 
-/** @author Fred Klaus */
-class CmdTable final
+namespace cpcx
 {
-public:
-    CmdTable()  = default;
-    ~CmdTable() = default;
+    //! Command table
+    class CmdTable final
+    {
+    public:
+        CmdTable()  ROLAND_DEFAULT
+        ~CmdTable() ROLAND_DEFAULT
 
-    CmdTableDef & get(int num) {return entry[num];}
+        CmdTableDef & get(int num) {return entry[num];}
 
-private:
-    CmdTableDef entry[MAX_CMD_COUNT];
+    private:
+        CmdTableDef entry[MAX_CMD_COUNT];
+    };
+} // namespace cpcx
 
-};
-
-#endif
+#endif // CPC_CMDTABLE_H

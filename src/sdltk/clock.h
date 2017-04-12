@@ -33,7 +33,7 @@ public:
     //! Standardconstructor
     Clock() : mLast(SDL_GetTicks()) {};
     //! Standarddestructor
-    ~Clock() = default;
+    ~Clock() ROLAND_DEFAULT
 
     //! Initialize the clock. Like "Set to 0".
     void init() {mLast = SDL_GetTicks();}

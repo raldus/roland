@@ -33,25 +33,25 @@ namespace sdltk
     class Size;
     class Point;
 
-    //! Baseclass for all Widgets @author Fred Klaus development@fkweb.de
+    //! Baseclass for all Widgets
     class Widget
     {
 
     public:
-        //! Constructor with parent Widget
+        //! Constructor with Canvas
         Widget(Canvas * const canvas);
         //! Constructor with parent Widget
         Widget(Widget * const parent = nullptr);
         //! Standarddestructor
-        virtual ~Widget() = default;
+        virtual ~Widget() ROLAND_DEFAULT
 
         //! Draw thes widget
         virtual void draw() = 0;
-        //! Catch MouseMotion
+        //! Catch MouseMotion events
         virtual void onMouseMotion (SDL_MouseMotionEvent * event) {}
-        //! Catch MouseButton
+        //! Catch MouseButton events
         virtual void onMouseButton (SDL_MouseButtonEvent * event) {}
-        //! Catch Keyboard
+        //! Catch Keyboard events
         virtual bool onKeyboard    (SDL_KeyboardEvent * event) {return false;}
         //! Catch UserEvents
         virtual bool onUser        (SDL_UserEvent * event)     {return false;}
@@ -69,7 +69,7 @@ namespace sdltk
         //! Sets the parent Widget
         void  setParent (Widget * const parent) {mParent  = parent;}
         //! Returns the parent
-        const Widget * parent() {return mParent;}
+        const Widget * parent() const {return mParent;}
 
         //! Sets the Color of the Widget by Color
         void setColor(const Color & color)  {mColor = color;}
@@ -123,11 +123,10 @@ namespace sdltk
         Rect  mCanvasRect;
         Color mColor;
 
+        bool mEnabled;
         bool mMouseOver;
         bool mMouseGrab;
-        bool mEnabled;
         bool mWantEvents;
-
     };
 
 } // sdltk

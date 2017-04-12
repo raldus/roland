@@ -35,7 +35,7 @@ namespace sdltk
 
     public:
         Button();
-        virtual ~Button() = default;
+        virtual ~Button() ROLAND_DEFAULT
 
         virtual void draw();
 
@@ -43,6 +43,9 @@ namespace sdltk
         virtual void onMouseButton (SDL_MouseButtonEvent * event);
 
         void setHighlightColor(const Color & color) {mHighlightColor = color;}
+
+        bool isDown() const {return mDown;}
+        void setDown(bool down) {mDown = down;}
 
     protected:
         Color mHighlightColor;

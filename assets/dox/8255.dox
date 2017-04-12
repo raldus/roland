@@ -1,9 +1,11 @@
-/** @page ppi8255-doc
+/*! 
+    
+\page ppi8255 The 8255 Programmable Peripheral Interface (PPI)
 
-	@image html cpc6128g.jpg
-	@htmlinclude 8255.html
+\image html cpc6128g.jpg
+\htmlinclude 8255.html
 
-	@author Fred Klaus
+\author Fred Klaus
+
 */
 
-// @version 0.1

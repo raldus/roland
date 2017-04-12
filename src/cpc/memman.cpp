@@ -232,7 +232,7 @@ namespace cpcx
 
         toggleUpperRom();
         toggleLowerRom();
-    };
+    }
 
 } // cpc
 

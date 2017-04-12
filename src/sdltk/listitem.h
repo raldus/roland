@@ -33,7 +33,7 @@ namespace sdltk
 
     public:
         ListItem();
-        virtual ~ListItem() = default;
+        virtual ~ListItem() ROLAND_DEFAULT
 
         void setOrigin(Sint16 x, Sint16 y) {mOrigin.set(x, y);}
         void reset() {mRect.setPos(mOrigin.x(), mOrigin.y());}

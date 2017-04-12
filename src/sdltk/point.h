@@ -30,14 +30,14 @@ namespace sdltk
 
     public:
         //! Standard Constructor. Initializes x and y to 0.
-        Point() = default;
+        Point() ROLAND_DEFAULT
         //! Constructor. \param x = Coordinate x /param y = Coordinate y
         Point(Sint16 x, Sint16 y) {mX = x;     mY = y;}
         //! Copyconstructor. It is save to init Point with itself.
         Point(const Point & p)    {mX = p.x(); mY = p.y();}
 
         //! Standard Destructor. Does nothing
-        ~Point() = default;
+        ~Point() ROLAND_DEFAULT
 
         //! Overloaded operator =. A deep copy will done, so it's save to assign Point to itself.
         Point & operator=(const Point & p)

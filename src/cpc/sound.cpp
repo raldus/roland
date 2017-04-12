@@ -27,8 +27,12 @@ namespace cpcx
 
     extern Cpc cpc;
 
-    constexpr tUWORD Sound::mAmplitudesAY[16];
-    constexpr tDWORD Sound::mFreqTable[5];
+    const tUWORD Sound::mAmplitudesAY[16] =
+        { 0, 836, 1212, 1773, 2619, 3875, 5397, 8823, 10392, 16706, 23339,
+                29292, 36969, 46421, 55195, 65535 };
+
+    const tDWORD Sound::mFreqTable[5] =
+        { 11025, 22050, 44100, 48000, 96000 };
 
     Sound::Sound(Psg *psg) : mPsg(psg)
     {
@@ -205,7 +209,7 @@ namespace cpcx
     /*
     inline void Sound::setEnvelopeRegister(tUBYTE value)
     {
-        mEnvelopeCounter.high = 0;
+        mEnvelopeCounter.s.high = 0;
         mPsg->setFirstPeriod(true);
         if (!(value & 4))
         {
@@ -294,41 +298,41 @@ namespace cpcx
     inline void Sound::synthesizerLogicQ()
     {
         // std::cerr << "synthesizer 3b *************" << std::endl;
-        mTonCounterA.high++;
-        if (mTonCounterA.high >= mPsg->tonALoW()) ///< @todo check this !!!
+        mTonCounterA.s.high++;
+        if (mTonCounterA.s.high >= mPsg->tonALoW()) ///< @todo check this !!!
         {
-            mTonCounterA.high = 0;
+            mTonCounterA.s.high = 0;
             mTonA ^= 1;
         }
-        mTonCounterB.high++;
-        if (mTonCounterB.high >= mPsg->tonBLoW()) ///< @todo check this !!!
+        mTonCounterB.s.high++;
+        if (mTonCounterB.s.high >= mPsg->tonBLoW()) ///< @todo check this !!!
         {
-            mTonCounterB.high = 0;
+            mTonCounterB.s.high = 0;
             mTonB ^= 1;
         }
-        mTonCounterC.high++;
-        if (mTonCounterC.high >= mPsg->tonCLoW()) ///< @todo check this !!!
+        mTonCounterC.s.high++;
+        if (mTonCounterC.s.high >= mPsg->tonCLoW()) ///< @todo check this !!!
         {
-            mTonCounterC.high = 0;
+            mTonCounterC.s.high = 0;
             mTonC ^= 1;
         }
-        mNoiseCounter.high++;
-        if ((!(mNoiseCounter.high & 1)) &&
-            (mNoiseCounter.high >= (mPsg->noise() << 1)))
+        mNoiseCounter.s.high++;
+        if ((!(mNoiseCounter.s.high & 1)) &&
+            (mNoiseCounter.s.high >= (mPsg->noise() << 1)))
         {
-            mNoiseCounter.high = 0;
+            mNoiseCounter.s.high = 0;
             mNoise.seed = (((((mNoise.seed >> 13) ^ (mNoise.seed >> 16)) & 1) ^ 1) |
                            mNoise.seed << 1) &
                           0x1ffff;
         }
-        if (!mEnvelopeCounter.high)
+        if (!mEnvelopeCounter.s.high)
         {
             (this->*mCaseEnvType)();
         }
-        mEnvelopeCounter.high++;
-        if (mEnvelopeCounter.high >= mPsg->envelopeLoW()) ///< @todo check this !!!
+        mEnvelopeCounter.s.high++;
+        if (mEnvelopeCounter.s.high >= mPsg->envelopeLoW()) ///< @todo check this !!!
         {
-            mEnvelopeCounter.high = 0;
+            mEnvelopeCounter.s.high = 0;
         }
     }
 
@@ -362,7 +366,7 @@ namespace cpcx
         }
         if (mNoiseEnA)
         {
-            k &= mNoise.val;
+            k &= mNoise.s.val;
         }
         if (k)
         {
@@ -395,7 +399,7 @@ namespace cpcx
         }
         if (mNoiseEnB)
         {
-            k &= mNoise.val;
+            k &= mNoise.s.val;
         }
         if (k)
         {
@@ -428,7 +432,7 @@ namespace cpcx
         }
         if (mNoiseEnC)
         {
-            k &= mNoise.val;
+            k &= mNoise.s.val;
         }
         if (k)
         {
@@ -451,12 +455,12 @@ namespace cpcx
     void Sound::synthesizerStereo16()
     {
         int tickcounter = 0;
-        while (mLoopCount.high)
+        while (mLoopCount.s.high)
         {
             synthesizerLogicQ();
             synthesizerMixerQ();
             tickcounter++;
-            mLoopCount.high--;
+            mLoopCount.s.high--;
         }
         mLoopCount.both += mLoopCountInit;
         tREGPAIR val;
@@ -477,12 +481,12 @@ namespace cpcx
     void Sound::synthesizerStereo8()
     {
         int tickcounter = 0;
-        while (mLoopCount.high)
+        while (mLoopCount.s.high)
         {
             synthesizerLogicQ();
             synthesizerMixerQ();
             tickcounter++;
-            mLoopCount.high--;
+            mLoopCount.s.high--;
         }
         mLoopCount.both += mLoopCountInit;
         tREGPAIR val;
@@ -526,7 +530,7 @@ namespace cpcx
         }
         if (mNoiseEnA)
         {
-            k &= mNoise.val;
+            k &= mNoise.s.val;
         }
         if (k)
         {
@@ -557,7 +561,7 @@ namespace cpcx
         }
         if (mNoiseEnB)
         {
-            k &= mNoise.val;
+            k &= mNoise.s.val;
         }
         if (k)
         {
@@ -588,7 +592,7 @@ namespace cpcx
         }
         if (mNoiseEnC)
         {
-            k &= mNoise.val;
+            k &= mNoise.s.val;
         }
         if (k)
         {
@@ -608,12 +612,12 @@ namespace cpcx
     void Sound::synthesizerMono16()
     {
         int tickcounter = 0;
-        while (mLoopCount.high)
+        while (mLoopCount.s.high)
         {
             synthesizerLogicQ();
             synthesizerMixerQMono();
             tickcounter++;
-            mLoopCount.high--;
+            mLoopCount.s.high--;
         }
         mLoopCount.both += mLoopCountInit;
         setBufferPtrW(mLeftChan /
@@ -630,12 +634,12 @@ namespace cpcx
     void Sound::synthesizerMono8()
     {
         int tickcounter = 0;
-        while (mLoopCount.high)
+        while (mLoopCount.s.high)
         {
             synthesizerLogicQ();
             synthesizerMixerQMono();
             tickcounter++;
-            mLoopCount.high--;
+            mLoopCount.s.high--;
         }
         mLoopCount.both += mLoopCountInit;
         setBufferPtrU(128 +

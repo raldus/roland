@@ -30,8 +30,8 @@ namespace sdltk
     class CanvasGL : public Canvas
     {
     public:
-        CanvasGL() = default;
-        virtual ~CanvasGL() = default;
+        CanvasGL() ROLAND_DEFAULT
+        virtual ~CanvasGL() ROLAND_DEFAULT
 
         virtual void begin();
         virtual void end();

@@ -20,6 +20,7 @@
 #ifndef CPC_COLOURS_H
 #define CPC_COLOURS_H
 
+#include "compspec.h"
 #include "types.h"
 
 namespace cpcx
@@ -30,8 +31,8 @@ namespace cpcx
     {
 
     public:
-        Colours() : mDepth(16), mIntensity(10), mMonitor(0) {};
-        ~Colours() = default;
+        Colours() : mDepth(16), mIntensity(10), mMonitor(0) {}
+        ~Colours() ROLAND_DEFAULT
 
         void init();
 

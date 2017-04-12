@@ -22,8 +22,6 @@
 namespace cpcx
 {
 
-    Keyboard::Keyboard() {init();}
-
     void Keyboard::init()
     {
         mRow = 0x00;

@@ -20,41 +20,46 @@
 #ifndef SDLTK_BORDER_H
 #define SDLTK_BORDER_H
 
+#include "compspec.h"
 #include "def.h"
 #include "SDL.h"
 
 namespace sdltk
 {
 
-    //! Represents a Border as 8 Rects
+    //! A Border represented as 8 Rects. 4 sides and 4 corners.
     class Border
     {
 
     public:
         enum BorderPos
         {
-            bpTop          = 0,
-            bpBottom       = 1,
-            bpLeft         = 2,
-            bpRight        = 3,
-            bpLeftTop      = 4,
-            bpLeftBottom   = 5,
-            bpRightTop     = 6,
-            bpRightBottom  = 7,
+            bpTop          = 0, //!< top side
+            bpBottom       = 1, //!< bottom side
+            bpLeft         = 2, //!< left side
+            bpRight        = 3, //!< right side
+            bpLeftTop      = 4, //!< left-top corner
+            bpLeftBottom   = 5, //!< left-bottom corner
+            bpRightTop     = 6, //!< right-top corner
+            bpRightBottom  = 7, //!< right-bottom corner
         };
 
+        //! Standard constructor. Initializes mColor.
         Border() : mColor(0xffffffff) {};
-        ~Border() = default;
+        //! Default destructor
+        ~Border() ROLAND_DEFAULT
 
+        //! Sets the Border color
         void setColor(uint color);
+        //! Set the Border size & thickness
         void setUniSize(uint width, uint height, uint thickness);
+
+        //! The paint command for the gui
         void paint(SDL_Surface * surf);
 
     protected:
+        uint     mColor;
         SDL_Rect mBorder[8];
-
-        uint mColor;
-
     };
 
 } // sdltk

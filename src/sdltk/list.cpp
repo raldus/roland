@@ -73,7 +73,7 @@ namespace sdltk
 
         if (event->type == SDL_KEYDOWN)
         {
-            switch((int) event->keysym.sym)
+            switch(static_cast<int>(event->keysym.sym))
             {
                 case SDLK_UP:
                     mSpeed  = 16;
@@ -113,7 +113,7 @@ namespace sdltk
         }
         else if (event->type == SDL_KEYUP)
         {
-            switch((int) event->keysym.sym)
+            switch(static_cast<int>(event->keysym.sym))
             {
                 case SDLK_UP:
                 case SDLK_DOWN:

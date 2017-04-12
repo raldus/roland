@@ -74,14 +74,14 @@ public:
     static void setCaseSensitiveCompare(bool csc) {mCaseSensitive = csc;}
 
 private:
-#if defined(_WIN32) || defined(_WIN64) 
-        static const char delim() {return '\\';}
+#if defined(_WIN32) || defined(_WIN64)
+        static char delim() {return '\\';}
 	#define snprintf _snprintf
   	#define vsnprintf _vsnprintf
   	#define strcasecmp _stricmp
-  	#define strncasecmp _strnicmp 
+  	#define strncasecmp _strnicmp
 #else
-        static const char delim() {return '/';}
+        static char delim() {return '/';}
 #endif // _WIN32 ||_WIN64
 
     static bool mCaseSensitive;

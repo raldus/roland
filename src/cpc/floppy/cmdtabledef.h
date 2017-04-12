@@ -17,36 +17,40 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef CMDTABLEDEF_H
-#define CMDTABLEDEF_H
+#ifndef CPC_CMDTABLEDEF_H
+#define CPC_CMDTABLEDEF_H
 
-class Fdc;
+#include "compspec.h"
 
-/** @author Fred Klaus */
-class CmdTableDef final
+namespace cpcx
 {
-public:
-    CmdTableDef()  = default;
-    ~CmdTableDef() = default;
+    class Fdc;
 
-    typedef void (Fdc::*CmdHandler)(void);
+    //! Comand table definitions
+    class CmdTableDef final
+    {
+    public:
+        CmdTableDef()  ROLAND_DEFAULT
+        ~CmdTableDef() ROLAND_DEFAULT
 
-    void set(int cmd, int cmdlen, int reslen, int cmddir, CmdHandler cmdhandler)
-        {mCmd=cmd; mCmdLength=cmdlen; mResLength=reslen; mCmdDirection=cmddir; mCmdHandler=cmdhandler;}
+        typedef void (Fdc::*CmdHandler)(void);
 
-    int cmd()          const {return mCmd;}
-    int cmdLength()    const {return mCmdLength;}
-    int resLength()    const {return mResLength;}
-    int cmdDirection() const {return mCmdDirection;}
-    CmdHandler cmdHandler() const {return mCmdHandler;}
+        void set(int cmd, int cmdlen, int reslen, int cmddir, CmdHandler cmdhandler)
+            {mCmd=cmd; mCmdLength=cmdlen; mResLength=reslen; mCmdDirection=cmddir; mCmdHandler=cmdhandler;}
 
-private:
-    int mCmd;
-    int mCmdLength;
-    int mResLength;
-    int mCmdDirection;
-    CmdHandler mCmdHandler;
+        int cmd()          const {return mCmd;}
+        int cmdLength()    const {return mCmdLength;}
+        int resLength()    const {return mResLength;}
+        int cmdDirection() const {return mCmdDirection;}
+        CmdHandler cmdHandler() const {return mCmdHandler;}
 
-};
+    private:
+        int mCmd;
+        int mCmdLength;
+        int mResLength;
+        int mCmdDirection;
+        CmdHandler mCmdHandler;
+    };
+} // namespace cpcx
 
-#endif
+#endif //CPC_CMDTABLEDEF_H

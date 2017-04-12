@@ -40,7 +40,7 @@ namespace sdltk
         //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
         ImageFont(const String & fname, const String & glyphs);
         //! Standarddestructor
-        ~ImageFont() = default;
+        ~ImageFont() ROLAND_DEFAULT
 
         //! Check whether the Image is valid and sets up the glyphs and their Rect class
         void init();

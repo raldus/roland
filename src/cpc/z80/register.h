@@ -20,6 +20,7 @@
 #ifndef CPC_REGISTER_H
 #define CPC_REGISTER_H
 
+#include "compspec.h"
 #include "types.h"
 #include "z80.h"
 
@@ -27,15 +28,18 @@
 
 namespace cpcx
 {
-
-    /** @author Fred Klaus */
+    //! Register handling of the Z80 CPU. There are 8bit registers which are
+    //! paired to 16 bit registers.
+    //! For Example: 8bit register A and 8bit register F are together register
+    //! AF with 16bits in size.
+    //! @author Fred Klaus */
     class Register final
     {
         friend class Z80;
 
     public:
         Register() {init();}
-        ~Register() = default;
+        ~Register() ROLAND_DEFAULT
 
         void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
 
@@ -43,9 +47,7 @@ namespace cpcx
         tREGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;
         tUBYTE   I, R, Rb7, IFF1, IFF2, IM, HALT, EI_issued, int_pending;
         tDWORD   break_point, trace;
-
     };
-
-} // cpc
+} // namespace cpcx
 
 #endif // CPC_REGISTER_H

@@ -20,6 +20,7 @@
 #ifndef DIRECTORY_H
 #define DIRECTORY_H
 
+#include "compspec.h"
 #include "filename.h"
 
 #include <vector>
@@ -47,7 +48,7 @@ public:
     //! Constructor to scan immediately
     Directory(const FileName & path, Options options = Options::None, char letter = 0);
     //! Standarddestructor
-    ~Directory() = default;
+    ~Directory() ROLAND_DEFAULT
 
     //! Scans the Directory specified by \param path with \param options and first letter
     void scan(const FileName & path, Options options = Options::None, char letter = 0);

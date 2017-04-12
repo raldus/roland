@@ -29,8 +29,8 @@ namespace sdltk
     class CanvasStd : public Canvas
     {
     public:
-        CanvasStd() = default;
-        virtual ~CanvasStd() = default;
+        CanvasStd() ROLAND_DEFAULT
+        virtual ~CanvasStd() ROLAND_DEFAULT
 
         virtual void point(const Point & pos);
         virtual void rect (const Rect  & rect);

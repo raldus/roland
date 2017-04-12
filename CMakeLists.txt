@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project(ROLAND CXX C)
 
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/assets/cmake")
 math(EXPR CMAKE_BITS ${CMAKE_SIZEOF_VOID_P}*8)
 
 set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
@@ -99,7 +100,7 @@ if(UNIX)
     add_definitions(-Wfatal-errors)
     # be BUILD_VERBOSE_FLAGS
     if(${BUILD_VERBOSE_FLAGS})
-        add_definitions(-Wall -Wextra -pedantic) # -Weffc++
+        add_definitions(-Wall -Wextra -pedantic -Wno-unused-parameter)
     endif()
 
 
@@ -131,11 +132,23 @@ install(DIRECTORY "${ROLAND_ASSETS}/roms"  DESTINATION "${CMAKE_INSTALL_PREFIX}/
 install(DIRECTORY "${ROLAND_ASSETS}/disks" DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
 install(DIRECTORY "${ROLAND_ASSETS}/app/"  DESTINATION "${CMAKE_INSTALL_PREFIX}/share/${PACKAGE_NAME}")
 
+
+# Compiler Specifications
+include(CompilerSpec)
+
+
 # doxygen target to generate API documentation with Doxygen
 find_package(Doxygen)
 if(DOXYGEN_FOUND)
     configure_file("${ROLAND_ASSETS}/doxyfile.in" 
                    "${CMAKE_BINARY_DIR}/doxyfile" @ONLY)
+    
+    file(GLOB ROLAND_FONTS "${ROLAND_ASSETS}/dox/Amstrad-CPC*")
+    file(COPY ${ROLAND_FONTS} DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
+    
+    file(GLOB ROLAND_HTML "${ROLAND_ASSETS}/dox/*.html")
+    file(COPY ${ROLAND_HTML} DESTINATION "${CMAKE_BINARY_DIR}/doc/html/")
+    
     add_custom_target(doc
         ${DOXYGEN_EXECUTABLE} "${CMAKE_BINARY_DIR}/doxyfile"
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -186,14 +199,14 @@ set(CPACK_PACKAGING_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX})
 set(CPACK_RPM_PACKAGE_NAME "${PROJECT_NAME}")
 set(CPACK_RPM_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_RPM_PACKAGE_MAINTAINER "Fred Klaus") #required
-set(CPACK_RPM_PACKAGE_REQUIRES "SDL >= 1.2, SDL_image >= 1.2")
+set(CPACK_RPM_PACKAGE_REQUIRES "libSDL-1_2-0 >= 1.2, libSDL_image-1_2-0 >= 1.2")
 set(CPACK_RPM_PACKAGE_GROUP "System/Emulators/PC")
 set(CPACK_RPM_PACKAGE_URL "https://www.rolandemu.de")
 
 set(CPACK_DEBIAN_PACKAGE_NAME "${PROJECT_NAME}")
 set(CPACK_DEBIAN_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_DEBIAN_PACKAGE_MAINTAINER "Fred Klaus") #required
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "SDL (>= 1.2), SDL_image (>= 1.2)")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsdl-image1.2 (>= 1.2), libsdl1.2debian (>= 1.2)")
 set(CPACK_DEBIAN_PACKAGE_GROUP "System/Emulators/PC")
 
 set(CPACK_GENERATOR "RPM;DEB")

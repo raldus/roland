@@ -1,9 +1,10 @@
-/** @page crtc-doc
+/*! 
 
-	@image html cpc6128g.jpg
-	@htmlinclude crtc.html
+\page crtc The 6845 Cathode Ray Tube Controller (CRTC)
 
-	@author Fred Klaus
+\image html cpc6128g.jpg
+\htmlinclude crtc.html
+
+\author Fred Klaus
+
 */
-
-// @version 0.1

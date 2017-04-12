@@ -45,6 +45,7 @@
 #include "audio.h"
 #include "clock.h"
 #include "keytrans.h"
+#include "color.h"
 
 #include "cpc.h"
 #include "prefs.h"
@@ -78,6 +79,9 @@ sdltk::Gui      * gui           = nullptr;
 sdltk::Label    * lblFps        = nullptr;
 sdltk::Label    * lblJoy        = nullptr;
 sdltk::Label    * lblDisk       = nullptr;
+sdltk::Label    * lblMenu       = nullptr;
+sdltk::Label    * lblTitle      = nullptr;
+sdltk::Button   * btnMenu       = nullptr;
 sdltk::Button   * btnTest       = nullptr;
 sdltk::Button   * btnTest2      = nullptr;
 sdltk::List     * lstDirectory  = nullptr;
@@ -154,6 +158,31 @@ void initGui()
             video->screen()->h - textsize.height() - 10);
     lblDisk->setBorder(true);
     lblDisk->setEnabled(false);
+
+    /*
+    btnMenu = new sdltk::Button;
+    btnMenu->setColor(100, 100, 100, 128);
+    btnMenu->setImage(datadir + "menu2.png", false, true);
+    btnMenu->setSize(32, 32);
+    btnMenu->setPos(video->screen()->w - 32 - 10, 10);
+    btnMenu->setWantEvents(true);
+    btnMenu->setBorder(true);
+    btnMenu->setEnabled(true);
+
+    lblMenu = new sdltk::Label;
+    lblMenu->setSize(video->screen()->w - 100, video->screen()->h - 100);
+    lblMenu->setText("Menu");
+    lblMenu->setColor(128, 128, 128, 160);
+    lblMenu->setPos(50, 50);
+    lblMenu->setBorder(true);
+    lblMenu->setEnabled(false);
+
+    lblTitle = new sdltk::Label(lblMenu);
+    lblTitle->setSize(100, 20);
+    lblTitle->setText("Menuxxxxx");
+    lblTitle->setColor(128, 128, 0, 200);
+    lblTitle->setPos(1, 1);
+    lblTitle->setEnabled(true);*/
 /*
     btnTest = new Button;
     btnTest->setPos(50, 50);
@@ -179,6 +208,9 @@ void initGui()
     gui->add(lblFps);
     gui->add(lblDisk);
     gui->add(lblJoy);
+    //gui->add(btnMenu);
+    //gui->add(lblMenu);
+    //gui->add(lblTitle);
     //gui->add(btnTest);
     //gui->add(btnTest2);
     //gui->add(lstDirectory);
@@ -220,6 +252,12 @@ void mainloop()
                                          bit_values[(cpc_key & 7)]));
         }
         else
+//            if (btnMenu->isDown())
+//            {
+//                lblMenu->setEnabled(!lblMenu->enabled());
+//                lblTitle->setEnabled(true);
+//                btnMenu->setDown(false);
+//            }
             while (SDL_PollEvent(&event) > 0)
             {
                 gui->setFocus(lstFile);
@@ -229,7 +267,7 @@ void mainloop()
                     case SDL_KEYDOWN:
                         // std::cout << "Key: " << event.key.keysym.sym << "\n";
                         cpc_key = keytrans.get(event);
-                        if (cpc_key != 0xff)
+                        if (!lstFile->enabled() && cpc_key != 0xff)
                         {
                             cpc.keyboard().setValue(
                                 (cpc_key >> 4),
@@ -238,7 +276,7 @@ void mainloop()
                         }
                         else
                         {
-                            switch ((int)event.key.keysym.sym)
+                            switch (static_cast<int>(event.key.keysym.sym))
                             {
                                 case SDLK_RETURN:
                                     if (event.key.keysym.mod & KMOD_LALT)
@@ -246,11 +284,33 @@ void mainloop()
                                         audio.pause(true);
                                         video->toggleFullscreen();
                                         audio.pause(false);
+                                        break;
                                     }
-                                    break;
+                                    if (lstFile->enabled() && gui->enabled())
+                                    {
+                                        lstFile->setEnabled(false);
+                                        if (!lstFile->enabled() && !lstFile->empty())
+                                        {
+                                            tSTRING str =
+                                                    prefs.getPath("diskdir")
+                                                    + Prefs::delim()
+                                                    + *lstFile->selected();
+                                            IOUT("[Roland]", "Disk Drive A: ", str);
+                                            cpc.fdc().dsk_eject(0);
+                                            cpc.fdc().dsk_load(str.c_str(), 0);
+                                            prefs.set("diska", str);
+                                            SDL_EnableKeyRepeat(0, 0);
+                                            clearKeyBuffer();
+                                        }
+                                        else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
+                                                                 SDL_DEFAULT_REPEAT_INTERVAL);
+                                        break;
+                                    }
 
                                 case SDLK_F1:
                                 {
+                                    if (gui->enabled()) SDL_ShowCursor(0);
+                                    else SDL_ShowCursor(1);
                                     gui->toggleEnabled();
                                     break;
                                 }

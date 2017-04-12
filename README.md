@@ -1,4 +1,4 @@
-# [ ![Roland](https://www.rolandemu.de/files/images/rolandemu.de/css/roland.png) <br>CPC Emulator](https://www.rolandemu.de/index.html) 
+# Roland CPC Emulator
 
 ## Overview
 Roland is an emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
@@ -30,13 +30,14 @@ cmake --build build
 If you plan to build an RPM package or to install with make,"-DCMAKE_BUILD_TYPE=" **must be** "Release".
 If you plan to build an run from source directory,"-DCMAKE_BUILD_TYPE=" **must be** "Debug".
 
-
 ### RPM package
+
 ```bash
 cmake --build build --target package
 ```
 
 ### Installation
+
 ```bash
 cmake --build build --target install
 ```

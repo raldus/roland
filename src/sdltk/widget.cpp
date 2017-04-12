@@ -23,28 +23,18 @@ namespace sdltk
 {
 
     Widget::Widget(Canvas * const canvas)
-        : mCanvas(canvas), mParent(nullptr)
+        : mCanvas(canvas), mParent(nullptr), mEnabled(true),
+          mMouseOver(false), mMouseGrab(false), mWantEvents(false)
     {
-        mEnabled    = true;
-        mWantEvents = false;
-        mMouseOver  = false;
-        mMouseGrab  = false;
-
         mColor.set(128, 128, 128, 128);
-
         mRect.set(0, 0, 0, 0);
     }
 
     Widget::Widget(Widget * const parent)
-        : mCanvas(nullptr), mParent(parent)
+        : mCanvas(nullptr), mParent(parent), mEnabled(true),
+          mMouseOver(false), mMouseGrab(false), mWantEvents(false)
     {
-        mEnabled    = true;
-        mWantEvents = false;
-        mMouseOver  = false;
-        mMouseGrab  = false;
-
         mColor.set(128, 128, 128, 128);
-
         mRect.set(0, 0, 0, 0);
     }
 

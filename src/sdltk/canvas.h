@@ -41,8 +41,8 @@ namespace sdltk
     {
 
     public:
-        Canvas() = default;
-        virtual ~Canvas() = default;
+        Canvas() ROLAND_DEFAULT
+        virtual ~Canvas() ROLAND_DEFAULT
 
         virtual void begin() {}
         virtual void end()   {}
