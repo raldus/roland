@@ -67,3 +67,12 @@ Sun Mar 26 20:13:53 2017 +0200
 [view tag](https://github.com/raldus/roland/commit/540e49668daed539ee0a2ab013b0a126919cd259) 
 
 ***
+
+tag 0.67
+Tagger: Fred Klaus <development@fkweb.de>
+
+The return key is now usable to close the gui.
+Wed Apr 12 15:16:31 2017 +0200 
+[view tag](https://github.com/raldus/roland/commit/976086364e5d5a7e71145911a298cfcae8def207) 
+
+***
