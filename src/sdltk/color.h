@@ -26,7 +26,7 @@
 namespace sdltk
 {
 
-    //! \author Fred Klaus development@fkweb.de @bug operators does not work correctly @todo operators*/
+    //! RGBA Color Type \bug operators does not work correctly \todo operators*/
     class Color
     {
 

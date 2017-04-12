@@ -44,6 +44,9 @@ namespace sdltk
 
         void setHighlightColor(const Color & color) {mHighlightColor = color;}
 
+        bool isDown() const {return mDown;}
+        void setDown(bool down) {mDown = down;}
+
     protected:
         Color mHighlightColor;
         bool  mDown;

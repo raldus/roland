@@ -63,7 +63,6 @@ namespace sdltk
         mBorder[bpRightBottom].y  = height - thickness;
         mBorder[bpRightBottom].w  = thickness;
         mBorder[bpRightBottom].h  = thickness;
-
     }
 
     void Border::paint(SDL_Surface * surface)

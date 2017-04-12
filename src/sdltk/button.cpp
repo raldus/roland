@@ -48,7 +48,6 @@ namespace sdltk
             mBorderColor2 = tmp;
             mTextOffset.set(1, 1);
             mDown = true;
-            setColor(60, 60, 60);
         }
 
         if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))

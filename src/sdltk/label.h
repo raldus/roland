@@ -25,12 +25,11 @@
 
 namespace sdltk
 {
-
     class Image;
     class Point;
     class Rect;
 
-    //! \author Fred Klaus development@fkweb.de
+    //! A Widget with text and background color or image
     class Label : public Widget
     {
 
@@ -49,6 +48,8 @@ namespace sdltk
         void setBorder(bool val);
         void setBackground(bool val)      {mBackground = val;}
         void setText(const String & text) {mText = text;}
+        void setBorderColor(const Color & color, const Color & highlite)
+            {mBorderColor1 = color; mBorderColor2 = highlite;}
 
     protected:
         void drawBorder();
