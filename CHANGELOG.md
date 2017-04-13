@@ -76,3 +76,12 @@ Wed Apr 12 15:16:31 2017 +0200
 [view tag](https://github.com/raldus/roland/commit/976086364e5d5a7e71145911a298cfcae8def207) 
 
 ***
+
+tag 0.68
+Tagger: Fred Klaus <development@fkweb.de>
+
+Buildfix release
+Wed Apr 12 16:35:57 2017 +0200 
+[view tag](https://github.com/raldus/roland/commit/054638e98bfa317028ab5d6c89a42e759cf440e8) 
+
+***

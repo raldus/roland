@@ -59,13 +59,16 @@ cmake --build build --target doc
 ## Usage
 Key|Function
 -----|--------
+F1|toggle gui on/off
 F2|insert disk in drive A:
 F3|insert disk in drive B:
-F4|execute cat/run (buggy)
-F5|enable/disable joystickemulation (cursorkeys + alt)
+F4|enable/disable joystick emulation (cursorkeys + alt)
+F6|toggle bilinear filtering in OpenGL graphics driver
+F7|switch to 2D graphics driver depending on OS (default)
+F8|switch to OpenGL graphics driver
 F9|reset
 F10|exit
-F12|switch to fullscreen (does not work in Windows; instead set fullscreen=1 in roland.cfg)
+F12|toggle fullscreen
 
 ### Usage of the CPC 464/664/6128
 Insert a disk, enter **cat**  **Enter** and
