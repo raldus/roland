@@ -22,6 +22,8 @@
 
 #include "config.h"
 #include <string>
+#include <array>
+#include <utility>
 
 #define PREFCOUNT 23
 
@@ -61,17 +63,7 @@ class Prefs
 
     std::string mFilename;
     std::string mNothing;
-    std::string mPrefs[PREFCOUNT][2] =
-    {
-        {"cpctype", "2"},        {"cpcspeed", "4"},    {"cpcrom", CPCROM},
-        {"amsdos", AMSROM},    {"romdir", ROMDIR}, {"diskdir", DISKDIR},
-        {"tapedir", "~/.roland"},{"snapdir", "~/.roland"},{"datadir", DATADIR},
-        {"diska", ""},           {"diskb", ""},        {"ramsize", "128"},
-        {"showfps", "true"},     {"fullscreen", "false"},
-        {"fullwidth", "640"},    {"fullheight", "480"},
-        {"winwidth", "640"},     {"winheight", "480"}, {"monitor", "0"},
-        {"border", "true"},      {"intensity", "10"},  {"doublescan", "true"},
-        {"jumpers", "58"}};
+    std::array<std::pair<std::string, std::string>, PREFCOUNT> mPrefs;
     };
 
 #endif // PREFS_H

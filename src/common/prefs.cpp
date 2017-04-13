@@ -64,6 +64,36 @@ Prefs::Prefs(bool autowrite, bool writealways)
 
     mNothing = "";
 
+    // keys and default values
+    mPrefs =
+    {
+        {
+            {"cpctype",    "2"},
+            {"cpcspeed",   "4"},
+            {"cpcrom",     CPCROM},
+            {"amsdos",     AMSROM},
+            {"romdir",     ROMDIR},
+            {"diskdir",    DISKDIR},
+            {"tapedir",    "~/.roland"},
+            {"snapdir",    "~/.roland"},
+            {"datadir",    DATADIR},
+            {"diska",      ""},
+            {"diskb",      ""},
+            {"ramsize",    "128"},
+            {"showfps",    "true"},
+            {"fullscreen", "false"},
+            {"fullwidth",  "640"},
+            {"fullheight", "480"},
+            {"winwidth",   "640"},
+            {"winheight",  "480"},
+            {"monitor",    "0"},
+            {"border",     "true"},
+            {"intensity",  "10"},
+            {"doublescan", "true"},
+            {"jumpers",    "58"}
+        }
+    };
+
     read();
 }
 
@@ -91,10 +121,10 @@ bool Prefs::read()
         if (in.eof()) break;
         for (int i = 0; i < PREFCOUNT; i++)
         {
-            if (tmp.substr(0, tmp.find('=')) == mPrefs[i][paKey])
+            if (tmp.substr(0, tmp.find('=')) == mPrefs[i].first)
             {
                 std::string tmpval(tmp.substr(tmp.rfind('=') + 1));
-                if (!tmpval.empty()) mPrefs[i][paValue] = tmpval;
+                if (!tmpval.empty()) mPrefs[i].second = tmpval;
                 break;
             }
         }
@@ -103,7 +133,7 @@ bool Prefs::read()
 
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        DOUT(mPrefs[i][paKey] << ": " << mPrefs[i][paValue] << "\n");
+        DOUT(mPrefs[i].first<< ": " << mPrefs[i].second<< "\n");
     }
 
     return true;
@@ -117,8 +147,8 @@ bool Prefs::write()
     if (!out) return false;
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        out << mPrefs[i][paKey] << "=" << mPrefs[i][paValue] << "\n";
-        DOUT(mPrefs[i][paKey] << ": " << mPrefs[i][paValue] << "\n");
+        out << mPrefs[i].first<< "=" << mPrefs[i].second<< "\n";
+        DOUT(mPrefs[i].first<< ": " << mPrefs[i].second<< "\n");
     }
     out.close();
     return true;
@@ -128,9 +158,9 @@ bool Prefs::set(const std::string & key, const std::string &value)
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == mPrefs[i][paKey])
+        if (key == mPrefs[i].first)
         {
-            mPrefs[i][paValue] = value;
+            mPrefs[i].second= value;
             if (mWriteAlways) write();
             return true;
         }
@@ -143,9 +173,9 @@ bool Prefs::set(const std::string & key, int value)
     int d, n;
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == mPrefs[i][paKey])
+        if (key == mPrefs[i].first)
         {
-            mPrefs[i][paValue] = fcvt(value, 0, &d, &n);
+            mPrefs[i].second= fcvt(value, 0, &d, &n);
             if (mWriteAlways) write();
             return true;
         }
@@ -157,11 +187,11 @@ bool Prefs::set(const std::string & key, bool value)
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == mPrefs[i][paKey])
+        if (key == mPrefs[i].first)
         {
             if (value == getBool(key)) return true; // @todo change this for all members to "is
                              // changed"
-            mPrefs[i][paValue] = value ? "yes" : "no";
+            mPrefs[i].second= value ? "yes" : "no";
             if (mWriteAlways) write();
             return true;
         }
@@ -173,7 +203,7 @@ std::string Prefs::getStr(const std::string & key) const
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == mPrefs[i][paKey]) return mPrefs[i][paValue];
+        if (key == mPrefs[i].first) return mPrefs[i].second;
     }
     return mNothing;
 }
@@ -206,10 +236,10 @@ int Prefs::getNum(const std::string & key) const
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == mPrefs[i][paKey])
+        if (key == mPrefs[i].first)
         {
-            if (mPrefs[i][paValue].empty()) return 0;
-            return atoi(mPrefs[i][paValue].c_str());
+            if (mPrefs[i].second.empty()) return 0;
+            return atoi(mPrefs[i].second.c_str());
         }
     }
     return 0;
@@ -219,11 +249,11 @@ bool Prefs::getBool(const std::string & key) const
 {
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        if (key == mPrefs[i][paKey])
+        if (key == mPrefs[i].first)
         {
-            if (mPrefs[i][paValue].empty()) return false;
-            if ((mPrefs[i][paValue] == "yes") || (mPrefs[i][paValue] == "true") ||
-                (mPrefs[i][paValue] == "on")  || (mPrefs[i][paValue] == "1"))
+            if (mPrefs[i].second.empty()) return false;
+            if ((mPrefs[i].second== "yes") || (mPrefs[i].second== "true") ||
+                (mPrefs[i].second== "on")  || (mPrefs[i].second== "1"))
                 return true;
             else
                 return false;
