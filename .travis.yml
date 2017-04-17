@@ -20,7 +20,10 @@ matrix:
 
 before_install:
   - sudo apt-get update
+  
+ install:
   - sudo apt-get -y install build-essential libsdl1.2-dev libsdl-image1.2-dev
+  - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 before_script:  
     - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release 
