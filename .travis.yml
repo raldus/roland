@@ -22,20 +22,6 @@ before_install:
   - sudo apt-get update
   - sudo apt-get -y install build-essential libsdl1.2-dev libsdl-image1.2-dev
 
-install:
-    - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
-    
-addons:
-  apt:
-    sources:
-    - ubuntu-toolchain-r-test
-    packages:
-    - gcc-4.8
-    - g++-4.8
-    - clang
-    - libsdl1.2-dev
-    - libsdl-image1.2-dev
-
 before_script:  
     - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release 
 
