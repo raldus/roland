@@ -17,8 +17,6 @@ matrix:
     - os: linux
       dist: sid
       sudo: required
-    - os: osx
-      sudo: required
 
 before_install:
   - sudo apt-get update
