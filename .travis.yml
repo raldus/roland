@@ -2,7 +2,23 @@ language: cpp
 
 compiler:  
     - gcc
-    - clang
+    
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: linux
+      dist: xenial
+      sudo: required
+    - os: linux
+      dist: jessie
+      sudo: required
+    - os: linux
+      dist: sid
+      sudo: required
+    - os: osx
+      sudo: required
 
 install:
     - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
