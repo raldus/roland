@@ -12,7 +12,7 @@ The source is written in c++11 code and needs at leat a c++11 enabled Compiler. 
 ### Status
 **Ubuntu 32/64**|[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland)
 ---|--:
-**Windows 32**|[![Build status](https://ci.appveyor.com/api/projects/status/rsa9fq8brffd5h50?svg=true)](https://ci.appveyor.com/project/raldus/roland)
+**Windows 32/64**|[![Build status](https://ci.appveyor.com/api/projects/status/ced6joh6ichpeqaf/branch/master?svg=true)](https://ci.appveyor.com/project/raldus/roland-0xe5q/branch/master)
 
 ### General
 You will need cmake and git installed.
@@ -59,13 +59,16 @@ cmake --build build --target doc
 ## Usage
 Key|Function
 -----|--------
+F1|toggle gui on/off
 F2|insert disk in drive A:
 F3|insert disk in drive B:
-F4|execute cat/run (buggy)
-F5|enable/disable joystickemulation (cursorkeys + alt)
+F4|enable/disable joystick emulation (cursorkeys + alt)
+F6|toggle bilinear filtering in OpenGL graphics driver
+F7|switch to 2D graphics driver depending on OS (default)
+F8|switch to OpenGL graphics driver
 F9|reset
 F10|exit
-F12|switch to fullscreen (does not work in Windows; instead set fullscreen=1 in roland.cfg)
+F12|toggle fullscreen
 
 ### Usage of the CPC 464/664/6128
 Insert a disk, enter **cat**  **Enter** and

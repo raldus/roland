@@ -101,6 +101,7 @@ if(UNIX)
     # be BUILD_VERBOSE_FLAGS
     if(${BUILD_VERBOSE_FLAGS})
         add_definitions(-Wall -Wextra -pedantic -Wno-unused-parameter)
+        set(VERBOSE 1)
     endif()
 
 
@@ -210,7 +211,16 @@ set(CPACK_DEBIAN_PACKAGE_DEPENDS "libsdl-image1.2 (>= 1.2), libsdl1.2debian (>= 
 set(CPACK_DEBIAN_PACKAGE_GROUP "System/Emulators/PC")
 set(CPACK_DEBIAN_PACKAGE_URL "https://www.rolandemu.de")
 
-set(CPACK_GENERATOR "RPM;DEB")
+set(CPACK_NSIS_PACKAGE_NAME "${PACKAGE_NAME}")
+set(CPACK_NSIS_DISPLAY_NAME "${PACKAGE_TITLE}")
+set(CPACK_NSIS_CONTACT "development@rolandemu.de")
+
+if(UNIX)
+    set(CPACK_GENERATOR "RPM;DEB")
+else()
+    set(CPACK_GENERATOR "NSIS")
+endif()
+
 include(CPack)
 
 
