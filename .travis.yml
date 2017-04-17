@@ -22,7 +22,7 @@ before_install:
   - sudo apt-get update
   
 install:
-  - sudo apt-get -y install build-essential libsdl1.2-dev libsdl-image1.2-dev
+  - sudo apt-get -y install build-essential libsdl1.2-dev libsdl-image1.2-dev g++-4.8 gcc-4.8
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
 
 before_script:  
