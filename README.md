@@ -10,9 +10,11 @@ For further information visit https://www.rolandemu.de/index.html
 The source is written in c++11 code and needs at leat a c++11 enabled Compiler. Supported are GCC native, Visual Studio 2015 or CygWin/MinGw. 
 
 ### Status
-**Ubuntu 32/64**|[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland)
----|--:
-**Windows 32/64**|[![Build status](https://ci.appveyor.com/api/projects/status/ced6joh6ichpeqaf/branch/master?svg=true)](https://ci.appveyor.com/project/raldus/roland-0xe5q/branch/master)
+OS|Detail|Status
+---|---|--:
+Ubuntu|32 & 64 bit|[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland)
+Windows|32 & 64 bit|[![Build status](https://ci.appveyor.com/api/projects/status/ced6joh6ichpeqaf/branch/master?svg=true)](https://ci.appveyor.com/project/raldus/roland-0xe5q/branch/master)
+All|CodeClimate|[![Code Climate](https://codeclimate.com/github/raldus/roland/badges/gpa.svg)](https://codeclimate.com/github/raldus/roland)|
 
 ### General
 You will need cmake and git installed.
