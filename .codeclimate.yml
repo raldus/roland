@@ -9,4 +9,6 @@ ratings:
   - "**.sh"
   - "**.cpp"
   - "**.h"
-+exclude_paths: []
+exclude_paths:
+  - exclude_paths:
+- "3rdparty/"
