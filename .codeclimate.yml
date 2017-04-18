@@ -1,7 +1,7 @@
 ---
 engines:
-  enabled: true
   cppcheck:
+    enabled: true
     config:
       check: all
       language: c++
