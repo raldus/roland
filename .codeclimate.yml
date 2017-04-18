@@ -2,23 +2,6 @@
 engines:
   gnu-complexity:
     enabled: true
-  cppcheck:
-    enabled: true
-    config:
-      check: all
-      language: c++
-      stds:
-        - c++11
-      platform: unix64
-      defines:
-      - "DEBUG=1"
-      - "__cplusplus"
-      undefines:
-      - "DEBUG"
-      includes:
-      - include/
-      max_configs: 42
-      inconclusive: false
   csslint:
     enabled: false
   duplication:
