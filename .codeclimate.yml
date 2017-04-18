@@ -10,5 +10,5 @@ ratings:
   - "**.cpp"
   - "**.h"
 exclude_paths:
-  - exclude_paths:
-- "3rdparty/"
+  - "3rdparty/"
+  - "assets/"

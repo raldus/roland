@@ -34,6 +34,8 @@ addons:
     - g++-4.8
     - libsdl1.2-dev
     - libsdl-image1.2-dev
+  code_climate:
+    repo_token: 39ec1bcef7121f6362df6c0cd19e5210b1b291d3eeeb0a05db0a4d44d593330d
 
 before_script:  
     - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release -DPACKAGE_DEPLOY=DEB -DPACKAGE_NUMBER=$TRAVIS_JOB_NUMBER
