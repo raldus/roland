@@ -1,5 +1,7 @@
 ---
 engines:
+  gnu-complexity:
+    enabled: true
   cppcheck:
     enabled: true
     config:
