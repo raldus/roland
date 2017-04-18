@@ -4,7 +4,7 @@
 Roland is an emulator of the homecomputers Amstrad/Schneider from the series CPC 464/664/6128
 for Linux und Windows.
 Roland depends on SDL > 1.2 and SDL-Image.
-For further information visit https://www.rolandemu.de/index.html
+For further information visit https://www.rolandemu.de/
 
 ## Build
 The source is written in c++11 code and needs at leat a c++11 enabled Compiler. Supported are GCC native, Visual Studio 2015 or CygWin/MinGw. 

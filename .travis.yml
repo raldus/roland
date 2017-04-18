@@ -36,13 +36,29 @@ addons:
     - libsdl-image1.2-dev
 
 before_script:  
-    - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release 
+    - cmake -H. -Bbuild -DCMAKE_BUILD_TYPE=Release -DPACKAGE_DEPLOY=DEB -DPACKAGE_NUMBER=$TRAVIS_JOB_NUMBER
 
 script: 
-    - cmake --build build 
+    - cmake --build build --target package 
 
 os:
     - linux
+
+before_deploy:
+  - export RELEASE_PKG_FILE=$(ls build/*.deb)
+  - echo "deploying $RELEASE_PKG_FILE to GitHub releases"
+  
+deploy:
+  provider: releases
+  api_key:
+    secure: RMb2gJiQuadQtMK7JXWpSur9S0Lxvo3GZ7rzzgHUxAdjnAne4oLbF0S7m2tZr4BGQehZS3+Juf2maDvS9NIjR5HmPIT1Xqq5xb1lqRrM4sMJfSvMI3T7CIkKsBRHjP7xiocHS1CF2uddTyqaogo+PMABup03gVlRB8MRsQj04sGnHnYSEj3OBL1L86rKOa2YRpOrtvwiLO3ZobpRvRLR9iAyqsZNmQIfqL04wsulJZ9N+IGwUmWNShx06ovXcbvXOiQ88nKsCHbTEr1DqnJ2RdJuHwGCEOEK1umktxNbomevfEELt2lIwTTGMd4T9oIkQVaD1OAciLcIOBfv9qRExBATLrlBx3JtdTIhY565aTqRFxcRvyL30VK7UDYK85JQnV7tK5bXYO+NyG2e19KHkzb1LJ3njD3I1Mq5+1qTpfnnaO8wfsuJYd6MgQmi8JN7QhpIG8XG+ltPiQPZBk6pZ866DwvunHY0GrBR4JQ3JaduU2227/+rvMxLc/jHiURFHLkKbvxeZSldoBDZwaIxXEhakcANngyTHYH8aC8gi7ZjXEHNTjIY22aAFP7amh83zSEZOroF3XI0Zu62etswLmLm01/oJqJin5t+rMEJHuqlXv9NWsg2jUioD20aJDZ1fqcEtvuSqYNF2XiNCTDXe82LH/QRCYo6a2Gyd3U43Sg=
+  file_glob: true
+  file: "${RELEASE_PKG_FILE}"
+  skip_cleanup: true
+  on:
+    tags: true
+    repo: raldus/roland
+    branch: master
     
 notifications:
     on_success: change
