@@ -2,14 +2,4 @@
 engines:
   gnu-complexity:
     enabled: true
-  csslint:
-    enabled: false
-  duplication:
-    enabled: false
-  fixme:
-    enabled: true
-  phpmd:
-    enabled: false
-  radon:
-    enabled: false
 exclude_paths: []
