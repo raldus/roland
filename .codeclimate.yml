@@ -2,4 +2,5 @@
 engines:
   gnu-complexity:
     enabled: true
-exclude_paths: []
+    config:
+      threshold: 30
