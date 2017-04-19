@@ -144,18 +144,19 @@ namespace sdltk
         }
     }
 
-    void Image::load(const String & fname, bool autoconvert)
+    void Image::load(const String & fname, bool autoconvert, uchar alpha)
     {
         mAutoConvert = autoconvert;
         mSurface = IMG_Load(fname.c_str());
         if (!mSurface) throw EXCSDL("could not load image");
+        SDL_SetAlpha(mSurface, SDL_SRCALPHA, alpha);
         mSize.set(mSurface);
         if (mAutoConvert) convert();
     }
 
-    void Image::load(const String & fname)
+    void Image::load(const String & fname, uchar alpha)
     {
-        load(fname, mAutoConvert);
+        load(fname, mAutoConvert, alpha);
     }
 
     void Image::convert()

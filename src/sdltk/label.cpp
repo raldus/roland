@@ -32,6 +32,7 @@ namespace sdltk
         mBackground = true;
         mBorder = false;
         mWantEvents = true;
+        mMoveable   = false;
     }
 
     Label::~Label()
@@ -51,6 +52,7 @@ namespace sdltk
 
     void Label::moveInit(SDL_MouseButtonEvent * event)
     {
+        if (!mMoveable) return;
         if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_MIDDLE))
         {
             relativePos(event->x, event->y, mRelativeMousePos);
@@ -66,6 +68,7 @@ namespace sdltk
 
     void Label::move(SDL_MouseMotionEvent * event)
     {
+        if (!mMoveable) return;
         if (event->state & SDL_BUTTON(SDL_BUTTON_MIDDLE))
         {
             mRect.setX(event->x - mRelativeMousePos.x());

@@ -48,8 +48,11 @@ namespace sdltk
         void setBorder(bool val);
         void setBackground(bool val)      {mBackground = val;}
         void setText(const String & text) {mText = text;}
+        void setMoveable(bool moveable) {mMoveable = moveable;}
         void setBorderColor(const Color & color, const Color & highlite)
             {mBorderColor1 = color; mBorderColor2 = highlite;}
+
+        const String & getText() const {return mText;}
 
     protected:
         void drawBorder();
@@ -63,7 +66,7 @@ namespace sdltk
 
         bool mBorder;
         bool mBackground;
-
+        bool mMoveable;
 
         Image * mImage;
 

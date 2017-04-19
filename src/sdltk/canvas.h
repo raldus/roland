@@ -56,7 +56,7 @@ namespace sdltk
         virtual void setClipRect(const Rect & rect) {}
         virtual void clearClipRect() {}
 
-        void setFont(const String & fname, const String & glyphs);
+        void setFont(const String & fname, const String & glyphs, uchar alpha=255);
         void setSurface(SDL_Surface * const surface) {mSurface = surface;}
 
         void point(Point * const pos)                      {point(*pos);}

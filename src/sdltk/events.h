@@ -23,7 +23,7 @@
 namespace sdltk
 {
 
-    enum UserEvent : int {Unknown, ListItemClicked};
+    enum UserEvent : int {Unknown, ListItemClicked, ListItemDoubleClicked};
 
 } // sdltk
 

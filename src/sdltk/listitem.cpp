@@ -19,6 +19,7 @@
  ***************************************************************************/
 #include "listitem.h"
 #include "events.h"
+#include "clock.h"
 #include "SDL.h"
 
 namespace sdltk
@@ -35,8 +36,27 @@ namespace sdltk
 
     void ListItem::onMouseButton(SDL_MouseButtonEvent * event)
     {
+        if (!parent()->enabled()) return;
+
+        static sdltk::Clock doubleclick;
+
         if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_LEFT))
         {
+            if (doubleclick.elapsed() < 250 && doubleclick.elapsed() > 50)
+            {
+                SDL_Event event;
+                event.type = SDL_USEREVENT;
+                event.user.code  =  UserEvent::ListItemDoubleClicked;
+                event.user.data1 = this;
+                event.user.data2 = 0;
+                SDL_PushEvent(&event);
+
+                IOUT("[ListItem]", "UserEvent::ListItemDoubleClicked sent", getText());
+                mDown = true;
+                return;
+            }
+            else doubleclick.init();
+
             SDL_Event event;
             event.type = SDL_USEREVENT;
             event.user.code  =  UserEvent::ListItemClicked;
@@ -44,7 +64,7 @@ namespace sdltk
             event.user.data2 = 0;
             SDL_PushEvent(&event);
 
-            IOUT("[ListItem]", "UserEvent::ListItemClicked", "sent");
+            IOUT("[ListItem]", "UserEvent::ListItemClicked sent", getText());
             mDown = true;
         }
 
