@@ -36,11 +36,13 @@ namespace sdltk
 
     void ListItem::onMouseButton(SDL_MouseButtonEvent * event)
     {
+        if (!parent()->enabled()) return;
+
         static sdltk::Clock doubleclick;
 
         if ((event->type == SDL_MOUSEBUTTONDOWN) && (event->button == SDL_BUTTON_LEFT))
         {
-            if (doubleclick.elapsed() < 250)
+            if (doubleclick.elapsed() < 250 && doubleclick.elapsed() > 50)
             {
                 SDL_Event event;
                 event.type = SDL_USEREVENT;
@@ -50,6 +52,7 @@ namespace sdltk
                 SDL_PushEvent(&event);
 
                 IOUT("[ListItem]", "UserEvent::ListItemDoubleClicked sent", getText());
+                mDown = true;
                 return;
             }
             else doubleclick.init();

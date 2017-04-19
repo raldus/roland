@@ -48,7 +48,7 @@ namespace sdltk
 
     bool Gui::checkEvent(SDL_Event * event)
     {
-        if (!mEnabled) return false;
+        if (!mEnabled || empty()) return false;
 
         SDL_Event ev2;
         int i = SDL_PeepEvents(&ev2, 1, SDL_PEEKEVENT, SDL_MOUSEMOTIONMASK);
@@ -63,7 +63,7 @@ namespace sdltk
 
         for (auto it : *this)
         {
-            if(it->parent() && !it->parent()->enabled()) return false;
+            //if(it->parent() && !it->parent()->enabled()) return false;
             if (it->wantEvents() && it->enabled())
             {
                 switch(event->type)

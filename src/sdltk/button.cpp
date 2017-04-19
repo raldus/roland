@@ -52,6 +52,10 @@ namespace sdltk
 
         if ((event->type == SDL_MOUSEBUTTONUP) && (event->button == SDL_BUTTON_LEFT))
         {
+            Color tmp;
+            tmp = mBorderColor1;
+            mBorderColor1 = mBorderColor2;
+            mBorderColor2 = tmp;
             mDown = false;
         }
 

@@ -132,7 +132,7 @@ void initGui()
 
     video->getCanvas()->setFont(
         datadir + "rpgfont.png",
-        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;", 128);
+        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;", 200);
 
     sdltk::Size textsize = video->getCanvas()->textSize("50/50");
 
@@ -276,12 +276,24 @@ void mainloop()
                                          bit_values[(cpc_key & 7)]));
         }
         else
+        {
 //            if (btnMenu->isDown())
 //            {
 //                lblMenu->setEnabled(!lblMenu->enabled());
 //                lblTitle->setEnabled(true);
 //                btnMenu->setDown(false);
 //            }
+            static unsigned char drive = 0;
+            if (btnDiskA->isDown())
+            {
+                drive = 0;
+                lstFile->setEnabled(true);
+            }
+            if (btnDiskB->isDown())
+            {
+                drive = 1;
+                lstFile->setEnabled(true);
+            }
             while (SDL_PollEvent(&event) > 0)
             {
                 gui->setFocus(lstFile);
@@ -297,9 +309,9 @@ void mainloop()
                             tSTRING str =
                                     prefs.getPath("diskdir")
                                     + ((sdltk::ListItem*) event.user.data1)->getText();
-                            IOUT("[Roland]", "Disk Drive A: ", str);
-                            cpc.fdc().dsk_eject(0);
-                            cpc.fdc().dsk_load(str.c_str(), 0);
+                            IOUT("[Roland]", "Disk Drive " + std::string(drive ? "B:" : "A:"), str);
+                            cpc.fdc().dsk_eject(drive);
+                            cpc.fdc().dsk_load(str.c_str(), drive);
                             prefs.set("diska", str);
                             SDL_EnableKeyRepeat(0, 0);
                         }
@@ -483,6 +495,7 @@ void mainloop()
                 }
             }
 
+        }
         if (audio.dist() < audio.mindist())
         {
             ticksadjust=-1; // speed emulation up to compensate @todo what to do here ???
