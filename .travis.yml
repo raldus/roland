@@ -46,8 +46,8 @@ script:
 os:
     - linux
     
- cache:
-  directories:
+cache:
+    directories:
     - build
 
 before_deploy:
