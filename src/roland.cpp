@@ -46,6 +46,7 @@
 #include "clock.h"
 #include "keytrans.h"
 #include "color.h"
+#include "events.h"
 
 #include "cpc.h"
 #include "prefs.h"
@@ -84,6 +85,8 @@ sdltk::Label    * lblTitle      = nullptr;
 sdltk::Button   * btnMenu       = nullptr;
 sdltk::Button   * btnTest       = nullptr;
 sdltk::Button   * btnTest2      = nullptr;
+sdltk::Button   * btnDiskA      = nullptr;
+sdltk::Button   * btnDiskB      = nullptr;
 sdltk::List     * lstDirectory  = nullptr;
 sdltk::FileList * lstFile       = nullptr;
 sdltk::Clock mainClock;
@@ -129,7 +132,7 @@ void initGui()
 
     video->getCanvas()->setFont(
         datadir + "rpgfont.png",
-        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;");
+        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;", 128);
 
     sdltk::Size textsize = video->getCanvas()->textSize("50/50");
 
@@ -201,6 +204,25 @@ void initGui()
     btnTest2->setText("Knopf2");
 */
 
+    btnDiskA = new sdltk::Button;
+    btnDiskA->setPos(1, 1);
+    btnDiskA->setSize(75, 20);
+    btnDiskA->setColor(128, 128, 128, 164);
+    btnDiskA->setEnabled(true);
+    btnDiskA->setBorder(true);
+    btnDiskA->setWantEvents(true);
+    btnDiskA->setText("Disk A");
+
+    btnDiskB = new sdltk::Button;
+    btnDiskB->setPos(btnDiskA->width()+2, 1);
+    btnDiskB->setSize(75, 20);
+    btnDiskB->setColor(128, 128, 128, 164);
+    btnDiskB->setEnabled(true);
+    btnDiskB->setBorder(true);
+    btnDiskB->setWantEvents(true);
+    btnDiskB->setText("Disk B");
+
+
     lstFile = new sdltk::FileList(gui, prefs.getPath("diskdir"));
     lstFile->setEnabled(false);
     //lstFile->clear();
@@ -208,6 +230,8 @@ void initGui()
     gui->add(lblFps);
     gui->add(lblDisk);
     gui->add(lblJoy);
+    gui->add(btnDiskA);
+    gui->add(btnDiskB);
     //gui->add(btnMenu);
     //gui->add(lblMenu);
     //gui->add(lblTitle);
@@ -261,9 +285,25 @@ void mainloop()
             while (SDL_PollEvent(&event) > 0)
             {
                 gui->setFocus(lstFile);
-                if (gui->checkEvent(&event)) continue;
+                //if (gui->checkEvent(&event)) continue;
+                gui->checkEvent(&event);
                 switch (event.type)
                 {
+                    case SDL_USEREVENT:
+                        if (event.user.code == sdltk::UserEvent::ListItemDoubleClicked)
+                        {
+                            IOUT("[roland.cpp]", "UserEvent::ListItemDoubleClicked", "received");
+                            lstFile->setEnabled(false);
+                            tSTRING str =
+                                    prefs.getPath("diskdir")
+                                    + ((sdltk::ListItem*) event.user.data1)->getText();
+                            IOUT("[Roland]", "Disk Drive A: ", str);
+                            cpc.fdc().dsk_eject(0);
+                            cpc.fdc().dsk_load(str.c_str(), 0);
+                            prefs.set("diska", str);
+                            SDL_EnableKeyRepeat(0, 0);
+                        }
+                        break;
                     case SDL_KEYDOWN:
                         // std::cout << "Key: " << event.key.keysym.sym << "\n";
                         cpc_key = keytrans.get(event);
@@ -316,45 +356,15 @@ void mainloop()
                                 }
 
                                 case SDLK_F2:
-                                {
-                                    lstFile->setEnabled(!lstFile->enabled());
-                                    if (!lstFile->enabled() && !lstFile->empty())
-                                    {
-                                        tSTRING str =
-                                                prefs.getPath("diskdir")
-                                                + Prefs::delim()
-                                                + *lstFile->selected();
-                                        IOUT("[Roland]", "Disk Drive A: ", str);
-                                        cpc.fdc().dsk_eject(0);
-                                        cpc.fdc().dsk_load(str.c_str(), 0);
-                                        prefs.set("diska", str);
-                                        SDL_EnableKeyRepeat(0, 0);
-                                        clearKeyBuffer();
-                                    }
-                                    else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
-                                                             SDL_DEFAULT_REPEAT_INTERVAL);
-                                    break;
-                                }
-
                                 case SDLK_F3:
-                                {
                                     lstFile->setEnabled(!lstFile->enabled());
-                                    if (!lstFile->enabled() && !lstFile->empty())
+                                    if (lstFile->enabled() && lstFile->empty())
                                     {
-                                        tSTRING str =
-                                                prefs.getPath("diskdir")
-                                                + Prefs::delim()
-                                                + *lstFile->selected();
-                                        IOUT("[Roland]", "Disk Drive B: ", str);
-                                        cpc.fdc().dsk_eject(1);
-                                        cpc.fdc().dsk_load(str.c_str(), 1);
-                                        prefs.set("diskb", str);
-                                        SDL_EnableKeyRepeat(0, 0);
-                                        clearKeyBuffer();
-                                    }
-                                    else SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
+                                        SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
                                                              SDL_DEFAULT_REPEAT_INTERVAL);
+                                    }
                                     break;
+
                                     /* audio.pause(true);
                                     sdltk::FileSelect *f = new sdltk::FileSelect(
                                         video->screen(), prefs.getPath("diskdir"),
@@ -377,7 +387,6 @@ void mainloop()
                                     audio.pause(false);
                                     delete f;
                                     break;*/
-                                }
 
                                 case SDLK_F4:
                                     joystick=keytrans.toggleJoystick();
@@ -444,6 +453,7 @@ void mainloop()
                                 case SDLK_F12:
                                     audio.pause(true);
                                     video->toggleFullscreen();
+                                    SDL_ShowCursor(1);
                                     initGui();
                                     audio.pause(false);
                                     break;

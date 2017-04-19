@@ -53,10 +53,10 @@ namespace sdltk
         mImage.clear();
     }
 
-    void ImageFont::load(const String & fname, const String & glyphs)
+    void ImageFont::load(const String & fname, const String & glyphs, uchar alpha)
     {
         clear();
-        mImage.load(fname, false);
+        mImage.load(fname, false, alpha);
         mGlyphs = glyphs;
         init();
         mImage.convert(); // IMPORTANT: first init(), then convert()

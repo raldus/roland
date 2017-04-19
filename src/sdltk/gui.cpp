@@ -63,7 +63,8 @@ namespace sdltk
 
         for (auto it : *this)
         {
-            if (it->wantEvents())
+            if(it->parent() && !it->parent()->enabled()) return false;
+            if (it->wantEvents() && it->enabled())
             {
                 switch(event->type)
                 {

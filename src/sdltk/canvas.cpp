@@ -22,9 +22,9 @@
 namespace sdltk
 {
 
-    void Canvas::setFont(const String & fname, const String & glyphs)
+    void Canvas::setFont(const String & fname, const String & glyphs, uchar alpha)
     {
-        mFont.load(fname, glyphs);
+        mFont.load(fname, glyphs, alpha);
     }
 
 } // sdltk

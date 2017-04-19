@@ -143,6 +143,18 @@ namespace sdltk
             IOUT("[List]", "UserEvent::ListItemClicked", "received");
             return true;
         }
+        if (event->code == UserEvent::ListItemDoubleClicked)
+        {
+            auto selected = find(begin(), end(), (ListItem*) event->data1);
+            if (selected != end())
+            {
+                mSelected = selected;
+            }
+
+
+            IOUT("[List]", "UserEvent::ListItemDoubleClicked", "received");
+            return true;
+        }
         return false;
     }
 

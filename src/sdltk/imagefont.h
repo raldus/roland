@@ -49,7 +49,7 @@ namespace sdltk
 
         //! loads an Image and calls ImageFont::init to set up the glyphs
         //! \param fname = the filename of an Image @param glyphs = the available glyphs in the Image
-        void load(const String & fname, const String & glyphs);
+        void load(const String & fname, const String & glyphs, uchar alpha=255);
 
         inline const Rect & glyph(Uint8 chr) const;
 
