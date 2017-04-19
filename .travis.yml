@@ -45,6 +45,10 @@ script:
 
 os:
     - linux
+    
+ cache:
+  directories:
+    - build
 
 before_deploy:
   - export RELEASE_PKG_FILE=$(ls build/*.deb)
