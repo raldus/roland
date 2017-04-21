@@ -123,6 +123,4 @@ Afterwards, put 'roland-linux.cfg' renamed to '.roland' into your homedir.
 
 ## Misc
 [Changelog](https://github.com/raldus/roland/blob/master/CHANGELOG.md)
-
-## Documentation
-You can find the latest API Documentation on https://www.rolandemu.de/en/information/api.html
+[API Documentation](https://www.rolandemu.de/en/information/api.html)
