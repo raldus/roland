@@ -8,7 +8,7 @@ For further information visit https://www.rolandemu.de/.
 You can find the latest API Documentation on https://www.rolandemu.de/en/information/api.html
 
 ## Build
-The source is written in c++11 code and needs at leat a c++11 enabled Compiler. Supported are GCC native, Visual Studio 2015 or CygWin/MinGw. 
+The source is written in c++11 code and needs at leat a c++11 enabled Compiler. Supported are GCC native > 4.8, Visual Studio 2012-2015 or CygWin/MinGw. 
 
 ### Status
 Plattform|Status
