@@ -47,7 +47,7 @@ cmake --build build --target install
 ```
 
 ### Windows
-At the moment Visual Studio 2015 32bit and MinGW are the only valid build environments.
+At the moment Visual Studio 2012 & 2013 32 & 64bit, Visual Studio 2015 32bit and MinGW are the only valid build environments.
 Following an example of a Visual Studio release build:
 ```bash
 cmake -H. -Bbuild -G"Visual Studio 14 2015" -DCMAKE_BUILD_TYPE=Release
@@ -81,11 +81,11 @@ you will see the directory. Enter 'run "filename"'  [Enter] (mostly *.bas).
 #### Example
 >
 1. press [F2]
-2. search a disk with [arrowkeys] (HarveyH.dsk) [Enter]
+2. search a disk with [Arrowkeys] 'HarveyH.dsk' [Enter]
 3. type 'cat'  [Enter]
 4. in this case the file is named 'Harvey'
 5. type 'run "harvey"'  [Enter]
-6. press [F5] to emulate a joystick with [arrowkeys] and [ALT]
+6. press [F5] to emulate a joystick with [Arrowkeys] and [ALT]
 
 #### Example 2 (Bjack1.dsk)
 >
@@ -123,4 +123,5 @@ Afterwards, put 'roland-linux.cfg' renamed to '.roland' into your homedir.
 
 ## Misc
 [Changelog](https://github.com/raldus/roland/blob/master/CHANGELOG.md)
+
 [API Documentation](https://www.rolandemu.de/en/information/api.html)
