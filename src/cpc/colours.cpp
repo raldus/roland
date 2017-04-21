@@ -110,44 +110,21 @@ namespace cpcx
                 case 24:
                     for (int i = 0; i < 32; i++)
                     {
-                        tUDWORD red = (tUDWORD)(0 * (mIntensity / 10.0) * 255);
-                        if (red > 255)
-                        { // limit to the maximum
-                            red = 255;
-                        }
                         tUDWORD green =
                             (tUDWORD)(mGreen[i] * (mIntensity / 10.0) * 255);
-                        if (green > 255)
-                        {
-                            green = 255;
-                        }
-                        tUDWORD blue = (tUDWORD)(0 * (mIntensity / 10.0) * 255);
-                        if (blue > 255)
-                        {
-                            blue = 255;
-                        }
-                        mTable[i] = blue | (green << 8) | (red << 16);
+                        if (green > 255) green = 255;
+                        mTable[i] = 0 | (green << 8) | (0 << 16);
                     }
                     break;
 
                 case 16:
                     for (int i = 0; i < 32; i++)
                     {
-                        tUDWORD red = (tUDWORD)(0 * (mIntensity / 10.0) * 31);
-                        if (red > 31)
-                            red = 31; // limit to the maximum
-
                         tUDWORD green =
                             (tUDWORD)(mGreen[i] * (mIntensity / 10.0) * 63);
-                        if (green > 63)
-                            green = 63;
+                        if (green > 63) green = 63;
 
-                        tUDWORD blue = (tUDWORD)(0 * (mIntensity / 10.0) * 31);
-                        if (blue > 31)
-                            blue = 31;
-
-                        tUDWORD colour = blue | (green << 5) | (red << 11);
-
+                        tUDWORD colour = 0 | (green << 5) | (0 << 11);
                         mTable[i] = colour | (colour << 16);
                     }
                     break;
