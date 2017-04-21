@@ -13,10 +13,12 @@ The source is written in c++11 code and needs at leat a c++11 enabled Compiler. 
 ### Status
 Plattform|Status
 ---|--:
-Ubuntu 64 bit|[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland)
+Ubuntu 64 bit * |[![Build Status](https://travis-ci.org/raldus/roland.svg?branch=master)](https://travis-ci.org/raldus/roland)
 Windows 32 & 64 bit VS2013|[![Build status](https://ci.appveyor.com/api/projects/status/ced6joh6ichpeqaf/branch/master?svg=true)](https://ci.appveyor.com/project/raldus/roland-0xe5q/branch/master)
 CodeClimate|[![Code Climate](https://codeclimate.com/github/raldus/roland/badges/gpa.svg)](https://codeclimate.com/github/raldus/roland)|
 Codacy|[![Codacy Badge](https://api.codacy.com/project/badge/Grade/19a42389d36f4f99b2827aff199d2f8c)](https://www.codacy.com/app/raldus/roland?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=raldus/roland&amp;utm_campaign=Badge_Grade)|
+
+*Linux 32bit builds are possible without problems, but its not implemented in travis so far.
 
 ### General
 You will need cmake and git installed.
