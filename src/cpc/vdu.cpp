@@ -26,7 +26,7 @@
 namespace cpcx
 {
 
-    Vdu::Vdu(Crtc* crtc, GateArray* gatearray, Z80* z80)
+    Vdu::Vdu(Crtc* crtc, GateArray* gatearray, Z80* z80) : mCrtc(nullptr)
     {
         mBpp          = Bpp32;
         mBorder       = true;
