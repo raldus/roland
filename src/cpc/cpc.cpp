@@ -262,7 +262,7 @@ namespace cpcx
             switch (value >> 6)
             {
                 case 0: // select pen
-                    mGatearray.setPen(value & 0x10 ? 0x10 : value & 0x0f);
+                    mGatearray.setPen((value & 0x10) ? 0x10 : value & 0x0f);
                     break;
 
                 case 1: // set colour
