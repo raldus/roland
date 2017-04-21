@@ -45,9 +45,8 @@
 #endif
 
 Prefs::Prefs(bool autowrite, bool writealways)
+    : mAutoWrite(autowrite), mWriteAlways(writealways), mRead(false)
 {
-    mAutoWrite   = autowrite;
-    mWriteAlways = writealways;
 
 #if defined(_WIN32) || defined(_WIN64)
     char buf[NAME_MAX + 1];
