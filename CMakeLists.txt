@@ -10,7 +10,7 @@ set(PACKAGE_NAME  "roland" CACHE STRING "Package Name")
 set(PACKAGE_DEPLOY  "RPM;DEB" CACHE STRING "Package deploy")
 
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/version") 
-execute_process(COMMAND git show --tags --quiet --reverse "--pretty=format:%ad %n[view tag](https://github.com/raldus/roland/commit/%H) %n%n***%n" OUTPUT_FILE "${CMAKE_BINARY_DIR}/CHANGELOG.md")
+execute_process(COMMAND git show --tags --quiet --reverse "--pretty=format:%ad %n[view tag](https://github.com/raldus/roland/commit/%H) %n%n***%n" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
 execute_process(COMMAND git describe --abbrev=0 --tags --always OUTPUT_VARIABLE PACKAGE_VERSION)
 string(REGEX REPLACE "\n$" "" PACKAGE_VERSION "${PACKAGE_VERSION}")
 file(WRITE "${CMAKE_BINARY_DIR}/version" "${PACKAGE_VERSION}")
