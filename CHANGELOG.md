@@ -1,97 +1,255 @@
-tag 0.6
-Tagger: Fred Klaus <development@fkweb.de>
+# CHANGELOG
 
-This is the first version build with c++11 enabled comiler
+### current
+ * Clarify calculation precedence
+ * Clarify calculation precedence
+ * Fix initialization of mCrtc
+ * Remove redundant expression
+ * Remove unnecessary code
+ * Fix missing initialization
+ * Change changelog generation
 
-Sat Apr 9 18:12:56 2016 +0200 
-[view tag](https://github.com/raldus/roland/commit/0f6a55a7cd2583c3026b57c94a036062b44d3df1) 
+## 0.70
+ * Change package build and deployment
+ * Delete _config.yml
+ * Set theme jekyll-theme-cayman
+ * Update .travis.yml
+ * Update .travis.yml
+ * Speeding up travis.yml with cache
+ * Change doubleclick behaviour and fix FileList
+ * Add doubleclick for FileList
+ * Delete roland.exe
+ * Update .codeclimate.yml
+ * Change build
 
-***
+## 0.69
+ * Add deployment (#15)
+ * Update README.md
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Update .codeclimate.yml
+ * Create .codeclimate.yml
+ * Update README.md
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update types.h
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update .travis.yml
+ * Update README.md
+ * Change preferences initialization for visual Studio 2012 compatibility :(
+ * Add nsis to cpack and fix verbosity
+ * Change filename
 
-tag 0.61
-Tagger: Fred Klaus <development@fkweb.de>
+## 0.68
+ * Change title of rpm packages
 
-Builds on VS2015 32bit now
+## 0.67
+ * Add Return Key to exit gui menus
+ * Add floppy to namespace cpcx
+ * Change documentation
+ * Add compiler specification to cmake
+ * Cleanup some documentation
+ * Change documentation
+ * Cleanup documentation generation
+ * Change documentation
+ * Add icon2code for later use
+ * Add better versioning
 
-Wed Nov 30 21:24:04 2016 +0100 
-[view tag](https://github.com/raldus/roland/commit/8dc859b4838b1a4339a0a6c5af0e039ad11d83c6) 
+## 0.66
+ * Add deb to package building
+ * Update README.md
+ * New bugfix release (#9)
+ * buildfix for windows
+ * New Changelog
+ * Current (#8)
+ * Fix segfault on start (#7)
 
-***
+## 0.65
+ * Fix some build issues
+ * Changed by git
 
-tag 0.62
-Tagger: Fred Klaus <development@fkweb.de>
+## 0.64
+ * Fix error on wrong pathes
+ * Cleanup build files
+ * Change constexpr to const for compatibility
+ * Change travis notification settings
+ * Change creation of pathes
+ * Fix pathes in config file
+ * Change directory options
+ * Change FileList for better Handling; not finished yet  (#5)
+ * Update README.md
+ * Update README.md
+ * Update README.md
+ * Update README.md
 
-Clean build of roland
+## 0.63
+ * Change FileList; not finished yet
+ * Change some requirements for infinite scrolling
+ * Fix a typo
+ * Change changelog
+ * Fix format
 
-Mon Dec 5 19:42:33 2016 +0100 
-[view tag](https://github.com/raldus/roland/commit/bae93065f81f1ce7e155f2d1bfeb04237c047e9d) 
+## 0.62
+ * Change buildfiles
+ * Change filename
+ * Change build behaviour
+ * Change build behaviour
+ * Change build behaviour
+ * Change build behaviour
+ * Change build behaviour
+ * Update README.md
+ * Update README.md
+ * Fix build issues
+ * Fix build issues
+ * Cleanup
+ * Cleanup build
+ * Rename folder
+ * Remove files
+ * Fix rpm issues
+ * Update README.md
+ * Update README.md
+ * Update README.md
+ * Update README.md
+ * Change some pathes
 
-***
+## 0.61
+ * Update README.md
+ * Update README.md
+ * Fix build with VS2015
+ * Fix VS2015 build
+ * Add SDL files for VS2015 build
+ * Fix some ISO-C++ issues
+ * Cleanup
+ * Fix VS2015 build issue
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix Visual Studio build issues
+ * Fix build issues
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Change readme
+ * Change readme
+ * Change readme
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Fix appveyor build support
+ * Add appveyor build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Fix travis build support
+ * Add travis build support for multi os
+ * Add travis build support
+ * Cleanup
+ * Add namespace cpcx (change later)
+ * Cleanup
+ * Remove old gui
+ * Implement new fileselector
+ * Cleanup in sdltk; no code changes
+ * Change typedefs in sdltk
+ * Cleanup of sdltk stuff
+ * Cleanup
+ * Fix namespace issue
+ * Cleanup in sdltk; no code changes
+ * Change selection highlight and movement
+ * Add more vim
+ * Change documentation
+ * Change selection to filelist in gui
+ * Add selection to filelist in gui
+ * Change filestructure and class Directory
+ * Preparation for the new gui
+ * Change some design issues
+ * Implement sdl filelist and a lot of cleanup:wq
+ * Change start behaviour to support noconfig
+ * Enable switch from plain (F7) to OpenGL driver (F8)
+ * Refine gui
+ * Rewrite gui to use new drivers
+ * Rename class Draw to more precise class Canvas
+ * Change comment header
+ * Add gui files
+ * Cleanup of sdl audio implementation
+ * Rewrite of sdl audio implementation
+ * Change more of cpc basic types to prevent conflicts
+ * Change of cpc basic types to prevent conflicts
+ * Change of sdl framework to support opengl soon -> F8
+ * Change visibility of mouse cursor and some cleanup
+ * Change header comment
+ * Changes in build files
+ * Fix code and build issues
+ * Fix build issues
+ * Fix to lower cpu usage
+ * Fix some more release build warnings
+ * Fix some release build warnings
+ * Refine cmake build
+ * Implement package creation with CPack (for now: rpm, src.rpm, bz2)
+ * Change directory structure
+ * Fix  doc files
+ * Add more doc files
+ * Add doc files
+ * Add doc file
+ * Correct build file
+ * Change build config
+ * Correct typo
+ * Change buildfiles
 
-tag 0.63
-Tagger: Fred Klaus <development@fkweb.de>
-
-GUI improvement
-
-Thu Dec 8 23:30:18 2016 +0100 
-[view tag](https://github.com/raldus/roland/commit/e9f157b312ec4a0e72c5885c630720c6963340f4) 
-
-***
-
-tag 0.64
-Tagger: Fred Klaus <development@fkweb.de>
-
-Bugfix release
-
-Sat Mar 25 19:18:53 2017 +0100 
-[view tag](https://github.com/raldus/roland/commit/1402c13da0e33776228a89cb9e5b43b93478aa6f) 
-
-***
-
-tag 0.65
-Tagger: Fred Klaus <development@fkweb.de>
-
-bufix release
-
-Sat Mar 25 19:48:56 2017 +0100 
-[view tag](https://github.com/raldus/roland/commit/498342a43c7a0251b6c3456a685c93b0c5a3e4e8) 
-
-***
-
-tag 0.66
-Tagger: Fred Klaus <development@fkweb.de>
-
-New bugfix release. Handles deb packages
-
-Sun Mar 26 20:13:53 2017 +0200 
-[view tag](https://github.com/raldus/roland/commit/540e49668daed539ee0a2ab013b0a126919cd259) 
-
-***
-
-tag 0.67
-Tagger: Fred Klaus <development@fkweb.de>
-
-The return key is now usable to close the gui.
-Wed Apr 12 15:16:31 2017 +0200 
-[view tag](https://github.com/raldus/roland/commit/976086364e5d5a7e71145911a298cfcae8def207) 
-
-***
-
-tag 0.68
-Tagger: Fred Klaus <development@fkweb.de>
-
-Buildfix release
-Wed Apr 12 16:35:57 2017 +0200 
-[view tag](https://github.com/raldus/roland/commit/054638e98bfa317028ab5d6c89a42e759cf440e8) 
-
-***
-
-Tue Apr 18 20:36:29 2017 +0200 
-[view tag](https://github.com/raldus/roland/commit/7b6541cf077ac404d2b7c85c6dde7f64dfa7c270) 
-
-***
-
-Thu Apr 20 20:46:35 2017 +0200 
-[view tag](https://github.com/raldus/roland/commit/c0f9688d5466cc1c7c9c36c4ad59ba67a8bda098) 
-
-***
+## 0.6
+ * Change buildfiles
+ * Add namespace sdltk to all SDL related stuff
+ * Link static
+ * Change build files
+ * Cleanup documentation
+ * Translate documentation
+ * More cleanup in class Prefs
+ * Cleanup in class Prefs
+ * Changes in format
+ * Added README-DE.md
+ * Cleanup some defines
+ * Changes in README
+ * Changes in README
+ * Add some disks
+ * Add needed config to start and amend README
+ * Add and execute script tab2space.sh
+ * First running c++11 version with cmake buildsystem on gcc-4.8.5 (SUSE Linux)
+ * Fix build issues [WIP]
+ * Fix typo in CMakeLists
+ * Update build files
+ * Add source tree
+ * Add some files
+ * Create README.md
+ * Initial commit

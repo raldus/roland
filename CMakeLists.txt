@@ -9,14 +9,7 @@ set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME  "roland" CACHE STRING "Package Name")
 set(PACKAGE_DEPLOY  "RPM;DEB" CACHE STRING "Package deploy")
 
-if (NOT EXISTS "${CMAKE_BINARY_DIR}/version") 
-execute_process(COMMAND git show --tags --quiet --reverse "--pretty=format:%ad %n[view tag](https://github.com/raldus/roland/commit/%H) %n%n***%n" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
-execute_process(COMMAND git describe --abbrev=0 --tags --always OUTPUT_VARIABLE PACKAGE_VERSION)
-string(REGEX REPLACE "\n$" "" PACKAGE_VERSION "${PACKAGE_VERSION}")
-file(WRITE "${CMAKE_BINARY_DIR}/version" "${PACKAGE_VERSION}")
-else() 
-file(READ "${CMAKE_BINARY_DIR}/version" PACKAGE_VERSION)
-endif()
+
 
 set(ROLAND_ASSETS  "${CMAKE_SOURCE_DIR}/assets")
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -38,6 +31,17 @@ set(ROLAND_CPCROM  "${ROLAND_ROOTDIR}/roms/cpc6128.rom")
 #set(CMAKE_BINARY_DIR       "${CMAKE_SOURCE_DIR}/bin" CACHE STRING "Build Dir")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin" CACHE STRING "Executable Output Path")
 set(LIBRARY_OUTPUT_PATH    "${CMAKE_BINARY_DIR}/bin" CACHE STRING "Library Output Path")
+
+
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/version") 
+execute_process(COMMAND "${ROLAND_ASSETS}/gen_changelog.sh" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
+execute_process(COMMAND git describe --abbrev=0 --tags --always OUTPUT_VARIABLE PACKAGE_VERSION)
+string(REGEX REPLACE "\n$" "" PACKAGE_VERSION "${PACKAGE_VERSION}")
+file(WRITE "${CMAKE_BINARY_DIR}/version" "${PACKAGE_VERSION}")
+else() 
+file(READ "${CMAKE_BINARY_DIR}/version" PACKAGE_VERSION)
+endif()
+
 
 if (WIN32)
     set(_WIN32 TRUE CACHE BOOL "Win32")
