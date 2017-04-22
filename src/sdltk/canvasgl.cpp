@@ -51,7 +51,6 @@ namespace sdltk
             GL_STENCIL_BUFFER_BIT |
             GL_TEXTURE_BIT |
             GL_TRANSFORM_BIT |
-            GL_POINT_BIT |
             GL_LINE_BIT
         );
 

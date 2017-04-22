@@ -9,16 +9,8 @@ set(PACKAGE_TITLE "Roland" CACHE STRING "Package Title")
 set(PACKAGE_NAME  "roland" CACHE STRING "Package Name")
 set(PACKAGE_DEPLOY  "RPM;DEB" CACHE STRING "Package deploy")
 
-if (NOT EXISTS "${CMAKE_BINARY_DIR}/version") 
-execute_process(COMMAND git show --tags --quiet --reverse "--pretty=format:%ad %n[view tag](https://github.com/raldus/roland/commit/%H) %n%n***%n" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
-execute_process(COMMAND git describe --abbrev=0 --tags --always OUTPUT_VARIABLE PACKAGE_VERSION)
-string(REGEX REPLACE "\n$" "" PACKAGE_VERSION "${PACKAGE_VERSION}")
-file(WRITE "${CMAKE_BINARY_DIR}/version" "${PACKAGE_VERSION}")
-else() 
-file(READ "${CMAKE_BINARY_DIR}/version" PACKAGE_VERSION)
-endif()
-
 set(ROLAND_ASSETS  "${CMAKE_SOURCE_DIR}/assets")
+
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(ROLAND_ROOTDIR "${ROLAND_ASSETS}")
     set(ROLAND_DATADIR "${ROLAND_ROOTDIR}/app")
@@ -27,17 +19,25 @@ elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
     set(ROLAND_DATADIR "${ROLAND_ROOTDIR}")
 endif()
 
-
-#set(ROLAND_DATADIR "${ROLAND_ROOTDIR}/app")
 set(ROLAND_ROMDIR  "${ROLAND_ROOTDIR}/roms")
 set(ROLAND_DISKDIR "${ROLAND_ROOTDIR}/disks")
 set(ROLAND_AMSROM  "${ROLAND_ROOTDIR}/roms/amsdos.rom")
 set(ROLAND_CPCROM  "${ROLAND_ROOTDIR}/roms/cpc6128.rom")
 
-
 #set(CMAKE_BINARY_DIR       "${CMAKE_SOURCE_DIR}/bin" CACHE STRING "Build Dir")
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin" CACHE STRING "Executable Output Path")
 set(LIBRARY_OUTPUT_PATH    "${CMAKE_BINARY_DIR}/bin" CACHE STRING "Library Output Path")
+
+if (NOT EXISTS "${CMAKE_BINARY_DIR}/version") 
+    if(UNIX)
+        execute_process(COMMAND "${ROLAND_ASSETS}/gen_changelog.sh" OUTPUT_FILE "${CMAKE_SOURCE_DIR}/CHANGELOG.md")
+    endif()
+        execute_process(COMMAND git describe --abbrev=0 --tags --always OUTPUT_VARIABLE PACKAGE_VERSION)
+        string(REGEX REPLACE "\n$" "" PACKAGE_VERSION "${PACKAGE_VERSION}")
+        file(WRITE "${CMAKE_BINARY_DIR}/version" "${PACKAGE_VERSION}")
+    else() 
+        file(READ "${CMAKE_BINARY_DIR}/version" PACKAGE_VERSION)
+endif()
 
 if (WIN32)
     set(_WIN32 TRUE CACHE BOOL "Win32")
@@ -45,7 +45,7 @@ endif (WIN32)
 
 if (MSVC)
     #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /NODEFAULTLIB")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /BUILD_VERBOSE_FLAGS:lib")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} /ROLAND_BUILD_VERBOSE:lib")
     set(_WIN32 TRUE BOOL)
 
     if (${CMAKE_GENERATOR} MATCHES "Visual Studio 14 2015")
@@ -99,10 +99,12 @@ if(UNIX)
     
     # eclipse stop on error
     add_definitions(-Wfatal-errors)
-    # be BUILD_VERBOSE_FLAGS
-    if(${BUILD_VERBOSE_FLAGS})
+    # be ROLAND_BUILD_VERBOSE
+    if(${ROLAND_BUILD_VERBOSE})
         add_definitions(-Wall -Wextra -pedantic -Wno-unused-parameter)
-        set(VERBOSE 1)
+        if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+            set(VERBOSE 1)
+        endif()
     endif()
 
 
@@ -120,7 +122,7 @@ message(STATUS "SDL_LIBRARY:      ${SDL_LIBRARY}")
 message(STATUS "SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
 
 # roland
-option(BUILD_VERBOSE_FLAGS "BUILD_VERBOSE_FLAGS" FALSE)
+option(ROLAND_BUILD_VERBOSE "ROLAND_BUILD_VERBOSE" TRUE)
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(DEBUG 1)
 endif()

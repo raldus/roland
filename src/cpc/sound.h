@@ -344,12 +344,12 @@ namespace cpcx
     inline void Sound::setMixerRegister(tUBYTE value)
     {
         mPsg->setMixer(value);
-        mTonEnA   = value & 1  ? false : true;
-        mNoiseEnA = value & 8  ? false : true;
-        mTonEnB   = value & 2  ? false : true;
-        mNoiseEnB = value & 16 ? false : true;
-        mTonEnC   = value & 4  ? false : true;
-        mNoiseEnC = value & 32 ? false : true;
+        mTonEnA   = (value & 1 ) ? false : true;
+        mTonEnB   = (value & 2 ) ? false : true;
+        mTonEnC   = (value & 4 ) ? false : true;
+        mNoiseEnA = (value & 8 ) ? false : true;
+        mNoiseEnB = (value & 16) ? false : true;
+        mNoiseEnC = (value & 32) ? false : true;
     }
 
 
@@ -357,7 +357,7 @@ namespace cpcx
     inline void Sound::setAmplA(tUBYTE value)
     {
         mPsg->setAmplitudeA(value);
-        mEnvelopeEnA = value & 16 ? false : true;
+        mEnvelopeEnA = (value & 16) ? false : true;
     }
 
 
@@ -365,7 +365,7 @@ namespace cpcx
     inline void Sound::setAmplB(tUBYTE value)
     {
         mPsg->setAmplitudeB(value);
-        mEnvelopeEnB = value & 16 ? false : true;
+        mEnvelopeEnB = (value & 16) ? false : true;
     }
 
 
@@ -373,7 +373,7 @@ namespace cpcx
     inline void Sound::setAmplC(tUBYTE value)
     {
         mPsg->setAmplitudeC(value);
-        mEnvelopeEnC = value & 16 ? false : true;
+        mEnvelopeEnC = (value & 16) ? false : true;
     }
 
 } // namespace cpcx
