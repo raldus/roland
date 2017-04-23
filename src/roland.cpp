@@ -87,6 +87,7 @@ sdltk::Button   * btnTest       = nullptr;
 sdltk::Button   * btnTest2      = nullptr;
 sdltk::Button   * btnDiskA      = nullptr;
 sdltk::Button   * btnDiskB      = nullptr;
+sdltk::Button   * btnColor      = nullptr;
 sdltk::List     * lstDirectory  = nullptr;
 sdltk::FileList * lstFile       = nullptr;
 sdltk::Clock mainClock;
@@ -132,7 +133,7 @@ void initGui()
 
     video->getCanvas()->setFont(
         datadir + "rpgfont.png",
-        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;", 200);
+        " abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,!?-+/():;");
 
     sdltk::Size textsize = video->getCanvas()->textSize("50/50");
 
@@ -613,6 +614,24 @@ int main(int argc, char *argv[])
         cerr << "[SDL] Could not init: " << SDL_GetError() << endl;
         SDL_Quit();
     }
+
+    // parse commandline args
+    for (int i=0; i < argc; i++)
+    {
+        if (strcmp(argv[i], "--green") == 0)
+        {
+            prefs.set("monitor", 1);
+        }
+        if (strcmp(argv[i], "--color") == 0)
+        {
+            prefs.set("monitor", 0);
+        }
+        IOUT("[Core]", "ARG", argv[i]);
+    }
+
+    cpc.init();
+
+
 
 #ifdef USE_MMX
     IOUT("[Core]", "MMX", "enabled");

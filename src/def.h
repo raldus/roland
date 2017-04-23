@@ -33,8 +33,8 @@ static const uint8_t  TAPE_VOLUME       = 32;
 static const uint8_t  MIN_SPEED_SETTING = 2;
 static const uint8_t  MAX_SPEED_SETTING = 32;
 static const uint8_t  DEF_SPEED_SETTING = 4;
-static const uint16_t CPC_SCR_WIDTH  = 1024;        //!< max width
-static const uint16_t CPC_SCR_HEIGHT = 312;         //!< max height
+static const uint16_t CPC_SCR_WIDTH     = 1024;     //!< max width
+static const uint16_t CPC_SCR_HEIGHT    = 312;      //!< max height
 static const uint16_t CPC_VISIBLE_SCR_WIDTH  = 384; //!< visible: 4+40+4 * 8
 static const uint16_t CPC_VISIBLE_SCR_HEIGHT = 270; //!< visible: 5+25+4 * 8  \TODO original is 272
 

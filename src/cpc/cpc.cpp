@@ -24,34 +24,34 @@
 namespace cpcx
 {
 
-    Cpc::Cpc(const Prefs & prefs)
+    Cpc::Cpc(Prefs & prefs)
     {
         mSound.init(&mPsg); //@todo Change this:cannot init again.
-        mPrefs = prefs;
+        mPrefs = &prefs;
     }
 
     int Cpc::init() ROLAND_NOEXCEPT
     {
-        mCpcType = static_cast<CpcType>(mPrefs.getNum("cpctype"));
-        mSpeed   = mPrefs.getNum("cpcspeed");
-        // mMonitor = (Monitor) mPrefs.getNum("monitor");
+        mCpcType = static_cast<CpcType>(mPrefs->getNum("cpctype"));
+        mSpeed   = mPrefs->getNum("cpcspeed");
+        // mMonitor = (Monitor) mPrefs->getNum("monitor");
 
         mGatearray.init();
         mPpi.init();
         // mPpi.setJumpers(Ppi::Schneider | Ppi::Refresh50Hz | Ppi::Expansion);
-        mPpi.setJumpers(mPrefs.getNum("jumpers"));
+        mPpi.setJumpers(mPrefs->getNum("jumpers"));
 
         mCrtc.init(&mPpi);
         mVdu.init(true, &mCrtc, &mGatearray, &mZ80);
-        mVdu.setBorder(mPrefs.getBool("border"));
-        //mVdu.setDoublescan(mPrefs.getBool("doublescan"));
+        mVdu.setBorder(mPrefs->getBool("border"));
+        //mVdu.setDoublescan(mPrefs->getBool("doublescan"));
 
-        mColours.setIntensity(mPrefs.getNum("intensity"));
-        mColours.setMonitor(mPrefs.getNum("monitor"));
+        mColours.setIntensity(mPrefs->getNum("intensity"));
+        mColours.setMonitor(mPrefs->getNum("monitor"));
 
         mMemman.init(&mZ80, &mGatearray);
-        int ret = mMemman.init(mPrefs.getNum("ramsize"), mPrefs.getPath("cpcrom"),
-                               mPrefs.getPath("amsdos"));
+        int ret = mMemman.init(mPrefs->getNum("ramsize"), mPrefs->getPath("cpcrom"),
+                               mPrefs->getPath("amsdos"));
         if (ret)
         {
             if (ret == MemMan::ErrRamSize)

@@ -79,7 +79,7 @@ namespace cpcx
 
 
         Cpc() ROLAND_DELETE
-        Cpc(const Prefs & prefs);
+        Cpc(Prefs & prefs);
         ~Cpc() ROLAND_DEFAULT
 
         int init() ROLAND_NOEXCEPT;
@@ -113,7 +113,7 @@ namespace cpcx
         uint      mSpeed;
         uint      mBpp;
 
-        Prefs     mPrefs;
+        Prefs *   mPrefs;
 
         Z80       mZ80; //! \todo change this !!!!!!!!!!!!!
         Crtc      mCrtc;
