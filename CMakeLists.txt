@@ -122,7 +122,16 @@ message(STATUS "SDL_LIBRARY:      ${SDL_LIBRARY}")
 message(STATUS "SDLIMAGE_LIBRARY: ${SDLIMAGE_LIBRARY}")
 
 # roland
-option(ROLAND_BUILD_VERBOSE "ROLAND_BUILD_VERBOSE" TRUE)
+option(ROLAND_BUILD_VERBOSE  "Build verbose version" ON)
+option(ROLAND_BUILD_COVERAGE "Build coverage version" OFF)
+if(ROLAND_BUILD_COVERAGE AND CMAKE_COMPILER_IS_GNUCXX AND (CMAKE_BUILD_TYPE STREQUAL "Debug"))
+    include(CodeCoverage)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -O0 -fprofile-arcs -ftest-coverage")
+    # set(LCOV_REMOVE_EXTRA "'3rdparty/*'")
+    setup_target_for_coverage(${PACKAGE_NAME}_coverage ${PACKAGE_NAME} coverage)
+endif()
+
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(DEBUG 1)
 endif()
