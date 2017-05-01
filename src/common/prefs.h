@@ -21,6 +21,8 @@
 #define PREFS_H
 
 #include "config.h"
+#include "def.h"
+
 #include <string>
 #include <array>
 #include <utility>

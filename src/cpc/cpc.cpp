@@ -359,7 +359,6 @@ namespace cpcx
                                       bit_values[bit]); // set requested bit
                             if (!(mPpi.control() & 1))  // output lower half?
                             {
-                                // CPC.mKeyboard_line = PPI.portC;
                                 mKeyboard.setValue(mPpi.portC());
                             }
                             if (!(mPpi.control() & 8)) // output upper half?
@@ -377,7 +376,6 @@ namespace cpcx
                                       ~(bit_values[bit])); // reset requested bit
                             if (!(mPpi.control() & 1))     // output lower half?
                             {
-                                // CPC.mKeyboard_line = PPI.portC;
                                 mKeyboard.setValue(mPpi.portC());
                             }
                             if (!(mPpi.control() & 8)) // output upper half?
@@ -401,13 +399,13 @@ namespace cpcx
         // **********************************************************************
         if (((port.b.h == 0xFA) && (!(port.b.l & 0x80)))) // floppy motor control?
         {
-            // DOUT("[FDC] (out) motor: " << (int) value << "\n");
+            DOUT("FDC", "motor", (int) value);
             mFdc.setMotor(value & 0x01);
             mFdc.addFlags(STATUSDRVA_flag | STATUSDRVB_flag);
         }
         else if ((port.b.h == 0xFB) && (!(port.b.l & 0x80))) // FDC data register?
         {
-            // DOUT("[FDC] (out) data: " << (int) value << "\n");
+            DOUT("FDC", "data", (int) value);
             mFdc.write_data(value);
         }
     }

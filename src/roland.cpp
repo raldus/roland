@@ -602,7 +602,7 @@ void quit()
 {
     audio.quit();
     SDL_Quit();
-    IOUT("[Core]", "SDL", "cleanly finished");
+    IOUT("quit", "SDL", "finished");
 }
 
 int main(int argc, char *argv[])
@@ -614,6 +614,7 @@ int main(int argc, char *argv[])
         cerr << "[SDL] Could not init: " << SDL_GetError() << endl;
         SDL_Quit();
     }
+    IOUT("main", "SDL initialization", "successfull");
 
     // parse commandline args
     for (int i=0; i < argc; i++)
@@ -626,18 +627,18 @@ int main(int argc, char *argv[])
         {
             prefs.set("monitor", 0);
         }
-        IOUT("[Core]", "ARG", argv[i]);
+        IOUT("main", "commandline argument " + std::to_string(i), argv[i]);
     }
-
-    cpc.init();
-
 
 
 #ifdef USE_MMX
-    IOUT("[Core]", "MMX", "enabled");
+    IOUT("main", "MMX", "enabled");
 #else
-    IOUT("[Core]", "MMX", "disabled");
+    IOUT("main", "MMX", "disabled");
 #endif
+
+
+    cpc.init();
 
     //bool fs = prefs.getBool("fullscreen");
 

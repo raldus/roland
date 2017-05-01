@@ -20,7 +20,6 @@
 #ifndef CPC_MEMMAN_H
 #define CPC_MEMMAN_H
 
-#include "def.h"
 #include "gatearray.h"
 #include "z80.h"
 

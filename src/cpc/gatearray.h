@@ -37,29 +37,28 @@ class GateArray final
 
         void init();
 
-        tUBYTE  pen()               const {return mPen;}
-        tUBYTE* ink()                     {return mInk;}
-        tUBYTE  ink(tUBYTE num)     const {return mInk[num];}
-        tUDWORD palette(tUBYTE num) const {return mPalette[num];}
-
-        tUBYTE romConfig()         const {return mRomConfig;}
-        tUBYTE ramConfig()         const {return mRamConfig;}
-        tUBYTE ramBank()           const {return mRamBank;}
-        tUBYTE upperRom()          const {return mUpperRom;}
-        tUBYTE counter()           const {return mCounter;}
-        tUBYTE mode()              const {return mMode;}
-        tUBYTE requestedMode()     const {return mRequestedMode;}
-        bool  interrupt()          const {return mInterrupt;}
-        tUBYTE intDelay()          const {return mIntDelay;}
-        tUBYTE slCount()           const {return mSlCount;}
+        inline tUBYTE   pen()               const {return mPen;}
+        inline tUBYTE * ink ()                    {return mInk;}
+        inline tUBYTE   ink(tUBYTE num)     const {return mInk[num];}
+        inline tUDWORD  palette(tUBYTE num) const {return mPalette[num];}
+        inline tUBYTE   romConfig()         const {return mRomConfig;}
+        inline tUBYTE   ramConfig()         const {return mRamConfig;}
+        inline tUBYTE   ramBank()           const {return mRamBank;}
+        inline tUBYTE   upperRom()          const {return mUpperRom;}
+        inline tUBYTE   counter()           const {return mCounter;}
+        inline tUBYTE   mode()              const {return mMode;}
+        inline tUBYTE   requestedMode()     const {return mRequestedMode;}
+        inline bool     interrupt()         const {return mInterrupt;}
+        inline tUBYTE   intDelay()          const {return mIntDelay;}
+        inline tUBYTE   slCount()           const {return mSlCount;}
 
         void setPen(tUBYTE pen)               {mPen = pen;}
         //void setInk(tUBYTE* ink) {for (int i=0; i<17; i++) mInk[i] = ink[i];}
         void setInk(tUBYTE ink)               {mInk[mPen] = ink;}
-        void setInk(tUBYTE num, tUBYTE ink)    {mInk[num]  = ink;}
+        void setInk(tUBYTE num, tUBYTE ink)   {mInk[num]  = ink;}
 
         void setPalette(tUBYTE num, uint col) {mPalette[num]  = col;}
-        void setPalette(uint col)            {mPalette[mPen] = col;}
+        void setPalette(uint col)             {mPalette[mPen] = col;}
 
         void setRomConfig(tUBYTE romcfg)      {mRomConfig = romcfg;}
         void setRamConfig(tUBYTE ramcfg)      {mRamConfig = ramcfg;}
@@ -69,7 +68,7 @@ class GateArray final
         void setMode(tUBYTE mode)             {mMode = mode;}
         void setRequestedMode(tUBYTE mode)    {mRequestedMode = mode;}
 
-        void setInterrupt(bool enabled)      {mInterrupt = enabled;}
+        void setInterrupt(bool enabled)       {mInterrupt = enabled;}
         void setIntDelay (tUBYTE value)       {mIntDelay  = value;}
         void setSlCount  (tUBYTE value)       {mSlCount   = value;}
 
@@ -83,11 +82,11 @@ class GateArray final
         tUBYTE mRequestedMode;
         tUBYTE mSlCount;
 
-        tUBYTE   mPen;
-        tUBYTE   mInk[17];
-        tUDWORD  mPalette[17];
+        tUBYTE  mPen;
+        tUBYTE  mInk[17];
+        tUDWORD mPalette[17];
 
-        bool  mInterrupt;
+        bool   mInterrupt;
         tUBYTE mIntDelay;
 
     };

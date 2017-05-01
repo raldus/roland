@@ -38,12 +38,6 @@
 #define NAME_MAX 1024
 #endif
 
-#ifdef DEBUG
-#define DOUT(a) std::cerr << a;
-#else
-#define DOUT(a)
-#endif
-
 Prefs::Prefs(bool autowrite, bool writealways)
     : mAutoWrite(autowrite), mWriteAlways(writealways), mRead(false)
 {
@@ -103,7 +97,7 @@ Prefs::~Prefs()
 
 bool Prefs::read()
 {
-    DOUT("\nReading Preferences...\n");
+    DOUT("Prefs::read", "reading preferences", "*** begin ***");
 
     std::ifstream in(mFilename.c_str());
     if (!in)
@@ -132,24 +126,26 @@ bool Prefs::read()
 
     for (int i = 0; i < PREFCOUNT; i++)
     {
-        DOUT(mPrefs[i].first<< ": " << mPrefs[i].second<< "\n");
+        DOUT("Prefs::read", mPrefs[i].first, mPrefs[i].second);
     }
 
+    DOUT("Prefs::read", "reading preferences", "*** end ***");
     return true;
 }
 
 bool Prefs::write()
 {
-    DOUT("\nWriting Preferences...\n");
+    DOUT("Prefs::write", "writing preferences", "*** begin ***");
 
     std::ofstream out(mFilename.c_str());
     if (!out) return false;
     for (int i = 0; i < PREFCOUNT; i++)
     {
         out << mPrefs[i].first<< "=" << mPrefs[i].second<< "\n";
-        DOUT(mPrefs[i].first<< ": " << mPrefs[i].second<< "\n");
+        DOUT("Prefs::write", mPrefs[i].first, mPrefs[i].second);
     }
     out.close();
+    DOUT("Prefs::write", "writing preferences", "*** end ***");
     return true;
 }
 

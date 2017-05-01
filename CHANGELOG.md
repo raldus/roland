@@ -1,13 +1,23 @@
 # CHANGELOG
 
 ### current
+ * Add commandline arguments --green & --color
+ * Add gconv coverage target
+ * Change default build flags
+ * Change changelog generation
  * Clarify calculation precedence
  * Clarify calculation precedence
  * Fix initialization of mCrtc
  * Remove redundant expression
  * Remove unnecessary code
  * Fix missing initialization
+ * Change changelog generation (#19)
  * Change changelog generation
+ * Update README.md
+ * Update README.md
+ * Update README.md
+ * Update README.md
+ * Update README.md
 
 ## 0.70
  * Change package build and deployment

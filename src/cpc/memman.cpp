@@ -18,6 +18,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "memman.h"
+#include "def.h"
 
 #include <memory>
 #include <fstream>
@@ -57,7 +58,7 @@ namespace cpcx
     {
         int ret = 0;
         mRamSize = ramsize;
-        if ((ramsize < 64) && (ramsize > 572))
+        if ((ramsize < 64) || (ramsize > 572))
             return ErrRamSize; // @todo (type6128 < 128kb) ram error.
         if (ramsize % 64)
             return ErrRamSize;
@@ -100,7 +101,7 @@ namespace cpcx
 #endif
         if (!in)
         {
-            std::cout << "*** Rom not found ***\n";
+           EOUT("openRom", "ROM", "not found");
             return false;
         }
         if (mRom[idx])
@@ -126,7 +127,7 @@ namespace cpcx
 #endif
         if (!in)
         {
-            std::cout << "*** CPC-Rom not found ***\n";
+            EOUT("openCpcRom", "CPC ROM", "not found");
             return false;
         }
         memset(mCpcRom, 0, 2 * 16384);
@@ -145,7 +146,7 @@ namespace cpcx
         rom2 = mRam + 2 * 16384;
         rom3 = mRam + 3 * 16384;
 
-        std::cout << "initBanking-ramBank: " << (int)mGateArray->ramBank() << "\n";
+        IOUT("initBanking", "RAM Bank:", (int) mGateArray->ramBank());
 
         rambank = mRam + ((mGateArray->ramBank() + 1) * (4 * 16384)); // 64 KB
         rom4 = rambank;
@@ -204,17 +205,13 @@ namespace cpcx
         }
         else
         {
-            membank =
-                (mGateArray->ramConfig() >> 3) & 7; // extract expansion memory bank
-            if (((membank + 1) * 64) >
-                mRamSize) // @todo selection is beyond available memory? ### +2 ###
+            membank = ((mGateArray->ramConfig() >> 3) & 7); // extract expansion memory bank
+            if (((membank + 1) * 64) > mRamSize) // @todo selection is beyond available memory? ### +2 ###
             {
                 membank = 0; // force default mapping
             }
         }
-        if (membank !=
-            mGateArray
-                ->ramBank()) // requested bank is different from the active one?
+        if (membank != mGateArray->ramBank()) // requested bank is different from the active one?
         {
             mGateArray->setRamBank(membank);
             initBanking();
