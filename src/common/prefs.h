@@ -36,7 +36,7 @@ class Prefs
   public:
     enum PrefsArray {paKey = 0, paValue = 1};
 
-    Prefs(bool autowrite = true, bool writealways = true);
+    Prefs(bool autowrite = true, bool writealways = false);
     ~Prefs();
 
     bool read();

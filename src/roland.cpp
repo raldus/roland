@@ -607,6 +607,12 @@ void quit()
 
 int main(int argc, char *argv[])
 {
+    IOUT("main", "location", argv[0]);
+#ifdef USE_MMX
+    IOUT("main", "MMX", "enabled");
+#else
+    IOUT("main", "MMX", "disabled");
+#endif
 
     /* Initializes Audio and Video */
     if (SDL_Init(SDL_INIT_AUDIO | SDL_INIT_VIDEO | SDL_INIT_TIMER) < 0)
@@ -617,25 +623,21 @@ int main(int argc, char *argv[])
     IOUT("main", "SDL initialization", "successfull");
 
     // parse commandline args
-    for (int i=0; i < argc; i++)
+    for (int i=1; i < argc; i++)
     {
-        if (strcmp(argv[i], "--green") == 0)
+        const char * pch = strtok(argv[i], "--=");
+        if (pch)
         {
-            prefs.set("monitor", 1);
+            const char * pch2 = strtok(nullptr, "--=");
+            if (pch2) prefs.set(pch, std::string(pch2));
+            else pch2 = "";
+            IOUT("main argv(" + std::to_string(i) + ")", pch, pch2);
         }
-        if (strcmp(argv[i], "--color") == 0)
+        else
         {
-            prefs.set("monitor", 0);
+           IOUT("main argv(" + std::to_string(i) + ")", "INVALID ARGUMENT", argv[i]);
         }
-        IOUT("main", "commandline argument " + std::to_string(i), argv[i]);
     }
-
-
-#ifdef USE_MMX
-    IOUT("main", "MMX", "enabled");
-#else
-    IOUT("main", "MMX", "disabled");
-#endif
 
 
     cpc.init();
