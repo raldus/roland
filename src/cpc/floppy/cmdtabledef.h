@@ -27,7 +27,7 @@ namespace cpcx
     class Fdc;
 
     //! Comand table definitions
-    class CmdTableDef final
+    class CmdTableDef ROLAND_FINAL
     {
     public:
         CmdTableDef()  ROLAND_DEFAULT

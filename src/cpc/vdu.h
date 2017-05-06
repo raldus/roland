@@ -37,7 +37,7 @@ namespace cpcx
     class Z80;
 
     /** @author Fred Klaus */
-    class Vdu final
+    class Vdu ROLAND_FINAL
     {
 
     public:

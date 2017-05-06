@@ -40,7 +40,7 @@ namespace cpcx
 
     //! The CPU of the CPC. With the Power of 4 Mhz and 8bit registers.
     //! The Z80 was later used in Sega Mega Drive as sound processor.
-    class Z80 final
+    class Z80 ROLAND_FINAL
     {
 
         // using Z80_IN_Handler = tUBYTE (*) (tREGPAIR port);

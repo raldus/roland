@@ -28,7 +28,7 @@ namespace cpcx
 {
 
     //! The sound chip of the CPC.
-    class Sound final
+    class Sound ROLAND_FINAL
     {
 
     public:

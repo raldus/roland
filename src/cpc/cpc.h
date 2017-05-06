@@ -58,7 +58,7 @@ namespace cpcx
 
     //! Represents the CPC and all of its components and functions. What we
     //! need is a Monitor and a Keyboard. Roland will take yours. ;)
-    class Cpc final
+    class Cpc ROLAND_FINAL
     {
 
     public:

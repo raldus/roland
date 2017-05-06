@@ -28,7 +28,7 @@ namespace cpcx
 {
 
     /** @author Fred Klaus */
-    class Keyboard final
+    class Keyboard ROLAND_FINAL
     {
 
     public:

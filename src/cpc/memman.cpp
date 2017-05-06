@@ -29,8 +29,8 @@ using std::string;
 namespace cpcx
 {
 
-    MemMan::MemMan(Z80 *z80, GateArray *gatearray, const string &cpcrom,
-                   const string &amsdos)
+    MemMan::MemMan(Z80 *z80, GateArray *gatearray, const tSTRING &cpcrom,
+                   const tSTRING &amsdos)
     {
         mGateArray = gatearray;
         mZ80 = z80;
@@ -46,14 +46,14 @@ namespace cpcx
         init();
     }
 
-    int MemMan::init(Z80 *z80, GateArray *gatearray)
+    int MemMan::init(Z80 *z80, GateArray *gatearray) ROLAND_NOEXCEPT
     {
         mGateArray = gatearray;
         mZ80 = z80;
         return init();
     }
 
-    int MemMan::init(tUWORD ramsize, const string & cpcrom, const string & amsdos)
+    int MemMan::init(tUWORD ramsize, const tSTRING & cpcrom, const tSTRING & amsdos) ROLAND_NOEXCEPT
     {
         int ret = 0;
         mRamSize = ramsize;
@@ -89,7 +89,7 @@ namespace cpcx
         return ret;
     }
 
-    bool MemMan::openRom(int idx, const string &filename)
+    bool MemMan::openRom(tUBYTE idx, const tSTRING & filename) ROLAND_NOEXCEPT
     {
         if (filename.empty())
             return false;
@@ -100,7 +100,7 @@ namespace cpcx
 #endif
         if (!in)
         {
-           EOUT("openRom", "ROM", "not found");
+           EOUT("openRom(" << (int) idx << ")", "ROM not found", filename);
             return false;
         }
         if (mRom[idx])
@@ -110,12 +110,13 @@ namespace cpcx
         }
         mRom[idx] = new tUBYTE[16384]; // @todo all new statements should be checked
                                       // for enough mem!!
-        in.read((char *)mRom[idx], 16384);
+        in.read((char*)mRom[idx], 16384);
         in.close();
+        IOUT("openRom(" + std::to_string(idx) + ")", (void*) mRom[idx], filename);
         return true;
     }
 
-    bool MemMan::openCpcRom(const string &filename)
+    bool MemMan::openCpcRom(const tSTRING &filename) ROLAND_NOEXCEPT
     {
         if (filename.empty())
             return false;
@@ -132,10 +133,11 @@ namespace cpcx
         memset(mCpcRom, 0, 2 * 16384);
         in.read((char *)mCpcRom, 2 * 16384);
         in.close();
+        IOUT("openCPCRom", (void*) mCpcRom, filename);
         return true;
     }
 
-    inline void MemMan::initBanking()
+    inline void MemMan::initBanking() ROLAND_NOEXCEPT
     {
         tUBYTE *rom0, *rom1, *rom2, *rom3, *rom4, *rom5, *rom6, *rom7;
         tUBYTE *rambank;
@@ -194,7 +196,7 @@ namespace cpcx
         mMemBankConfig[7][3] = rom3;
     }
 
-    void MemMan::memoryManager()
+    void MemMan::memoryManager() ROLAND_NOEXCEPT
     {
         tUBYTE membank;
         if (mRamSize == 64) // 64KB of RAM?

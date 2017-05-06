@@ -31,7 +31,7 @@
 namespace cpcx
 {
     //! The floppy drive controller.
-    class Fdc final
+    class Fdc ROLAND_FINAL
     {
 
     public:

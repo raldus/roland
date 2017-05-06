@@ -28,7 +28,7 @@ namespace cpcx
 {
 
     //! @author Fred Klaus
-    class MemMan final
+    class MemMan ROLAND_FINAL
     {
 
     public:
@@ -40,25 +40,22 @@ namespace cpcx
 
         enum Error   : tUBYTE {ErrRamSize=1, ErrMemory=2, ErrCpcRom=4, ErrAmsdos=8};
 
-        int init(tUWORD ramsize = 128, const tSTRING & cpcrom = "", const tSTRING & amsdos = "");
-        int init(Z80* z80, GateArray* gatearray);
+        int init(tUWORD ramsize = 128, const tSTRING & cpcrom = "", const tSTRING & amsdos = "") ROLAND_NOEXCEPT;
+        int init(Z80* z80, GateArray* gatearray) ROLAND_NOEXCEPT;
 
-        inline void initBanking();
-        void memoryManager();
+        bool openRom(tUBYTE idx, const tSTRING & filename) ROLAND_NOEXCEPT;
+        bool openCpcRom(const tSTRING & filename) ROLAND_NOEXCEPT;
 
-        inline void toggleLowerRom();
-        inline void toggleUpperRom();
+        void memoryManager()         ROLAND_NOEXCEPT;
+        inline void initBanking()    ROLAND_NOEXCEPT;
+        inline void toggleLowerRom() ROLAND_NOEXCEPT;
+        inline void toggleUpperRom() ROLAND_NOEXCEPT;
 
-        tUBYTE* memBankConfig(tUBYTE bank, tUBYTE seg) {return mMemBankConfig[bank][seg];}
-        tUBYTE* rom(int bank) {return mRom[bank];}
-
-        tUBYTE* upperRom() {return mUpperRom;}
-        tUBYTE* lowerRom() {return mLowerRom;}
-
-        tUBYTE* base() {return mMemBankConfig[0][0];}
-
-        bool openRom(int idx, const tSTRING & filename);
-        bool openCpcRom(const tSTRING & filename);
+        tUBYTE* memBankConfig(tUBYTE bank, tUBYTE seg) ROLAND_NOEXCEPT {return mMemBankConfig[bank][seg];}
+        tUBYTE* rom(int bank) ROLAND_NOEXCEPT {return mRom[bank];}
+        tUBYTE* upperRom()    ROLAND_NOEXCEPT {return mUpperRom;}
+        tUBYTE* lowerRom()    ROLAND_NOEXCEPT {return mLowerRom;}
+        tUBYTE* base()        ROLAND_NOEXCEPT {return mMemBankConfig[0][0];}
 
     private:
         GateArray* mGateArray;
@@ -76,7 +73,7 @@ namespace cpcx
 
     };
 
-    inline void MemMan::toggleUpperRom()
+    inline void MemMan::toggleUpperRom() ROLAND_NOEXCEPT
     {
 
         if (!(mGateArray->romConfig() & 0x08))
@@ -96,7 +93,7 @@ namespace cpcx
 //        }
     }
 
-    inline void MemMan::toggleLowerRom()
+    inline void MemMan::toggleLowerRom() ROLAND_NOEXCEPT
     {
         if (!(mGateArray->romConfig() & 0x04))
         {

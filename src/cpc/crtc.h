@@ -27,7 +27,7 @@ namespace cpcx
 {
     //! The CRTC6845
     //! CRTC6845\n\n @htmlinclude crtc.html
-    class Crtc final
+    class Crtc ROLAND_FINAL
     {
 
     public:

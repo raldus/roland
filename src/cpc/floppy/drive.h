@@ -26,7 +26,7 @@
 namespace cpcx
 {
     //! A floppy drive.
-    class Drive final
+    class Drive ROLAND_FINAL
     {
     public:
         Drive();

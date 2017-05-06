@@ -26,7 +26,7 @@
 namespace cpcx
 {
     //! A sector of a disk.
-    class Sector final
+    class Sector ROLAND_FINAL
     {
     public:
         Sector();

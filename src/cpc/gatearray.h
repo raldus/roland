@@ -28,7 +28,7 @@ namespace cpcx
 
 //! Gate Array\n\n @htmlinclude gatearray.html
 //! \author Fred Klaus
-class GateArray final
+class GateArray ROLAND_FINAL
 {
 
     public:

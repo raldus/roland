@@ -27,7 +27,7 @@ namespace cpcx
 {
 
     //! \author Fred Klaus
-    class Colours final
+    class Colours ROLAND_FINAL
     {
 
     public:

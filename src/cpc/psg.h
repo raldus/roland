@@ -29,7 +29,7 @@ namespace cpcx
     class Sound;
 
     /** @author Fred Klaus */
-    class Psg final
+    class Psg ROLAND_FINAL
     {
 
     public:

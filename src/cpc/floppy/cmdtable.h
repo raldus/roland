@@ -26,13 +26,13 @@
 namespace cpcx
 {
     //! Command table
-    class CmdTable final
+    class CmdTable ROLAND_FINAL
     {
     public:
         CmdTable()  ROLAND_DEFAULT
         ~CmdTable() ROLAND_DEFAULT
 
-        CmdTableDef & get(int num) {return entry[num];}
+        CmdTableDef & get(int num) ROLAND_NOEXCEPT {return entry[num];}
 
     private:
         CmdTableDef entry[MAX_CMD_COUNT];

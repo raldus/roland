@@ -640,7 +640,7 @@ int main(int argc, char *argv[])
     }
 
 
-    cpc.init();
+    //cpc.init();
 
     //bool fs = prefs.getBool("fullscreen");
 

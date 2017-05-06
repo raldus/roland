@@ -28,7 +28,7 @@ namespace cpcx
 
     //! The 8255 Parallel Peripheral Interface
     //! Parallel Peripheral Interface\n\n @htmlinclude  8255.html
-    class Ppi final
+    class Ppi ROLAND_FINAL
     {
 
     public:

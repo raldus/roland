@@ -32,7 +32,7 @@ namespace cpcx
     //! paired to 16 bit registers.
     //! For Example: 8bit register A and 8bit register F are together register
     //! AF with 16bits in size.
-    class Register final
+    class Register ROLAND_FINAL
     {
         friend class Z80;
 

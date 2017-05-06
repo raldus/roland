@@ -29,7 +29,7 @@
 namespace cpcx
 {
     //! A track of a disk
-    class Track final
+    class Track ROLAND_FINAL
     {
     public:
         Track() {std::memset(this, 0, sizeof(*this));}
