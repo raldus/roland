@@ -1,6 +1,11 @@
 # CHANGELOG
 
 ### current
+ * Update .travis.yml
+ * Update .travis.yml
+ * Improve preference handling. All preferences can now set as commandline arguments: roland --key=value
+ * Add CP/M disks
+ * Improve debug output
  * Add commandline arguments --green & --color
  * Add gconv coverage target
  * Change default build flags
