@@ -203,7 +203,7 @@ namespace cpcx
 
     void Vdu::access_video_memory(int repeat_count)
     {
-        register tUBYTE char_count, line_count, raster_count;
+        tUBYTE char_count, line_count, raster_count;
 
         do
         {
@@ -483,7 +483,7 @@ namespace cpcx
     void Vdu::draw16bppx2_border()
     {
         tUDWORD colour;
-        register tUDWORD* mem_ptr;
+        tUDWORD* mem_ptr;
 
         colour   = mGateArray->palette(16);
         colour |= (colour << 16);
@@ -508,7 +508,7 @@ namespace cpcx
     void Vdu::draw16bppx2_mode0()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         mem_ptr = (tUDWORD*) mScrBase + mScrOffset; // PC screen buffer address
@@ -535,7 +535,7 @@ namespace cpcx
     void Vdu::draw16bppx2_mode1()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         //std::cout << "CPC-addr.w.l: " << std::hex << (int) addr.w.l << "\n";
@@ -568,7 +568,7 @@ namespace cpcx
     void Vdu::draw16bppx2_mode2()
     {
         tUBYTE pat;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD pen_on, pen_off;
         tREGPAIR val;
 
@@ -615,7 +615,7 @@ namespace cpcx
     void Vdu::draw24bppx2_border()
     {
         tUDWORD colour;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
 
         colour = mGateArray->palette(16);
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer address
@@ -647,7 +647,7 @@ namespace cpcx
     void Vdu::draw24bppx2_mode0()
     {
         tUBYTE idx;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
         tUDWORD val;
 
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -681,7 +681,7 @@ namespace cpcx
     void Vdu::draw24bppx2_mode1()
     {
         tUBYTE idx;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
         tUDWORD val;
 
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -719,7 +719,7 @@ namespace cpcx
     void Vdu::draw24bppx2_mode2()
     {
         tUBYTE pat;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
         tUDWORD pen_on, pen_off;
 
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -758,7 +758,7 @@ namespace cpcx
     void Vdu::draw32bppx2_border()
     {
         tUDWORD colour;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
 
         colour = mGateArray->palette(16);
         mem_ptr = (mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -790,7 +790,7 @@ namespace cpcx
     void Vdu::draw32bppx2_mode0()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
@@ -824,7 +824,7 @@ namespace cpcx
     void Vdu::draw32bppx2_mode1()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
@@ -862,7 +862,7 @@ namespace cpcx
     void Vdu::draw32bppx2_mode2()
     {
         tUBYTE pat;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD pen_on, pen_off;
 
         mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
@@ -898,7 +898,7 @@ namespace cpcx
     void Vdu::draw32bpp_border()
     {
         tUDWORD colour;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
 
         colour = mGateArray->palette(16);
         mem_ptr = (mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -922,7 +922,7 @@ namespace cpcx
     void Vdu::draw32bpp_mode0()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
@@ -948,7 +948,7 @@ namespace cpcx
     void Vdu::draw32bpp_mode1()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
@@ -978,7 +978,7 @@ namespace cpcx
     void Vdu::draw32bpp_mode2()
     {
         tUBYTE pat;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD pen_on, pen_off;
 
         mem_ptr = mScrBase + mScrOffset; // PC screen buffer addr.w.less
@@ -1008,7 +1008,7 @@ namespace cpcx
     void Vdu::draw24bpp_border()
     {
         tUDWORD colour;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
 
         colour = mGateArray->palette(16);
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer address
@@ -1032,7 +1032,7 @@ namespace cpcx
     void Vdu::draw24bpp_mode0()
     {
         tUBYTE idx;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
         tUDWORD val;
 
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -1058,7 +1058,7 @@ namespace cpcx
     void Vdu::draw24bpp_mode1()
     {
         tUBYTE idx;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
         tUDWORD val;
 
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -1088,7 +1088,7 @@ namespace cpcx
     void Vdu::draw24bpp_mode2()
     {
         tUBYTE pat;
-        register tUBYTE *mem_ptr;
+        tUBYTE *mem_ptr;
         tUDWORD pen_on, pen_off;
 
         mem_ptr = (tUBYTE *)(mScrBase + mScrOffset); // PC screen buffer addr.w.less
@@ -1118,7 +1118,7 @@ namespace cpcx
     void Vdu::draw16bpp_border()
     {
         tUDWORD colour;
-        register tUDWORD* mem_ptr;
+        tUDWORD* mem_ptr;
 
         colour   = mGateArray->palette(16);
         colour |= (colour << 16);
@@ -1139,7 +1139,7 @@ namespace cpcx
     void Vdu::draw16bpp_mode0()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         mem_ptr = (tUDWORD*) mScrBase + mScrOffset; // PC screen buffer address
@@ -1162,7 +1162,7 @@ namespace cpcx
     void Vdu::draw16bpp_mode1()
     {
         tUBYTE idx;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD val;
 
         //std::cout << "CPC-addr.w.l: " << std::hex << (int) addr.w.l << "\n";
@@ -1188,7 +1188,7 @@ namespace cpcx
     void Vdu::draw16bpp_mode2()
     {
         tUBYTE pat;
-        register tUDWORD *mem_ptr;
+        tUDWORD *mem_ptr;
         tUDWORD pen_on, pen_off;
         tREGPAIR val;
 

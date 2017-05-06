@@ -32,7 +32,6 @@ namespace cpcx
     //! paired to 16 bit registers.
     //! For Example: 8bit register A and 8bit register F are together register
     //! AF with 16bits in size.
-    //! @author Fred Klaus */
     class Register final
     {
         friend class Z80;
@@ -41,7 +40,7 @@ namespace cpcx
         Register() {init();}
         ~Register() ROLAND_DEFAULT
 
-        void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point = 0xffffffff;}
+        void init() {std::memset(this, 0, sizeof(*this)); IX.w.l=IY.w.l=0xffff;AF.b.l=0x40;break_point=0xffffffff;}
 
     private:
         tREGPAIR AF, BC, DE, HL, PC, SP, AFx, BCx, DEx, HLx, IX, IY;

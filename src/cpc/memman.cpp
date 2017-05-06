@@ -18,7 +18,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "memman.h"
-#include "def.h"
 
 #include <memory>
 #include <fstream>
@@ -213,6 +212,7 @@ namespace cpcx
         }
         if (membank != mGateArray->ramBank()) // requested bank is different from the active one?
         {
+            IOUT("memoryManager", "RAM Bank:", (int) membank);
             mGateArray->setRamBank(membank);
             initBanking();
         }
@@ -232,45 +232,3 @@ namespace cpcx
     }
 
 } // cpc
-
-
-    /*
-    inline void MemMan::toggleUpperRom()
-    {
-
-        if (!(mGateArray->romConfig() & 0x08))
-        {
-            if (mGateArray->upperRom() == 0)
-            {
-                mZ80->setMembank_read(3, mUpperRom);
-                return;
-            }
-            if (mRom[mGateArray->upperRom()] != 0)
-            {
-                mZ80->setMembank_read(3, mRom[mGateArray->upperRom()]);
-            }
-            else
-            {
-                mZ80->setMembank_read(3, mUpperRom); // revert to Basic
-            }
-        }
-    //  else
-    //  {
-    //      mZ80->setMembank_read(3, mMemBankConfig[mGateArray->ramConfig() & 7]
-    [3]);
-    //  }
-    }
-
-    inline void MemMan::toggleLowerRom()
-    {
-        if (!(mGateArray->romConfig() & 0x04))
-        {
-            mZ80->setMembank_read(0, mLowerRom);
-        }
-    //  else
-    //  {
-    //      mZ80->setMembank_read(0, mMemBankConfig[mGateArray->ramConfig() & 7]
-    [0]);
-    //  }
-    }
-    */

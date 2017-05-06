@@ -30,7 +30,7 @@ namespace cpcx
 #define MF2_RUNNING     2
 #define MF2_INVISIBLE   4
 
-    class Cpc;
+    class  Cpc;
     extern Cpc cpc;
 
 #define z80_IN_handler  (cpc.*IN_handler)
@@ -40,14 +40,13 @@ namespace cpcx
 
     //! The CPU of the CPC. With the Power of 4 Mhz and 8bit registers.
     //! The Z80 was later used in Sega Mega Drive as sound processor.
-    //! @author Fred Klaus */
     class Z80 final
     {
 
         // using Z80_IN_Handler = tUBYTE (*) (tREGPAIR port);
-        typedef tUBYTE (Cpc::*Z80_IN_Handler) (tREGPAIR port);
-        typedef void   (Cpc::*Z80_OUT_Handler)(tREGPAIR port, tUBYTE value);
-        typedef void   (Cpc::*Z80_WS_Handler) (void);
+        typedef tUBYTE (Cpc::*Z80_IN_Handler)  (tREGPAIR port);
+        typedef void   (Cpc::*Z80_OUT_Handler) (tREGPAIR port, tUBYTE value);
+        typedef void   (Cpc::*Z80_WS_Handler)  (void);
 
     public:
         Z80();
@@ -208,12 +207,12 @@ namespace cpcx
         void  write_mem (tUWORD addr, tUBYTE val)          // writes a tUBYTE to a 16KB memory bank
             {*(membank_write[addr >> 14] + (addr & 0x3fff)) = val;}
 
-        void setMembank_read (tUBYTE bank, tUBYTE* ptr) {membank_read [bank]=ptr;}
-        void setMembank_write(tUBYTE bank, tUBYTE* ptr) {membank_write[bank]=ptr;}
+        void setMembank_read (tUBYTE bank, tUBYTE * ptr) {membank_read [bank]=ptr;}
+        void setMembank_write(tUBYTE bank, tUBYTE * ptr) {membank_write[bank]=ptr;}
 
-        void setInHandler (Z80_IN_Handler handler)  {IN_handler=handler;}
+        void setInHandler (Z80_IN_Handler  handler) {IN_handler=handler;}
         void setOutHandler(Z80_OUT_Handler handler) {OUT_handler=handler;}
-        void setWsHandler (Z80_WS_Handler handler)  {WS_handler=handler;}
+        void setWsHandler (Z80_WS_Handler  handler) {WS_handler=handler;}
 
 
         Register & reg() {return z80;}

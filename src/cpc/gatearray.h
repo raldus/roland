@@ -38,7 +38,6 @@ class GateArray final
         void init();
 
         inline tUBYTE   pen()               const {return mPen;}
-        inline tUBYTE * ink ()                    {return mInk;}
         inline tUBYTE   ink(tUBYTE num)     const {return mInk[num];}
         inline tUDWORD  palette(tUBYTE num) const {return mPalette[num];}
         inline tUBYTE   romConfig()         const {return mRomConfig;}

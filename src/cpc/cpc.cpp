@@ -127,31 +127,26 @@ namespace cpcx
                 case 0:                        // read from port A?
                     if (mPpi.control() & 0x10) // port A set to input?
                     {
-                        if ((mPsg.control() & 0xc0) ==
-                            0x40) // PSG control set to read?
+                        if ((mPsg.control() & 0xc0) == 0x40) // PSG control set to read?
                         {
                             if (mPsg.selected() < 16) // within valid range?
                             {
                                 if (mPsg.selected() == 14) // PSG port A?
                                 {
                                     if (!(mPsg.registerAY(7) & 0x40))
-                                        retval = mKeyboard.value(
-                                            mKeyboard.row() &
-                                            0x0f); // port A in input mode? read
+                                        retval = mKeyboard.value(mKeyboard.row() & 0x0f); // port A in input mode? read
                                                    // mKeyboard matrix node status
                                     else
                                         retval =
                                             mPsg.registerAY(14) &
-                                            mKeyboard.value(mKeyboard.row() &
-                                                            0x0f); // retval=last
+                                            mKeyboard.value(mKeyboard.row() & 0x0f); // retval=last
                                                                    // value w/ logic
                                                                    // AND of input
                                 }
                                 else if (mPsg.selected() == 15) // PSG port B?
                                 {
                                     if ((mPsg.registerAY(7) & 0x80))
-                                        retval = mPsg.registerAY(
-                                            15); // port B in output
+                                        retval = mPsg.registerAY(15); // port B in output
                                                  // mode?retval=stored value
                                 }
                                 else
@@ -183,20 +178,19 @@ namespace cpcx
                 case 2: // PPI PortC
                 {
                     tUBYTE direction = mPpi.control() & 9;
-                    tUBYTE retval = mPpi.portC();
+                    //tUBYTE retval = mPpi.portC();   // TODO: ???
                     if (direction) // either half set to input?
                     {
+                        retval = mPpi.portC();
                         if (direction & 8) // upper half set to input?
                         {
                             retval &= 0x0f; // blank out upper half
-                            tUBYTE value =
-                                mPpi.portC() & 0xc0; // isolate PSG control bits
+                            tUBYTE value = mPpi.portC() & 0xc0; // isolate PSG control bits
                             if (value == 0xc0)       // PSG specify register?
                             {
                                 value = 0x80; // change to PSG write register
                             }
-                            retval |=
-                                value | 0x20; // casette write data is always set
+                            retval |= value | 0x20; // casette write data is always set
 
                             // if (CPC.tape_motor) retval |= 0x10;    // set the bit
                             // if the tape motor is running
@@ -206,7 +200,7 @@ namespace cpcx
                             retval |= 0x0f; // invalid - set all bits
                         }
                     }
-                    retval = retval;
+                    //retval = retval; // TODO: ???
                     break;
                 }
             }
@@ -224,17 +218,22 @@ namespace cpcx
             {
                 retval = mFdc.read_data();
             }
-            /*
-            if (!(port.b.h & 0x04)) { // external peripheral?
-            if ((port.b.h == 0xfb) && (!(port.b.l & 0x80))) { // FDC?
-            if (!(port.b.l & 0x01)) { // FDC status register?
-            ret_val = mFdc_read_status();
-        } else { // FDC data register
-            ret_val = mFdc_read_data();
-        }
-        }
-        }
-            */
+
+//            if (!(port.b.h & 0x04))
+//            { // external peripheral?
+//                if ((port.b.h == 0xfb) && (!(port.b.l & 0x80)))
+//                { // FDC?
+//                    if (!(port.b.l & 0x01))
+//                    { // FDC status register?
+//                        retval = mFdc.read_status();
+//                    }
+//                    else
+//                    { // FDC data register
+//                        retval = mFdc.read_data();
+//                    }
+//                }
+//            }
+
         }
         return retval;
     }
@@ -248,10 +247,18 @@ namespace cpcx
         {
             tUBYTE sel = (port.b.h & 3);
             if (sel == 0)
+            {
                 mCrtc.select(value); // CRTC register select?
+                IOUT("z80_out_handler", "CRTC select", (int) value);
+            }
             else if (sel == 1)       // CRTC write data?
+            {
                 if (mCrtc.selected() < 16)
+                {
+                    IOUT("z80_out_handler", "CRTC write", (int) value);
                     mCrtc.write(value); // only registers 0 - 15 can be written to
+                }
+            }
         }
         else // ***** @todo watch this !
             // **********************************************************************
@@ -267,6 +274,7 @@ namespace cpcx
 
                 case 1: // set colour
                 {
+                    //IOUT("z80_out_handler", "color select", (int) (value & 0x1f));
                     tUBYTE col = value & 0x1f; // isolate colour value
                     mGatearray.setInk(col);
                     mGatearray.setPalette(mColours.get(col));
@@ -279,6 +287,7 @@ namespace cpcx
 
                     if (value & 0x10) // delay Z80 interrupt?
                     {
+                        IOUT("z80_out_handler", "z80 interrupt", "true");
                         mZ80.setIntPending(0);    // clear pending interrupts
                         mGatearray.setSlCount(0); // reset GA scanline counter
                     }
@@ -288,6 +297,7 @@ namespace cpcx
                     break;
 
                 case 3: // set memory configuration
+                    IOUT("z80_out_handler", "RAM config", (int) value);
                     mGatearray.setRamConfig(value);
                     mMemman.memoryManager();
                     break;
@@ -301,7 +311,7 @@ namespace cpcx
         // **********************************************************************
         if (!(port.b.h & 0x20)) // ROM select?
         {
-            // cout << "selectRom: " << (int) (value & 7) << "\n";
+            IOUT("z80_out_handler", "ROM select", (int) value);
             mGatearray.setUpperRom(value); /** @todo check this */
             // mMemman.initBanking();
             mMemman.toggleUpperRom();
@@ -324,10 +334,12 @@ namespace cpcx
                     break;
 
                 case 1: // write to port B?
+                    IOUT("z80_out_handler", "PPI write port B", (int) value);
                     mPpi.setB(value);
                     break;
 
-                case 2: // write to port C?
+                case 2: // write to port C
+                    //IOUT("z80_out_handler", "PPI write port C", (int) value);
                     mPpi.setC(value);
 
                     if (!(mPpi.control() & 1))
@@ -343,6 +355,7 @@ namespace cpcx
                     break;
 
                 case 3:               // modify PPI control
+                    //IOUT("z80_out_handler", "PPI control", (int) value);
                     if (value & 0x80) // change PPI configuration
                     {
                         mPpi.setControl(value);
@@ -399,13 +412,13 @@ namespace cpcx
         // **********************************************************************
         if (((port.b.h == 0xFA) && (!(port.b.l & 0x80)))) // floppy motor control?
         {
-            DOUT("FDC", "motor", (int) value);
+            IOUT("FDC", "motor", (int) value);
             mFdc.setMotor(value & 0x01);
             mFdc.addFlags(STATUSDRVA_flag | STATUSDRVB_flag);
         }
         else if ((port.b.h == 0xFB) && (!(port.b.l & 0x80))) // FDC data register?
         {
-            DOUT("FDC", "data", (int) value);
+            IOUT("FDC", "data", (int) value);
             mFdc.write_data(value);
         }
     }

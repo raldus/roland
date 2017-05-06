@@ -20,6 +20,7 @@
 #ifndef CPC_MEMMAN_H
 #define CPC_MEMMAN_H
 
+#include "def.h"
 #include "gatearray.h"
 #include "z80.h"
 
@@ -89,6 +90,10 @@ namespace cpcx
                 mZ80->setMembank_read(3, mRom[mGateArray->upperRom()]);
             }
         }
+//        else
+//        {
+//            mZ80->setMembank_read(3, mMemBankConfig[mGateArray->ramConfig() & 7][3]);
+//        }
     }
 
     inline void MemMan::toggleLowerRom()
@@ -97,6 +102,10 @@ namespace cpcx
         {
             mZ80->setMembank_read(0, mLowerRom);
         }
+//        else
+//        {
+//            mZ80->setMembank_read(0, mMemBankConfig[mGateArray->ramConfig() & 7][0]);
+//        };
     }
 
 } // cpc

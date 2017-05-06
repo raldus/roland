@@ -515,7 +515,7 @@ namespace cpcx
 
     int Z80::execute(int cc)
     {
-        register tUBYTE bOpCode;
+        tUBYTE bOpCode;
 
         iCycleCountInit = cc;
         iCycleCountSum = 0;
@@ -1626,7 +1626,7 @@ namespace cpcx
 
     void Z80::z80_pfx_cb()
     {
-        register tUBYTE bOpCode;
+        tUBYTE bOpCode;
 
         bOpCode = read_mem(z80.PC.w.l++);
         iCycleCount += cc_cb[bOpCode];
@@ -2478,7 +2478,7 @@ namespace cpcx
 
     void Z80::z80_pfx_dd()
     {
-        register tUBYTE bOpCode;
+        tUBYTE bOpCode;
 
         bOpCode = read_mem(z80.PC.w.l++);
         iCycleCount += cc_xy[bOpCode];
@@ -3596,7 +3596,7 @@ namespace cpcx
     void Z80::z80_pfx_ddcb()
     {
         signed char o;
-        register tUBYTE bOpCode;
+        tUBYTE bOpCode;
 
         o = read_mem(z80.PC.w.l++); // offset
         bOpCode = read_mem(z80.PC.w.l++);
@@ -4672,7 +4672,7 @@ namespace cpcx
 
     void Z80::z80_pfx_ed()
     {
-        register tUBYTE bOpCode;
+        tUBYTE bOpCode;
 
         bOpCode = read_mem(z80.PC.w.l++);
         iCycleCount += cc_ed[bOpCode];
@@ -5303,7 +5303,7 @@ namespace cpcx
 
     void Z80::z80_pfx_fd()
     {
-        register tUBYTE bOpCode;
+        tUBYTE bOpCode;
 
         bOpCode = read_mem(z80.PC.w.l++);
         iCycleCount += cc_xy[bOpCode];
@@ -6421,7 +6421,7 @@ namespace cpcx
     void Z80::z80_pfx_fdcb()
     {
         signed char o;
-        register tUBYTE bOpCode;
+        tUBYTE bOpCode;
 
         o = read_mem(z80.PC.w.l++); // offset
         bOpCode = read_mem(z80.PC.w.l++);
