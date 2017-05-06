@@ -51,7 +51,7 @@ namespace sdltk
                 event.user.data2 = 0;
                 SDL_PushEvent(&event);
 
-                IOUT("[ListItem]", "UserEvent::ListItemDoubleClicked sent", getText());
+                IOUT("UserEvent", "ListItemDoubleClicked", "sent > " << getText());
                 mDown = true;
                 return;
             }
@@ -64,7 +64,7 @@ namespace sdltk
             event.user.data2 = 0;
             SDL_PushEvent(&event);
 
-            IOUT("[ListItem]", "UserEvent::ListItemClicked sent", getText());
+            IOUT("UserEvent", "ListItemClicked", "sent > " << getText());
             mDown = true;
         }
 

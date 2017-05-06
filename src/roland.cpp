@@ -289,11 +289,13 @@ void mainloop()
             {
                 drive = 0;
                 lstFile->setEnabled(true);
+                SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
             }
             if (btnDiskB->isDown())
             {
                 drive = 1;
                 lstFile->setEnabled(true);
+                SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY, SDL_DEFAULT_REPEAT_INTERVAL);
             }
             while (SDL_PollEvent(&event) > 0)
             {
@@ -305,12 +307,12 @@ void mainloop()
                     case SDL_USEREVENT:
                         if (event.user.code == sdltk::UserEvent::ListItemDoubleClicked)
                         {
-                            IOUT("[roland.cpp]", "UserEvent::ListItemDoubleClicked", "received");
+                            IOUT("SDL_USEREVENT", "ListItemDoubleClicked", "received");
                             lstFile->setEnabled(false);
                             tSTRING str =
                                     prefs.getPath("diskdir")
                                     + ((sdltk::ListItem*) event.user.data1)->getText();
-                            IOUT("[Roland]", "Disk Drive " + std::string(drive ? "B:" : "A:"), str);
+                            DOUT("SDL_USEREVENT", "disk drive " + std::string(drive ? "B:" : "A:"), str);
                             cpc.fdc().dsk_eject(drive);
                             cpc.fdc().dsk_load(str.c_str(), drive);
                             prefs.set("diska", str);
@@ -331,6 +333,14 @@ void mainloop()
                         {
                             switch (static_cast<int>(event.key.keysym.sym))
                             {
+                                case SDLK_ESCAPE:
+                                {
+                                    DOUT("SDLK_ESCAPE", "disk drive", "cancel");
+                                    lstFile->setEnabled(false);
+                                    SDL_EnableKeyRepeat(0, 0);
+                                    break;
+                                }
+
                                 case SDLK_RETURN:
                                     if (event.key.keysym.mod & KMOD_LALT)
                                     {
@@ -348,9 +358,9 @@ void mainloop()
                                                     prefs.getPath("diskdir")
                                                     + Prefs::delim()
                                                     + *lstFile->selected();
-                                            IOUT("[Roland]", "Disk Drive A: ", str);
-                                            cpc.fdc().dsk_eject(0);
-                                            cpc.fdc().dsk_load(str.c_str(), 0);
+                                            DOUT("SDLK_RETURN", "disk drive " + std::string(drive ? "B:" : "A:"), str);
+                                            cpc.fdc().dsk_eject(drive);
+                                            cpc.fdc().dsk_load(str.c_str(), drive);
                                             prefs.set("diska", str);
                                             SDL_EnableKeyRepeat(0, 0);
                                             clearKeyBuffer();
@@ -369,12 +379,31 @@ void mainloop()
                                 }
 
                                 case SDLK_F2:
-                                case SDLK_F3:
+                                    DOUT("SDLK_F2", "disk drive A", "cancel");
+                                    drive=0;
                                     lstFile->setEnabled(!lstFile->enabled());
-                                    if (lstFile->enabled() && lstFile->empty())
+                                    if (lstFile->enabled())
                                     {
                                         SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
                                                              SDL_DEFAULT_REPEAT_INTERVAL);
+                                    }
+                                    else
+                                    {
+                                        SDL_EnableKeyRepeat(0, 0);
+                                    }
+                                    break;
+                                case SDLK_F3:
+                                    DOUT("SDLK_F3", "disk drive B", "cancel");
+                                    drive=1;
+                                    lstFile->setEnabled(!lstFile->enabled());
+                                    if (lstFile->enabled())
+                                    {
+                                        SDL_EnableKeyRepeat(SDL_DEFAULT_REPEAT_DELAY,
+                                                             SDL_DEFAULT_REPEAT_INTERVAL);
+                                    }
+                                    else
+                                    {
+                                        SDL_EnableKeyRepeat(0, 0);
                                     }
                                     break;
 

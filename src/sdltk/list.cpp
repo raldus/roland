@@ -140,7 +140,7 @@ namespace sdltk
                 mTmpColor = (*mSelected)->color();
             }
 
-            IOUT("[List]", "UserEvent::ListItemClicked", "received");
+            IOUT("UserEvent", "ListItemClicked", "received");
             return true;
         }
         if (event->code == UserEvent::ListItemDoubleClicked)
@@ -152,7 +152,7 @@ namespace sdltk
             }
 
 
-            IOUT("[List]", "UserEvent::ListItemDoubleClicked", "received");
+            IOUT("UserEvent", "ListItemDoubleClicked", "received");
             return true;
         }
         return false;
