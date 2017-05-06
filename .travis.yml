@@ -21,9 +21,17 @@ matrix:
 before_install:
   - sudo apt-get update
   
-install:
-  - sudo apt-get -y install build-essential gcc-4.8 g++-4.8 libsdl1.2-dev libsdl-image1.2-dev
+install:  
+  # install gcc-4.8 with c++11 support: https://github.com/travis-ci-tester/travis-test-gcc-cxx-11
+  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+  - sudo apt-get update
+  - sudo apt-get -y install g++-4.8
+  - sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-4.8 90
+  - sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-4.8 90
   - if [ "$CXX" = "g++" ]; then export CXX="g++-4.8" CC="gcc-4.8"; fi
+  
+  - sudo apt-get -y install build-essential libsdl1.2-dev libsdl-image1.2-dev
+  
     
 addons:
   apt:
