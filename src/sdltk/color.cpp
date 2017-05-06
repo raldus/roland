@@ -44,9 +44,9 @@ namespace sdltk
         result.setB(mB + color.b());
         result.setA(255);
 
-        result.setR(result.r() > 255 ? 255 : (result.r() < 0 ? 0 : result.r()));
-        result.setG(result.g() > 255 ? 255 : (result.g() < 0 ? 0 : result.g()));
-        result.setB(result.b() > 255 ? 255 : (result.b() < 0 ? 0 : result.b()));
+        result.setR(result.r());
+        result.setG(result.g());
+        result.setB(result.b());
 
         return result;
     }
@@ -60,9 +60,9 @@ namespace sdltk
         result.setB(mB - color.b());
         result.setA(255);
 
-        result.setR(result.r() > 255 ? 255 : (result.r() < 0 ? 0 : result.r()));
-        result.setG(result.g() > 255 ? 255 : (result.g() < 0 ? 0 : result.g()));
-        result.setB(result.b() > 255 ? 255 : (result.b() < 0 ? 0 : result.b()));
+        result.setR(result.r());
+        result.setG(result.g());
+        result.setB(result.b());
 
         return result;
     }
@@ -75,9 +75,9 @@ namespace sdltk
         result.setB((int)(mB * value));
         result.setA(mA);
 
-        result.setR(result.r() > 255 ? 255 : (result.r() < 0 ? 0 : result.r()));
-        result.setG(result.g() > 255 ? 255 : (result.g() < 0 ? 0 : result.g()));
-        result.setB(result.b() > 255 ? 255 : (result.b() < 0 ? 0 : result.b()));
+        result.setR(result.r());
+        result.setG(result.g());
+        result.setB(result.b());
 
         return result;
     }
